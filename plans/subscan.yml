@@ -1,0 +1,50 @@
+name: Subscan API Plans
+description: Subscan API service pricing plans for accessing indexed on-chain data across Substrate-based networks including Polkadot and Kusama.
+provider: Subscan
+url: https://pro.subscan.io/
+contact: api@subscan.io
+plans:
+  - name: Free
+    description: Designed for developers, researchers, and ecosystem enthusiasts to build and explore at zero cost. Includes access to all supported networks with limited daily request quota and rate limits.
+    url: https://pro.subscan.io/
+    price: 0
+    currency: USD
+    unit: month
+    quotas:
+      - name: Daily Requests
+        value: 100000
+        unit: requests/day
+      - name: Rate Limit
+        value: 5
+        unit: requests/second
+    features:
+      - API key access
+      - Access to 90+ Substrate networks
+      - Block, extrinsic, event, and account endpoints
+      - Parachain data endpoints
+  - name: Developer
+    description: Higher performance plan for active development teams with expanded daily request quota and dedicated support.
+    url: https://pro.subscan.io/
+    price: null
+    currency: USD
+    unit: month
+    quotas:
+      - name: Daily Requests
+        value: 400000
+        unit: requests/day
+    features:
+      - All Free plan features
+      - Expanded daily request quota
+      - Dedicated support
+  - name: Pro
+    description: Production-grade high-performance plan with expanded quotas, SLA guarantees, and dedicated support for production deployments. Pricing available on request.
+    url: https://pro.subscan.io/
+    price: null
+    currency: USD
+    unit: month
+    features:
+      - All Developer plan features
+      - SLA for production networks
+      - Dedicated account support
+      - Custom quota arrangements
+    contact: api@subscan.io

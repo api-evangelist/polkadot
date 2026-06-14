@@ -1,0 +1,51 @@
+name: Subscan API FinOps
+description: Financial operations guidance for teams consuming the Subscan API for Polkadot and Kusama blockchain data. Covers cost management, budgeting, and optimization strategies.
+provider: Subscan
+url: https://pro.subscan.io/
+contact: api@subscan.io
+cost_model:
+  type: Subscription
+  tiers:
+    - name: Free
+      monthly_cost: 0
+      daily_request_limit: 100000
+      rate_limit_rps: 5
+      cost_per_request: 0
+    - name: Developer
+      monthly_cost: null
+      daily_request_limit: 400000
+      rate_limit_rps: null
+      cost_per_request: null
+      notes: Contact api@subscan.io for pricing
+    - name: Pro
+      monthly_cost: null
+      daily_request_limit: null
+      rate_limit_rps: null
+      cost_per_request: null
+      notes: Enterprise pricing negotiated directly; contact api@subscan.io
+  alternative_access:
+    name: PubFi (usage-based)
+    description: Subscan data is also available via PubFi (pubfi.ai) with usage-based pricing and x402 payments, enabling automated pay-per-use access for AI agents and automated workflows.
+    url: https://pubfi.ai/discovery/api/subscan
+    model: Pay-per-request
+cost_optimization:
+  - recommendation: Cache frequently accessed data (current block, token metadata) locally to reduce redundant API calls.
+    impact: high
+  - recommendation: Batch queries where possible using list endpoints rather than individual lookups.
+    impact: medium
+  - recommendation: Monitor daily request consumption against the 100,000 req/day Free plan limit using response headers.
+    impact: medium
+  - recommendation: For production workloads exceeding Free plan limits, self-host Substrate API Sidecar against a Polkadot node to eliminate per-request costs.
+    impact: high
+  - recommendation: Use the PubFi gateway for sporadic or agent-driven access patterns where per-request billing is more cost-effective than a subscription.
+    impact: medium
+budgeting:
+  free_tier_ceiling_per_month: 3000000
+  notes: Free plan provides 100,000 requests/day, equating to approximately 3 million requests/month at no cost. Plan upgrades are required for higher volumes.
+references:
+  - url: https://support.subscan.io/
+    description: Subscan API documentation
+  - url: https://pro.subscan.io/
+    description: Subscan API key registration and plan management
+  - url: https://pubfi.ai/discovery/api/subscan
+    description: PubFi usage-based access to Subscan data

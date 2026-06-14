@@ -1,0 +1,44 @@
+name: Subscan API Rate Limits
+description: Rate limits enforced by the Subscan API service for accessing indexed Substrate blockchain data on Polkadot, Kusama, and related networks.
+provider: Subscan
+url: https://support.subscan.io/
+contact: api@subscan.io
+limits:
+  - plan: Free
+    rate:
+      value: 5
+      unit: requests/second
+    daily:
+      value: 100000
+      unit: requests/day
+    notes: Single API key allowed per account on the Free plan.
+  - plan: Developer
+    rate:
+      value: null
+      unit: requests/second
+      notes: Rate limit not publicly disclosed; higher than Free plan.
+    daily:
+      value: 400000
+      unit: requests/day
+  - plan: Pro
+    rate:
+      value: null
+      unit: requests/second
+      notes: Custom rate limits available; contact api@subscan.io for details.
+    daily:
+      value: null
+      unit: requests/day
+      notes: Custom quotas negotiated per customer.
+authentication:
+  type: API Key
+  header: X-API-Key
+  registration: https://pro.subscan.io/
+enforcement:
+  - All requests must be authenticated with an API key
+  - Endpoints are HTTPS only
+  - Exceeding limits returns HTTP 429 Too Many Requests
+references:
+  - url: https://support.subscan.io/
+    description: Official Subscan API documentation
+  - url: https://subscan.statuspage.io/
+    description: Subscan service status page

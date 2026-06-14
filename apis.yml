@@ -1,0 +1,111 @@
+name: Polkadot
+description: Polkadot is a multi-chain blockchain network that enables interoperability between specialized blockchains called parachains. Developer APIs are provided through Subscan (a multi-chain block explorer with a hosted HTTP API) and the Substrate API Sidecar (a REST interface for Polkadot SDK-based chains), enabling queries against extrinsics, events, accounts, blocks, staking data, and parachain state on Polkadot, Kusama, and related networks.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Blockchain
+  - Polkadot
+  - Parachain
+  - Substrate
+  - Crypto
+  - Web3
+apis:
+  - name: Subscan API
+    description: Subscan provides a hosted HTTP API for querying indexed on-chain data across more than 90 Substrate-based networks including Polkadot and Kusama. Endpoints cover blocks, extrinsics, events, accounts, staking, tokens, and parachain data. Each network has a dedicated base URL following the pattern https://{network}.api.subscan.io. All requests require an API key obtained from pro.subscan.io.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://support.subscan.io/
+    baseURL: https://polkadot.api.subscan.io
+    tags:
+      - Blockchain
+      - Polkadot
+      - Kusama
+      - Extrinsics
+      - Events
+      - Accounts
+      - Blocks
+      - Staking
+      - Parachain
+    properties:
+      - type: Documentation
+        url: https://support.subscan.io/
+      - type: PostmanCollection
+        url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+      - type: OpenAPI
+        url: https://github.com/subscan-explorer/subscan-OpenAPI
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+    contact:
+      - FN: Subscan API Support
+        email: api@subscan.io
+  - name: Substrate API Sidecar
+    description: The Substrate API Sidecar is an open-source REST service maintained by Parity Technologies that provides a RESTful interface for interacting with Polkadot SDK-based blockchains. It covers blocks, accounts (balances, assets, foreign assets), transactions (dry-run, parse, material), staking, and parachain/coretime data. Parity provides public hosted instances for Polkadot, Kusama, Polkadot Asset Hub, and Kusama Asset Hub. Self-hosting is recommended for production use.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://paritytech.github.io/substrate-api-sidecar/docsv2/
+    baseURL: https://polkadot-public-sidecar.parity-chains.parity.io
+    tags:
+      - Blockchain
+      - Polkadot
+      - Kusama
+      - Accounts
+      - Blocks
+      - Transactions
+      - Staking
+      - Parachain
+      - Open Source
+    properties:
+      - type: Documentation
+        url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+      - type: OpenAPI
+        url: https://paritytech.github.io/substrate-api-sidecar/dist/
+      - type: GitHubRepository
+        url: https://github.com/paritytech/substrate-api-sidecar
+    contact:
+      - FN: Parity Technologies
+        url: https://www.parity.io/
+  - name: Polkadot REST API
+    description: The Polkadot REST API is a Rust rewrite of the Substrate API Sidecar, maintained by Parity Technologies, offering REST endpoints for blocks, transactions (dry-run, parse, material), accounts, staking, and parachain/coretime data. It targets production deployments requiring high throughput and provides OpenAPI specifications for all endpoints.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://github.com/paritytech/polkadot-rest-api
+    baseURL: https://github.com/paritytech/polkadot-rest-api
+    tags:
+      - Blockchain
+      - Polkadot
+      - Transactions
+      - Blocks
+      - Staking
+      - Parachain
+      - Rust
+      - Open Source
+    properties:
+      - type: Documentation
+        url: https://github.com/paritytech/polkadot-rest-api
+      - type: GitHubRepository
+        url: https://github.com/paritytech/polkadot-rest-api
+    contact:
+      - FN: Parity Technologies
+        url: https://www.parity.io/
+common:
+  - type: Website
+    url: https://polkadot.com/
+  - type: Developer
+    url: https://docs.polkadot.com/
+  - type: Blog
+    url: https://polkadot.com/blog
+  - type: GitHub
+    url: https://github.com/paritytech
+  - type: StatusPage
+    url: https://subscan.statuspage.io/
+  - type: TermsOfService
+    url: https://polkadot.com/terms-of-use
+  - type: PrivacyPolicy
+    url: https://polkadot.com/privacy-policy
+maintainers:
+  - FN: API Evangelist
+    email: info@apievangelist.com
