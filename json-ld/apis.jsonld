@@ -1,0 +1,86 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "apis": "https://apis.io/vocab#"
+  },
+  "@type": "WebAPI",
+  "@id": "https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/apis.yml",
+  "name": "Polkadot",
+  "description": "Polkadot is a multi-chain blockchain network that enables interoperability between specialized blockchains called parachains. Developer APIs are provided through Subscan (a multi-chain block explorer with a hosted HTTP API) and the Substrate API Sidecar (a REST interface for Polkadot SDK-based chains), enabling queries against extrinsics, events, accounts, blocks, staking data, and parachain state on Polkadot, Kusama, and related networks.",
+  "url": "https://polkadot.com/",
+  "documentation": "https://docs.polkadot.com/",
+  "termsOfService": "https://polkadot.com/terms-of-use",
+  "keywords": [
+    "Blockchain",
+    "Polkadot",
+    "Parachain",
+    "Substrate",
+    "Crypto",
+    "Web3"
+  ],
+  "provider": {
+    "@type": "Organization",
+    "name": "Parity Technologies",
+    "url": "https://www.parity.io/"
+  },
+  "hasPart": [
+    {
+      "@type": "WebAPI",
+      "name": "Subscan API",
+      "description": "Subscan provides a hosted HTTP API for querying indexed on-chain data across more than 90 Substrate-based networks including Polkadot and Kusama. Endpoints cover blocks, extrinsics, events, accounts, staking, tokens, and parachain data.",
+      "url": "https://support.subscan.io/",
+      "documentation": "https://support.subscan.io/",
+      "termsOfService": "https://polkadot.com/terms-of-use",
+      "keywords": [
+        "Blockchain",
+        "Polkadot",
+        "Kusama",
+        "Extrinsics",
+        "Events",
+        "Accounts",
+        "Blocks",
+        "Staking",
+        "Parachain"
+      ],
+      "apis:openapi": "https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/subscan-swagger.yaml"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Substrate API Sidecar",
+      "description": "The Substrate API Sidecar is an open-source REST service maintained by Parity Technologies that provides a RESTful interface for interacting with Polkadot SDK-based blockchains. It covers blocks, accounts, transactions, staking, and parachain/coretime data.",
+      "url": "https://paritytech.github.io/substrate-api-sidecar/docsv2/",
+      "documentation": "https://docs.polkadot.com/chain-interactions/query-data/query-rest/",
+      "keywords": [
+        "Blockchain",
+        "Polkadot",
+        "Kusama",
+        "Accounts",
+        "Blocks",
+        "Transactions",
+        "Staking",
+        "Parachain",
+        "Open Source"
+      ],
+      "apis:openapi": "https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/substrate-api-sidecar-openapi.yaml"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Polkadot REST API",
+      "description": "The Polkadot REST API is a Rust rewrite of the Substrate API Sidecar, maintained by Parity Technologies, offering REST endpoints for blocks, transactions, accounts, staking, and parachain/coretime data.",
+      "url": "https://github.com/paritytech/polkadot-rest-api",
+      "documentation": "https://github.com/paritytech/polkadot-rest-api",
+      "keywords": [
+        "Blockchain",
+        "Polkadot",
+        "Transactions",
+        "Blocks",
+        "Staking",
+        "Parachain",
+        "Rust",
+        "Open Source"
+      ],
+      "apis:openapi": "https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/polkadot-rest-api-openapi.json"
+    }
+  ]
+}

@@ -34,7 +34,7 @@ apis:
       - type: PostmanCollection
         url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
       - type: OpenAPI
-        url: https://github.com/subscan-explorer/subscan-OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/subscan-swagger.yaml
       - type: Plans
         url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
       - type: RateLimits
@@ -63,7 +63,7 @@ apis:
       - type: Documentation
         url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
       - type: OpenAPI
-        url: https://paritytech.github.io/substrate-api-sidecar/dist/
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/substrate-api-sidecar-openapi.yaml
       - type: GitHubRepository
         url: https://github.com/paritytech/substrate-api-sidecar
     contact:
@@ -86,6 +86,8 @@ apis:
     properties:
       - type: Documentation
         url: https://github.com/paritytech/polkadot-rest-api
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/polkadot-rest-api-openapi.json
       - type: GitHubRepository
         url: https://github.com/paritytech/polkadot-rest-api
     contact:
