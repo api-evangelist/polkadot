@@ -94,6 +94,8 @@ apis:
       - FN: Parity Technologies
         url: https://www.parity.io/
 common:
+  - type: AgenticAccess
+    url: agentic-access/polkadot-agentic-access.yml
   - type: DomainSecurity
     url: security/polkadot-domain-security.yml
   - type: Website
