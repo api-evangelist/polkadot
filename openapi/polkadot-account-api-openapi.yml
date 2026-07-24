@@ -1,0 +1,1617 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Account
+paths:
+  /api/scan/account/assets_changed:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated change history for account asset balances. This endpoint currently supports assets and foreign-assets style tokens.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.assetsChangedParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.AssetChangedHistoryJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List account asset-change history
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - assets
+      - changed
+      - history
+      - scan
+      - wallet
+      - address
+      - user
+  /api/scan/account/balance_history:
+    post:
+      consumes:
+      - application/json
+      description: Returns historical balance snapshots for an account and token. Polkadot, Kusama, and Westend support block-level history, while other supported networks return daily snapshots.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountBalanceParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    history:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.SnapshotBalanceHistoryJson'
+                      type: array
+                    status:
+                      $ref: '#/definitions/subscan_internal_model.AccountBalanceHistoryStatus'
+                  type: object
+              type: object
+      summary: Get account balance history
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - balance
+      - history
+      - scan
+      - wallet
+      - address
+      - user
+  /api/scan/account/tokens:
+    post:
+      consumes:
+      - application/json
+      description: Returns token holdings for one account, including the native token, built-in assets, and supported EVM tokens such as ERC-20 and ERC-721.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountTokenParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_service_scan.AccountTokenJson'
+              type: object
+      summary: List token balances for an account
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - token
+      - scan
+      - tokens
+      - wallet
+      - address
+      - user
+      - asset
+      - coin
+  /api/scan/accounts/merkle:
+    post:
+      consumes:
+      - application/json
+      description: Returns the account merkle list with optional tag and balance filters. This endpoint is available only on Polkadot and Asset Hub Polkadot.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountsMerkleParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/subscan_internal_model.AccountMerkleJson'
+                  type: array
+              type: object
+      summary: List account merkle records
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - merkle
+      - scan
+      - accounts
+      - wallet
+      - address
+      - user
+  /api/scan/accounts/statistics:
+    post:
+      consumes:
+      - application/json
+      description: Returns aggregated account statistics, including either asset-distribution counts or account-role counts depending on the requested type.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountsStatisticsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/subscan_internal_model.AccountRoleCountJson'
+                  type: array
+              type: object
+      summary: Get account statistics
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - statistics
+      - scan
+      - accounts
+      - wallet
+      - address
+      - user
+  /api/scan/search/identity:
+    post:
+      consumes:
+      - application/json
+      description: Performs a fuzzy search on account identity display names and returns matching identities with any related sub-accounts.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.searchByIdentityParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    identity:
+                      items:
+                        $ref: '#/definitions/subscan_internal_service_scan.IdentifierWithSubAccount'
+                      type: array
+                  type: object
+              type: object
+      summary: Search accounts by identity display name
+      tags:
+      - Account
+      x-synonyms:
+      - search
+      - identity
+      - account
+      - scan
+      - lookup
+      - find
+      - query
+      - wallet
+      - address
+      - user
+  /api/scan/token/holders:
+    post:
+      consumes:
+      - application/json
+      description: Returns a paginated holder list for the selected token or unique ID, with optional balance filters and ordering.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.tokenHoldersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.AccountSampleJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List token holders
+      tags:
+      - Account
+      x-synonyms:
+      - token
+      - holders
+      - account
+      - scan
+      - asset
+      - coin
+      - owners
+      - token holders
+      - wallet
+      - address
+      - user
+  /api/v2/scan/account/tokens:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated token holdings for one account address, including the native token, built-in assets, and EVM tokens such as ERC-20 and ERC-721 when available on the current network. Use token_type to narrow the token source or class, order_field and order to sort by token, balance, price, or supply, and page/row for pagination (max row 100). This is the primary endpoint for wallet token balances, account asset holdings, and token portfolio lookups.
+      parameters:
+      - description: Account address plus optional token type, sorting, and pagination controls.
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountTokenV2Params'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.TokenJsonV2Json'
+                      type: array
+                    module:
+                      items:
+                        type: string
+                      type: array
+                  type: object
+              type: object
+      summary: List token balances for an account (v2)
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - token
+      - tokens
+      - wallet
+      - address
+      - asset
+      - coin
+      - balance
+      - balances
+      - token balance
+      - token balances
+      - holdings
+      - portfolio
+      - wallet assets
+  /api/v2/scan/accounts:
+    post:
+      consumes:
+      - application/json
+      description: Returns a paginated account list with optional balance filters, role filters, explicit address selection, and ordering.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.AccountSampleJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List accounts
+      tags:
+      - Account
+      x-synonyms:
+      - accounts
+      - account
+      - scan
+      - wallet
+      - address
+      - user
+  /api/v2/scan/accounts/net_assets:
+    post:
+      consumes:
+      - application/json
+      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/) Returns a paginated account-level net-asset leaderboard. Native-only networks read directly from chain_accounts; other networks use pre-aggregated priced fungible-token snapshots.'
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountNetAssetsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.AccountNetAssetJson'
+                      type: array
+                  type: object
+              type: object
+      summary: '[PRO] List accounts by net assets'
+      tags:
+      - Account
+      x-synonyms:
+      - accounts
+      - net assets
+      - wealth
+      - leaderboard
+      - wallet
+      - token value
+  /api/v2/scan/search:
+    post:
+      consumes:
+      - application/json
+      description: Resolves one account from a Substrate address, EVM address, or SS58 account index and returns normalized account details. If the account is not cached, the service may query on-chain balance data to create or refresh the account before responding. Use this endpoint for account lookup, wallet profile lookup, or resolving an address before calling balance- or token-related APIs.
+      parameters:
+      - description: Account lookup input. Accepts a Substrate address, EVM address, or account index.
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountInfoParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    account:
+                      $ref: '#/definitions/subscan_internal_model.AccountJsonV1'
+                  type: object
+              type: object
+      summary: Get account information by address or account index
+      tags:
+      - Account
+      x-synonyms:
+      - account
+      - address
+      - wallet
+      - lookup
+      - find
+      - query
+      - resolve address
+      - wallet profile
+      - account profile
+      - evm address
+      - account index
+  /api/v2/scan/transfers:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated transfer records with account, token, amount, and block-range filters.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.transfersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    total:
+                      $ref: '#/definitions/subscan_internal_model.TransferHistoryTokensTotal'
+                    transfers:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.TransferHistoryJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List transfers
+      tags:
+      - Account
+      x-synonyms:
+      - transfers
+      - account
+      - scan
+      - wallet
+      - address
+      - user
+definitions:
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  internal_server_http.accountsMerkleParams:
+    properties:
+      address_type:
+        type: string
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        enum:
+        - balance
+        - locked
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+      tag_name:
+        type: string
+      tag_sub_type:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_service_scan.IdentifierWithSubAccount:
+    properties:
+      identifier:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      sub_account:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+        type: array
+    type: object
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  subscan_internal_model.PalletVestingSchedule:
+    properties:
+      locked:
+        type: string
+      per_block:
+        type: string
+      starting_block:
+        type: integer
+    type: object
+  subscan_internal_service_scan.AccountTokenJson:
+    properties:
+      ERC20:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+      ERC721:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+      ERC1155:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+      assets:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+      builtin:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+      native:
+        items:
+          $ref: '#/definitions/subscan_internal_model.TokenJson'
+        type: array
+    type: object
+  subscan_internal_model.TransferHistoryJson:
+    properties:
+      amount:
+        type: string
+      amount_v2:
+        type: string
+      asset_symbol:
+        type: string
+      asset_type:
+        description: AssetType asset type,default empty.
+        type: string
+      asset_unique_id:
+        type: string
+      block_num:
+        type: integer
+      block_timestamp:
+        type: integer
+      currency_amount:
+        type: string
+      current_currency_amount:
+        type: string
+      event_idx:
+        type: integer
+      extrinsic_index:
+        type: string
+      fee:
+        type: string
+      from:
+        type: string
+      from_account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      hash:
+        type: string
+      is_lock:
+        type: boolean
+      item_detail:
+        $ref: '#/definitions/subscan_internal_model.ItemDetail'
+      item_id:
+        type: string
+      module:
+        type: string
+      nonce:
+        type: integer
+      success:
+        type: boolean
+      to:
+        type: string
+      to_account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      transfer_id:
+        type: integer
+    type: object
+  subscan_internal_model.TokenJson:
+    properties:
+      alias_name:
+        type: string
+      asset_id:
+        type: string
+      balance:
+        type: string
+      bonded:
+        type: string
+      contract:
+        type: string
+      conviction_lock:
+        type: string
+      currency_id:
+        type: string
+      decimals:
+        type: integer
+      democracy_lock:
+        type: string
+      election_lock:
+        type: string
+      exchange_ratio:
+        type: string
+      label:
+        type: string
+      lock:
+        type: string
+      lp_bonded_token_combination:
+        items:
+          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
+        type: array
+      lp_token_combination:
+        items:
+          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
+        type: array
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      multi_location: {}
+      price:
+        type: string
+      reserved:
+        type: string
+      symbol:
+        type: string
+      token_image:
+        description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
+        type: string
+      unbonding:
+        type: string
+      unclaimed:
+        type: string
+      unique_id:
+        type: string
+      vesting:
+        $ref: '#/definitions/subscan_internal_model.VestingJson'
+    type: object
+  internal_server_http.accountsParams:
+    properties:
+      account:
+        description: Get the account data associated with different roles of the account,Only proxy,proxies,multisig,multisigMember,convictionDelegate,convictionDelegated,democracyDelegate,democracyDelegated role is valid
+        type: string
+      address:
+        description: Get the specified account data
+        items:
+          type: string
+        maxItems: 100
+        minItems: 1
+        type: array
+      filter:
+        enum:
+        - validator
+        - nominator
+        - councilMember
+        - techcomm
+        - registrar
+        - system
+        - module
+        - evm
+        - erc20
+        - erc721
+        - erc1155
+        - contract
+        - nominationPool
+        - proxies
+        - proxy
+        - multisig
+        - multisigMember
+        - fellowship
+        - onChainIdentity
+        - convictionDelegate
+        - convictionDelegated
+        - democracyDelegate
+        - democracyDelegated
+        - multiTokensHolder
+        - tanssiOperator
+        - activeBlockAuthor
+        - collator
+        type: string
+      max_balance:
+        type: string
+      min_balance:
+        type: string
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        enum:
+        - balance
+        - locked
+        - ring_lock
+        - nft_amount
+        - evm_txn_count
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_model.MetadataMedia:
+    properties:
+      types:
+        type: string
+      url:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object
+  subscan_internal_model.AccountMerkleJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      address_type:
+        type: string
+      balance:
+        type: string
+      count_extrinsic:
+        type: integer
+      locked:
+        type: string
+      tag_name:
+        type: string
+      tag_sub_type:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  subscan_internal_model.ProxyAccountJson:
+    properties:
+      proxy_account:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ProxyAccountInfoJson'
+        type: array
+      real_account:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ProxyAccountInfoJson'
+        type: array
+    type: object
+  subscan_internal_model.AccountDerive:
+    properties:
+      balance:
+        type: string
+      bonded:
+        type: string
+      id:
+        type: integer
+      locked:
+        type: string
+      reserved:
+        type: string
+      token:
+        type: string
+      unbonding:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  subscan_internal_model.AccountHold:
+    properties:
+      amount:
+        type: string
+      id: {}
+    type: object
+  subscan_internal_model.AccountSampleJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      address:
+        type: string
+      balance:
+        type: string
+      balance_lock:
+        type: string
+      count_extrinsic:
+        type: integer
+      derive_token:
+        additionalProperties:
+          $ref: '#/definitions/subscan_internal_model.AccountDerive'
+        type: object
+      evm_account:
+        type: string
+      evm_txn_count:
+        type: integer
+      extra:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountJsonExtra'
+        type: array
+      fellowship_rank:
+        type: integer
+      is_evm_contract:
+        type: boolean
+      lock:
+        type: string
+      nft_amount:
+        description: UpgradeV2      bool `json:"-"`
+        type: string
+      registrar_info:
+        $ref: '#/definitions/subscan_internal_model.RoleRegistrarJson'
+      reserved:
+        type: string
+      substrate_account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+    type: object
+  subscan_internal_model.TransferHistoryTokensTotal:
+    additionalProperties:
+      $ref: '#/definitions/subscan_internal_model.TransferHistoryTotal'
+    type: object
+  subscan_internal_model.RoleRegistrarJson:
+    properties:
+      registrar_fee:
+        type: string
+      registrar_index:
+        type: integer
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  subscan_internal_model.LinearVestingSchedule:
+    properties:
+      balance:
+        type: string
+      cliff:
+        type: integer
+      vesting:
+        type: integer
+    type: object
+  subscan_internal_model.AccountJsonV1:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      address:
+        type: string
+      assets_tag:
+        items:
+          type: string
+        type: array
+      balance:
+        type: string
+      balance_lock:
+        type: string
+      bonded:
+        type: string
+      conviction_lock:
+        type: string
+      count_extrinsic:
+        type: integer
+      customize_role:
+        additionalProperties:
+          type: boolean
+        type: object
+      delegate:
+        $ref: '#/definitions/subscan_internal_model.DelegateAccountJson'
+      democracy_lock:
+        type: string
+      derive_token:
+        additionalProperties:
+          $ref: '#/definitions/subscan_internal_model.AccountDerive'
+        type: object
+      discord:
+        type: string
+      display:
+        type: string
+      election_lock:
+        type: string
+      email:
+        type: string
+      evm_account:
+        type: string
+      evm_txn_count:
+        type: integer
+      extra:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountJsonExtra'
+        type: array
+      fellowship_rank:
+        type: integer
+      github:
+        type: string
+      holds:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountHold'
+        type: array
+      is_collator:
+        type: boolean
+      is_contract:
+        type: boolean
+      is_council_member:
+        type: boolean
+      is_erc20:
+        type: boolean
+      is_erc721:
+        type: boolean
+      is_erc1155:
+        type: boolean
+      is_evm_contract:
+        type: boolean
+      is_evm_system:
+        type: boolean
+      is_fellowship_member:
+        type: boolean
+      is_module_account:
+        type: boolean
+      is_pool_member:
+        type: boolean
+      is_registrar:
+        type: boolean
+      is_techcomm_member:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      legal:
+        type: string
+      lock:
+        type: string
+      matrix:
+        type: string
+      multisig:
+        $ref: '#/definitions/subscan_internal_model.MultiAccountJson'
+      nft_amount:
+        description: UpgradeV2      bool `json:"-"`
+        type: string
+      nomination_pool_balance:
+        items: {}
+        type: array
+      nonce:
+        type: integer
+      proxy:
+        $ref: '#/definitions/subscan_internal_model.ProxyAccountJson'
+      registrar_fee:
+        type: string
+      registrar_index:
+        type: integer
+      registrar_info:
+        $ref: '#/definitions/subscan_internal_model.RoleRegistrarJson'
+      reserved:
+        type: string
+      riot:
+        type: string
+      role:
+        type: string
+      staking_info:
+        $ref: '#/definitions/subscan_internal_model.StakingAccount'
+      stash:
+        type: string
+      substrate_account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      transferable_balance:
+        type: string
+      twitter:
+        type: string
+      unbonding:
+        type: string
+      vesting:
+        $ref: '#/definitions/subscan_internal_model.VestingJson'
+      web:
+        type: string
+    type: object
+  subscan_internal_model.TokenJsonV2Json:
+    properties:
+      alias_name:
+        type: string
+      asset_id:
+        type: string
+      balance:
+        type: string
+      bonded:
+        type: string
+      category:
+        type: string
+      contract:
+        type: string
+      conviction_lock:
+        type: string
+      currency_id:
+        type: string
+      decimals:
+        type: integer
+      democracy_lock:
+        type: string
+      election_lock:
+        type: string
+      exchange_ratio:
+        type: string
+      label:
+        type: string
+      lock:
+        type: string
+      lp_bonded_token_combination:
+        items:
+          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
+        type: array
+      lp_token_combination:
+        items:
+          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
+        type: array
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      multi_location: {}
+      price:
+        type: string
+      reserved:
+        type: string
+      supply:
+        type: string
+      symbol:
+        type: string
+      token_image:
+        description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
+        type: string
+      unbonding:
+        type: string
+      unclaimed:
+        type: string
+      unique_id:
+        type: string
+      vesting:
+        $ref: '#/definitions/subscan_internal_model.VestingJson'
+    type: object
+  subscan_internal_model.SnapshotBalanceHistoryJson:
+    properties:
+      balance:
+        type: string
+      block:
+        type: integer
+      date:
+        type: string
+    type: object
+  internal_server_http.tokenHoldersParams:
+    properties:
+      included_zero_balance:
+        type: boolean
+      max_balance:
+        type: string
+      min_balance:
+        type: string
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        enum:
+        - balance
+        - locked
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+      token:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  subscan_internal_model.LpTokenInfo:
+    properties:
+      amount:
+        type: string
+      decimals:
+        type: integer
+      price:
+        type: string
+      symbol:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  internal_server_http.accountNetAssetsParams:
+    properties:
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 20
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_model.OrmlVestingSchedule:
+    properties:
+      per_period:
+        type: string
+      period:
+        type: integer
+      period_count:
+        type: integer
+      start:
+        type: integer
+    type: object
+  subscan_internal_model.ItemDetail:
+    properties:
+      collection_symbol:
+        type: string
+      fallback_image:
+        type: string
+      image:
+        type: string
+      local_image:
+        type: string
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      symbol:
+        type: string
+      thumbnail:
+        type: string
+    type: object
+  internal_server_http.accountTokenV2Params:
+    properties:
+      address:
+        example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+        type: string
+      order:
+        enum:
+        - asc
+        - desc
+        example: desc
+        type: string
+      order_field:
+        enum:
+        - token
+        - balance
+        - price
+        - supply
+        example: balance
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 20
+        maximum: 100
+        minimum: 0
+        type: integer
+      token_type:
+        example: erc20
+        type: string
+    required:
+    - address
+    type: object
+  internal_server_http.searchByIdentityParams:
+    properties:
+      identity:
+        maxLength: 300
+        minLength: 1
+        type: string
+    required:
+    - identity
+    type: object
+  subscan_internal_model.AssetChangedHistoryJson:
+    properties:
+      amount:
+        type: string
+      asset_unique_id:
+        type: string
+      block_timestamp:
+        type: integer
+      decimals:
+        type: integer
+      event_id:
+        type: string
+      event_index:
+        type: string
+      extrinsic_index:
+        type: string
+      symbol:
+        type: string
+    type: object
+  subscan_internal_model.TransferHistoryTotal:
+    properties:
+      received:
+        type: string
+      sent:
+        type: string
+      total:
+        type: string
+    type: object
+  internal_server_http.accountTokenParams:
+    properties:
+      address:
+        type: string
+    required:
+    - address
+    type: object
+  subscan_internal_model.MultiAccountJson:
+    properties:
+      multi_account:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+        type: array
+      multi_account_member:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+        type: array
+      threshold:
+        type: integer
+    type: object
+  internal_server_http.transfersParams:
+    properties:
+      address:
+        type: string
+      after_id:
+        items:
+          type: integer
+        type: array
+      asset_symbol:
+        type: string
+      asset_unique_id:
+        type: string
+      block_range:
+        type: string
+      currency:
+        enum:
+        - token
+        - usd
+        type: string
+      direction:
+        enum:
+        - all
+        - sent
+        - received
+        type: string
+      extrinsic_index:
+        type: string
+      filter_nft:
+        description: filter nft transfer, support uniques module and enjin multi-token
+        type: boolean
+      include_total:
+        type: boolean
+      item_id:
+        type: integer
+      max_amount:
+        type: string
+      min_amount:
+        type: string
+      order:
+        enum:
+        - asc
+        - desc
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      receiver:
+        type: string
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+      sender:
+        type: string
+      success:
+        type: boolean
+      timeout:
+        type: integer
+      token_category:
+        items:
+          type: string
+        type: array
+    type: object
+  subscan_internal_model.DelegateAccountJson:
+    properties:
+      conviction_delegate:
+        items:
+          $ref: '#/definitions/subscan_internal_model.DelegateJson'
+        type: array
+      conviction_delegated:
+        items:
+          $ref: '#/definitions/subscan_internal_model.DelegateJson'
+        type: array
+      democracy_delegate:
+        items:
+          $ref: '#/definitions/subscan_internal_model.DelegateJson'
+        type: array
+      democracy_delegated:
+        items:
+          $ref: '#/definitions/subscan_internal_model.DelegateJson'
+        type: array
+    type: object
+  subscan_internal_model.StakingAccount:
+    properties:
+      controller:
+        type: string
+      controller_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      reward_account:
+        type: string
+      reward_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+    type: object
+  subscan_internal_model.AccountRoleCountJson:
+    properties:
+      count:
+        type: integer
+      role:
+        type: string
+    type: object
+  internal_server_http.accountInfoParams:
+    properties:
+      key:
+        example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+        type: string
+    required:
+    - key
+    type: object
+  internal_server_http.accountBalanceParams:
+    properties:
+      address:
+        type: string
+      block_range:
+        description: 'block range filter, e.g.: 1000-2000, only polkadot,kusama,westend available'
+        type: string
+      end:
+        description: 'history end date, e.g.: 2024-01-02'
+        type: string
+      recent_block:
+        description: 'Block-level returns rows, e.g.: 1000, only polkadot,kusama,westend available'
+        maximum: 10000
+        type: integer
+      start:
+        description: 'history start date, e.g.: 2024-01-02'
+        type: string
+      token_unique_id:
+        type: string
+    required:
+    - address
+    type: object
+  subscan_internal_model.AccountJsonExtra:
+    properties:
+      amount:
+        type: string
+      conviction:
+        type: string
+      origins:
+        type: integer
+      proxy_type:
+        type: string
+    type: object
+  internal_server_http.assetsChangedParams:
+    properties:
+      address:
+        type: string
+      asset_unique_id:
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - address
+    type: object
+  subscan_internal_model.AccountBalanceHistoryStatus:
+    enum:
+    - ''
+    type: string
+    x-enum-varnames:
+    - AccountBalanceHistoryStatusNone
+  subscan_internal_model.VestingJson:
+    properties:
+      linear_schedules:
+        items:
+          $ref: '#/definitions/subscan_internal_model.LinearVestingSchedule'
+        type: array
+      orml_schedules:
+        items:
+          $ref: '#/definitions/subscan_internal_model.OrmlVestingSchedule'
+        type: array
+      pallet_schedules:
+        items:
+          $ref: '#/definitions/subscan_internal_model.PalletVestingSchedule'
+        type: array
+      total_locked:
+        type: string
+      type:
+        type: string
+    type: object
+  subscan_internal_model.ProxyAccountInfoJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      proxy_type:
+        type: string
+    type: object
+  subscan_internal_model.AccountNetAssetJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      evm_account:
+        type: string
+      priced_token_count:
+        type: integer
+      total_value:
+        type: string
+      unpriced_token_count:
+        type: integer
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  subscan_internal_model.DelegateJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      amount:
+        type: string
+      conviction:
+        type: string
+      delegate_account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      origins:
+        type: integer
+      votes:
+        type: string
+    type: object
+  internal_server_http.accountsStatisticsParams:
+    properties:
+      exclude_system:
+        type: boolean
+      type:
+        enum:
+        - assets
+        - role
+        type: string
+    type: object

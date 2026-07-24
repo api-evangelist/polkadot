@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account CrustStorage API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: CrustStorage
+paths:
+  /api/scan/swork/daily:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustStorageDailyStatParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage daily stat
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - daily
+      - stat
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/group:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustGroupParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage group detail
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - group
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/group/members:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustMembersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage group members
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - group
+      - members
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/groups:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustGroupsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage groups
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - groups
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/member:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustMemberParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage group member detail
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - group
+      - member
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/member/files:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustFilesParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage group member files
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - group
+      - member
+      - files
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/member/orders:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustMemberOrdersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage group member orders
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - group
+      - member
+      - orders
+      - cruststorage
+      - scan
+      - swork
+  /api/scan/swork/orders:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_crust_swork_http.CrustOrdersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crust storage orders
+      tags:
+      - CrustStorage
+      x-synonyms:
+      - crust
+      - storage
+      - orders
+      - cruststorage
+      - scan
+      - swork
+definitions:
+  internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+    properties:
+      address:
+        type: string
+      all_orders:
+        type: boolean
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - address
+    type: object
+  internal_plugin_crust_swork_http.CrustOrdersParams:
+    properties:
+      address:
+        items:
+          type: string
+        type: array
+      expired_status:
+        enum:
+        - 1
+        - 2
+        - 3
+        type: integer
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
+    properties:
+      category:
+        enum:
+        - nodes
+        - storage
+        - files
+        type: string
+      end:
+        type: string
+      start:
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  internal_plugin_crust_swork_http.CrustMembersParams:
+    properties:
+      group_owner:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 1000
+        minimum: 1
+        type: integer
+    required:
+    - group_owner
+    type: object
+  internal_plugin_crust_swork_http.CrustFilesParams:
+    properties:
+      address:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - address
+    type: object
+  internal_plugin_crust_swork_http.CrustMemberParams:
+    properties:
+      address:
+        type: string
+    required:
+    - address
+    type: object
+  internal_plugin_crust_swork_http.CrustGroupParams:
+    properties:
+      group_owner:
+        type: string
+    required:
+    - group_owner
+    type: object
+  internal_plugin_crust_swork_http.CrustGroupsParams:
+    properties:
+      group_owner:
+        type: string
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        enum:
+        - power
+        - total_stake
+        - members
+        - cap
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 1000
+        minimum: 1
+        type: integer
+    type: object

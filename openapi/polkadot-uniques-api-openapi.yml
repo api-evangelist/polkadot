@@ -1,0 +1,513 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Uniques API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Uniques
+paths:
+  /api/scan/uniques/account/balances:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated unique item balances for an account.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.UniquesBalancesParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List unique balances by account
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - balances
+      - account
+      - uniques
+      - scan
+      - wallet
+      - address
+      - user
+  /api/scan/uniques/activities:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated activity records for a unique collection and optional item.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.UniquesActivitiesParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List unique collection activities
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collection
+      - activities
+      - uniques
+      - scan
+  /api/scan/uniques/all:
+    get:
+      consumes:
+      - application/json
+      description: Returns all unique collections without pagination.
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List all unique collections
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collections
+      - uniques
+      - scan
+  /api/scan/uniques/unique:
+    post:
+      consumes:
+      - application/json
+      description: Returns details for a unique collection by collection_id.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.uniqueParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get unique collection details
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collection
+      - uniques
+      - scan
+  /api/scan/uniques/unique/holders:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated holder distribution for a unique collection.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.UniquesHoldersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List unique collection holders
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collection
+      - holders
+      - uniques
+      - scan
+      - owners
+      - token holders
+  /api/scan/uniques/unique/item:
+    post:
+      consumes:
+      - application/json
+      description: Returns details for a unique collection item by collection_id and item_id.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.uniqueItemParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get unique item details
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - item
+      - uniques
+      - scan
+  /api/scan/uniques/unique/items:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated items in a unique collection with optional owner filter.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.uniqueItemsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_uniques_db.ItemSample'
+                      type: array
+                  type: object
+              type: object
+      summary: List unique collection items
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collection
+      - items
+      - uniques
+      - scan
+  /api/scan/uniques/uniques:
+    post:
+      consumes:
+      - application/json
+      description: Returns a paginated list of unique collections.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_uniques_http.uniquesListParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List unique collections
+      tags:
+      - Uniques
+      x-synonyms:
+      - unique
+      - collections
+      - uniques
+      - scan
+definitions:
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_plugin_uniques_db.ItemSample:
+    properties:
+      collection_id:
+        type: string
+      collection_name:
+        type: string
+      item_id:
+        type: integer
+      metadata:
+        $ref: '#/definitions/subscan_internal_model.StandardMetadata'
+      owner:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      transfer_count:
+        type: integer
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  internal_plugin_uniques_http.uniqueItemsParams:
+    properties:
+      collection_id:
+        type: string
+      order:
+        description: Optional, order sort, default desc
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        description: Optional, order field
+        enum:
+        - item_id
+        - create_at
+        - transfer_count
+        type: string
+      owner:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_uniques_http.uniqueItemParams:
+    properties:
+      collection_id:
+        type: string
+      item_id:
+        type: integer
+    type: object
+  internal_plugin_uniques_http.UniquesHoldersParams:
+    properties:
+      collection_id:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_uniques_http.uniqueParam:
+    properties:
+      collection_id:
+        type: string
+    type: object
+  subscan_internal_plugin_share.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  internal_plugin_uniques_http.uniquesListParam:
+    properties:
+      collection_id:
+        type: string
+      order:
+        description: Optional, order sort, default desc
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        description: Optional, order field
+        enum:
+        - collection_id
+        - items
+        - holders
+        - transfer_count
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+      search:
+        description: uniques name
+        maxLength: 256
+        minLength: 1
+        type: string
+    type: object
+  subscan_internal_model.StandardMetadata:
+    properties:
+      attributes: {}
+      decode_attrs:
+        items: {}
+        type: array
+      description:
+        example: Thanks
+        type: string
+      external_url:
+        example: https://beta.nft.io/my-collections
+        type: string
+      fallback_image:
+        type: string
+      image:
+        example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
+        type: string
+      local_image:
+        type: string
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      name:
+        example: 500 Followers
+        type: string
+      symbol:
+        example: PKG
+        type: string
+      thumbnail:
+        type: string
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  internal_plugin_uniques_http.UniquesActivitiesParams:
+    properties:
+      collection_id:
+        type: string
+      item_id:
+        type: integer
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  internal_plugin_uniques_http.UniquesBalancesParams:
+    properties:
+      address:
+        example: EaBRZ3VBUFEd6GT9kxXXk9C5gsYC6zAsNfxahmpusrYPtPf
+        type: string
+      collection_id:
+        example: '1'
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - address
+    type: object
+  subscan_internal_model.MetadataMedia:
+    properties:
+      types:
+        type: string
+      url:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object

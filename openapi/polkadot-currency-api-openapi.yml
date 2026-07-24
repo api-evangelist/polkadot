@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Currency API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Currency
+paths:
+  /api/open/currencies:
+    post:
+      consumes:
+      - application/json
+      description: Returns the supported currency codes that can be used for native-token price lookup and conversion.
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    currencies:
+                      items:
+                        type: string
+                      type: array
+                  type: object
+              type: object
+      summary: List supported native-token quote currencies
+      tags:
+      - Currency
+      x-synonyms:
+      - supported
+      - currencies
+      - currency
+      - open
+  /api/open/price:
+    post:
+      consumes:
+      - application/json
+      description: Returns the native-token price quote for the requested timestamp. Use this endpoint for historical token price lookup in supported quote currencies.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.currencyPriceParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_service_scan.CurrencyPrice'
+              type: object
+      summary: Get the native token price at a specific time
+      tags:
+      - Currency
+      x-synonyms:
+      - currency
+      - price
+      - open
+      - rate
+      - valuation
+  /api/open/price_converter:
+    post:
+      consumes:
+      - application/json
+      description: Converts a token amount from one supported currency into another using the price snapshot at the requested time. Returns both the converted output value and the quote data used for the calculation.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.currencyConverterParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/internal_server_http.CurrencyConverter'
+              type: object
+      summary: Convert one token value between currencies
+      tags:
+      - Currency
+      x-synonyms:
+      - currency
+      - price
+      - converter
+      - open
+      - rate
+      - valuation
+definitions:
+  internal_server_http.currencyConverterParams:
+    properties:
+      from:
+        type: string
+      quote:
+        type: string
+      time:
+        type: integer
+      value:
+        type: string
+    required:
+    - from
+    - quote
+    - value
+    type: object
+  internal_server_http.CurrencyConverter:
+    properties:
+      output:
+        type: string
+      price:
+        $ref: '#/definitions/subscan_internal_service_scan.CurrencyPrice'
+    type: object
+  subscan_internal_service_scan.CurrencyPrice:
+    properties:
+      price:
+        type: string
+      records:
+        items:
+          $ref: '#/definitions/subscan_internal_service_scan.PriceRecord'
+        type: array
+      time:
+        type: integer
+    type: object
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  internal_server_http.currencyPriceParams:
+    properties:
+      base:
+        type: string
+      quote:
+        enum:
+        - USD
+        type: string
+      time:
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_service_scan.PriceRecord:
+    properties:
+      price:
+        type: string
+      time:
+        type: integer
+    type: object

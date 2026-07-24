@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Multisig API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Multisig
+paths:
+  /api/scan/multisig:
+    post:
+      consumes:
+      - application/json
+      description: Returns details for a multisig extrinsic by multi_id and call_hash.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.multisigParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_model.MultisigExtrinsicJson'
+              type: object
+      summary: Get multisig extrinsic details
+      tags:
+      - Multisig
+      x-synonyms:
+      - multisig
+      - extrinsic
+      - scan
+      - multi-signature
+      - multi sig
+      - transaction
+      - tx
+      - on-chain call
+  /api/scan/multisigs:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated multisig extrinsics filtered by account, call hash, and type.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.multisigParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    multisig:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.MultisigExtrinsicJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List multisig extrinsics
+      tags:
+      - Multisig
+      x-synonyms:
+      - multisig
+      - extrinsics
+      - scan
+      - multisigs
+      - multi-signature
+      - multi sig
+  /api/scan/multisigs/details:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated multisig detail records for the specified account.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.multisigsDetailsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    multisig:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.MultisigExtrinsicDetailsJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List multisig extrinsic details
+      tags:
+      - Multisig
+      x-synonyms:
+      - multisig
+      - extrinsic
+      - scan
+      - multisigs
+      - multi-signature
+      - multi sig
+      - transaction
+      - tx
+      - on-chain call
+definitions:
+  internal_server_http.multisigsDetailsParams:
+    properties:
+      account:
+        example: 14RYaXRSqb9rPqMaAVp1UZW2czQ6dMNGMbvukwfifi6m8ZgZ
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+      status:
+        enum:
+        - Approval
+        - Executed
+        - Cancelled
+        - Failed
+        type: string
+    required:
+    - account
+    type: object
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.ExtrinsicParam:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      type_name:
+        type: string
+      value: {}
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  subscan_internal_model.MultisigProcessJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      approve_type:
+        type: string
+      extrinsic_index:
+        type: string
+      status:
+        $ref: '#/definitions/subscan_internal_model.MultiAction'
+      timestamp:
+        type: integer
+    type: object
+  subscan_internal_model.ExtrinsicSubCallJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      exec_result:
+        $ref: '#/definitions/subscan_libs_substrate.MetadataModuleError'
+      exec_status:
+        type: string
+      module:
+        type: string
+      multisig:
+        $ref: '#/definitions/subscan_internal_model.MultisigJson'
+      name:
+        type: string
+      param: {}
+      sub_calls:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicSubCallJson'
+        type: array
+    type: object
+  subscan_internal_model.MultisigJson:
+    properties:
+      call_hash:
+        type: string
+      call_module:
+        type: string
+      call_module_function:
+        type: string
+      error:
+        $ref: '#/definitions/subscan_internal_model.ExtrinsicError'
+      extrinsic_index:
+        type: string
+      multi_id:
+        type: string
+      multisig_account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      multisig_status:
+        $ref: '#/definitions/subscan_internal_model.MultiAction'
+      processing:
+        type: integer
+      threshold:
+        type: integer
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  internal_server_http.multisigParams:
+    properties:
+      call_hash:
+        example: 95989422012815483151816709596805504452218676110269919620971647505502472854755
+        type: string
+      multi_id:
+        example: 14661803-2
+        type: string
+    required:
+    - call_hash
+    - multi_id
+    type: object
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  subscan_internal_model.MultiAction:
+    enum:
+    - Approval
+    - Executed
+    - Cancelled
+    - Failed
+    type: string
+    x-enum-varnames:
+    - MultiActionApproval
+    - MultiActionExecuted
+    - MultiActionCancelled
+    - MultiActionExecuteFailed
+  subscan_libs_substrate.MetadataModuleError:
+    properties:
+      doc:
+        items:
+          type: string
+        type: array
+      module:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
+    type: object
+  subscan_internal_model.ExtrinsicError:
+    properties:
+      batch_index:
+        type: integer
+      doc:
+        type: string
+      module:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
+      version:
+        type: integer
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  subscan_internal_model.MultisigExtrinsicJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      block_timestamp:
+        type: integer
+      call_data:
+        type: string
+      call_hash:
+        type: string
+      call_module:
+        type: string
+      call_module_function:
+        type: string
+      error:
+        $ref: '#/definitions/subscan_internal_model.ExtrinsicError'
+      multi_account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      multi_id:
+        description: extrinsicIndex
+        type: string
+      params:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicParam'
+        type: array
+      process:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MultisigProcessJson'
+        type: array
+      status:
+        $ref: '#/definitions/subscan_internal_model.MultiAction'
+      sub_calls:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicSubCallJson'
+        type: array
+      threshold:
+        type: integer
+    type: object
+  subscan_internal_model.MultisigExtrinsicDetailsJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      approve_record:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MultisigProcessJson'
+        type: array
+      block_timestamp:
+        type: integer
+      call_data:
+        type: string
+      call_hash:
+        type: string
+      call_module:
+        type: string
+      call_module_function:
+        type: string
+      cancel_extrinsic_idx:
+        type: string
+      cancel_record:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MultisigProcessJson'
+        type: array
+      confirm_extrinsic_idx:
+        type: string
+      error:
+        $ref: '#/definitions/subscan_internal_model.ExtrinsicError'
+      multi_account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      multi_id:
+        description: extrinsicIndex
+        type: string
+      params:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicParam'
+        type: array
+      process:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MultisigProcessJson'
+        type: array
+      status:
+        $ref: '#/definitions/subscan_internal_model.MultiAction'
+      sub_calls:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicSubCallJson'
+        type: array
+      threshold:
+        type: integer
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object

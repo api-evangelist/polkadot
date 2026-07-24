@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Proxy API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Proxy
+paths:
+  /api/scan/proxy/extrinsics:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated proxy extrinsics for the specified account.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.proxyExtrinsicsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    extrinsics:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.ProxyChainExtrinsicJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List proxy extrinsics
+      tags:
+      - Proxy
+      x-synonyms:
+      - proxy
+      - extrinsics
+      - scan
+      - delegation
+      - delegated account
+definitions:
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.ExtrinsicParam:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      type_name:
+        type: string
+      value: {}
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  internal_server_http.proxyExtrinsicsParams:
+    properties:
+      account:
+        description: Current network account
+        example: 14RYaXRSqb9rPqMaAVp1UZW2czQ6dMNGMbvukwfifi6m8ZgZ
+        type: string
+      after_id:
+        type: integer
+      order:
+        enum:
+        - asc
+        - desc
+        example: desc
+        type: string
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - account
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object
+  subscan_internal_model.ProxyChainExtrinsicJson:
+    properties:
+      account_display:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+        description: Execution account
+      block_num:
+        example: 12413008
+        type: integer
+      block_timestamp:
+        example: 1681965624
+        type: integer
+      call_module:
+        example: proxy
+        type: string
+      call_module_function:
+        example: proxy
+        type: string
+      extrinsic_hash:
+        example: 81305734486849278591077331450996506840682755212684355542763969953595696224721
+        type: string
+      extrinsic_index:
+        example: 12413008-1
+        type: string
+      fee:
+        description: Estimated handling fee
+        example: '10000'
+        type: string
+      fee_used:
+        description: Actual handling fee
+        example: '10000'
+        type: string
+      finalized:
+        example: true
+        type: boolean
+      id:
+        type: integer
+      nonce:
+        example: 1
+        type: integer
+      params:
+        items:
+          $ref: '#/definitions/subscan_internal_model.ExtrinsicParam'
+        type: array
+      real_account_display:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+        description: Entrusted account
+      signature:
+        example: b80d3b8a51ff541b17239ce50c6048c23824a0c7ef8c7e0a7957e68785bc9e4dd521e8ec604c184f26b0dd2ddaa0722bf39bdb7ed4cab5f1906ebfbbd76b5681
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object

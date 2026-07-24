@@ -1,0 +1,729 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account NFTs API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: NFTs
+paths:
+  /api/scan/nfts/account/balances:
+    post:
+      consumes:
+      - application/json
+      description: 'Get NFT balances by account address
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftAccountBalancesParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_nfts_db.CollectionBalance'
+                      type: array
+                  type: object
+              type: object
+      summary: NFT account balances
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - account
+      - balances
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+      - wallet
+      - address
+      - user
+  /api/scan/nfts/activities:
+    post:
+      consumes:
+      - application/json
+      description: 'Get Nft activities(include nft Created/Issued/Burned...) by nft collection id
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftActivitiesParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_nfts_db.NftRelateExtrinsic'
+                      type: array
+                  type: object
+              type: object
+      summary: NFT activities
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - activities
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+  /api/scan/nfts/info:
+    post:
+      consumes:
+      - application/json
+      description: 'NFT collection info
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_plugin_nfts_db.NftsJson'
+              type: object
+      summary: NFT info
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+  /api/scan/nfts/info/holders:
+    post:
+      consumes:
+      - application/json
+      description: 'NFT holders in a collection
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftHoldersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_nfts_db.NftHolderJson'
+                      type: array
+                  type: object
+              type: object
+      summary: NFT holders
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - holders
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+      - owners
+      - token holders
+  /api/scan/nfts/info/item:
+    post:
+      consumes:
+      - application/json
+      description: 'NFT item info
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftItemParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_plugin_nfts_db.CollectionItemJson'
+              type: object
+      summary: NFT item
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - item
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+  /api/scan/nfts/info/items:
+    post:
+      consumes:
+      - application/json
+      description: 'NFT items in a collection
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftItemsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_nfts_db.ItemSample'
+                      type: array
+                  type: object
+              type: object
+      summary: NFT items
+      tags:
+      - NFTs
+      x-synonyms:
+      - nft
+      - items
+      - nfts
+      - scan
+      - erc721
+      - collectible
+      - non-fungible token
+  /api/scan/nfts/list:
+    post:
+      consumes:
+      - application/json
+      description: 'NFTs collection list
+
+        This API only supports networks with nfts frame'
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_nfts_http.NftsParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_nfts_db.NftsSampleJson'
+                      type: array
+                  type: object
+              type: object
+      summary: NFTs list
+      tags:
+      - NFTs
+      x-synonyms:
+      - nfts
+      - scan
+definitions:
+  internal_plugin_nfts_http.NftParams:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+    type: object
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_plugin_nfts_db.NftsSampleJson:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+      collection_image:
+        example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
+        type: string
+      collection_name:
+        example: Retrowave
+        type: string
+      holders:
+        example: 10
+        type: integer
+      items:
+        example: 10
+        type: integer
+      owner:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      transfer_count:
+        example: 10
+        type: integer
+    type: object
+  internal_plugin_nfts_http.NftItemsParams:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+      order:
+        description: Optional, order sort, default desc
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        description: Optional, order field
+        enum:
+        - item_id
+        - create_at
+        - transfer_count
+        type: string
+      owner:
+        description: Optional, owner address
+        example: EaBRZ3VBUFEd6GT9kxXXk9C5gsYC6zAsNfxahmpusrYPtPf
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_nfts_http.NftActivitiesParams:
+    properties:
+      after_id:
+        description: Optional, after id for pagination
+        example: 0
+        minimum: 0
+        type: integer
+      collection_id:
+        description: Collection id, required
+        example: '1'
+        type: string
+      item_id:
+        description: Item id, optional
+        example: '1'
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_model.MetadataMedia:
+    properties:
+      types:
+        type: string
+      url:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object
+  subscan_internal_plugin_nfts_db.NftRelateExtrinsic:
+    properties:
+      block_num:
+        example: 5296820
+        type: integer
+      block_timestamp:
+        example: 1693996722
+        type: integer
+      collection_id:
+        example: '129'
+        type: string
+      event_id:
+        example: ItemMetadataSet
+        type: string
+      event_index:
+        example: 5296820-26
+        type: string
+      extrinsic_index:
+        example: 5296820-3
+        type: string
+      id:
+        type: integer
+      item_id:
+        example: '1'
+        type: string
+      module_id:
+        example: nfts
+        type: string
+    type: object
+  subscan_internal_model.MetadataSample:
+    properties:
+      fallback_image:
+        type: string
+      image:
+        type: string
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      name:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  subscan_internal_plugin_nfts_db.CollectionItemJson:
+    properties:
+      attributes: {}
+      collection_id:
+        example: '126'
+        type: string
+      data:
+        example: ipfs://ipfs/bafkreiga2srd2royhpxav3migytg35ny5ph74sbqhfxujwqu6tpoio5ize
+        type: string
+      holder:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      item_id:
+        example: '1'
+        type: string
+      metadata:
+        $ref: '#/definitions/subscan_internal_model.StandardMetadata'
+    type: object
+  subscan_internal_plugin_share.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  subscan_internal_plugin_nfts_db.NftsJson:
+    properties:
+      attributes: {}
+      collection_id:
+        example: '1'
+        type: string
+      data:
+        example: ipfs://ipfs/bafkreiga2srd2royhpxav3migytg35ny5ph74sbqhfxujwqu6tpoio5ize
+        type: string
+      holders:
+        example: 10
+        type: integer
+      is_destroyed:
+        example: false
+        type: boolean
+      items:
+        example: 10
+        type: integer
+      metadata:
+        $ref: '#/definitions/subscan_internal_model.StandardMetadata'
+      owner:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      total_supply:
+        example: 10
+        type: integer
+      unique_id:
+        example: standard_nfts/126
+        type: string
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  internal_plugin_nfts_http.NftsParams:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+      order:
+        description: Optional, order sort, default desc
+        enum:
+        - desc
+        - asc
+        example: desc
+        type: string
+      order_field:
+        description: Optional, order field
+        enum:
+        - items
+        - holders
+        - collection_id
+        - transfer_count
+        example: holders
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_nfts_http.NftHoldersParams:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_nfts_http.NftItemParams:
+    properties:
+      collection_id:
+        description: Collection id, required
+        type: string
+      item_id:
+        description: Item id, required
+        type: string
+    type: object
+  subscan_internal_plugin_nfts_db.CollectionBalance:
+    properties:
+      balance:
+        example: '1'
+        type: string
+      collection_id:
+        example: '1'
+        type: string
+      collection_name:
+        example: Kusama Crowdloans
+        type: string
+      item_id:
+        example: '1'
+        type: string
+      token_metadata:
+        $ref: '#/definitions/subscan_internal_model.MetadataSample'
+    type: object
+  subscan_internal_plugin_nfts_db.ItemSample:
+    properties:
+      collection_id:
+        example: '1'
+        type: string
+      collection_name:
+        example: Kusama Crowdloans
+        type: string
+      item_id:
+        example: '1'
+        type: string
+      metadata:
+        $ref: '#/definitions/subscan_internal_model.StandardMetadata'
+      owner:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      transfer_count:
+        type: integer
+    type: object
+  subscan_internal_plugin_nfts_db.NftHolderJson:
+    properties:
+      balance:
+        example: 1
+        type: integer
+      holder:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+    type: object
+  internal_plugin_nfts_http.NftAccountBalancesParams:
+    properties:
+      address:
+        example: EaBRZ3VBUFEd6GT9kxXXk9C5gsYC6zAsNfxahmpusrYPtPf
+        type: string
+      collection_id:
+        example: '1'
+        type: string
+      page:
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - address
+    type: object
+  subscan_internal_model.StandardMetadata:
+    properties:
+      attributes: {}
+      decode_attrs:
+        items: {}
+        type: array
+      description:
+        example: Thanks
+        type: string
+      external_url:
+        example: https://beta.nft.io/my-collections
+        type: string
+      fallback_image:
+        type: string
+      image:
+        example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
+        type: string
+      local_image:
+        type: string
+      media:
+        items:
+          $ref: '#/definitions/subscan_internal_model.MetadataMedia'
+        type: array
+      name:
+        example: 500 Followers
+        type: string
+      symbol:
+        example: PKG
+        type: string
+      thumbnail:
+        type: string
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object

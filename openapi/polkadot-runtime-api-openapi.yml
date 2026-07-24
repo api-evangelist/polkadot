@@ -1,0 +1,736 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account runtime API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: runtime
+  description: Runtime specification, metadata, and code
+paths:
+  /v1/runtime/code:
+    get:
+      tags:
+      - runtime
+      summary: Runtime Wasm code
+      description: Returns the Wasm code blob of the Substrate runtime at a given block.
+      operationId: runtime_code
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime code
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/runtime/metadata:
+    get:
+      tags:
+      - runtime
+      summary: Runtime metadata
+      description: Returns the decoded runtime metadata in JSON format.
+      operationId: runtime_metadata
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime metadata
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/runtime/metadata/versions:
+    get:
+      tags:
+      - runtime
+      summary: Available metadata versions
+      description: Returns the available metadata versions at a given block.
+      operationId: runtime_metadata_versions
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of available metadata versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Invalid block parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/runtime/metadata/{version}:
+    get:
+      tags:
+      - runtime
+      summary: Runtime metadata by version
+      description: Returns the metadata at a specific version. The version parameter should be in 'vX' format (e.g., 'v14', 'v15').
+      operationId: runtime_metadata_versioned
+      parameters:
+      - name: version
+        in: path
+        description: Metadata version (e.g., 'v14', 'v15')
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime metadata at specified version
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid version format or block parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/runtime/spec:
+    get:
+      tags:
+      - runtime
+      summary: Runtime specification
+      description: Returns the runtime specification including version, APIs, and chain properties.
+      operationId: runtime_spec
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime specification
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /api/scan/runtime/list:
+    post:
+      consumes:
+      - application/json
+      description: Returns runtime version history for the current network.
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.RuntimeVersion'
+                      type: array
+                  type: object
+              type: object
+      summary: List runtime versions
+      tags:
+      - runtime
+      x-synonyms:
+      - runtime
+      - versions
+      - scan
+      - spec version
+      - runtime version
+  /api/scan/runtime/metadata:
+    post:
+      consumes:
+      - application/json
+      description: Returns runtime metadata modules for the specified runtime spec version.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.runtimeMetadataParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    info:
+                      properties:
+                        metadata:
+                          items:
+                            $ref: '#/definitions/types.MetadataModules'
+                          type: array
+                      type: object
+                  type: object
+              type: object
+      summary: Get runtime metadata
+      tags:
+      - runtime
+      x-synonyms:
+      - runtime
+      - metadata
+      - scan
+      - spec version
+      - runtime version
+      - meta
+      - chain info
+  /api/scan/runtime/modules:
+    post:
+      consumes:
+      - application/json
+      description: Returns runtime modules for the specified runtime spec version.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.runtimeModuleParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.RuntimeModuleJson'
+                      type: array
+                  type: object
+              type: object
+      summary: List runtime modules
+      tags:
+      - runtime
+      x-synonyms:
+      - runtime
+      - modules
+      - scan
+      - spec version
+      - runtime version
+  /runtime/metadata:
+    get:
+      tags:
+      - runtime
+      summary: Get the runtime metadata in decoded, JSON form.
+      description: 'Returns the runtime metadata as a JSON object. Substrate Reference: - FRAME Support: https://crates.parity.io/frame_support/metadata/index.html - Knowledge Base: https://substrate.dev/docs/en/knowledgebase/runtime/metadata'
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve the metadata at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeMetadata'
+  /runtime/metadata/{metadataVersion}:
+    get:
+      tags:
+      - runtime
+      summary: Get the requested version of runtime metadata in decoded, JSON form.
+      description: 'Returns the requested version of runtime metadata as a JSON object. Substrate Reference: - FRAME Support: https://crates.parity.io/frame_support/metadata/index.html - Knowledge Base: https://substrate.dev/docs/en/knowledgebase/runtime/metadata'
+      parameters:
+      - name: metadataVersion
+        in: path
+        description: The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`).
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block at which to retrieve the metadata at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeMetadata'
+  /runtime/metadata/versions:
+    get:
+      tags:
+      - runtime
+      summary: Get the available versions of runtime metadata.
+      description: 'Returns the available versions of runtime metadata. Substrate Reference: - FRAME Support: https://crates.parity.io/frame_support/metadata/index.html - Knowledge Base: https://substrate.dev/docs/en/knowledgebase/runtime/metadata'
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve the metadata versions at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                description: An array with the available metadata versions.
+  /runtime/code:
+    get:
+      tags:
+      - runtime
+      summary: Get the runtime wasm blob.
+      description: Returns the runtime Wasm blob in hex format.
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve the runtime wasm blob at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeCode'
+  /runtime/spec:
+    get:
+      tags:
+      - runtime
+      summary: Get version information of the Substrate runtime.
+      description: Returns version information related to the runtime.
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve runtime version information at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeSpec'
+components:
+  schemas:
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    ChainType:
+      type: object
+      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
+      properties:
+        live:
+          type: string
+          nullable: true
+          default: null
+        development:
+          type: string
+          nullable: true
+          default: null
+        local:
+          type: string
+          nullable: true
+          default: null
+        custom:
+          type: string
+      example: '{"live": null}'
+    RuntimeMetadata:
+      type: object
+      description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
+
+        The structure varies significantly between different runtime versions (V9-V16) and different chains.
+
+        This is a generic container that preserves the actual metadata structure as returned by the runtime.
+
+        '
+      properties:
+        magicNumber:
+          type: string
+          description: The magic number identifying this as Substrate metadata (typically "1635018093")
+          example: '1635018093'
+        metadata:
+          type: object
+          description: 'Version-specific metadata content. The structure depends entirely on the runtime metadata version
+
+            and can include various combinations of pallets, lookup registries, extrinsics, APIs, and other
+
+            runtime-specific information.
+
+            '
+      required:
+      - magicNumber
+      - metadata
+    RuntimeSpec:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        authoringVersion:
+          type: string
+          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
+        chainType:
+          $ref: '#/components/schemas/ChainType'
+        implVersion:
+          type: string
+          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
+        specName:
+          type: string
+          description: Identifies the different Substrate runtimes.
+        specVersion:
+          type: string
+          description: Version of the runtime specification.
+        transactionVersion:
+          type: string
+          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
+        properties:
+          type: object
+          description: Arbitrary properties defined in the chain spec.
+      description: Version information related to the runtime.
+    RuntimeCode:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        code:
+          type: string
+          format: hex
+definitions:
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  types.MetadataModuleError:
+    properties:
+      doc:
+        items:
+          type: string
+        type: array
+      fields:
+        items:
+          $ref: '#/definitions/types.ModuleErrorField'
+        type: array
+      index:
+        type: integer
+      name:
+        type: string
+    type: object
+  types.StorageType:
+    properties:
+      PlainTypeValue:
+        type: integer
+      double_map_type:
+        $ref: '#/definitions/types.MapType'
+      map_type:
+        $ref: '#/definitions/types.MapType'
+      n_map_type:
+        $ref: '#/definitions/types.NMapType'
+      origin:
+        type: string
+      plain_type:
+        type: string
+    type: object
+  internal_server_http.runtimeMetadataParams:
+    properties:
+      spec:
+        description: Runtime version
+        example: 9430
+        type: integer
+    type: object
+  types.MetadataConstants:
+    properties:
+      constants_value:
+        type: string
+      docs:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      type:
+        type: string
+      type_value:
+        type: integer
+    type: object
+  subscan_internal_model.RuntimeVersion:
+    properties:
+      block_num:
+        type: integer
+      modules:
+        type: string
+      spec_version:
+        type: integer
+    type: object
+  types.MetadataEvents:
+    properties:
+      args:
+        items:
+          type: string
+        type: array
+      args_name:
+        items:
+          type: string
+        type: array
+      args_type_name:
+        items:
+          type: string
+        type: array
+      docs:
+        items:
+          type: string
+        type: array
+      lookup:
+        type: string
+      name:
+        type: string
+    type: object
+  subscan_internal_model.RuntimeModuleItemJson:
+    properties:
+      call:
+        items:
+          type: string
+        type: array
+      event:
+        items:
+          type: string
+        type: array
+      module:
+        type: string
+    type: object
+  types.MetadataModuleCallArgument:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      type_name:
+        type: string
+    type: object
+  types.MetadataStorage:
+    properties:
+      docs:
+        items:
+          type: string
+        type: array
+      fallback:
+        type: string
+      hasher:
+        type: string
+      modifier:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/types.StorageType'
+    type: object
+  types.MetadataCalls:
+    properties:
+      args:
+        items:
+          $ref: '#/definitions/types.MetadataModuleCallArgument'
+        type: array
+      docs:
+        items:
+          type: string
+        type: array
+      lookup:
+        type: string
+      name:
+        type: string
+    type: object
+  types.PalletLookUp:
+    properties:
+      type:
+        type: integer
+    type: object
+  types.NMapType:
+    properties:
+      hashers:
+        items:
+          type: string
+        type: array
+      key_vec:
+        items:
+          type: string
+        type: array
+      keys_id:
+        type: integer
+      value:
+        type: string
+      value_id:
+        type: integer
+    type: object
+  types.MapType:
+    properties:
+      hasher:
+        type: string
+      isLinked:
+        type: boolean
+      key:
+        type: string
+      key2:
+        type: string
+      key2Hasher:
+        type: string
+      value:
+        type: string
+    type: object
+  subscan_internal_model.RuntimeModuleJson:
+    properties:
+      modules:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RuntimeModuleItemJson'
+        type: array
+      spec_version:
+        type: integer
+    type: object
+  types.MetadataModules:
+    properties:
+      calls:
+        items:
+          $ref: '#/definitions/types.MetadataCalls'
+        type: array
+      calls_value:
+        $ref: '#/definitions/types.PalletLookUp'
+      constants:
+        items:
+          $ref: '#/definitions/types.MetadataConstants'
+        type: array
+      errors:
+        items:
+          $ref: '#/definitions/types.MetadataModuleError'
+        type: array
+      errors_value:
+        $ref: '#/definitions/types.PalletLookUp'
+      events:
+        items:
+          $ref: '#/definitions/types.MetadataEvents'
+        type: array
+      events_value:
+        $ref: '#/definitions/types.PalletLookUp'
+      index:
+        type: integer
+      name:
+        type: string
+      prefix:
+        type: string
+      storage:
+        items:
+          $ref: '#/definitions/types.MetadataStorage'
+        type: array
+    type: object
+  internal_server_http.runtimeModuleParams:
+    properties:
+      all:
+        example: true
+        type: boolean
+      spec:
+        description: Runtime version
+        example: 9430
+        type: integer
+    type: object
+  types.ModuleErrorField:
+    properties:
+      doc:
+        items:
+          type: string
+        type: array
+      type:
+        type: string
+      type_name:
+        type: string
+    type: object

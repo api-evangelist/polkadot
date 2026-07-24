@@ -1,0 +1,345 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Bifrost API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Bifrost
+paths:
+  /api/scan/liquidstaking/operations:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for bifrost/bifrost-kusama network.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_pallets_liquidStaking.operationParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                properties:
+                  count:
+                    type: integer
+                  list:
+                    items:
+                      $ref: '#/definitions/internal_pluginv2_pallets_liquidStaking.OperationRecordJson'
+                    type: array
+                type: object
+              message:
+                type: string
+            type: object
+      summary: LiquidStaking operation record list
+      tags:
+      - Bifrost
+      x-synonyms:
+      - liquidstaking
+      - operation
+      - record
+      - bifrost
+      - scan
+      - operations
+  /api/scan/tokengateway/transfers:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated Bifrost TokenGateway transfer records for one address from the dedicated TokenGateway table. Supports filtering by transfer status, source and destination accounts, source and destination chains, block time range, scaled amount range, and asset unique ID. Results are ordered by newest block timestamp first, then by descending row id. The address must be a valid Substrate or EVM address that can be normalized into the indexed account format.
+      parameters:
+      - description: address, pagination, and optional TokenGateway filters
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_customizeds_bifrost_tokengateway.TransfersParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                $ref: '#/definitions/subscan_internal_model.BifrostTokenGatewayTransferListJSON'
+              message:
+                type: string
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+            type: object
+      summary: List Bifrost TokenGateway transfers
+      tags:
+      - Bifrost
+      x-synonyms:
+      - tokengateway
+      - hyperbridge
+      - cross-chain
+      - transfers
+      - bifrost
+definitions:
+  subscan_internal_model.EventParam:
+    properties:
+      name:
+        type: string
+      raw_value:
+        items:
+          type: integer
+        type: array
+      type:
+        type: string
+      type_name:
+        type: string
+      value: {}
+    type: object
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  internal_pluginv2_pallets_liquidStaking.OperationRecordJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      block_num:
+        type: integer
+      block_timestamp:
+        type: integer
+      event_id:
+        type: string
+      event_index:
+        type: string
+      extrinsic_index:
+        type: string
+      id:
+        type: integer
+      module_id:
+        type: string
+      param:
+        items:
+          $ref: '#/definitions/subscan_internal_model.EventParam'
+        type: array
+    type: object
+  subscan_internal_model.BifrostTokenGatewayTransferJSON:
+    properties:
+      asset:
+        $ref: '#/definitions/subscan_internal_model.BifrostTokenGatewayAssetJSON'
+      block_num:
+        type: integer
+      block_timestamp:
+        type: integer
+      cross_chain_status:
+        type: integer
+      dest_account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      dest_chain:
+        type: string
+      event_index:
+        type: string
+      event_type:
+        type: string
+      extrinsic_index:
+        type: string
+      id:
+        type: integer
+      source_account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      source_chain:
+        type: string
+      status:
+        $ref: '#/definitions/subscan_internal_model.BifrostTokenGatewayStatus'
+    type: object
+  subscan_internal_model.BifrostTokenGatewayTransferListJSON:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/subscan_internal_model.BifrostTokenGatewayTransferJSON'
+        type: array
+    type: object
+  subscan_internal_model.BifrostTokenGatewayAssetJSON:
+    properties:
+      amount:
+        type: string
+      decimals:
+        type: integer
+      symbol:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  internal_pluginv2_customizeds_bifrost_tokengateway.TransfersParams:
+    properties:
+      address:
+        type: string
+      after_id:
+        type: integer
+      amount_scale_max:
+        type: string
+      amount_scale_min:
+        type: string
+      asset_unique_id:
+        type: string
+      either_chain:
+        description: either_chain is an optional filter that applies to both source and destination chain fields when from_chain and to_chain are not provided, allowing for flexible querying of transfers involving a specific chain regardless of direction.
+        type: string
+      from:
+        type: string
+      from_chain:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.BifrostTokenGatewayStatus'
+        enum:
+        - pending
+        - success
+        - failed
+        - timeout
+      time_end:
+        minimum: 1
+        type: integer
+      time_start:
+        minimum: 1
+        type: integer
+      to:
+        type: string
+      to_chain:
+        type: string
+    required:
+    - row
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  internal_pluginv2_pallets_liquidStaking.operationParams:
+    properties:
+      address:
+        type: string
+      module:
+        items:
+          type: string
+        type: array
+      page:
+        description: Page number, starting from 0
+        example: 0
+        minimum: 0
+        type: integer
+      row:
+        description: Data size per page
+        example: 10
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object
+  subscan_internal_model.BifrostTokenGatewayStatus:
+    enum:
+    - pending
+    - success
+    - failed
+    - timeout
+    type: string
+    x-enum-varnames:
+    - BifrostTokenGatewayStatusPending
+    - BifrostTokenGatewayStatusSuccess
+    - BifrostTokenGatewayStatusFailed
+    - BifrostTokenGatewayStatusTimeout

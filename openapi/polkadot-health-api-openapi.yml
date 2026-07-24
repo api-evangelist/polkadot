@@ -1,0 +1,81 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account health API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: health
+  description: Health check
+paths:
+  /v1/health:
+    get:
+      tags:
+      - health
+      summary: Health check
+      description: Returns the health status of the API server.
+      operationId: get_health
+      responses:
+        '202':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /healthz:
+    get:
+      description: Returns OK when the service process is alive.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+      summary: Liveness health check
+      tags:
+      - health
+      x-synonyms:
+      - liveness
+      - health
+      - check
+      - healthz
+  /readiness:
+    get:
+      description: Returns OK when the service is ready to serve traffic.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+      summary: Readiness health check
+      tags:
+      - health
+      x-synonyms:
+      - readiness
+      - health
+      - check
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+      - status
+      properties:
+        connected_chains:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        status:
+          type: string
+        uptime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0

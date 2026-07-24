@@ -1,0 +1,243 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account rc runtime API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: rc runtime
+paths:
+  /rc/runtime/spec:
+    get:
+      tags:
+      - rc runtime
+      summary: Get version information of the relay chain Substrate runtime.
+      description: Returns version information related to the relay chain runtime. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for runtime specification.
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve runtime version information at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeSpec'
+  /rc/runtime/metadata:
+    get:
+      tags:
+      - rc runtime
+      summary: Get the relay chain's metadata.
+      description: Returns the relay chain's runtime metadata in decoded JSON format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for metadata.
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or height at which to query. If not provided, queries finalized head.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeMetadata'
+  /rc/runtime/metadata/versions:
+    get:
+      tags:
+      - rc runtime
+      summary: Get the available versions of relay chain's metadata.
+      description: Returns the available versions of the relay chain's metadata. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for metadata versions.
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or height at which to query. If not provided, queries finalized head.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /rc/runtime/metadata/{metadataVersion}:
+    get:
+      tags:
+      - rc runtime
+      summary: Get the relay chain's metadata at a specific version.
+      description: Returns the relay chain's runtime metadata at a specific version in decoded JSON format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for versioned metadata.
+      parameters:
+      - name: metadataVersion
+        in: path
+        description: The specific version of the Metadata to query. The input must conform to the 'vX' format, where 'X' represents the version number (examples 'v14', 'v15').
+        required: true
+        schema:
+          type: string
+          pattern: ^v[0-9]+$
+      - name: at
+        in: query
+        description: Block hash or height at which to query. If not provided, queries finalized head.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeMetadata'
+        '400':
+          description: Invalid version format or version not available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rc/runtime/code:
+    get:
+      tags:
+      - rc runtime
+      summary: Get the Wasm code blob of the relay chain Substrate runtime.
+      description: Returns the relay chain's runtime code in Wasm format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for runtime code.
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve runtime code information at.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeCode'
+components:
+  schemas:
+    RuntimeSpec:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        authoringVersion:
+          type: string
+          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
+        chainType:
+          $ref: '#/components/schemas/ChainType'
+        implVersion:
+          type: string
+          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
+        specName:
+          type: string
+          description: Identifies the different Substrate runtimes.
+        specVersion:
+          type: string
+          description: Version of the runtime specification.
+        transactionVersion:
+          type: string
+          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
+        properties:
+          type: object
+          description: Arbitrary properties defined in the chain spec.
+      description: Version information related to the runtime.
+    RuntimeCode:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        code:
+          type: string
+          format: hex
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    RuntimeMetadata:
+      type: object
+      description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
+
+        The structure varies significantly between different runtime versions (V9-V16) and different chains.
+
+        This is a generic container that preserves the actual metadata structure as returned by the runtime.
+
+        '
+      properties:
+        magicNumber:
+          type: string
+          description: The magic number identifying this as Substrate metadata (typically "1635018093")
+          example: '1635018093'
+        metadata:
+          type: object
+          description: 'Version-specific metadata content. The structure depends entirely on the runtime metadata version
+
+            and can include various combinations of pallets, lookup registries, extrinsics, APIs, and other
+
+            runtime-specific information.
+
+            '
+      required:
+      - magicNumber
+      - metadata
+    ChainType:
+      type: object
+      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
+      properties:
+        live:
+          type: string
+          nullable: true
+          default: null
+        development:
+          type: string
+          nullable: true
+          default: null
+        local:
+          type: string
+          nullable: true
+          default: null
+        custom:
+          type: string
+      example: '{"live": null}'

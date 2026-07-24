@@ -1,0 +1,420 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Stat API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Stat
+paths:
+  /api/scan/accounts/mau:
+    post:
+      consumes:
+      - application/json
+      description: Returns monthly active account statistics for the requested date range.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.accountsMAUHandleParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.MonthStatistics'
+                      type: array
+                  type: object
+              type: object
+      summary: Get monthly active account statistics
+      tags:
+      - Stat
+      x-synonyms:
+      - monthly
+      - active
+      - account
+      - statistics
+      - stat
+      - scan
+      - accounts
+      - mau
+      - wallet
+      - address
+      - user
+  /api/scan/daily_token:
+    post:
+      consumes:
+      - application/json
+      description: Returns daily token statistics for a date range and optional token symbol.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.dailyTokenStatParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.DailyTokenStatusJson'
+                      type: array
+                  type: object
+              type: object
+      summary: Get daily token statistics
+      tags:
+      - Stat
+      x-synonyms:
+      - daily
+      - token
+      - statistics
+      - stat
+      - scan
+      - asset
+      - coin
+  /api/scan/price/history:
+    post:
+      consumes:
+      - application/json
+      description: Returns token price history and EMA metrics for the selected date range and format.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.priceHistoryParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    ema7_average:
+                      type: string
+                    ema30_average:
+                      type: string
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_service_scan.Price'
+                      type: array
+                  type: object
+              type: object
+      summary: Get token price history
+      tags:
+      - Stat
+      x-synonyms:
+      - token
+      - price
+      - history
+      - stat
+      - scan
+      - asset
+      - coin
+      - rate
+      - valuation
+  /api/v2/scan/daily:
+    post:
+      consumes:
+      - application/json
+      description: Returns daily aggregated chain statistics for the selected category and date range.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server_http.dailyStatV2Param'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/internal_server_http.J'
+            - properties:
+                data:
+                  properties:
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_model.DailyStaticJsonV2'
+                      type: array
+                  type: object
+              type: object
+      summary: Get daily statistics (v2)
+      tags:
+      - Stat
+      x-synonyms:
+      - daily
+      - statistics
+      - stat
+      - scan
+definitions:
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.DailyTokenStatusJson:
+    properties:
+      available:
+        type: string
+      other:
+        type: string
+      other_details:
+        $ref: '#/definitions/subscan_internal_model.OtherDetail'
+      staking:
+        type: string
+      system_accounts:
+        items:
+          $ref: '#/definitions/subscan_internal_model.AccountBalanceDetailJson'
+        type: array
+      time_utc:
+        type: string
+      total_issuance:
+        type: string
+      treasury_amount:
+        type: string
+    type: object
+  internal_server_http.dailyTokenStatParams:
+    properties:
+      end:
+        example: '2023-06-01'
+        type: string
+      format:
+        enum:
+        - day
+        type: string
+      start:
+        example: '2023-05-01'
+        type: string
+      symbol:
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  subscan_internal_model.OtherDetail:
+    properties:
+      conviction_locked_balance:
+        type: string
+      democracy_locked_balance:
+        type: string
+      election_locked_balance:
+        type: string
+      nominator_bonded:
+        type: string
+      reserved_balance:
+        type: string
+      unbonded_locked_balance:
+        type: string
+      validator_bonded:
+        type: string
+      vesting_balance:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  internal_server_http.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  internal_server_http.accountsMAUHandleParams:
+    properties:
+      end:
+        example: '2025-07-25'
+        type: string
+      start:
+        example: '2025-07-22'
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  subscan_internal_model.MonthStatistics:
+    properties:
+      active_account:
+        type: integer
+      time_utc:
+        type: string
+    type: object
+  subscan_internal_model.DailyStaticJsonV2:
+    properties:
+      time_utc:
+        type: string
+      total:
+        type: string
+      transfer_amount:
+        type: string
+    type: object
+  subscan_internal_model.AccountBalanceDetailJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      address:
+        type: string
+      balance:
+        type: string
+    type: object
+  internal_server_http.priceHistoryParams:
+    properties:
+      currency:
+        type: string
+      end:
+        example: '2023-06-01'
+        type: string
+      format:
+        enum:
+        - day
+        - hour
+        - 6hour
+        - 12hour
+        type: string
+      start:
+        example: '2023-05-01'
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  subscan_internal_service_scan.Price:
+    properties:
+      feed_at:
+        type: integer
+      price:
+        type: string
+    type: object
+  internal_server_http.dailyStatV2Param:
+    properties:
+      category:
+        type: string
+      end:
+        example: '2023-06-01'
+        type: string
+      format:
+        enum:
+        - day
+        - hour
+        - 6hour
+        - minute
+        - 7d
+        - month
+        - year
+        type: string
+      start:
+        example: '2023-05-01'
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object

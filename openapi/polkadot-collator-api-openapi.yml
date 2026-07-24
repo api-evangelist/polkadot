@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Collator API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Collator
+paths:
+  /api/scan/collator/info:
+    post:
+      consumes:
+      - application/json
+      description: Returns detailed information for a single collator account.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_pallets_collator.collatorInfoParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                $ref: '#/definitions/internal_pluginv2_pallets_collator.CollatorJson'
+              message:
+                type: string
+            type: object
+      summary: Get collator details
+      tags:
+      - Collator
+      x-synonyms:
+      - collator
+      - scan
+      - block producer
+      - validator
+  /api/scan/collator/list:
+    post:
+      consumes:
+      - application/json
+      description: Returns a paginated list of collators with status, account, and ordering filters.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_pallets_collator.collatorListParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                properties:
+                  count:
+                    type: integer
+                  list:
+                    items:
+                      $ref: '#/definitions/internal_pluginv2_pallets_collator.CollatorJson'
+                    type: array
+                type: object
+              message:
+                type: string
+            type: object
+      summary: List collators
+      tags:
+      - Collator
+      x-synonyms:
+      - collators
+      - collator
+      - scan
+      - block producer
+      - validator
+  /api/scan/collator/meta:
+    get:
+      consumes:
+      - application/json
+      description: Returns collator metadata used by the collator APIs.
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                $ref: '#/definitions/internal_pluginv2_pallets_collator.MetadataJson'
+              message:
+                type: string
+            type: object
+      summary: Get collator metadata
+      tags:
+      - Collator
+      x-synonyms:
+      - collator
+      - metadata
+      - scan
+      - meta
+      - block producer
+      - validator
+      - chain info
+  /api/scan/collator/timeline:
+    post:
+      consumes:
+      - application/json
+      description: Returns paginated timeline records for a collator.
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_pallets_collator.collatorTimelineParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            properties:
+              code:
+                type: integer
+              data:
+                properties:
+                  count:
+                    type: integer
+                  list:
+                    items:
+                      $ref: '#/definitions/internal_pluginv2_pallets_collator.CollatorTimelineJson'
+                    type: array
+                type: object
+              message:
+                type: string
+            type: object
+      summary: List collator timeline records
+      tags:
+      - Collator
+      x-synonyms:
+      - collator
+      - timeline
+      - records
+      - scan
+      - block producer
+      - validator
+definitions:
+  internal_pluginv2_pallets_collator.MetadataJson:
+    properties:
+      candidacy_bond:
+        type: string
+      candidates:
+        type: integer
+      candidates_total_bond:
+        type: string
+      desired_candidates:
+        type: integer
+      invulnerables:
+        type: integer
+    type: object
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  internal_pluginv2_pallets_collator.CollatorTimelineJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      action:
+        type: string
+      block_num:
+        type: integer
+      event_index:
+        type: string
+    type: object
+  internal_pluginv2_pallets_collator.CollatorJson:
+    properties:
+      account_display:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      balance:
+        type: string
+      bond:
+        type: string
+      last_authored_block:
+        description: LastChangeBlock   int                   `json:"last_change_block"`
+        type: integer
+      status:
+        $ref: '#/definitions/subscan_internal_dao.CollatorStatus'
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  internal_pluginv2_pallets_collator.collatorListParams:
+    properties:
+      account:
+        type: string
+      order:
+        enum:
+        - desc
+        - asc
+        type: string
+      order_field:
+        enum:
+        - account
+        - bond
+        - last_change_block
+        - last_authored_block
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_dao.CollatorStatus'
+        enum:
+        - 0
+        - 1
+        - 2
+    type: object
+  internal_pluginv2_pallets_collator.collatorInfoParams:
+    properties:
+      account:
+        type: string
+    required:
+    - account
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  internal_pluginv2_pallets_collator.collatorTimelineParams:
+    properties:
+      account:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  subscan_internal_dao.CollatorStatus:
+    enum:
+    - 1
+    - 2
+    - 3
+    type: integer
+    x-enum-varnames:
+    - CollatorInvulnerable
+    - CollatorCandidate
+    - CollatorRetired
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object

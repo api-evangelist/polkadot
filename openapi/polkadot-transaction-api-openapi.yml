@@ -1,0 +1,846 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account transaction API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: transaction
+  description: Transaction submission, fee estimation, and construction material
+paths:
+  /v1/transaction:
+    post:
+      tags:
+      - transaction
+      summary: Submit transaction
+      description: Submit a signed extrinsic to the transaction pool.
+      operationId: submit
+      requestBody:
+        description: Signed extrinsic with 'tx' field containing hex-encoded transaction
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Transaction hash
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/dry-run:
+    post:
+      tags:
+      - transaction
+      summary: Dry run transaction
+      description: Dry run a transaction to check validity without submitting.
+      operationId: dry_run
+      requestBody:
+        description: Transaction with 'tx', 'senderAddress', and optional 'at' and 'xcmVersion' fields
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Dry run result
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/fee-estimate:
+    post:
+      tags:
+      - transaction
+      summary: Estimate transaction fee
+      description: Estimate the fee for a transaction.
+      operationId: fee_estimate
+      requestBody:
+        description: Transaction with 'tx' field containing hex-encoded transaction
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Fee estimate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeEstimateResponse'
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/material:
+    get:
+      tags:
+      - transaction
+      summary: Transaction construction material
+      description: Returns network information needed for transaction construction including genesis hash, spec version, and optionally metadata.
+      operationId: material
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: noMeta
+        in: query
+        description: 'DEPRECATED: If true, metadata is not included'
+        required: false
+        schema:
+          type: boolean
+      - name: metadata
+        in: query
+        description: 'Metadata format: ''json'' or ''scale'''
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction material
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/material/{metadataVersion}:
+    get:
+      tags:
+      - transaction
+      summary: Transaction material with versioned metadata
+      description: Returns transaction construction material with metadata at a specific version.
+      operationId: material_versioned
+      parameters:
+      - name: metadataVersion
+        in: path
+        description: Metadata version (e.g., 'v14', 'v15')
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: noMeta
+        in: query
+        description: 'DEPRECATED: If true, metadata is not included'
+        required: false
+        schema:
+          type: boolean
+      - name: metadata
+        in: query
+        description: 'Metadata format: ''json'' or ''scale'''
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction material with versioned metadata
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/metadata-blob:
+    post:
+      tags:
+      - transaction
+      summary: Generate metadata blob
+      description: Generates a metadata blob for transaction signing with the CheckMetadataHash extension.
+      operationId: metadata_blob
+      requestBody:
+        description: Request with 'tx' field and optional 'at' block
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Metadata blob
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/transaction/parse:
+    post:
+      tags:
+      - transaction
+      summary: Parse transaction
+      description: 'Decode a raw transaction and return its components without executing or submitting it. Returns the decoded pallet/method, call arguments, signature info, nonce, tip, era, and hash. Note: This endpoint uses the chain''s current (latest) metadata for decoding. Transactions created for older runtime versions may fail to decode if the extrinsic format has changed.'
+      operationId: parse
+      requestBody:
+        description: Transaction with 'tx' field containing hex-encoded extrinsic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParseRequest'
+        required: true
+      responses:
+        '200':
+          description: Parsed transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseResponse'
+        '400':
+          description: Invalid transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseError'
+        '500':
+          description: Internal server error
+  /transaction:
+    post:
+      tags:
+      - transaction
+      summary: Submit a transaction to the node's transaction pool.
+      description: Accepts a valid signed extrinsic. Replaces `/tx` from versions < v1.0.0.
+      operationId: submitTransaction
+      requestBody:
+        $ref: '#/components/requestBodies/Transaction'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSuccess'
+        '400':
+          description: failed to parse or submit transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionFailure'
+  /transaction/dry-run:
+    post:
+      tags:
+      - transaction
+      summary: Dry run an extrinsic.
+      description: Use the `dryRun` call to simulate the submission of a transaction without executing it so that you can check for potential errors and validate the expected outcome.
+      operationId: dryrunTransaction
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionDryRun'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDryRun'
+        '400':
+          description: failed to dry-run transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionFailure'
+  /transaction/fee-estimate:
+    post:
+      tags:
+      - transaction
+      summary: Receive a fee estimate for a transaction.
+      description: 'Send a serialized transaction and receive back a naive fee estimate. Note: `partialFee` does not include any tips that you may add to increase a transaction''s priority. See the reference on `compute_fee`. Replaces `/tx/fee-estimate` from versions < v1.0.0. Substrate Reference: - `RuntimeDispatchInfo`: https://crates.parity.io/pallet_transaction_payment_rpc_runtime_api/struct.RuntimeDispatchInfo.html - `query_info`: https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.query_info - `compute_fee`: https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.compute_fee'
+      operationId: feeEstimateTransaction
+      requestBody:
+        $ref: '#/components/requestBodies/Transaction'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionFeeEstimate'
+        '400':
+          description: fee estimation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionFeeEstimateFailure'
+  /transaction/material:
+    get:
+      tags:
+      - transaction
+      summary: Get all the network information needed to construct a transaction offline.
+      description: Returns the material that is universal to constructing any signed transaction offline. Replaces `/tx/artifacts` from versions < v1.0.0.
+      operationId: getTransactionMaterial
+      parameters:
+      - name: at
+        in: query
+        description: Block at which to retrieve the transaction construction material.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      - name: noMeta
+        in: query
+        description: DEPRECATED! This is no longer supported
+        schema:
+          type: boolean
+          default: false
+      - name: metadata
+        in: query
+        description: Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata. When `metadata` is not inputted, the `metadata` field will be absent.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionMaterial'
+        '400':
+          description: invalid blockId supplied for at query param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /transaction/material/{metadataVersion}:
+    get:
+      tags:
+      - transaction
+      summary: Get all the network information needed to construct a transaction offline and the version of metadata specified in `metadataVersion`.
+      description: Returns all the materials necessary for constructing any signed transactions offline.
+      operationId: getTransactionMaterialwithVersionedMetadata
+      parameters:
+      - name: metadataVersion
+        in: path
+        description: The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`). By default, metadata is outputted in 'json' format, unless the `metadata` query parameter is provided, in which case it can be either in 'json' or 'scale' format.
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block at which to retrieve the transaction construction material.
+        required: false
+        schema:
+          type: string
+          description: Block identifier, as the block height or block hash.
+          format: unsignedInteger or $hex
+      - name: metadata
+        in: query
+        description: Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionMaterial'
+        '400':
+          description: invalid blockId supplied for at query param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /transaction/metadata-blob:
+    post:
+      tags:
+      - transaction
+      summary: Get the metadata blob for offline signers.
+      description: Returns the minimal metadata ("metadata blob" or "proof") needed by offline signers to decode a transaction's signing payload, along with the metadata hash for the CheckMetadataHash signed extension per RFC-0078.
+      operationId: getTransactionMetadataBlob
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionMetadataBlob'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionMetadataBlob'
+        '400':
+          description: invalid request body or metadata V15 not available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TransactionFeeEstimate:
+      type: object
+      properties:
+        weight:
+          $ref: '#/components/schemas/WeightsV2'
+          description: Weights represented as WeightsV2 (two dimensional weights). When querying historical blocks that use WeightsV1, the weight will be returned as a weight key that points to a number represented as a string.
+        class:
+          type: string
+          description: Extrinsic class.
+          enum:
+          - Normal
+          - Operational
+          - Mandatory
+        partialFee:
+          type: string
+          description: Expected inclusion fee for the transaction. Note that the fee rate changes up to 30% in a 24 hour period and this will not be the exact fee.
+          format: unsignedInteger
+      description: 'Note: `partialFee` does not include any tips that you may add to increase a transaction''s priority. See [compute_fee](https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.compute_fee).'
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    TransactionDispatchError:
+      type: object
+      description: The reason why the dispatch call failed.
+      properties:
+        errorType:
+          type: string
+          enum:
+          - Other
+          - CannotLookup
+          - BadOrigin
+          - ModuleError
+          - ConsumerRemaining
+          - NoProviders
+          - TooManyConsumers
+          - TokenError
+          - ArithmeticError
+          - TransactionalError
+          - Exhausted
+          - Corruption
+          - Unavailable
+          - RootNotAllowed
+          description: The type of transaction error.
+    MetadataBlobBody:
+      type: object
+      properties:
+        tx:
+          type: string
+          format: hex
+          description: Full encoded extrinsic as a hex string.
+        txAdditionalSigned:
+          type: string
+          format: hex
+          description: Optional additional signed data for the extrinsic. Used together with `tx`.
+        callData:
+          type: string
+          format: hex
+          description: Call data as hex string. Use this alongside includedInExtrinsic and includedInSignedData instead of `tx`.
+        includedInExtrinsic:
+          type: string
+          format: hex
+          description: Signed extension data included in the extrinsic. Required when using callData.
+        includedInSignedData:
+          type: string
+          format: hex
+          description: Signed extension data included in the signature. Required when using callData.
+        at:
+          type: string
+          description: Block hash or number to query at. Defaults to finalized head.
+          format: unsignedInteger or $hex
+      description: 'Request body for generating the metadata blob. You must provide either: (1) `tx` (full extrinsic) with optional `txAdditionalSigned`, or (2) `callData` with `includedInExtrinsic` and `includedInSignedData`.'
+    DryRunBody:
+      type: object
+      properties:
+        at:
+          type: string
+          format: unsignedInteger
+        tx:
+          type: string
+          format: hex
+        senderAddress:
+          type: string
+          format: ss58
+    TransactionFailedToSubmit:
+      type: object
+      properties:
+        code:
+          type: number
+        error:
+          type: string
+          description: Failed to submit transaction.
+        transaction:
+          type: string
+          format: hex
+        cause:
+          type: string
+        stack:
+          type: string
+      description: Error message when the node rejects the submitted transaction.
+    ParseRequest:
+      type: object
+      description: Request body for transaction parsing.
+      properties:
+        tx:
+          type:
+          - string
+          - 'null'
+          description: Hex-encoded extrinsic with optional 0x prefix.
+          example: 0x4902840004316d995f...
+    TransactionFailedToParse:
+      type: object
+      properties:
+        code:
+          type: number
+        error:
+          type: string
+          description: '`Failed to parse a tx.`'
+        transaction:
+          type: string
+          format: hex
+        cause:
+          type: string
+        stack:
+          type: string
+      description: Error message when Sidecar fails to parse the transaction.
+    WeightsV2:
+      type: object
+      properties:
+        refTime:
+          type: string
+          description: The weight of computational time used based on some reference hardware.
+        proofSize:
+          type: string
+          description: The weight of storage space used by proof of validity.
+    TransactionDryRun:
+      type: object
+      properties:
+        resultType:
+          type: string
+          enum:
+          - DispatchOutcome
+          - DispatchError
+          - TransactionValidityError
+          description: The result will be either a `DispatchOutcome` if the transaction is valid, a `DispatchError` if the transaction failed, or a `TransactionValidityError` if the transaction is invalid.
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/TransactionDispatchOutcome'
+          - $ref: '#/components/schemas/TransactionDispatchError'
+          - $ref: '#/components/schemas/TransactionValidityError'
+      description: "References:\n  - `PostDispatchInfo`: https://docs.rs/frame-support/38.0.0/frame_support/dispatch/struct.PostDispatchInfo.html\n  - `DispatchError`: https://docs.rs/sp-runtime/39.0.1/sp_runtime/enum.DispatchError.html\n  - `Error Type`: https://paritytech.github.io/polkadot-sdk/master/xcm_runtime_apis/dry_run/enum.Error.html"
+    FeeEstimateResponse:
+      type: object
+      required:
+      - weight
+      - class
+      - partialFee
+      properties:
+        class:
+          type: string
+        partialFee:
+          type: string
+        weight:
+          $ref: '#/components/schemas/Weight'
+    SignatureInfo:
+      type: object
+      description: Signature information for signed extrinsics.
+      required:
+      - signer
+      - signature
+      properties:
+        signature:
+          type: string
+          description: Hex-encoded signature
+          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
+        signer:
+          $ref: '#/components/schemas/SignerId'
+          description: Signer account
+    TransactionMetadataBlob:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        metadataHash:
+          type: string
+          format: hex
+          description: The 32-byte metadata hash (hex-encoded) that should be used with the CheckMetadataHash signed extension.
+        metadataBlob:
+          type: string
+          format: hex
+          description: The metadata blob (hex-encoded) containing the minimal metadata required for offline signers to decode the transaction. This is a SCALE-encoded Proof structure per RFC-0078.
+        specVersion:
+          type: number
+          description: The chain's spec version.
+        specName:
+          type: string
+          description: The chain's spec name.
+        base58Prefix:
+          type: number
+          description: The chain's SS58 address prefix.
+        decimals:
+          type: number
+          description: Number of decimals for the chain's native token.
+        tokenSymbol:
+          type: string
+          description: Symbol for the chain's native token.
+      description: Response containing the metadata blob for offline signers. The metadataBlob contains type definitions needed to decode the specific transaction, Merkle proofs verifying these types are part of the full metadata, and extra chain info.
+    Transaction:
+      type: object
+      properties:
+        tx:
+          type: string
+          format: hex
+    TransactionMaterial:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        genesisHash:
+          type: string
+          description: The hash of the chain's genesis block.
+          format: blockHash
+        chainName:
+          type: string
+          description: The chain's name.
+        specName:
+          type: string
+          description: The chain's spec.
+        specVersion:
+          type: string
+          description: The spec version. Always increased in a runtime upgrade.
+        txVersion:
+          type: string
+          description: The transaction version. Common `txVersion` numbers indicate that the transaction encoding format and method indices are the same. Needed for decoding in an offline environment. Adding new transactions does not change `txVersion`.
+        metadata:
+          type: string
+          description: The chain's metadata. It will only be present when the metadata query param is used.
+      description: 'Note: `chainName`, `specName`, and `specVersion` are used to define a type registry with a set of signed extensions and types. For Polkadot and Kusama, `chainName` is not used in defining this registry, but in other Substrate-based chains that re-launch their network without changing the `specName`, the `chainName` would be needed to create the correct registry. Substrate Reference: - `RuntimeVersion`: https://crates.parity.io/sp_version/struct.RuntimeVersion.html - `SignedExtension`: https://crates.parity.io/sp_runtime/traits/trait.SignedExtension.html -  FRAME Support: https://crates.parity.io/frame_support/metadata/index.html'
+    TransactionDispatchOutcome:
+      type: object
+      description: The result of a valid transaction submitted via the `dry-run` endpoint.
+      properties:
+        actualWeight:
+          type: string
+          format: unsignedInteger
+          description: The actual weight of the transaction.
+        paysFee:
+          type: string
+          format: boolean
+          description: Whether the transaction pays a fee.
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    ParseError:
+      type: object
+      description: Error response for transaction parsing failures.
+      required:
+      - code
+      - error
+      - transaction
+      - cause
+      - stack
+      properties:
+        cause:
+          type: string
+          description: Cause of the error
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code
+          example: 400
+          minimum: 0
+        error:
+          type: string
+          description: Error message
+          example: Failed to parse transaction.
+        stack:
+          type: string
+          description: Stack trace
+        transaction:
+          type: string
+          description: The transaction that failed to parse
+    TransactionFeeEstimateFailure:
+      type: object
+      properties:
+        code:
+          type: number
+        at:
+          type: object
+          properties:
+            hash:
+              type: string
+        error:
+          type: string
+          description: Error description.
+        transaction:
+          type: string
+          format: hex
+        block:
+          type: string
+          description: Block hash of the block fee estimation was attempted at.
+        cause:
+          type: string
+          description: Error message from the client.
+        stack:
+          type: string
+    TransactionSuccess:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The hash of the encoded transaction.
+    ParseResponse:
+      type: object
+      description: Response for successful transaction parsing.
+      required:
+      - isSigned
+      - method
+      - args
+      - era
+      - hash
+      properties:
+        args:
+          type: object
+          description: Decoded call arguments
+        era:
+          type: object
+          description: Era/mortality information
+        hash:
+          type: string
+          description: Blake2-256 hash of the extrinsic
+          example: 0x1234567890abcdef...
+        isSigned:
+          type: boolean
+          description: Whether the extrinsic is signed
+          example: true
+        method:
+          $ref: '#/components/schemas/MethodInfo'
+          description: Pallet and method information
+        nonce:
+          type:
+          - string
+          - 'null'
+          description: Account nonce (only present for signed extrinsics)
+          example: '42'
+        signature:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SignatureInfo'
+            description: Signature information (only present for signed extrinsics)
+        tip:
+          type:
+          - string
+          - 'null'
+          description: Tip amount (only present for signed extrinsics)
+          example: '0'
+    SignerId:
+      type: object
+      description: Signer identifier.
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: SS58-encoded account address
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    MethodInfo:
+      type: object
+      description: Method information (pallet and method name).
+      required:
+      - pallet
+      - method
+      properties:
+        method:
+          type: string
+          description: Method name in lowerCamelCase
+          example: transferAllowDeath
+        pallet:
+          type: string
+          description: Pallet name in lowerCamelCase
+          example: balances
+    TransactionFailure:
+      oneOf:
+      - $ref: '#/components/schemas/TransactionFailedToSubmit'
+      - $ref: '#/components/schemas/TransactionFailedToParse'
+    TransactionValidityError:
+      type: object
+      description: The error result from an invalid transaction submitted via the `dry-run` endpoint.
+      properties:
+        errorType:
+          type: string
+          enum:
+          - Unimplemented
+          - VersionedConversionFailed
+          description: The type of transaction error, either `Unimplemented` or `VersionedConversionFailed`.
+    Weight:
+      type: object
+      required:
+      - refTime
+      - proofSize
+      properties:
+        proofSize:
+          type: string
+        refTime:
+          type: string
+  requestBodies:
+    TransactionMetadataBlob:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MetadataBlobBody'
+      required: true
+    Transaction:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Transaction'
+      required: true
+    TransactionDryRun:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DryRunBody'
+      required: true

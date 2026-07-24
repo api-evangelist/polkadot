@@ -1,0 +1,392 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Avail API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Avail
+paths:
+  /api/scan/dataAvailability/info:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_avail_dataAvailability_http.SubmittedDataInfoParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Submitted Data info
+      tags:
+      - Avail
+      x-synonyms:
+      - submitted
+      - data
+      - avail
+      - scan
+      - dataavailability
+  /api/scan/dataAvailability/list:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for avail network.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_avail_dataAvailability_http.SubmittedListParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_avail_dataAvailability_db.AppDataJson'
+                      type: array
+                    size:
+                      type: integer
+                  type: object
+              type: object
+      summary: Submitted Data list
+      tags:
+      - Avail
+      x-synonyms:
+      - submitted
+      - data
+      - avail
+      - scan
+      - dataavailability
+  /api/scan/vector/daily:
+    post:
+      consumes:
+      - application/json
+      description: This API only available for avail network.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_avail_vector_http.transferDailyParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/subscan_internal_plugin_avail_vector_db.VectorTransferDailyJson'
+                  type: array
+              type: object
+      summary: vector transfer daily list
+      tags:
+      - Avail
+  /api/scan/vector/statistics:
+    post:
+      consumes:
+      - application/json
+      description: This API only available for avail network.
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  $ref: '#/definitions/subscan_internal_plugin_avail_vector_db.VectorTransferStatistics'
+              type: object
+      summary: Transfer count statistics
+      tags:
+      - Avail
+  /api/scan/vector/transfer:
+    post:
+      consumes:
+      - application/json
+      description: This API only available for avail network.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_plugin_avail_vector_http.transferParam'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/subscan_internal_plugin_avail_vector_db.VectorTransferJson'
+                      type: array
+                  type: object
+              type: object
+      summary: vector transfer list
+      tags:
+      - Avail
+definitions:
+  subscan_internal_model.AccountParentJson:
+    properties:
+      address:
+        type: string
+      display:
+        type: string
+      identity:
+        type: boolean
+      sub_symbol:
+        type: string
+    type: object
+  subscan_internal_model.MerkleTag:
+    properties:
+      address_type:
+        type: string
+      tag_name:
+        type: string
+      tag_subtype:
+        type: string
+      tag_type:
+        type: string
+    type: object
+  subscan_internal_model.SampleIdentity:
+    properties:
+      display:
+        type: string
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      parent:
+        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+    type: object
+  internal_plugin_avail_dataAvailability_http.SubmittedListParam:
+    properties:
+      address:
+        type: string
+      app_id:
+        type: integer
+      block_num:
+        minimum: 1
+        type: integer
+      extrinsic_index:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
+  internal_plugin_avail_vector_http.transferDailyParam:
+    properties:
+      end:
+        example: '2023-06-01'
+        type: string
+      format:
+        enum:
+        - day
+        - week
+        - month
+        example: day
+        type: string
+      start:
+        example: '2023-05-01'
+        type: string
+    required:
+    - end
+    - start
+    type: object
+  subscan_internal_plugin_avail_vector_db.VectorTransferStatistics:
+    properties:
+      avail_to_eth_count:
+        type: integer
+      avail_to_eth_sum:
+        type: string
+      eth_to_avail_count:
+        type: integer
+      eth_to_avail_sum:
+        type: string
+    type: object
+  internal_plugin_avail_dataAvailability_http.SubmittedDataInfoParam:
+    properties:
+      extrinsic_index:
+        example: 277764-458
+        type: string
+      hash:
+        example: 19113970726987136144018792964335985025967463666252479637084635182152021787304
+        type: string
+    required:
+    - extrinsic_index
+    - hash
+    type: object
+  subscan_internal_plugin_share.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  subscan_internal_model.EvmAccountDisplay:
+    properties:
+      contract_name:
+        type: string
+      verify_source:
+        type: string
+    type: object
+  subscan_internal_plugin_avail_dataAvailability_db.AppDataJson:
+    properties:
+      account:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      app_id:
+        type: integer
+      data_hash:
+        type: string
+      extrinsic_index:
+        type: string
+      size:
+        type: integer
+    type: object
+  internal_plugin_avail_vector_http.transferParam:
+    properties:
+      address:
+        type: string
+      block_range:
+        type: string
+      max_amount:
+        type: string
+      min_amount:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      receiver:
+        type: string
+      result:
+        type: boolean
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+      sender:
+        type: string
+    type: object
+  subscan_internal_model.RegistrationJudgementJson:
+    properties:
+      index:
+        type: integer
+      judgement:
+        type: string
+    type: object
+  subscan_internal_plugin_avail_vector_db.VectorTransferDailyJson:
+    properties:
+      avail_to_eth_count:
+        type: integer
+      avail_to_eth_sum:
+        type: string
+      date:
+        type: string
+      eth_to_avail_count:
+        type: integer
+      eth_to_avail_sum:
+        type: string
+    type: object
+  subscan_internal_plugin_avail_vector_db.VectorTransferJson:
+    properties:
+      amount:
+        type: string
+      block_num:
+        type: integer
+      block_timestamp:
+        type: integer
+      extrinsic_index:
+        type: string
+      id:
+        type: integer
+      receiver:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      result:
+        type: boolean
+      sender:
+        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
+      token_id:
+        type: string
+    type: object
+  subscan_internal_model.AccountDisplay:
+    properties:
+      account_index:
+        type: string
+      address:
+        description: Current network account
+        type: string
+      display:
+        type: string
+      evm_address:
+        type: string
+      evm_contract:
+        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
+      identity:
+        type: boolean
+      judgements:
+        items:
+          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
+        type: array
+      merkle:
+        $ref: '#/definitions/subscan_internal_model.MerkleTag'
+      parent:
+        allOf:
+        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
+        description: Parent account
+      people:
+        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
+    type: object

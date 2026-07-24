@@ -1,0 +1,2314 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account rc API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: rc
+  description: Relay chain endpoints (available on parachains only)
+paths:
+  /v1/rc/accounts/{accountId}/balance-info:
+    get:
+      tags:
+      - rc
+      summary: RC get balance info
+      description: Returns balance information for a given account on the relay chain.
+      operationId: get_balance_info
+      parameters:
+      - name: accountId
+        in: path
+        description: SS58-encoded account address
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      - name: token
+        in: query
+        description: Token symbol (defaults to native token)
+        required: false
+        schema:
+          type: string
+      - name: denominated
+        in: query
+        description: Denominate balances using chain decimals
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Balance information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RcBalanceInfoResponse'
+        '400':
+          description: Invalid account address
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/accounts/{accountId}/proxy-info:
+    get:
+      tags:
+      - rc
+      summary: RC get proxy info
+      description: Returns proxy information for a given account on the relay chain.
+      operationId: get_proxy_info
+      parameters:
+      - name: accountId
+        in: path
+        description: SS58-encoded account address
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Proxy information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RcProxyInfoResponse'
+        '400':
+          description: Invalid account address
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/accounts/{accountId}/staking-info:
+    get:
+      tags:
+      - rc
+      summary: RC get staking info
+      description: Returns staking information for a given stash account on the relay chain.
+      operationId: get_staking_info
+      parameters:
+      - name: accountId
+        in: path
+        description: SS58-encoded stash account address
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      - name: includeClaimedRewards
+        in: query
+        description: When true, include claimed rewards in the response
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Staking information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RcStakingInfoResponse'
+        '400':
+          description: Invalid account address
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/accounts/{accountId}/staking-payouts:
+    get:
+      tags:
+      - rc
+      summary: RC get staking payouts
+      description: Returns staking payout information for a given account on the relay chain.
+      operationId: get_staking_payouts
+      parameters:
+      - name: accountId
+        in: path
+        description: SS58-encoded account address
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      - name: depth
+        in: query
+        description: 'Number of eras to query (default: 1)'
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: era
+        in: query
+        description: 'The era to query at (default: active_era - 1)'
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: unclaimedOnly
+        in: query
+        description: 'Only show unclaimed rewards (default: true)'
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Staking payouts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RcStakingPayoutsResponse'
+        '400':
+          description: Invalid account address
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/accounts/{accountId}/vesting-info:
+    get:
+      tags:
+      - rc
+      summary: RC get vesting info
+      description: Returns vesting information for a given account on the relay chain.
+      operationId: get_vesting_info
+      parameters:
+      - name: accountId
+        in: path
+        description: SS58-encoded account address
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vesting information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RcVestingInfoResponse'
+        '400':
+          description: Invalid account address
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks:
+    get:
+      tags:
+      - rc
+      summary: RC get blocks by range
+      description: Returns relay chain blocks within a specified range (max 500 blocks).
+      operationId: get_rc_blocks
+      parameters:
+      - name: range
+        in: query
+        description: Block range (e.g., '100-200')
+        required: false
+        schema:
+          type: string
+      - name: eventDocs
+        in: query
+        description: Include event documentation
+        required: false
+        schema:
+          type: boolean
+      - name: extrinsicDocs
+        in: query
+        description: Include extrinsic documentation
+        required: false
+        schema:
+          type: boolean
+      - name: noFees
+        in: query
+        description: Skip fee calculation
+        required: false
+        schema:
+          type: boolean
+      - name: decodedXcmMsgs
+        in: query
+        description: Decode and include XCM messages
+        required: false
+        schema:
+          type: boolean
+      - name: paraId
+        in: query
+        description: Filter XCM messages by parachain ID
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      responses:
+        '200':
+          description: Relay chain blocks
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid range or missing parameter
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/head:
+    get:
+      tags:
+      - rc
+      summary: RC get head block
+      description: Returns the latest block on the relay chain.
+      operationId: get_rc_blocks_head
+      parameters:
+      - name: finalized
+        in: query
+        description: 'When true returns finalized head (default: true)'
+        required: false
+        schema:
+          type: boolean
+      - name: eventDocs
+        in: query
+        description: Include event documentation
+        required: false
+        schema:
+          type: boolean
+      - name: extrinsicDocs
+        in: query
+        description: Include extrinsic documentation
+        required: false
+        schema:
+          type: boolean
+      - name: noFees
+        in: query
+        description: Skip fee calculation
+        required: false
+        schema:
+          type: boolean
+      - name: decodedXcmMsgs
+        in: query
+        description: Decode and include XCM messages
+        required: false
+        schema:
+          type: boolean
+      - name: paraId
+        in: query
+        description: Filter XCM messages by parachain ID
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      responses:
+        '200':
+          description: Relay chain head block
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/head/header:
+    get:
+      tags:
+      - rc
+      summary: RC get head block header
+      description: Returns the header of the latest relay chain block.
+      operationId: get_rc_blocks_head_header
+      parameters:
+      - name: finalized
+        in: query
+        description: 'When true returns finalized head (default: true)'
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain head block header
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/{blockId}:
+    get:
+      tags:
+      - rc
+      summary: RC get block by ID
+      description: Returns relay chain block information for a given block identifier.
+      operationId: get_rc_block
+      parameters:
+      - name: blockId
+        in: path
+        description: Block height number or block hash
+        required: true
+        schema:
+          type: string
+      - name: eventDocs
+        in: query
+        description: Include event documentation
+        required: false
+        schema:
+          type: boolean
+      - name: extrinsicDocs
+        in: query
+        description: Include extrinsic documentation
+        required: false
+        schema:
+          type: boolean
+      - name: noFees
+        in: query
+        description: Skip fee calculation
+        required: false
+        schema:
+          type: boolean
+      - name: decodedXcmMsgs
+        in: query
+        description: Include decoded XCM messages
+        required: false
+        schema:
+          type: boolean
+      - name: paraId
+        in: query
+        description: Filter XCM messages by parachain ID
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      responses:
+        '200':
+          description: Relay chain block information
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block identifier
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/{blockId}/extrinsics-raw:
+    get:
+      tags:
+      - rc
+      summary: RC get raw extrinsics
+      description: Returns raw hex-encoded extrinsics for a relay chain block without decoding.
+      operationId: get_rc_block_extrinsics_raw
+      parameters:
+      - name: blockId
+        in: path
+        description: Block height number or block hash
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Raw extrinsics
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block identifier
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/{blockId}/extrinsics/{extrinsicIndex}:
+    get:
+      tags:
+      - rc
+      summary: RC get extrinsic by index
+      description: Returns a specific extrinsic from a relay chain block by its index.
+      operationId: get_rc_extrinsic
+      parameters:
+      - name: blockId
+        in: path
+        description: Block height number or block hash
+        required: true
+        schema:
+          type: string
+      - name: extrinsicIndex
+        in: path
+        description: Index of the extrinsic in the block
+        required: true
+        schema:
+          type: string
+      - name: eventDocs
+        in: query
+        description: Include event documentation
+        required: false
+        schema:
+          type: boolean
+      - name: extrinsicDocs
+        in: query
+        description: Include extrinsic documentation
+        required: false
+        schema:
+          type: boolean
+      - name: noFees
+        in: query
+        description: Skip fee calculation
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Extrinsic details
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block ID or extrinsic index
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/{blockId}/header:
+    get:
+      tags:
+      - rc
+      summary: RC get block header
+      description: Returns the header of a relay chain block by block hash or block number.
+      operationId: get_rc_block_header
+      parameters:
+      - name: blockId
+        in: path
+        description: Block height number or block hash
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain block header
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block identifier
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/blocks/{blockId}/para-inclusions:
+    get:
+      tags:
+      - rc
+      summary: RC get parachain inclusions
+      description: Returns parachain inclusion information for a given relay chain block.
+      operationId: get_rc_block_para_inclusions
+      parameters:
+      - name: blockId
+        in: path
+        description: Block height number or block hash
+        required: true
+        schema:
+          type: string
+      - name: paraId
+        in: query
+        description: Filter by parachain ID
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      responses:
+        '200':
+          description: Parachain inclusions
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid block identifier
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/node/network:
+    get:
+      tags:
+      - rc
+      summary: RC get node network
+      description: Returns the relay chain node's network information.
+      operationId: get_rc_node_network
+      responses:
+        '200':
+          description: Relay chain node network info
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/node/transaction-pool:
+    get:
+      tags:
+      - rc
+      summary: RC get transaction pool
+      description: Returns the relay chain's transaction pool with optional fee information.
+      operationId: get_rc_node_transaction_pool
+      parameters:
+      - name: includeFee
+        in: query
+        description: 'Include fee information for each transaction (default: false)'
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain transaction pool
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionPoolResponse'
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/node/version:
+    get:
+      tags:
+      - rc
+      summary: RC get node version
+      description: Returns the relay chain node's version information.
+      operationId: get_rc_node_version
+      responses:
+        '200':
+          description: Relay chain node version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeVersionResponse'
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/pallets/on-going-referenda:
+    get:
+      tags:
+      - rc
+      summary: RC on-going referenda
+      description: Returns all currently active referenda from the relay chain's Referenda pallet.
+      operationId: rc_pallets_on_going_referenda
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Active referenda from relay chain
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/staking/progress:
+    get:
+      tags:
+      - rc
+      summary: RC staking progress
+      description: Returns staking progress from the relay chain.
+      operationId: rc_pallets_staking_progress
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain staking progress
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/staking/validators:
+    get:
+      tags:
+      - rc
+      summary: RC staking validators
+      description: Returns the list of active validators from the relay chain.
+      operationId: rc_pallets_staking_validators
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain validator information
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/consts:
+    get:
+      tags:
+      - rc
+      summary: RC pallet constants
+      description: Returns all constants defined in a relay chain pallet.
+      operationId: rc_pallets_constants
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: onlyIds
+        in: query
+        description: Only return constant names
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain pallet constants
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid pallet
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/consts/{constantItemId}:
+    get:
+      tags:
+      - rc
+      summary: RC pallet constant value
+      description: Returns the value and metadata of a specific constant from a relay chain pallet.
+      operationId: rc_pallets_constant_item
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: constantItemId
+        in: path
+        description: Name of the constant
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Include metadata
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain constant value
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Constant not found
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/dispatchables:
+    get:
+      tags:
+      - rc
+      summary: RC pallet dispatchables
+      description: Returns the dispatchable calls defined in a relay chain pallet.
+      operationId: rc_pallets_dispatchables
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: onlyIds
+        in: query
+        description: Only return dispatchable names
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain pallet dispatchables
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid pallet
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/dispatchables/{dispatchableId}:
+    get:
+      tags:
+      - rc
+      summary: RC pallet dispatchable details
+      description: Returns a single dispatchable call from a relay chain pallet.
+      operationId: rc_pallet_dispatchable_item
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: dispatchableId
+        in: path
+        description: Name of the dispatchable
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Include metadata
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain dispatchable details
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Dispatchable not found
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/errors:
+    get:
+      tags:
+      - rc
+      summary: RC pallet errors
+      description: Returns all errors defined in a relay chain pallet.
+      operationId: rc_pallet_errors
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: onlyIds
+        in: query
+        description: Only return error names
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain pallet errors
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid pallet
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/errors/{errorItemId}:
+    get:
+      tags:
+      - rc
+      summary: RC pallet error details
+      description: Returns metadata for a specific error in a relay chain pallet.
+      operationId: rc_pallet_error_item
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: errorItemId
+        in: path
+        description: Name of the error
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Include metadata
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain error details
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Error not found
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/events:
+    get:
+      tags:
+      - rc
+      summary: RC pallet events
+      description: Returns all events defined in a relay chain pallet.
+      operationId: rc_pallet_events
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: onlyIds
+        in: query
+        description: Only return event names
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain pallet events
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid pallet
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/events/{eventItemId}:
+    get:
+      tags:
+      - rc
+      summary: RC pallet event details
+      description: Returns metadata for a specific event in a relay chain pallet.
+      operationId: rc_pallet_event_item
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: eventItemId
+        in: path
+        description: Event name
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Include full event metadata
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain event details
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Pallet or event not found
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/storage:
+    get:
+      tags:
+      - rc
+      summary: RC pallet storage items
+      description: Returns the list of storage items for a relay chain pallet.
+      operationId: rc_get_pallets_storage
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: onlyIds
+        in: query
+        description: Only return storage item names
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain pallet storage items
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid pallet or parameters
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/pallets/{palletId}/storage/{storageItemId}:
+    get:
+      tags:
+      - rc
+      summary: RC pallet storage item value
+      description: Returns the value of a specific storage item from a relay chain pallet.
+      operationId: rc_get_pallets_storage_item
+      parameters:
+      - name: palletId
+        in: path
+        description: Name or index of the pallet
+        required: true
+        schema:
+          type: string
+      - name: storageItemId
+        in: path
+        description: Name of the storage item
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: keys[]
+        in: query
+        description: Storage key arguments
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: metadata
+        in: query
+        description: Include metadata for the storage item
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Relay chain storage item value
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameters
+        '404':
+          description: Storage item not found
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/runtime/code:
+    get:
+      tags:
+      - rc
+      summary: RC get runtime code
+      description: Returns the Wasm code blob of the relay chain runtime at a given block.
+      operationId: get_rc_runtime_code
+      parameters:
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain runtime code
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/runtime/metadata:
+    get:
+      tags:
+      - rc
+      summary: RC get runtime metadata
+      description: Returns the decoded runtime metadata of the relay chain in JSON format.
+      operationId: get_rc_runtime_metadata
+      parameters:
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain runtime metadata
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/runtime/metadata/versions:
+    get:
+      tags:
+      - rc
+      summary: RC get metadata versions
+      description: Returns the available metadata versions on the relay chain at a given block.
+      operationId: get_rc_runtime_metadata_versions
+      parameters:
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Available metadata versions
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/runtime/metadata/{version}:
+    get:
+      tags:
+      - rc
+      summary: RC get metadata by version
+      description: Returns the relay chain metadata at a specific version (e.g., v14, v15).
+      operationId: get_rc_runtime_metadata_versioned
+      parameters:
+      - name: version
+        in: path
+        description: Metadata version in 'vX' format (e.g., v14, v15)
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain metadata at specified version
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid version format
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/runtime/spec:
+    get:
+      tags:
+      - rc
+      summary: RC get runtime spec
+      description: Returns the runtime spec of the relay chain at a given block.
+      operationId: get_rc_runtime_spec
+      parameters:
+      - name: at
+        in: query
+        description: Block identifier (number or hash)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain runtime spec
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/transaction:
+    post:
+      tags:
+      - rc
+      summary: Submit transaction (relay chain)
+      description: Submit a signed extrinsic to the relay chain transaction pool. Only available on parachains.
+      operationId: submit_rc
+      requestBody:
+        description: Signed extrinsic with 'tx' field containing hex-encoded transaction
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Transaction hash
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain not configured
+  /v1/rc/transaction/dry-run:
+    post:
+      tags:
+      - rc
+      summary: RC dry run transaction
+      description: Dry run a transaction on the relay chain.
+      operationId: dry_run_rc
+      requestBody:
+        description: Transaction with 'tx', 'senderAddress', and optional 'at' and 'xcmVersion' fields
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Dry run result
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/transaction/fee-estimate:
+    post:
+      tags:
+      - rc
+      summary: RC fee estimate
+      description: Estimate the fee for a relay chain transaction.
+      operationId: fee_estimate_rc
+      requestBody:
+        description: Transaction with 'tx' field
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Fee estimate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeEstimateResponse'
+        '400':
+          description: Invalid transaction
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/transaction/material:
+    get:
+      tags:
+      - rc
+      summary: RC transaction material
+      description: Returns relay chain network information for transaction construction.
+      operationId: material_rc
+      parameters:
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: noMeta
+        in: query
+        description: 'DEPRECATED: If true, metadata is not included'
+        required: false
+        schema:
+          type: boolean
+      - name: metadata
+        in: query
+        description: 'Metadata format: ''json'' or ''scale'''
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain transaction material
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/transaction/material/{metadataVersion}:
+    get:
+      tags:
+      - rc
+      summary: RC transaction material versioned
+      description: Returns relay chain transaction material with metadata at a specific version.
+      operationId: material_versioned_rc
+      parameters:
+      - name: metadataVersion
+        in: path
+        description: Metadata version (e.g., 'v14', 'v15')
+        required: true
+        schema:
+          type: string
+      - name: at
+        in: query
+        description: Block hash or number to query at
+        required: false
+        schema:
+          type: string
+      - name: noMeta
+        in: query
+        description: 'DEPRECATED: If true, metadata is not included'
+        required: false
+        schema:
+          type: boolean
+      - name: metadata
+        in: query
+        description: 'Metadata format: ''json'' or ''scale'''
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relay chain transaction material with versioned metadata
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/transaction/metadata-blob:
+    post:
+      tags:
+      - rc
+      summary: RC metadata blob
+      description: Generates a metadata blob from the relay chain for transaction signing.
+      operationId: metadata_blob_rc
+      requestBody:
+        description: Request with 'tx' field and optional 'at' block
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Metadata blob
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal server error
+        '503':
+          description: Service unavailable
+  /v1/rc/transaction/parse:
+    post:
+      tags:
+      - rc
+      summary: Parse transaction (relay chain)
+      description: 'Decode a raw transaction using relay chain metadata. Only available on parachains. Returns the decoded pallet/method, call arguments, signature info, nonce, tip, era, and hash. Note: This endpoint uses the relay chain''s current (latest) metadata for decoding. Transactions created for older runtime versions may fail to decode if the extrinsic format has changed.'
+      operationId: parse_rc
+      requestBody:
+        description: Transaction with 'tx' field containing hex-encoded extrinsic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParseRequest'
+        required: true
+      responses:
+        '200':
+          description: Parsed transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseResponse'
+        '400':
+          description: Invalid transaction or relay chain not configured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseError'
+        '500':
+          description: Internal server error
+        '503':
+          description: Relay chain unavailable
+  /experimental/rc/blocks/head/traces:
+    get:
+      tags:
+      - rc
+      summary: Get the latest relay chain block's traces.
+      description: Returns the latest relay chain block's traces.
+      operationId: getRcBlockHeadTraces
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlocksTrace'
+  /experimental/rc/blocks/{blockId}/traces:
+    get:
+      tags:
+      - rc
+      summary: Get a relay chain block's traces by its height or hash.
+      description: Returns a relay chain block's traces. Can be identified by either its height or hash.
+      operationId: getRcBlockTraces
+      parameters:
+      - name: blockId
+        in: path
+        description: Block identifier, as the block height or block hash.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlocksTrace'
+        '400':
+          description: invalid blockId supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /experimental/rc/blocks/head/traces/operations:
+    get:
+      tags:
+      - rc
+      summary: Get the latest relay chain block's trace operations.
+      description: Returns the latest relay chain block's trace operations.
+      operationId: getRcBlockHeadTraceOperations
+      parameters:
+      - name: actions
+        in: query
+        description: Include action traces.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlocksTraceOperations'
+  /experimental/rc/blocks/{blockId}/traces/operations:
+    get:
+      tags:
+      - rc
+      summary: Get a relay chain block's trace operations by its height or hash.
+      description: Returns a relay chain block's trace operations. Can be identified by either its height or hash.
+      operationId: getRcBlockTraceOperations
+      parameters:
+      - name: blockId
+        in: path
+        description: Block identifier, as the block height or block hash.
+        required: true
+        schema:
+          type: string
+      - name: actions
+        in: query
+        description: Include action traces.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlocksTraceOperations'
+        '400':
+          description: invalid blockId supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    UnlockingChunk:
+      type: object
+      description: Unlocking chunk with value and era when funds become available
+      required:
+      - value
+      - era
+      properties:
+        era:
+          type: string
+          description: Era when funds become available
+        value:
+          type: string
+          description: Amount being unlocked
+    ClaimedReward:
+      type: object
+      description: Claimed reward status for a specific era
+      required:
+      - era
+      - status
+      properties:
+        era:
+          type: string
+          description: Era index
+        status:
+          type: string
+          description: Claim status ("claimed" or "unclaimed")
+    RcBalanceInfoResponse:
+      type: object
+      description: Response for GET /rc/accounts/{accountId}/balance-info
+      required:
+      - at
+      - nonce
+      - tokenSymbol
+      - free
+      - reserved
+      - miscFrozen
+      - feeFrozen
+      - frozen
+      - transferable
+      - locks
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        feeFrozen:
+          type: string
+          description: 'The amount that free may not drop below when withdrawing specifically for
+
+            transaction fee payment (legacy field, may be string message for newer runtimes)'
+        free:
+          type: string
+          description: Free balance (not equivalent to spendable balance)
+        frozen:
+          type: string
+          description: Frozen balance (newer runtimes, may be string message for older runtimes)
+        locks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceLock'
+          description: Array of balance locks
+        miscFrozen:
+          type: string
+          description: 'The amount that free may not drop below when withdrawing for anything except
+
+            transaction fee payment (legacy field, may be string message for newer runtimes)'
+        nonce:
+          type: string
+          description: Account nonce
+        reserved:
+          type: string
+          description: Reserved balance
+        tokenSymbol:
+          type: string
+          description: Token symbol
+        transferable:
+          type: string
+          description: 'Calculated transferable balance using: free - max(maybeED, frozen - reserved)'
+    TransactionPoolEntry:
+      type: object
+      required:
+      - hash
+      - encodedExtrinsic
+      properties:
+        encodedExtrinsic:
+          type: string
+        hash:
+          type: string
+        partialFee:
+          type:
+          - string
+          - 'null'
+        priority:
+          type:
+          - string
+          - 'null'
+        tip:
+          type:
+          - string
+          - 'null'
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    NominationsInfo:
+      type: object
+      description: Nominations information for a nominator
+      required:
+      - targets
+      - submittedIn
+      - suppressed
+      properties:
+        submittedIn:
+          type: string
+          description: Era in which nomination was submitted
+        suppressed:
+          type: boolean
+          description: Whether nominations are suppressed
+        targets:
+          type: array
+          items:
+            type: string
+          description: List of validator addresses being nominated
+    Operation:
+      type: object
+      properties:
+        phase:
+          $ref: '#/components/schemas/OperationPhase'
+        parentSpanId:
+          $ref: '#/components/schemas/SpanId'
+        primarySpanId:
+          $ref: '#/components/schemas/SpanId'
+        eventIndex:
+          type: string
+          format: unsignedInteger
+          description: Index of the underlying trace event.
+        address:
+          type: string
+          description: 'Account this operation affects. Note - this will be an object like
+
+            `{ id: address }` if the network uses `MultiAddress`
+
+            '
+        storage:
+          type: object
+          properties:
+            pallet:
+              type: string
+            item:
+              type: string
+            field1:
+              type: string
+              description: 'A field of the storage item. (i.e `system::Account::get(address).data`)
+
+                '
+            field2:
+              type: string
+              description: 'A field of the struct described by field1 (i.e
+
+                `system::Account::get(address).data.free`)
+
+                '
+        amount:
+          $ref: '#/components/schemas/OperationAmount'
+    SpanId:
+      type: object
+      properties:
+        name:
+          type: string
+        target:
+          type: string
+        id:
+          type: string
+          format: unsignedInteger
+    RewardDestination:
+      oneOf:
+      - type: object
+        description: Rewards are automatically re-staked
+        required:
+        - staked
+        properties:
+          staked:
+            default: null
+      - type: object
+        description: Rewards are sent to the stash account
+        required:
+        - stash
+        properties:
+          stash:
+            default: null
+      - type: object
+        description: Rewards are sent to the controller account
+        required:
+        - controller
+        properties:
+          controller:
+            default: null
+      - type: object
+        description: No reward destination
+        required:
+        - none
+        properties:
+          none:
+            default: null
+      - type: object
+        description: Rewards are sent to a specific account
+        required:
+        - account
+        properties:
+          account:
+            type: string
+            description: Rewards are sent to a specific account
+      description: 'Reward destination - e.g. { "staked": null }, { "stash": null }, { "account": "..." }'
+    VestingSchedule:
+      type: object
+      description: A vesting schedule
+      required:
+      - locked
+      - perBlock
+      - startingBlock
+      properties:
+        locked:
+          type: string
+          description: Total tokens locked at start of vesting
+        perBlock:
+          type: string
+          description: Tokens unlocked per block
+        startingBlock:
+          type: string
+          description: Block when vesting begins
+    ParseRequest:
+      type: object
+      description: Request body for transaction parsing.
+      properties:
+        tx:
+          type:
+          - string
+          - 'null'
+          description: Hex-encoded extrinsic with optional 0x prefix.
+          example: 0x4902840004316d995f...
+    TransactionPoolResponse:
+      type: object
+      required:
+      - pool
+      properties:
+        pool:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionPoolEntry'
+    FeeEstimateResponse:
+      type: object
+      required:
+      - weight
+      - class
+      - partialFee
+      properties:
+        class:
+          type: string
+        partialFee:
+          type: string
+        weight:
+          $ref: '#/components/schemas/Weight'
+    NodeVersionResponse:
+      type: object
+      required:
+      - clientVersion
+      - clientImplName
+      - chain
+      properties:
+        chain:
+          type: string
+        clientImplName:
+          type: string
+        clientVersion:
+          type: string
+    RcProxyInfoResponse:
+      type: object
+      description: Response for GET /rc/accounts/{accountId}/proxy-info
+      required:
+      - at
+      - delegatedAccounts
+      - depositHeld
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        delegatedAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProxyDefinition'
+          description: Array of delegated accounts with their proxy definitions
+        depositHeld:
+          type: string
+          description: The deposit held for the proxies
+    SignatureInfo:
+      type: object
+      description: Signature information for signed extrinsics.
+      required:
+      - signer
+      - signature
+      properties:
+        signature:
+          type: string
+          description: Hex-encoded signature
+          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
+        signer:
+          $ref: '#/components/schemas/SignerId'
+          description: Signer account
+    EraPayouts:
+      oneOf:
+      - $ref: '#/components/schemas/EraPayoutsData'
+        description: Successful payout data for an era
+      - type: object
+        description: Error message when payouts cannot be calculated
+        required:
+        - message
+        properties:
+          message:
+            type: string
+      description: Payouts for a single era - can be either actual payouts or an error message
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    RcStakingPayoutsResponse:
+      type: object
+      description: Response for GET /rc/accounts/{accountId}/staking-payouts
+      required:
+      - at
+      - erasPayouts
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        erasPayouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/EraPayouts'
+          description: Array of era payouts
+    ParseError:
+      type: object
+      description: Error response for transaction parsing failures.
+      required:
+      - code
+      - error
+      - transaction
+      - cause
+      - stack
+      properties:
+        cause:
+          type: string
+          description: Cause of the error
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code
+          example: 400
+          minimum: 0
+        error:
+          type: string
+          description: Error message
+          example: Failed to parse transaction.
+        stack:
+          type: string
+          description: Stack trace
+        transaction:
+          type: string
+          description: The transaction that failed to parse
+    OperationPhase:
+      type: object
+      properties:
+        variant:
+          type: string
+          enum:
+          - onInitialize
+          - initialChecks
+          - applyExtrinsic
+          - onFinalize
+          - finalChecks
+          description: Phase of block execution pipeline.
+        extrinsicIndex:
+          type: string
+          format: unsignedInteger
+          description: 'If phase variant is `applyExtrinsic` this will be the index of
+
+            the extrinsic. Otherwise this field will not be present.
+
+            '
+    RcVestingInfoResponse:
+      type: object
+      description: Response for GET /rc/accounts/{accountId}/vesting-info
+      required:
+      - at
+      - vesting
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        vesting:
+          type: array
+          items:
+            $ref: '#/components/schemas/VestingSchedule'
+          description: Array of vesting schedules (empty array if no vesting)
+    OperationAmountCurrency:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: KSM
+    ValidatorPayout:
+      type: object
+      description: Payout information for a single validator
+      required:
+      - validatorId
+      - nominatorStakingPayout
+      - claimed
+      - totalValidatorRewardPoints
+      - validatorCommission
+      - totalValidatorExposure
+      - nominatorExposure
+      properties:
+        claimed:
+          type: boolean
+          description: Whether the reward has been claimed
+        nominatorExposure:
+          type: string
+          description: Nominator's stake behind this validator
+        nominatorStakingPayout:
+          type: string
+          description: Calculated payout amount for the nominator
+        totalValidatorExposure:
+          type: string
+          description: Total stake behind this validator
+        totalValidatorRewardPoints:
+          type: string
+          description: Validator's reward points for this era
+        validatorCommission:
+          type: string
+          description: Validator's commission (as parts per billion, 0-1000000000)
+        validatorId:
+          type: string
+          description: Validator stash account ID
+    TraceSpan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: unsignedInteger
+        name:
+          type: string
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+        wasm:
+          type: boolean
+    OperationAmount:
+      type: object
+      properties:
+        values:
+          type: string
+          format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
+    BlockInfo:
+      type: object
+      description: Block information
+      required:
+      - hash
+      - height
+      properties:
+        hash:
+          type: string
+        height:
+          type: string
+    TraceEventDataStringValues:
+      type: object
+      properties:
+        key:
+          type: string
+          format: hex
+          description: The complete storage key for the entry.
+        method:
+          type: string
+          description: Normally one of Put or Get.
+        result:
+          type: string
+          format: hex
+          description: Hex scale encoded storage value.
+      description: Note these exact values will only be present for storage events.
+    ParseResponse:
+      type: object
+      description: Response for successful transaction parsing.
+      required:
+      - isSigned
+      - method
+      - args
+      - era
+      - hash
+      properties:
+        args:
+          type: object
+          description: Decoded call arguments
+        era:
+          type: object
+          description: Era/mortality information
+        hash:
+          type: string
+          description: Blake2-256 hash of the extrinsic
+          example: 0x1234567890abcdef...
+        isSigned:
+          type: boolean
+          description: Whether the extrinsic is signed
+          example: true
+        method:
+          $ref: '#/components/schemas/MethodInfo'
+          description: Pallet and method information
+        nonce:
+          type:
+          - string
+          - 'null'
+          description: Account nonce (only present for signed extrinsics)
+          example: '42'
+        signature:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SignatureInfo'
+            description: Signature information (only present for signed extrinsics)
+        tip:
+          type:
+          - string
+          - 'null'
+          description: Tip amount (only present for signed extrinsics)
+          example: '0'
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+    ProxyDefinition:
+      type: object
+      description: A proxy definition containing the delegate, proxy type, and delay
+      required:
+      - delegate
+      - proxyType
+      - delay
+      properties:
+        delay:
+          type: string
+          description: The announcement delay in blocks
+        delegate:
+          type: string
+          description: The delegate address that can act on behalf of the account
+        proxyType:
+          type: string
+          description: The type of proxy (e.g., "Any", "Staking", "Governance", etc.)
+    BlocksTrace:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        blockHash:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceEvent'
+        parentHash:
+          type: string
+        spans:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceSpan'
+        storageKeys:
+          type: string
+          description: Hex encoded storage keys used to filter events.
+        tracingTargets:
+          type: string
+          description: Targets used to filter spans and events.
+    SignerId:
+      type: object
+      description: Signer identifier.
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: SS58-encoded account address
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    MethodInfo:
+      type: object
+      description: Method information (pallet and method name).
+      required:
+      - pallet
+      - method
+      properties:
+        method:
+          type: string
+          description: Method name in lowerCamelCase
+          example: transferAllowDeath
+        pallet:
+          type: string
+          description: Pallet name in lowerCamelCase
+          example: balances
+    StakingLedger:
+      type: object
+      description: Staking ledger information
+      required:
+      - stash
+      - total
+      - active
+      - unlocking
+      properties:
+        active:
+          type: string
+          description: Active staked balance
+        claimedRewards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimedReward'
+          description: Claimed rewards per era (only when includeClaimedRewards=true)
+        stash:
+          type: string
+          description: Stash account address
+        total:
+          type: string
+          description: Total locked balance (active + unlocking)
+        unlocking:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnlockingChunk'
+          description: Unlocking chunks with value and era
+    BalanceLock:
+      type: object
+      description: Balance lock information
+      required:
+      - id
+      - amount
+      - reasons
+      properties:
+        amount:
+          type: string
+          description: Amount locked
+        id:
+          type: string
+          description: Lock identifier
+        reasons:
+          type: string
+          description: Lock reasons (Fee = 0, Misc = 1, All = 2)
+    EraPayoutsData:
+      type: object
+      description: Actual payout data for an era
+      required:
+      - era
+      - totalEraRewardPoints
+      - totalEraPayout
+      - payouts
+      properties:
+        era:
+          type: string
+          description: Era index
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorPayout'
+          description: Individual payouts for validators nominated
+        totalEraPayout:
+          type: string
+          description: Total payout for the era
+        totalEraRewardPoints:
+          type: string
+          description: Total reward points for the era
+    Weight:
+      type: object
+      required:
+      - refTime
+      - proofSize
+      properties:
+        proofSize:
+          type: string
+        refTime:
+          type: string
+    BlocksTraceOperations:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+    RcStakingInfoResponse:
+      type: object
+      description: Response for GET /rc/accounts/{accountId}/staking-info
+      required:
+      - at
+      - controller
+      - rewardDestination
+      - numSlashingSpans
+      - staking
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        controller:
+          type: string
+          description: Controller account address
+        nominations:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/NominationsInfo'
+            description: Nominations info (null if not a nominator)
+        numSlashingSpans:
+          type: string
+          description: Number of slashing spans
+        rewardDestination:
+          $ref: '#/components/schemas/RewardDestination'
+          description: Where rewards are paid to
+        staking:
+          $ref: '#/components/schemas/StakingLedger'
+          description: Staking ledger

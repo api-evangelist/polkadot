@@ -1,0 +1,97 @@
+openapi: 3.1.0
+info:
+  title: Polkadot REST Account Moonbeam API
+  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  contact:
+    url: https://github.com/paritytech/polkadot-rest-api
+  license:
+    name: GPL-3.0-or-later
+  version: 0.1.3
+servers:
+- url: http://localhost:8080/v1
+  description: Localhost
+tags:
+- name: Moonbeam
+paths:
+  /api/scan/orbiters/rewards:
+    post:
+      consumes:
+      - application/json
+      description: This API is only available for moonbeam(moonriver,moonbase) network.
+      parameters:
+      - description: param
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams'
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/subscan_internal_plugin_share.J'
+            - properties:
+                data:
+                  properties:
+                    count:
+                      type: integer
+                    list:
+                      items:
+                        $ref: '#/definitions/internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward'
+                      type: array
+                  type: object
+              type: object
+      summary: Get Moonbeam Orbiters rewards
+      tags:
+      - Moonbeam
+      x-synonyms:
+      - moonbeam
+      - orbiters
+      - rewards
+      - scan
+      - reward
+      - payout
+definitions:
+  internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward:
+    properties:
+      amount:
+        type: string
+      block_timestamp:
+        type: integer
+      event_id:
+        type: string
+      event_index:
+        type: string
+      extrinsic_index:
+        type: string
+      module_id:
+        type: string
+    type: object
+  subscan_internal_plugin_share.J:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data: {}
+      generated_at:
+        example: 1699600641
+        type: integer
+      message:
+        example: Success
+        type: string
+    type: object
+  internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams:
+    properties:
+      address:
+        type: string
+      page:
+        minimum: 0
+        type: integer
+      row:
+        maximum: 100
+        minimum: 1
+        type: integer
+    type: object
