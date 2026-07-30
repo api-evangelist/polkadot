@@ -1,6 +1,18 @@
 name: Polkadot
 description: Polkadot is a multi-chain blockchain network that enables interoperability between specialized blockchains called parachains. Developer APIs are provided through Subscan (a multi-chain block explorer with a hosted HTTP API) and the Substrate API Sidecar (a REST interface for Polkadot SDK-based chains), enabling queries against extrinsics, events, accounts, blocks, staking data, and parachain state on Polkadot, Kusama, and related networks.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/polkadot.png
 url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -13,86 +25,1773 @@ tags:
   - Crypto
   - Web3
 apis:
-  - name: Subscan API
-    description: Subscan provides a hosted HTTP API for querying indexed on-chain data across more than 90 Substrate-based networks including Polkadot and Kusama. Endpoints cover blocks, extrinsics, events, accounts, staking, tokens, and parachain data. Each network has a dedicated base URL following the pattern https://{network}.api.subscan.io. All requests require an API key obtained from pro.subscan.io.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://support.subscan.io/
-    baseURL: https://polkadot.api.subscan.io
-    tags:
-      - Blockchain
-      - Polkadot
-      - Kusama
-      - Extrinsics
-      - Events
-      - Accounts
-      - Blocks
-      - Staking
-      - Parachain
-    properties:
-      - type: Documentation
-        url: https://support.subscan.io/
-      - type: PostmanCollection
-        url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/subscan-swagger.yaml
-      - type: Plans
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
-      - type: RateLimits
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
-      - type: FinOps
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
-    contact:
-      - FN: Subscan API Support
-        email: api@subscan.io
-  - name: Substrate API Sidecar
-    description: The Substrate API Sidecar is an open-source REST service maintained by Parity Technologies that provides a RESTful interface for interacting with Polkadot SDK-based blockchains. It covers blocks, accounts (balances, assets, foreign assets), transactions (dry-run, parse, material), staking, and parachain/coretime data. Parity provides public hosted instances for Polkadot, Kusama, Polkadot Asset Hub, and Kusama Asset Hub. Self-hosting is recommended for production use.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://paritytech.github.io/substrate-api-sidecar/docsv2/
-    baseURL: https://polkadot-public-sidecar.parity-chains.parity.io
-    tags:
-      - Blockchain
-      - Polkadot
-      - Kusama
-      - Accounts
-      - Blocks
-      - Transactions
-      - Staking
-      - Parachain
-      - Open Source
-    properties:
-      - type: Documentation
-        url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/substrate-api-sidecar-openapi.yaml
-      - type: GitHubRepository
-        url: https://github.com/paritytech/substrate-api-sidecar
-    contact:
-      - FN: Parity Technologies
-        url: https://www.parity.io/
-  - name: Polkadot REST API
-    description: The Polkadot REST API is a Rust rewrite of the Substrate API Sidecar, maintained by Parity Technologies, offering REST endpoints for blocks, transactions (dry-run, parse, material), accounts, staking, and parachain/coretime data. It targets production deployments requiring high throughput and provides OpenAPI specifications for all endpoints.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://github.com/paritytech/polkadot-rest-api
-    baseURL: https://github.com/paritytech/polkadot-rest-api
-    tags:
-      - Blockchain
-      - Polkadot
-      - Transactions
-      - Blocks
-      - Staking
-      - Parachain
-      - Rust
-      - Open Source
-    properties:
-      - type: Documentation
-        url: https://github.com/paritytech/polkadot-rest-api
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/openapi/polkadot-rest-api-openapi.json
-      - type: GitHubRepository
-        url: https://github.com/paritytech/polkadot-rest-api
-    contact:
-      - FN: Parity Technologies
-        url: https://www.parity.io/
+- aid: polkadot:polkadot-account-api
+  name: Polkadot Account API
+  description: The Account API from Polkadot — 12 operation(s) for account.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-account-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-accounts-api
+  name: Polkadot accounts API
+  description: Account balance, staking, and proxy information
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-ahm-api
+  name: Polkadot ahm API
+  description: Asset Hub Migration information
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - ahm
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-ahm-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-assets-api
+  name: Polkadot Assets API
+  description: The Assets API from Polkadot — 5 operation(s) for assets.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-assets-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-avail-api
+  name: Polkadot Avail API
+  description: The Avail API from Polkadot — 5 operation(s) for avail.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Avail
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-avail-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-bifrost-api
+  name: Polkadot Bifrost API
+  description: The Bifrost API from Polkadot — 2 operation(s) for bifrost.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Bifrost
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-bifrost-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-block-api
+  name: Polkadot Block API
+  description: The Block API from Polkadot — 3 operation(s) for block.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Block
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-block-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-blocks-api
+  name: Polkadot blocks API
+  description: Block queries and extrinsic data
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-blocks-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-capabilities-api
+  name: Polkadot capabilities API
+  description: API capabilities and chain pallets
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - capabilities
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-capabilities-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-collator-api
+  name: Polkadot Collator API
+  description: The Collator API from Polkadot — 4 operation(s) for collator.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Collator
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-collator-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-common-api
+  name: Polkadot Common API
+  description: The Common API from Polkadot — 1 operation(s) for common.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Common
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-common-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-contracts-api
+  name: Polkadot Contracts API
+  description: The Contracts API from Polkadot — 9 operation(s) for contracts.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Contracts
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-contracts-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-coretime-api
+  name: Polkadot coretime API
+  description: Coretime system information
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - coretime
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-coretime-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-cruststorage-api
+  name: Polkadot CrustStorage API
+  description: The CrustStorage API from Polkadot — 8 operation(s) for cruststorage.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - CrustStorage
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-cruststorage-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-currency-api
+  name: Polkadot Currency API
+  description: The Currency API from Polkadot — 3 operation(s) for currency.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Currency
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-currency-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-enjin-api
+  name: Polkadot Enjin API
+  description: The Enjin API from Polkadot — 7 operation(s) for enjin.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Enjin
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-enjin-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-event-api
+  name: Polkadot Event API
+  description: The Event API from Polkadot — 3 operation(s) for event.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Event
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-event-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-evm-api
+  name: Polkadot EVM API
+  description: The EVM API from Polkadot — 22 operation(s) for evm.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - EVM
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-evm-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-extrinsic-api
+  name: Polkadot Extrinsic API
+  description: The Extrinsic API from Polkadot — 6 operation(s) for extrinsic.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Extrinsic
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-extrinsic-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-foreignassets-api
+  name: Polkadot ForeignAssets API
+  description: The ForeignAssets API from Polkadot — 6 operation(s) for foreignassets.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - ForeignAssets
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-foreignassets-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-governance-api
+  name: Polkadot Governance API
+  description: The Governance API from Polkadot — 40 operation(s) for governance.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Governance
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-governance-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-health-api
+  name: Polkadot health API
+  description: Health check
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-health-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-log-api
+  name: Polkadot Log API
+  description: The Log API from Polkadot — 2 operation(s) for log.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Log
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-log-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-metadata-api
+  name: Polkadot Metadata API
+  description: The Metadata API from Polkadot — 1 operation(s) for metadata.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-midnight-api
+  name: Polkadot Midnight API
+  description: The Midnight API from Polkadot — 11 operation(s) for midnight.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Midnight
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-midnight-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-moonbeam-api
+  name: Polkadot Moonbeam API
+  description: The Moonbeam API from Polkadot — 1 operation(s) for moonbeam.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Moonbeam
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-moonbeam-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-multichain-api
+  name: Polkadot MultiChain API
+  description: The MultiChain API from Polkadot — 5 operation(s) for multichain.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - MultiChain
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-multichain-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-multisig-api
+  name: Polkadot Multisig API
+  description: The Multisig API from Polkadot — 3 operation(s) for multisig.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Multisig
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-multisig-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-nfts-api
+  name: Polkadot NFTs API
+  description: The NFTs API from Polkadot — 7 operation(s) for nfts.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - NFTs
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-nfts-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-node-api
+  name: Polkadot node API
+  description: Connected node information
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - node
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-node-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-nominationpools-api
+  name: Polkadot NominationPools API
+  description: The NominationPools API from Polkadot — 6 operation(s) for nominationpools.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - NominationPools
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-nominationpools-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-pallets-api
+  name: Polkadot pallets API
+  description: Runtime pallet metadata, storage, constants, events, errors
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - pallets
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-pallets-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-parachain-api
+  name: Polkadot Parachain API
+  description: The Parachain API from Polkadot — 7 operation(s) for parachain.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Parachain
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-parachain-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-paras-api
+  name: Polkadot paras API
+  description: Parachain inclusion data
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - paras
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-paras-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-pro-api
+  name: Polkadot PRO API
+  description: Pro-only endpoints require a Subscan Pro plan.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - PRO
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-pro-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-proxy-api
+  name: Polkadot Proxy API
+  description: The Proxy API from Polkadot — 1 operation(s) for proxy.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Proxy
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-proxy-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-accounts-api
+  name: Polkadot rc accounts API
+  description: The rc accounts API from Polkadot — 5 operation(s) for rc accounts.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-api
+  name: Polkadot rc API
+  description: Relay chain endpoints (available on parachains only)
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-blocks-api
+  name: Polkadot rc blocks API
+  description: The rc blocks API from Polkadot — 8 operation(s) for rc blocks.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-blocks-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-node-api
+  name: Polkadot rc node API
+  description: The rc node API from Polkadot — 3 operation(s) for rc node.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc node
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-node-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-pallets-api
+  name: Polkadot rc pallets API
+  description: The rc pallets API from Polkadot — 13 operation(s) for rc pallets.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc pallets
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-pallets-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-runtime-api
+  name: Polkadot rc runtime API
+  description: The rc runtime API from Polkadot — 5 operation(s) for rc runtime.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc runtime
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-runtime-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-staking-api
+  name: Polkadot rc staking API
+  description: The rc staking API from Polkadot — 4 operation(s) for rc staking.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc staking
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-staking-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-rc-transaction-api
+  name: Polkadot rc transaction API
+  description: The rc transaction API from Polkadot — 5 operation(s) for rc transaction.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - rc transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-rc-transaction-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-runtime-api
+  name: Polkadot runtime API
+  description: Runtime specification, metadata, and code
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - runtime
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-runtime-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-scheduler-api
+  name: Polkadot Scheduler API
+  description: The Scheduler API from Polkadot — 3 operation(s) for scheduler.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Scheduler
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-scheduler-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-search-api
+  name: Polkadot Search API
+  description: The Search API from Polkadot — 1 operation(s) for search.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-search-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-staking-api
+  name: Polkadot Staking API
+  description: The Staking API from Polkadot — 19 operation(s) for staking.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Staking
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-staking-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-stat-api
+  name: Polkadot Stat API
+  description: The Stat API from Polkadot — 4 operation(s) for stat.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Stat
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-stat-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-sxt-api
+  name: Polkadot Sxt API
+  description: The Sxt API from Polkadot — 2 operation(s) for sxt.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Sxt
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-sxt-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-tokens-api
+  name: Polkadot Tokens API
+  description: The Tokens API from Polkadot — 8 operation(s) for tokens.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-trace-api
+  name: Polkadot trace API
+  description: The trace API from Polkadot — 4 operation(s) for trace.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - trace
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-trace-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-transaction-api
+  name: Polkadot transaction API
+  description: Transaction submission, fee estimation, and construction material
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-transaction-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-uniques-api
+  name: Polkadot Uniques API
+  description: The Uniques API from Polkadot — 8 operation(s) for uniques.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Uniques
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-uniques-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-version-api
+  name: Polkadot version API
+  description: API version
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - version
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-version-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-vesting-api
+  name: Polkadot Vesting API
+  description: The Vesting API from Polkadot — 1 operation(s) for vesting.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Vesting
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-vesting-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
+- aid: polkadot:polkadot-xcm-api
+  name: Polkadot Xcm API
+  description: The Xcm API from Polkadot — 10 operation(s) for xcm.
+  humanURL: https://support.subscan.io/
+  baseURL: https://polkadot.api.subscan.io
+  tags:
+  - Xcm
+  properties:
+  - type: OpenAPI
+    url: openapi/polkadot-xcm-api-openapi.yml
+  - type: Documentation
+    url: https://support.subscan.io/
+  - type: PostmanCollection
+    url: https://documenter.getpostman.com/view/1618960/TVCe1oRU
+  - type: Plans
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/plans/subscan.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/rate-limits/subscan.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/polkadot/refs/heads/main/finops/subscan.yml
+  - type: Documentation
+    url: https://docs.polkadot.com/chain-interactions/query-data/query-rest/
+  - type: GitHubRepository
+    url: https://github.com/paritytech/substrate-api-sidecar
+  - type: Documentation
+    url: https://github.com/paritytech/polkadot-rest-api
+  - type: GitHubRepository
+    url: https://github.com/paritytech/polkadot-rest-api
 common:
   - type: AgenticAccess
     url: agentic-access/polkadot-agentic-access.yml
