@@ -1793,6 +1793,9 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 common:
+  - type: License
+    name: GPL-3.0
+    url: https://github.com/paritytech/substrate-api-sidecar/blob/master/LICENSE
   - type: AgenticAccess
     url: agentic-access/polkadot-agentic-access.yml
   - type: DomainSecurity
