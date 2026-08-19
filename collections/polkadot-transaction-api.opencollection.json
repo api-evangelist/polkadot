@@ -1,0 +1,283 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account transaction API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transaction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/v1/transaction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a signed extrinsic to the transaction pool."
+        },
+        {
+          "info": {
+            "name": "Dry run transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/v1/transaction/dry-run",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dry run a transaction to check validity without submitting."
+        },
+        {
+          "info": {
+            "name": "Estimate transaction fee",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/v1/transaction/fee-estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Estimate the fee for a transaction."
+        },
+        {
+          "info": {
+            "name": "Transaction construction material",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/transaction/material",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block hash or number to query at"
+              },
+              {
+                "name": "noMeta",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: If true, metadata is not included"
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata format: 'json' or 'scale'"
+              }
+            ]
+          },
+          "docs": "Returns network information needed for transaction construction including genesis hash, spec version, and optionally metadata."
+        },
+        {
+          "info": {
+            "name": "Transaction material with versioned metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/transaction/material/:metadataVersion",
+            "params": [
+              {
+                "name": "metadataVersion",
+                "value": "",
+                "type": "path",
+                "description": "Metadata version (e.g., 'v14', 'v15')"
+              },
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block hash or number to query at"
+              },
+              {
+                "name": "noMeta",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: If true, metadata is not included"
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Metadata format: 'json' or 'scale'"
+              }
+            ]
+          },
+          "docs": "Returns transaction construction material with metadata at a specific version."
+        },
+        {
+          "info": {
+            "name": "Generate metadata blob",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/v1/transaction/metadata-blob",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a metadata blob for transaction signing with the CheckMetadataHash extension."
+        },
+        {
+          "info": {
+            "name": "Parse transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/v1/transaction/parse",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Decode a raw transaction and return its components without executing or submitting it. Returns the decoded pallet/method, call arguments, signature info, nonce, tip, era, and hash. Note: This endpoint uses the chain's current (latest) metadata for decoding. Transactions created for older runtime versions may fail to decode if the extrinsic format has changed."
+        },
+        {
+          "info": {
+            "name": "Submit a transaction to the node's transaction pool.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/transaction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a valid signed extrinsic. Replaces `/tx` from versions < v1.0.0."
+        },
+        {
+          "info": {
+            "name": "Dry run an extrinsic.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/transaction/dry-run",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use the `dryRun` call to simulate the submission of a transaction without executing it so that you can check for potential errors and validate the expected outcome."
+        },
+        {
+          "info": {
+            "name": "Receive a fee estimate for a transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/transaction/fee-estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a serialized transaction and receive back a naive fee estimate. Note: `partialFee` does not include any tips that you may add to increase a transaction's priority. See the reference on `compute_fee`. Replaces `/tx/fee-estimate` from versions < v1.0.0. Substrate Reference: - `RuntimeDispatchInfo`: https://crates.parity.io/pallet_transaction_payment_rpc_runtime_api/struct.RuntimeDispatchInfo.html - `query_info`: https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.que"
+        },
+        {
+          "info": {
+            "name": "Get all the network information needed to construct a transaction offline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/transaction/material",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block at which to retrieve the transaction construction material."
+              },
+              {
+                "name": "noMeta",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED! This is no longer supported"
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata. When `metadata` is not inputted, the `metadata` field will be absent."
+              }
+            ]
+          },
+          "docs": "Returns the material that is universal to constructing any signed transaction offline. Replaces `/tx/artifacts` from versions < v1.0.0."
+        },
+        {
+          "info": {
+            "name": "Get all the network information needed to construct a transaction offline and the version of metadata specified in `metadataVersion`.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/transaction/material/:metadataVersion",
+            "params": [
+              {
+                "name": "metadataVersion",
+                "value": "",
+                "type": "path",
+                "description": "The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`). By default, metadata is outputted in 'json' format, unless the `metadata` query parameter is provided, in which case it can be either in 'json' or 'scale' format."
+              },
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block at which to retrieve the transaction construction material."
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata."
+              }
+            ]
+          },
+          "docs": "Returns all the materials necessary for constructing any signed transactions offline."
+        },
+        {
+          "info": {
+            "name": "Get the metadata blob for offline signers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/transaction/metadata-blob",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the minimal metadata (\"metadata blob\" or \"proof\") needed by offline signers to decode a transaction's signing payload, along with the metadata hash for the CheckMetadataHash signed extension per RFC-0078."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

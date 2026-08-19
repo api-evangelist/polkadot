@@ -1,0 +1,96 @@
+{
+  "item": [
+    {
+      "id": "097efd26-59ec-473f-925f-e80ba3ad9352",
+      "name": "Proxy",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1af12765-3457-4c39-8626-620697260a65",
+          "name": "List proxy extrinsics",
+          "request": {
+            "name": "List proxy extrinsics",
+            "description": {
+              "content": "Returns paginated proxy extrinsics for the specified account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "proxy",
+                "extrinsics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5c70502-d024-4eed-a91c-fac69dbd66f1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "proxy",
+                    "extrinsics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fdfba7f8-5a7c-4b20-8332-0e85148f0e2c",
+    "name": "Polkadot REST Account Proxy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

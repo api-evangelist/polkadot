@@ -1,0 +1,367 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account coretime API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "coretime",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get coretime info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/info",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns coretime chain status information including the last committed timeslice."
+        },
+        {
+          "info": {
+            "name": "Get coretime leases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/leases",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns all leases registered on a coretime chain with task IDs and validity timeslices."
+        },
+        {
+          "info": {
+            "name": "Get coretime overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/overview",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns an overview of all cores with assignments, queue state, workload, workplan, and regions."
+        },
+        {
+          "info": {
+            "name": "Get coretime regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/regions",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns all regions on a coretime chain including begin/end timeslices, core, owner, and mask."
+        },
+        {
+          "info": {
+            "name": "Get coretime potential renewals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/renewals",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns potential renewals on a coretime chain sorted by core index, including price, completion status, and task assignment."
+        },
+        {
+          "info": {
+            "name": "Get coretime reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/coretime/reservations",
+            "params": [
+              {
+                "name": "at",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier (number or hash)"
+              }
+            ]
+          },
+          "docs": "Returns all reservations on a coretime chain. Reserved cores are permanently allocated and not available for sale."
+        },
+        {
+          "info": {
+            "name": "List coretime assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/assigns"
+          },
+          "docs": "Returns paginated coretime assignment records filtered by paraId and core."
+        },
+        {
+          "info": {
+            "name": "List coretime broker operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/operation"
+          },
+          "docs": "Returns a paginated list of broker operation events filtered by address, core, core index, event ID, and block range."
+        },
+        {
+          "info": {
+            "name": "List purchased coretime regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/purchased"
+          },
+          "docs": "Returns paginated purchased coretime regions with optional cycle, core, and purchase-type filters."
+        },
+        {
+          "info": {
+            "name": "Get coretime region information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/region"
+          },
+          "docs": "Returns detailed information for a coretime region by core_index."
+        },
+        {
+          "info": {
+            "name": "List coretime regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/regions"
+          },
+          "docs": "Returns paginated coretime regions filtered by owner, lifecycle status, and block boundaries."
+        },
+        {
+          "info": {
+            "name": "Get coretime sale information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/sale"
+          },
+          "docs": "Returns coretime sale information filtered by region begin and sales cycle."
+        },
+        {
+          "info": {
+            "name": "List coretime sale history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/sales"
+          },
+          "docs": "Returns paginated historical coretime sale records."
+        },
+        {
+          "info": {
+            "name": "Get coretime workload details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/workload/details"
+          },
+          "docs": "Returns workload details for a region and requires either core or para_id."
+        },
+        {
+          "info": {
+            "name": "List coretime workload history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/workload/history"
+          },
+          "docs": "Returns paginated workload history and requires either core or para_id."
+        },
+        {
+          "info": {
+            "name": "List coretime workloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/workloads"
+          },
+          "docs": "Returns paginated workload summaries for the latest or specified region."
+        },
+        {
+          "info": {
+            "name": "List coretime workplans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/broker/workplans"
+          },
+          "docs": "Returns paginated coretime workplan records filtered by paraId and core."
+        },
+        {
+          "info": {
+            "name": "Get all the leases currently registered on coretime chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/leases",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get all the leases currently registered on coretime chain."
+        },
+        {
+          "info": {
+            "name": "Get all the regions currently registered on coretime chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/regions",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get all the regions currently registered on coretime chain."
+        },
+        {
+          "info": {
+            "name": "Get all the potential renewals currently registered on coretime chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/renewals",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get all the potential renewals currently registered on coretime chain."
+        },
+        {
+          "info": {
+            "name": "Get all the reservations currently registered on coretime chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/reservations",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get all the reservations currently registered on coretime chain."
+        },
+        {
+          "info": {
+            "name": "Get the generic information about coretime, either on coretime chain or relay chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/info",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get the generic information about coretime, either on coretime chain or relay chain."
+        },
+        {
+          "info": {
+            "name": "Get all the cores information either on coretime chain or relay chain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/coretime/overview",
+            "params": [
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "query",
+                "description": "Block identifier, as the block height or block hash."
+              }
+            ]
+          },
+          "docs": "Get all the cores information either on coretime chain or relay chain."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

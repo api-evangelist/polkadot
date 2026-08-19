@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account EVM API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EVM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ABI by method id or event topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/abi"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM account tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/account/tokens"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "Evm block by block number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/block"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "List EVM blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/blocks"
+          },
+          "docs": "Returns paginated EVM blocks. This API only supports networks with EVM pallet(frontier or revive)."
+        },
+        {
+          "info": {
+            "name": "EVM contract detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/contract"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM contract list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/contract/list"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "Polkadot pvm resolc versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/contract/solcs"
+          },
+          "docs": "This API only supports networks with EVM pallet(revive)"
+        },
+        {
+          "info": {
+            "name": "EVM erc721 collectible detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/erc721/collectible"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM ERC721 collectibles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/erc721/collectibles"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM erc1155 collectible detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/erc1155/collectible"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM erc1155 token holders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/erc1155/collectible/holders"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM ERC1155 collectibles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/erc1155/collectibles"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "Etherscan-like API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/evm/etherscan"
+          },
+          "docs": "We provide a subset of Etherscan-like API for EVM-compatible chains. Please refer to the official Etherscan API documentation for details on parameters and responses.\nOfficial Etherscan API Documentation: https://docs.etherscan.io/api-endpoints\nBelow are the API Endpoints we already support.\n- Account Module: balance, balancehistory, txlist, tokentx, tokennfttx, txlistinternal\n- Block Module: getblocknobytime\n- Contract Module: getabi, getsourcecode, getcontractcreation, verifysourcecode, checkv"
+        },
+        {
+          "info": {
+            "name": "EVM event Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/logs"
+          },
+          "docs": "EVM event Logs,returns the event logs from an address. The current maximum limit for the number of results returned through pagination is 10,000. If you require more, please adjust the block_range parameter.\nThis API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "Evm meta",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/meta"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM erc20/erc721/erc1155 token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/token"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM token holders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/token/holders"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM token transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/token/transfer"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM erc20/erc721/erc1155 tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/tokens"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM transaction info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/transaction"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        },
+        {
+          "info": {
+            "name": "EVM internal Tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/transaction/internalTx"
+          },
+          "docs": "This API is only available for the PEAQ network"
+        },
+        {
+          "info": {
+            "name": "Evm transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/evm/v2/transactions"
+          },
+          "docs": "This API only supports networks with EVM pallet(frontier or revive)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

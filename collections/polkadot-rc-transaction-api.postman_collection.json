@@ -1,0 +1,726 @@
+{
+  "item": [
+    {
+      "id": "9bf41525-d130-4815-9838-8f3f068e79e7",
+      "name": "rc transaction",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd62b1eb-fe35-4cea-8d0a-d52d01bdb1f5",
+          "name": "Submit a transaction to the relay chain node's transaction pool.",
+          "request": {
+            "name": "Submit a transaction to the relay chain node's transaction pool.",
+            "description": {
+              "content": "Accepts a valid signed extrinsic for the relay chain. Replaces `/tx` from versions < v1.0.0.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "transaction"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tx\": \"<hex>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f43ac70-6db9-416a-9079-21055baeef10",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hash\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f19f253b-b9d0-40c0-990c-a8dc2da73ce1",
+              "name": "failed to parse or submit transaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2006.8765247053566,\n  \"error\": \"string\",\n  \"transaction\": \"string\",\n  \"cause\": \"string\",\n  \"stack\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e991c6fa-2200-4cf0-91d2-2ce8127b2f78",
+          "name": "Dry run an extrinsic on the relay chain.",
+          "request": {
+            "name": "Dry run an extrinsic on the relay chain.",
+            "description": {
+              "content": "Use the `dryRun` call to simulate the submission of a transaction to the relay chain without executing it so that you can check for potential errors and validate the expected outcome.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "transaction",
+                "dry-run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"at\": \"<unsignedInteger>\",\n  \"tx\": \"<hex>\",\n  \"senderAddress\": \"<ss58>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "84539f51-0e3e-4949-b1d7-84403d90e1a7",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "dry-run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resultType\": \"DispatchOutcome\",\n  \"result\": {\n    \"actualWeight\": \"string\",\n    \"paysFee\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96ac355b-7c49-45a5-9bea-fd631eb52dd4",
+              "name": "failed to dry-run transaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "dry-run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2006.8765247053566,\n  \"error\": \"string\",\n  \"transaction\": \"string\",\n  \"cause\": \"string\",\n  \"stack\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cedfb3e8-d8a8-47b2-8c4a-64c43ae8ed2b",
+          "name": "Receive a fee estimate for a relay chain transaction.",
+          "request": {
+            "name": "Receive a fee estimate for a relay chain transaction.",
+            "description": {
+              "content": "Send a serialized transaction and receive back a naive fee estimate for the relay chain. Note: `partialFee` does not include any tips that you may add to increase a transaction's priority. See the reference on `compute_fee`. Replaces `/tx/fee-estimate` from versions < v1.0.0. Substrate Reference: - `RuntimeDispatchInfo`: https://crates.parity.io/pallet_transaction_payment_rpc_runtime_api/struct.RuntimeDispatchInfo.html - `query_info`: https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.query_info - `compute_fee`: https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.compute_fee",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "transaction",
+                "fee-estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tx\": \"<hex>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "faaa68a7-3561-4cb5-992f-40c7e6c494d2",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"weight\": {\n    \"refTime\": \"string\",\n    \"proofSize\": \"string\"\n  },\n  \"class\": \"Mandatory\",\n  \"partialFee\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ee55546-10f4-43d8-8483-2dbdb27a28a6",
+              "name": "fee estimation failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "fee-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 360.4846043308907,\n  \"at\": {\n    \"hash\": \"string\"\n  },\n  \"error\": \"string\",\n  \"transaction\": \"string\",\n  \"block\": \"string\",\n  \"cause\": \"string\",\n  \"stack\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46a33c0c-592c-4ae0-8201-c4b19f821e40",
+          "name": "Get all the relay chain network information needed to construct a transaction offline.",
+          "request": {
+            "name": "Get all the relay chain network information needed to construct a transaction offline.",
+            "description": {
+              "content": "Returns the material that is universal to constructing any signed transaction offline for the relay chain. Replaces `/tx/artifacts` from versions < v1.0.0.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "transaction",
+                "material"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve the transaction construction material from the relay chain."
+                },
+                {
+                  "disabled": false,
+                  "key": "noMeta",
+                  "value": "false",
+                  "description": "DEPRECATED! This is no longer supported"
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata",
+                  "value": "<string>",
+                  "description": "Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata. When `metadata` is not inputted, the `metadata` field will be absent."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e05abc34-ec9c-41ee-b76d-750e9198156d",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "material"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "noMeta",
+                      "value": "false"
+                    },
+                    {
+                      "key": "metadata",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"genesisHash\": \"string\",\n  \"chainName\": \"string\",\n  \"specName\": \"string\",\n  \"specVersion\": \"string\",\n  \"txVersion\": \"string\",\n  \"metadata\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bf9e78a-53ef-4af9-91bd-3054e731cf38",
+              "name": "invalid blockId supplied for at query param",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "material"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "noMeta",
+                      "value": "false"
+                    },
+                    {
+                      "key": "metadata",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 124.8491012695141,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "551dfdf7-0e2a-4e04-8bb1-5b8632f8efaa",
+          "name": "Get all the relay chain network information needed to construct a transaction offline and the version of metadata specified in `metadataVersion`.",
+          "request": {
+            "name": "Get all the relay chain network information needed to construct a transaction offline and the version of metadata specified in `metadataVersion`.",
+            "description": {
+              "content": "Returns all the materials necessary for constructing any signed transactions offline for the relay chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "transaction",
+                "material",
+                ":metadataVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve the transaction construction material from the relay chain."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata",
+                  "value": "<string>",
+                  "description": "Specifies the format of the metadata to be returned. Accepted values are 'json', and 'scale'. 'json' being the decoded metadata, and 'scale' being the SCALE encoded metadata."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "metadataVersion",
+                  "description": "(Required) The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`). By default, metadata is outputted in 'json' format, unless the `metadata` query parameter is provided, in which case it can be either in 'json' or 'scale' format."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "17c55cc7-15c7-49a9-ad96-7c4dc39da39e",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "material",
+                    ":metadataVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "metadata",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metadataVersion",
+                      "description": "(Required) The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`). By default, metadata is outputted in 'json' format, unless the `metadata` query parameter is provided, in which case it can be either in 'json' or 'scale' format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"genesisHash\": \"string\",\n  \"chainName\": \"string\",\n  \"specName\": \"string\",\n  \"specVersion\": \"string\",\n  \"txVersion\": \"string\",\n  \"metadata\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "495841c3-20f5-43ae-aac8-04c36dbbe7be",
+              "name": "invalid blockId supplied for at query param",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "transaction",
+                    "material",
+                    ":metadataVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "metadata",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metadataVersion",
+                      "description": "(Required) The version of metadata. The input is expected in a `vX` format, where `X` represents the version number (e.g. `v14`, `v15`). By default, metadata is outputted in 'json' format, unless the `metadata` query parameter is provided, in which case it can be either in 'json' or 'scale' format."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 124.8491012695141,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1b8a9d95-f5b8-43ef-9b0b-554375a6b7a2",
+    "name": "Polkadot REST Account rc transaction API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

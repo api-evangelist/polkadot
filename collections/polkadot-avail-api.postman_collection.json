@@ -1,0 +1,352 @@
+{
+  "item": [
+    {
+      "id": "17bf4ed2-2667-4fa2-8666-4e0566b0d093",
+      "name": "Avail",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "720489fb-e11a-43d3-941b-7e5cb5a830a3",
+          "name": "Submitted Data info",
+          "request": {
+            "name": "Submitted Data info",
+            "description": {
+              "content": "This API is only available for avail network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "dataAvailability",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7790955c-3eed-42d2-ac8b-bebc5c1303ab",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "dataAvailability",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c751c2b-3d6d-45e7-8006-1ba52f6e8a9f",
+          "name": "Submitted Data list",
+          "request": {
+            "name": "Submitted Data list",
+            "description": {
+              "content": "This API is only available for avail network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "dataAvailability",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b2a0d7e-e12e-432f-8b07-e6261db61382",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "dataAvailability",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fd965b2-e03a-456f-8986-e587a26a3fda",
+          "name": "vector transfer daily list",
+          "request": {
+            "name": "vector transfer daily list",
+            "description": {
+              "content": "This API only available for avail network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "vector",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "828f6bac-fd0a-4461-afa0-7c9598b4f946",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "vector",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "861221e8-2ab4-497a-8ee7-264577724b84",
+          "name": "Transfer count statistics",
+          "request": {
+            "name": "Transfer count statistics",
+            "description": {
+              "content": "This API only available for avail network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "vector",
+                "statistics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26f14a08-66f4-42fe-9388-fbd85bb986aa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "vector",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cd3ad7a-bf27-4cf8-b066-bc281dd5c9ab",
+          "name": "vector transfer list",
+          "request": {
+            "name": "vector transfer list",
+            "description": {
+              "content": "This API only available for avail network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "vector",
+                "transfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a4237cce-c654-4beb-b473-8f7a58b0a7a6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "vector",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "54a97ef9-7951-4ca6-9241-d9c28c60e91b",
+    "name": "Polkadot REST Account Avail API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account PRO API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PRO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "[PRO] Count multichain account assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/account/count"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the number of multichain asset records associated with one account.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account balance-value history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/balance_value_history"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the historical total balance value for one account over the requested date range. Dates use the format YYYY-MM-DD.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account balance-value statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/balance_value_stat"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the maximum, minimum, and previous-24-hour balance values for one account.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] List multichain price snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/price"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the available multichain price data, optionally including price-change information.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM bridge statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/bridge_stat"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns bridge-type XCM statistics grouped by time format."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM channel details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/channel"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns one XCM/HRMP channel by sender and recipient parachain IDs."
+        },
+        {
+          "info": {
+            "name": "[PRO] List XCM channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/channels"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM/HRMP channel list filtered by sender, recipient, status, or para_id."
+        },
+        {
+          "info": {
+            "name": "[PRO] Find XCM message ID by hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/check_hash"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the XCM message unique ID from origin or destination event/hash inputs."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM message details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/info"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns detailed information for one XCM message by unique_id or origin identifiers."
+        },
+        {
+          "info": {
+            "name": "[PRO] List XCM messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/list"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns paginated XCM messages with protocol, status, asset, and block-range filters."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/meta"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM metadata and parachain statistics, optionally filtered by para_id."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM parachain statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/parachain/stat"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM parachain send/receive statistics with optional direction and date filters."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get XCM statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/xcm/stat"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM traffic statistics for a date range and optional parachain filter."
+        },
+        {
+          "info": {
+            "name": "[PRO] List accounts by net assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/accounts/net_assets"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/) Returns a paginated account-level net-asset leaderboard. Native-only networks read directly from chain_accounts; other networks use pre-aggregated priced fungible-token snapshots."
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/multiChain/account"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns aggregated multichain asset balances for one account together with related DeFi participation data.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] List XCM messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/xcm/list"
+          },
+          "docs": "**PRO API**: Requires a Pro plan. Returns paginated XCM messages with protocol, status, asset, and block-range filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

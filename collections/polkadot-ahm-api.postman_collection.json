@@ -1,0 +1,274 @@
+{
+  "item": [
+    {
+      "id": "e3b13867-817e-4b5b-a778-0fd0d020c3f4",
+      "name": "ahm",
+      "description": {
+        "content": "Asset Hub Migration information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1504399-572f-470d-9072-84d9f51b12da",
+          "name": "Asset Hub Migration info",
+          "request": {
+            "name": "Asset Hub Migration info",
+            "description": {
+              "content": "Returns information about the Asset Hub migration, including start and end blocks for both relay chain and Asset Hub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "ahm-info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2777d00-15db-4e08-ad36-a03596dddee8",
+              "name": "AHM migration boundaries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "ahm-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bbeedfb-7506-4728-bf4e-e8b20931fe4b",
+              "name": "No migration data available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "ahm-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60ac6053-20c6-404c-acd3-d2c022e39550",
+          "name": "Get Asset Hub Migration information.",
+          "request": {
+            "name": "Get Asset Hub Migration information.",
+            "description": {
+              "content": "Returns information about Asset Hub Migration (AHM) including migration start and end blocks for both relay chain and Asset Hub. The endpoint automatically detects whether you're connected to a relay chain or Asset Hub and provides relevant migration data. Returns static migration boundaries for known networks or queries on-chain migration pallets for dynamic information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ahm-info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d682705f-3c96-47b1-9451-67f4f5dd6276",
+              "name": "Successfully retrieved Asset Hub Migration information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ahm-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"relay\": {\n    \"startBlock\": 26041702,\n    \"endBlock\": 26071771\n  },\n  \"assetHub\": {\n    \"startBlock\": 11716733,\n    \"endBlock\": 11736597\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9673043-3b2b-4e58-8f29-5f347fc5637c",
+              "name": "Invalid chain specName or missing migration pallets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ahm-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2669.36587278244,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32a1a051-0b75-4635-ad69-5f3b4b33bdcd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ahm-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2669.36587278244,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c4ba3e82-4221-4c22-bbbb-1afe6ab66248",
+    "name": "Polkadot REST Account ahm API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

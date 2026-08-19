@@ -1,0 +1,748 @@
+{
+  "item": [
+    {
+      "id": "b5d1b3e0-e156-4e4a-8d8a-3aa4e6eae8c1",
+      "name": "Midnight",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed20d6f4-1c9c-4064-8d07-305fb7734505",
+          "name": "Midnight Supported Compact Compiler Versions",
+          "request": {
+            "name": "Midnight Supported Compact Compiler Versions",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "compact_version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1270f15-d5a6-4f1b-945b-954419cabdad",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "compact_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f35224c8-3bb4-4ea7-abc8-9904402c4444",
+          "name": "Midnight Contract Detail",
+          "request": {
+            "name": "Midnight Contract Detail",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "contract"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ca406fe-631e-4e04-bd12-478c8547c983",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "contract"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74edaebe-c54c-40dc-9f31-41a7634e3f67",
+          "name": "Midnight Contract CMA info",
+          "request": {
+            "name": "Midnight Contract CMA info",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "contract",
+                "cma"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3858bc5-c01f-4040-a5ba-392b02e15b76",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "contract",
+                    "cma"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6bba0a1-238f-4528-80da-e5c9de2b97de",
+          "name": "Midnight Contract State",
+          "request": {
+            "name": "Midnight Contract State",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "contract",
+                "state"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56511d02-3d70-4879-8e51-873f204ac138",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "contract",
+                    "state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "97408ec2-55c8-475f-a69f-162f88cb4aec",
+          "name": "Midnight Contracts",
+          "request": {
+            "name": "Midnight Contracts",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "contracts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db55a502-eacc-4155-8776-a111a3799be2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ad47bdf-4ea3-4bfe-973b-4ff8f3a19271",
+          "name": "Midnight Transaction Detail",
+          "request": {
+            "name": "Midnight Transaction Detail",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "transaction"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "442142a6-4564-4369-b581-47f60d605fb8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "transaction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54768867-2369-4988-a48b-4064e8c916f5",
+          "name": "Midnight Transactions",
+          "request": {
+            "name": "Midnight Transactions",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "91e2aae3-140b-4783-abaa-51ede9ee6a5e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46964213-92e0-4a91-af02-4220efea94d6",
+          "name": "Midnight Unshielded Balance",
+          "request": {
+            "name": "Midnight Unshielded Balance",
+            "description": {
+              "content": "This API is only available midnight network and supports optional address, direction, extrinsic, time, and value filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "unshielded_tokens",
+                "balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "beaf6d5b-1d03-4c69-9774-e5dcf414f978",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "unshielded_tokens",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b23740c-061c-4b17-ad9d-ee98771bb934",
+          "name": "Midnight Unshielded Token Balance List",
+          "request": {
+            "name": "Midnight Unshielded Token Balance List",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "unshielded_tokens",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e574f32c-21f1-4feb-83bf-85d6790903ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "unshielded_tokens",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bdbee7dc-6c83-4490-b7df-c88506dc0867",
+          "name": "Midnight Unshielded Ledger",
+          "request": {
+            "name": "Midnight Unshielded Ledger",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "unshielded_tokens",
+                "ledger"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8868ece6-53e1-4714-9a08-06d8231afa0e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "unshielded_tokens",
+                    "ledger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25b40eaa-95f9-44dd-b0e0-e3b529cce69c",
+          "name": "Midnight Unshielded Token Type List",
+          "request": {
+            "name": "Midnight Unshielded Token Type List",
+            "description": {
+              "content": "This API is only available midnight network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "midnight",
+                "unshielded_tokens",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e76312ee-c9b2-4615-a7ef-e8edba97b68a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "midnight",
+                    "unshielded_tokens",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dd89da60-48a7-40f6-b84b-3bf53c277f9d",
+    "name": "Polkadot REST Account Midnight API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

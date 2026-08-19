@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account node API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "node",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Node network info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/node/network"
+          },
+          "docs": "Returns the node's network information including peer count, syncing status, and local peer ID."
+        },
+        {
+          "info": {
+            "name": "Transaction pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/node/transaction-pool",
+            "params": [
+              {
+                "name": "includeFee",
+                "value": "",
+                "type": "query",
+                "description": "Include fee details for each transaction"
+              }
+            ]
+          },
+          "docs": "Returns the node's transaction pool with optional fee information."
+        },
+        {
+          "info": {
+            "name": "Node version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/node/version"
+          },
+          "docs": "Returns the node's version information including client version, implementation name, and chain name."
+        },
+        {
+          "info": {
+            "name": "Get information about the Substrate node's activity in the peer-to-peer network.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/node/network"
+          },
+          "docs": "Returns network related information of the node."
+        },
+        {
+          "info": {
+            "name": "Get pending extrinsics from the Substrate node.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/node/transaction-pool",
+            "params": [
+              {
+                "name": "includeFee",
+                "value": "",
+                "type": "query",
+                "description": "Boolean representing whether or not to include tips, partialFee, and priority in each extrinsic."
+              }
+            ]
+          },
+          "docs": "Returns the extrinsics that the node knows of that have not been included in a block."
+        },
+        {
+          "info": {
+            "name": "Get information about the Substrates node's implementation and versioning.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/node/version"
+          },
+          "docs": "Returns versioning information of the node."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

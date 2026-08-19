@@ -1,0 +1,356 @@
+{
+  "item": [
+    {
+      "id": "d3ae4d18-8d33-4eb1-ad64-a664e0c99c0a",
+      "name": "Assets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b37798a2-8e06-4741-8a61-1f54e8ff2837",
+          "name": "Asset account balances",
+          "request": {
+            "name": "Asset account balances",
+            "description": {
+              "content": "Get asset balances by account address\nThis API only supports networks with assets frame",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "assets",
+                "account",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08309261-a27d-4c3c-a4df-49edaf024fcc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "assets",
+                    "account",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c767041-5736-4a3c-bcdd-59224aecc751",
+          "name": "Asset activities",
+          "request": {
+            "name": "Asset activities",
+            "description": {
+              "content": "Get asset activities(include asset Created/Issued/Burned...) by asset id\nThis API only supports networks with assets frame",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "assets",
+                "activities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a0999d3-3ce6-42b3-aa89-9625c6206f54",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "assets",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4210255b-096f-48f4-a6df-40d5e760971e",
+          "name": "Asset info",
+          "request": {
+            "name": "Asset info",
+            "description": {
+              "content": "Get asset info by asset id\nThis API only supports networks with assets frame",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "assets",
+                "asset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23470644-192f-45e0-9b4a-cd175f44d718",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "assets",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54f308a7-1d70-4d94-a3dd-6ebc5e8e04b0",
+          "name": "Asset holders",
+          "request": {
+            "name": "Asset holders",
+            "description": {
+              "content": "Get asset holders by asset id\nThis API only supports networks with assets frame",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "assets",
+                "asset",
+                "holders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa349261-f68f-4b25-ba16-1d51966d5f38",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "assets",
+                    "asset",
+                    "holders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aad1577b-db52-4497-a622-801009895774",
+          "name": "Assets list",
+          "request": {
+            "name": "Assets list",
+            "description": {
+              "content": "Assets token list\nThis API only supports networks with assets frame",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "scan",
+                "assets",
+                "assets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e739f8b-c845-4774-962e-a4d20918d298",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "scan",
+                    "assets",
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8f8d6d6c-6293-4728-b6df-c259ad467e10",
+    "name": "Polkadot REST Account Assets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

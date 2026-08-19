@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Event API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get event by index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/event"
+          },
+          "docs": "Returns event details for a specific event index."
+        },
+        {
+          "info": {
+            "name": "Get event parameters by index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/event/params"
+          },
+          "docs": "Returns parsed parameter payloads for up to 100 event indexes."
+        },
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/events"
+          },
+          "docs": "Returns paginated events with module/event filters, block constraints, and optional address matching."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

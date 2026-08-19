@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Assets API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Asset account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/assets/account/balances"
+          },
+          "docs": "Get asset balances by account address\nThis API only supports networks with assets frame"
+        },
+        {
+          "info": {
+            "name": "Asset activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/assets/activities"
+          },
+          "docs": "Get asset activities(include asset Created/Issued/Burned...) by asset id\nThis API only supports networks with assets frame"
+        },
+        {
+          "info": {
+            "name": "Asset info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/assets/asset"
+          },
+          "docs": "Get asset info by asset id\nThis API only supports networks with assets frame"
+        },
+        {
+          "info": {
+            "name": "Asset holders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/assets/asset/holders"
+          },
+          "docs": "Get asset holders by asset id\nThis API only supports networks with assets frame"
+        },
+        {
+          "info": {
+            "name": "Assets list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/assets/assets"
+          },
+          "docs": "Assets token list\nThis API only supports networks with assets frame"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Midnight API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Midnight",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Midnight Supported Compact Compiler Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/compact_version"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Contract Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/contract"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Contract CMA info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/contract/cma"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Contract State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/contract/state"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/contracts"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Transaction Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/transaction"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/transactions"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Unshielded Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/unshielded_tokens/balance"
+          },
+          "docs": "This API is only available midnight network and supports optional address, direction, extrinsic, time, and value filters."
+        },
+        {
+          "info": {
+            "name": "Midnight Unshielded Token Balance List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/unshielded_tokens/balances"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Unshielded Ledger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/unshielded_tokens/ledger"
+          },
+          "docs": "This API is only available midnight network"
+        },
+        {
+          "info": {
+            "name": "Midnight Unshielded Token Type List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/midnight/unshielded_tokens/types"
+          },
+          "docs": "This API is only available midnight network"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

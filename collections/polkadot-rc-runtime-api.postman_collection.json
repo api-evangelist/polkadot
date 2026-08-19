@@ -1,0 +1,533 @@
+{
+  "item": [
+    {
+      "id": "9d8e4535-fc9f-4fa0-a000-fbabd3890601",
+      "name": "rc runtime",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56690f81-f847-4025-98ab-60ed7d55f2b3",
+          "name": "Get version information of the relay chain Substrate runtime.",
+          "request": {
+            "name": "Get version information of the relay chain Substrate runtime.",
+            "description": {
+              "content": "Returns version information related to the relay chain runtime. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for runtime specification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "runtime",
+                "spec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve runtime version information at."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc13074b-597f-4a64-94b9-02ff60fbd8ed",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "spec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"authoringVersion\": \"string\",\n  \"chainType\": {\n    \"live\": null,\n    \"development\": null,\n    \"local\": null,\n    \"custom\": \"string\"\n  },\n  \"implVersion\": \"string\",\n  \"specName\": \"string\",\n  \"specVersion\": \"string\",\n  \"transactionVersion\": \"string\",\n  \"properties\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e1f2dbd-6744-4df7-9782-39728dfb88b3",
+          "name": "Get the relay chain's metadata.",
+          "request": {
+            "name": "Get the relay chain's metadata.",
+            "description": {
+              "content": "Returns the relay chain's runtime metadata in decoded JSON format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "runtime",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block hash or height at which to query. If not provided, queries finalized head."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "728f234b-a7ee-4e1f-9a39-8f982f1787f5",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"magicNumber\": \"1635018093\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd557be0-0d43-4b21-a95f-9d06ba9b335a",
+          "name": "Get the available versions of relay chain's metadata.",
+          "request": {
+            "name": "Get the available versions of relay chain's metadata.",
+            "description": {
+              "content": "Returns the available versions of the relay chain's metadata. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for metadata versions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "runtime",
+                "metadata",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block hash or height at which to query. If not provided, queries finalized head."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "848e3d02-1334-4443-8f1f-d7f20058ae0c",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "metadata",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b471d7c-2f4e-48d0-be2b-33e13542f1bf",
+          "name": "Get the relay chain's metadata at a specific version.",
+          "request": {
+            "name": "Get the relay chain's metadata at a specific version.",
+            "description": {
+              "content": "Returns the relay chain's runtime metadata at a specific version in decoded JSON format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for versioned metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "runtime",
+                "metadata",
+                ":metadataVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block hash or height at which to query. If not provided, queries finalized head."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "metadataVersion",
+                  "description": "(Required) The specific version of the Metadata to query. The input must conform to the 'vX' format, where 'X' represents the version number (examples 'v14', 'v15')."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8c7dba8f-a958-4419-be1c-8c1b9ca772ee",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "metadata",
+                    ":metadataVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metadataVersion",
+                      "description": "(Required) The specific version of the Metadata to query. The input must conform to the 'vX' format, where 'X' represents the version number (examples 'v14', 'v15')."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"magicNumber\": \"1635018093\",\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87394eac-ce53-4a5c-a68d-7f0be798decf",
+              "name": "Invalid version format or version not available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "metadata",
+                    ":metadataVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "metadataVersion",
+                      "description": "(Required) The specific version of the Metadata to query. The input must conform to the 'vX' format, where 'X' represents the version number (examples 'v14', 'v15')."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8049.5552704034635,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c931565f-040d-4b9e-932b-e6757b050c4d",
+          "name": "Get the Wasm code blob of the relay chain Substrate runtime.",
+          "request": {
+            "name": "Get the Wasm code blob of the relay chain Substrate runtime.",
+            "description": {
+              "content": "Returns the relay chain's runtime code in Wasm format. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for runtime code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "runtime",
+                "code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve runtime code information at."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec668009-eab7-4e91-9fff-d27a359b97c7",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "runtime",
+                    "code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "50b2fc0a-4194-4db4-8fc7-e7d57c1aed5b",
+    "name": "Polkadot REST Account rc runtime API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

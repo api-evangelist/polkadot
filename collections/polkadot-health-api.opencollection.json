@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account health API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/health"
+          },
+          "docs": "Returns the health status of the API server."
+        },
+        {
+          "info": {
+            "name": "Liveness health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/healthz"
+          },
+          "docs": "Returns OK when the service process is alive."
+        },
+        {
+          "info": {
+            "name": "Readiness health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/readiness"
+          },
+          "docs": "Returns OK when the service is ready to serve traffic."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

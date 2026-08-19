@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Contracts API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contracts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List WASM contract events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/events"
+          },
+          "docs": "Returns paginated emitted events for one WASM contract, with optional filtering by extrinsic index. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "Get WASM contract details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/info"
+          },
+          "docs": "Returns detailed information for one WASM contract by contract address. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "List WASM contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/list"
+          },
+          "docs": "Returns a paginated list of WASM contracts with optional verification and ordering filters. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "Get WASM contract aggregate metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/meta"
+          },
+          "docs": "Returns aggregate WASM contract statistics such as contract count, transaction count, and verified-contract count. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "Get a WASM contract timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/timeline"
+          },
+          "docs": "Returns the lifecycle timeline for one WASM contract address. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "List WASM contract transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/contracts/transactions"
+          },
+          "docs": "Returns paginated WASM contract transactions filtered by account address, contract address, block range, and success status. Available only on networks with the contracts frame."
+        },
+        {
+          "info": {
+            "name": "List supported contract compiler images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/contracts/verify/compiler_images"
+          },
+          "docs": "Returns the supported third-party compiler images and tags that can be used for WASM contract verification."
+        },
+        {
+          "info": {
+            "name": "List supported contract compiler versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/contracts/verify/compiler_version"
+          },
+          "docs": "Returns the supported compiler versions that can be used to verify WASM contracts."
+        },
+        {
+          "info": {
+            "name": "Query an !Ink contract with a given message (method).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/contracts/ink/:address/query",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "SS58 or Hex address of the account associated with the contract."
+              },
+              {
+                "name": "method",
+                "value": "",
+                "type": "query",
+                "description": "The message or method used to query."
+              },
+              {
+                "name": "gasLimit",
+                "value": "",
+                "type": "query",
+                "description": "The gas limit to be used as an option for the queried message."
+              },
+              {
+                "name": "storageDepositLimit",
+                "value": "",
+                "type": "query",
+                "description": "The storage deposit limit to be used as an option for the queried message."
+              },
+              {
+                "name": "args",
+                "value": "",
+                "type": "query",
+                "description": "Abi params used as args specified in the metadata to be passed into a query. The format to use this query param is ?args[]=1&args[]=2&args[]=3."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Will return a valid or invalid result."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

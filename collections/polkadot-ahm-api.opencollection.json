@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account ahm API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ahm",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Asset Hub Migration info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/v1/ahm-info"
+          },
+          "docs": "Returns information about the Asset Hub migration, including start and end blocks for both relay chain and Asset Hub."
+        },
+        {
+          "info": {
+            "name": "Get Asset Hub Migration information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/ahm-info"
+          },
+          "docs": "Returns information about Asset Hub Migration (AHM) including migration start and end blocks for both relay chain and Asset Hub. The endpoint automatically detects whether you're connected to a relay chain or Asset Hub and provides relevant migration data. Returns static migration boundaries for known networks or queries on-chain migration pallets for dynamic information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

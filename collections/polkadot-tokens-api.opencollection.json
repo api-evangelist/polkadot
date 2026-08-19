@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Tokens API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search tokens by name, symbol, or unique ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/search/tokens"
+          },
+          "docs": "Searches token metadata by a free-form token key such as token name, ticker symbol, or unique ID."
+        },
+        {
+          "info": {
+            "name": "List tokens by symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/token"
+          },
+          "docs": "Returns network token symbols and token metadata keyed by symbol."
+        },
+        {
+          "info": {
+            "name": "List token prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/token/price"
+          },
+          "docs": "Returns the latest price list for available tokens."
+        },
+        {
+          "info": {
+            "name": "List tokens by unique ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/token/unique_id"
+          },
+          "docs": "Returns network token symbols, unique IDs, and token metadata keyed by unique_id."
+        },
+        {
+          "info": {
+            "name": "Get native token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/token/native"
+          },
+          "docs": "Returns the native token and provider information for the current network."
+        },
+        {
+          "info": {
+            "name": "List token providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/v2/scan/token/providers"
+          },
+          "docs": "Returns active token providers and their capabilities."
+        },
+        {
+          "info": {
+            "name": "Search tokens (v2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/token/search"
+          },
+          "docs": "Returns tokens grouped by provider for the requested unique IDs."
+        },
+        {
+          "info": {
+            "name": "List tokens (v2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/tokens"
+          },
+          "docs": "Returns paginated tokens from the selected provider with optional search, ordering, and extended fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

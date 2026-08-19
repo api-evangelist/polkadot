@@ -1,0 +1,218 @@
+{
+  "item": [
+    {
+      "id": "bef73f89-b1d8-4840-b02c-40dc3d7957fb",
+      "name": "Currency",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db6baa08-95d1-4654-ae74-537325cb032a",
+          "name": "List supported native-token quote currencies",
+          "request": {
+            "name": "List supported native-token quote currencies",
+            "description": {
+              "content": "Returns the supported currency codes that can be used for native-token price lookup and conversion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "open",
+                "currencies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2832a30e-b3f5-4bf5-964e-6668fe59879a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "open",
+                    "currencies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccf2ffb9-e1b7-4070-b94d-9dcc4e83ce6e",
+          "name": "Get the native token price at a specific time",
+          "request": {
+            "name": "Get the native token price at a specific time",
+            "description": {
+              "content": "Returns the native-token price quote for the requested timestamp. Use this endpoint for historical token price lookup in supported quote currencies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "open",
+                "price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0added3e-ac53-4b36-ad12-35272bfde4ef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "open",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67d8d013-2bcb-45ee-ae71-21f71c1e4e99",
+          "name": "Convert one token value between currencies",
+          "request": {
+            "name": "Convert one token value between currencies",
+            "description": {
+              "content": "Converts a token amount from one supported currency into another using the price snapshot at the requested time. Returns both the converted output value and the quote data used for the calculation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "open",
+                "price_converter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94eafa04-5e18-4425-91d3-f888adbaaaa3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "open",
+                    "price_converter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "66e36bff-ff49-4634-bde8-2ef25e291c85",
+    "name": "Polkadot REST Account Currency API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

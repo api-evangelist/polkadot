@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Collator API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collator",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get collator details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/collator/info"
+          },
+          "docs": "Returns detailed information for a single collator account."
+        },
+        {
+          "info": {
+            "name": "List collators",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/collator/list"
+          },
+          "docs": "Returns a paginated list of collators with status, account, and ordering filters."
+        },
+        {
+          "info": {
+            "name": "Get collator metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/collator/meta"
+          },
+          "docs": "Returns collator metadata used by the collator APIs."
+        },
+        {
+          "info": {
+            "name": "List collator timeline records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/collator/timeline"
+          },
+          "docs": "Returns paginated timeline records for a collator."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

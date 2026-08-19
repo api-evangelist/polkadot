@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account MultiChain API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MultiChain",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "[PRO] Count multichain account assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/account/count"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the number of multichain asset records associated with one account.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account balance-value history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/balance_value_history"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the historical total balance value for one account over the requested date range. Dates use the format YYYY-MM-DD.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account balance-value statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/balance_value_stat"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the maximum, minimum, and previous-24-hour balance values for one account.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] List multichain price snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multiChain/price"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the available multichain price data, optionally including price-change information.\nSupport Network: polkadot"
+        },
+        {
+          "info": {
+            "name": "[PRO] Get multichain account assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/multiChain/account"
+          },
+          "docs": "**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns aggregated multichain asset balances for one account together with related DeFi participation data.\nSupport Network: polkadot"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

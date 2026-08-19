@@ -1,0 +1,396 @@
+{
+  "item": [
+    {
+      "id": "ee8b2bfd-957f-4d24-a3bc-3365b1fcc46a",
+      "name": "trace",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd125471-564c-48a7-a42f-609ab7d47533",
+          "name": "[Experimental - subject to breaking change.] Get traces for the most\nrecently finalized block.\n",
+          "request": {
+            "name": "[Experimental - subject to breaking change.] Get traces for the most\nrecently finalized block.\n",
+            "description": {
+              "content": "Returns traces (spans and events) of the most recently finalized block from\nRPC `state_straceBlock`. Consult the [RPC docs](https://github.com/paritytech/substrate/blob/aba876001651506f85c14baf26e006b36092e1a0/client/rpc-api/src/state/mod.rs#L140)\nfor conceptual info.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "experimental",
+                "blocks",
+                "head",
+                "traces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19df8689-4b50-4315-81c1-ce7c237d5cca",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "experimental",
+                    "blocks",
+                    "head",
+                    "traces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"blockHash\": \"string\",\n  \"events\": [\n    {\n      \"data\": {\n        \"stringValues\": {\n          \"key\": \"string\",\n          \"method\": \"string\",\n          \"result\": \"string\"\n        }\n      },\n      \"parentId\": \"string\",\n      \"target\": \"string\"\n    },\n    {\n      \"data\": {\n        \"stringValues\": {\n          \"key\": \"string\",\n          \"method\": \"string\",\n          \"result\": \"string\"\n        }\n      },\n      \"parentId\": \"string\",\n      \"target\": \"string\"\n    }\n  ],\n  \"parentHash\": \"string\",\n  \"spans\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parentId\": \"string\",\n      \"target\": \"string\",\n      \"wasm\": true\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parentId\": \"string\",\n      \"target\": \"string\",\n      \"wasm\": true\n    }\n  ],\n  \"storageKeys\": \"string\",\n  \"tracingTargets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9d066c4-7621-4325-bfdf-86979a56cd4b",
+          "name": "[Experimental - subject to breaking change.] Get traces for the given `blockId`.\n",
+          "request": {
+            "name": "[Experimental - subject to breaking change.] Get traces for the given `blockId`.\n",
+            "description": {
+              "content": "Returns traces (spans and events) of the specified block from\nRPC `state_straceBlock`. Consult the [RPC docs](https://github.com/paritytech/substrate/blob/aba876001651506f85c14baf26e006b36092e1a0/client/rpc-api/src/state/mod.rs#L140) for conceptual info.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "experimental",
+                "blocks",
+                ":blockId",
+                "traces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "blockId",
+                  "description": "(Required) Block identifier, as the block height or block hash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71143504-678a-4947-a3a0-06281bf8f2df",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "experimental",
+                    "blocks",
+                    ":blockId",
+                    "traces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "blockId",
+                      "description": "(Required) Block identifier, as the block height or block hash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"blockHash\": \"string\",\n  \"events\": [\n    {\n      \"data\": {\n        \"stringValues\": {\n          \"key\": \"string\",\n          \"method\": \"string\",\n          \"result\": \"string\"\n        }\n      },\n      \"parentId\": \"string\",\n      \"target\": \"string\"\n    },\n    {\n      \"data\": {\n        \"stringValues\": {\n          \"key\": \"string\",\n          \"method\": \"string\",\n          \"result\": \"string\"\n        }\n      },\n      \"parentId\": \"string\",\n      \"target\": \"string\"\n    }\n  ],\n  \"parentHash\": \"string\",\n  \"spans\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parentId\": \"string\",\n      \"target\": \"string\",\n      \"wasm\": true\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parentId\": \"string\",\n      \"target\": \"string\",\n      \"wasm\": true\n    }\n  ],\n  \"storageKeys\": \"string\",\n  \"tracingTargets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb764aeb-54ef-4330-8546-e426359d89bf",
+          "name": "[Experimental - subject to breaking change.] Get the operations from the\nmost recently finalized block.\n",
+          "request": {
+            "name": "[Experimental - subject to breaking change.] Get the operations from the\nmost recently finalized block.\n",
+            "description": {
+              "content": "Returns the operations from the most recently finalized block. Operations\nrepresent one side of a balance change. For example if Alice transfers\n100unit to Bob there will be two operations; 1) Alice - 100 2) Bob + 100.\n\nGiven account A and A's balance at block k0 (Ak0), if we sum all the\noperations for A from block k1 through kn against Ak0, we will end up\nwith A's balance at block kn (Akn). Thus, operations can be used to audit\nthat balances change as expected.\n\nThis is useful for Substrate based chains because the advanced business\nlogic can make it difficult to ensure auditable balance reconciliation\nbased purely on events. Instead of using events one can use the\noperations given from this endpoint.\n\nNote - each operation corresponds to a delta of a single field of the\n`system::AccountData` storage item (i.e `free`, `reserved`, `misc_frozen`\nand `fee_frozen`).\nNote - operations are assigned a block execution phase (and extrinsic index\nfor those in the apply extrinsic phase) based on an \"action group\". For\nexample all the operations for 1 extrinsic will be in the same action group.\nThe action groups can optionally be fetched with the `action` query param\nfor closer auditing.\nNote - There are no 0 value operations (e.g. a transfer of 0, or a\ntransfer to itself)\n\nTo learn more about operation and action group creation please consult\n[this diagram](https://docs.google.com/drawings/d/1vZoJo9jaXlz0LmrdTOgHck9_1LsfuQPRmTr-5g1tOis/edit?usp=sharing)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "experimental",
+                "blocks",
+                "head",
+                "traces",
+                "operations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actions",
+                  "value": "false",
+                  "description": "Whether or not to include action groups."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b448bdd6-8942-4b2a-85be-222b8fe89888",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "experimental",
+                    "blocks",
+                    "head",
+                    "traces",
+                    "operations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actions",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"operations\": [\n    {\n      \"phase\": {\n        \"variant\": \"onFinalize\",\n        \"extrinsicIndex\": \"string\"\n      },\n      \"parentSpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"primarySpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"eventIndex\": \"string\",\n      \"address\": \"string\",\n      \"storage\": {\n        \"pallet\": \"string\",\n        \"item\": \"string\",\n        \"field1\": \"string\",\n        \"field2\": \"string\"\n      },\n      \"amount\": {\n        \"values\": \"string\",\n        \"currency\": {\n          \"symbol\": \"KSM\"\n        }\n      }\n    },\n    {\n      \"phase\": {\n        \"variant\": \"onInitialize\",\n        \"extrinsicIndex\": \"string\"\n      },\n      \"parentSpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"primarySpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"eventIndex\": \"string\",\n      \"address\": \"string\",\n      \"storage\": {\n        \"pallet\": \"string\",\n        \"item\": \"string\",\n        \"field1\": \"string\",\n        \"field2\": \"string\"\n      },\n      \"amount\": {\n        \"values\": \"string\",\n        \"currency\": {\n          \"symbol\": \"KSM\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "858a9a16-33a0-4e2c-af0a-5d409f2fd926",
+          "name": "[Experimental - subject to breaking change.] Get the operations from the\nspecified block.\n",
+          "request": {
+            "name": "[Experimental - subject to breaking change.] Get the operations from the\nspecified block.\n",
+            "description": {
+              "content": "Returns the operations from the most recently finalized block. Operations\nrepresent one side of a balance change. For example if Alice transfers\n100unit to Bob there will be two operations; 1) Alice - 100 2) Bob + 100.\n\nGiven account A and A's balance at block k0 (Ak0), if we sum all the\noperations for A from block k1 through kn against Ak0, we will end up\nwith A's balance at block kn (Akn). Thus, operations can be used to audit\nthat balances change as expected.\n\nThis is useful for Substrate based chains because the advanced business\nlogic can make it difficult to ensure auditable balance reconciliation\nbased purely on events. Instead of using events one can use the\noperations given from this endpoint.\n\nNote - each operation corresponds to a delta of a single field of the\n`system::AccountData` storage item (i.e `free`, `reserved`, `misc_frozen`\nand `fee_frozen`).\nNote - operations are assigned a block execution phase (and extrinsic index\nfor those in the apply extrinsic phase) based on an \"action group\". For\nexample all the operations for 1 extrinsic will be in the same action group.\nThe action groups can optionally be fetched with the `action` query param\nfor closer auditing.\nNote - There are no 0 value operations (e.g. a transfer of 0, or a\ntransfer to itself)\n\nTo learn more about operation and action group creation please consult\n[this diagram](https://docs.google.com/drawings/d/1vZoJo9jaXlz0LmrdTOgHck9_1LsfuQPRmTr-5g1tOis/edit?usp=sharing)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "experimental",
+                "blocks",
+                ":blockId",
+                "traces",
+                "operations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actions",
+                  "value": "false",
+                  "description": "Whether or not to include action groups."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "blockId",
+                  "description": "(Required) Block identifier, as the block height or block hash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e47de5e4-d0ad-4e44-906c-3447fe7aa7fc",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "experimental",
+                    "blocks",
+                    ":blockId",
+                    "traces",
+                    "operations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actions",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "blockId",
+                      "description": "(Required) Block identifier, as the block height or block hash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"operations\": [\n    {\n      \"phase\": {\n        \"variant\": \"onFinalize\",\n        \"extrinsicIndex\": \"string\"\n      },\n      \"parentSpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"primarySpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"eventIndex\": \"string\",\n      \"address\": \"string\",\n      \"storage\": {\n        \"pallet\": \"string\",\n        \"item\": \"string\",\n        \"field1\": \"string\",\n        \"field2\": \"string\"\n      },\n      \"amount\": {\n        \"values\": \"string\",\n        \"currency\": {\n          \"symbol\": \"KSM\"\n        }\n      }\n    },\n    {\n      \"phase\": {\n        \"variant\": \"onInitialize\",\n        \"extrinsicIndex\": \"string\"\n      },\n      \"parentSpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"primarySpanId\": {\n        \"name\": \"string\",\n        \"target\": \"string\",\n        \"id\": \"string\"\n      },\n      \"eventIndex\": \"string\",\n      \"address\": \"string\",\n      \"storage\": {\n        \"pallet\": \"string\",\n        \"item\": \"string\",\n        \"field1\": \"string\",\n        \"field2\": \"string\"\n      },\n      \"amount\": {\n        \"values\": \"string\",\n        \"currency\": {\n          \"symbol\": \"KSM\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a9a14415-6ca5-4185-84e5-cc7b2622c1a2",
+    "name": "Polkadot REST Account trace API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

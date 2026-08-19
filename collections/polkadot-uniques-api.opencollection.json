@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Uniques API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Uniques",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List unique balances by account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/account/balances"
+          },
+          "docs": "Returns paginated unique item balances for an account."
+        },
+        {
+          "info": {
+            "name": "List unique collection activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/activities"
+          },
+          "docs": "Returns paginated activity records for a unique collection and optional item."
+        },
+        {
+          "info": {
+            "name": "List all unique collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/v1/api/scan/uniques/all"
+          },
+          "docs": "Returns all unique collections without pagination."
+        },
+        {
+          "info": {
+            "name": "Get unique collection details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/unique"
+          },
+          "docs": "Returns details for a unique collection by collection_id."
+        },
+        {
+          "info": {
+            "name": "List unique collection holders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/unique/holders"
+          },
+          "docs": "Returns paginated holder distribution for a unique collection."
+        },
+        {
+          "info": {
+            "name": "Get unique item details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/unique/item"
+          },
+          "docs": "Returns details for a unique collection item by collection_id and item_id."
+        },
+        {
+          "info": {
+            "name": "List unique collection items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/unique/items"
+          },
+          "docs": "Returns paginated items in a unique collection with optional owner filter."
+        },
+        {
+          "info": {
+            "name": "List unique collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/uniques/uniques"
+          },
+          "docs": "Returns a paginated list of unique collections."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

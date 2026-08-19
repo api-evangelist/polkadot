@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Block API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Block",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get block details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/block"
+          },
+          "docs": "Returns block details by block number, block hash, or the nearest block to a supplied block timestamp."
+        },
+        {
+          "info": {
+            "name": "Get a block header",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/header"
+          },
+          "docs": "Returns the block header for the requested block number."
+        },
+        {
+          "info": {
+            "name": "List blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/blocks"
+          },
+          "docs": "Returns a paginated block list with optional author and block-range filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

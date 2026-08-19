@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account ForeignAssets API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ForeignAssets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ForeignAssets account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/account/balances"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        },
+        {
+          "info": {
+            "name": "ForeignAssets activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/activities"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        },
+        {
+          "info": {
+            "name": "ForeignAssets list all",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/all"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        },
+        {
+          "info": {
+            "name": "ForeignAssets info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/asset"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        },
+        {
+          "info": {
+            "name": "ForeignAssets holders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/asset/holders"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        },
+        {
+          "info": {
+            "name": "ForeignAssets list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/foreignAssets/assets"
+          },
+          "docs": "This API only supports networks with foreignAssets frame"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

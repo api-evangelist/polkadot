@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Multisig API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Multisig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get multisig extrinsic details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multisig"
+          },
+          "docs": "Returns details for a multisig extrinsic by multi_id and call_hash."
+        },
+        {
+          "info": {
+            "name": "List multisig extrinsics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multisigs"
+          },
+          "docs": "Returns paginated multisig extrinsics filtered by account, call hash, and type."
+        },
+        {
+          "info": {
+            "name": "List multisig extrinsic details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/multisigs/details"
+          },
+          "docs": "Returns paginated multisig detail records for the specified account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

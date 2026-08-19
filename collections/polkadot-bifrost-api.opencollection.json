@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Bifrost API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bifrost",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "LiquidStaking operation record list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/liquidstaking/operations"
+          },
+          "docs": "This API is only available for bifrost/bifrost-kusama network."
+        },
+        {
+          "info": {
+            "name": "List Bifrost TokenGateway transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/tokengateway/transfers"
+          },
+          "docs": "Returns paginated Bifrost TokenGateway transfer records for one address from the dedicated TokenGateway table. Supports filtering by transfer status, source and destination accounts, source and destination chains, block time range, scaled amount range, and asset unique ID. Results are ordered by newest block timestamp first, then by descending row id. The address must be a valid Substrate or EVM address that can be normalized into the indexed account format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

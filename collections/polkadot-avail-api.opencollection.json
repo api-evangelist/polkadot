@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Avail API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Avail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submitted Data info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/dataAvailability/info"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Submitted Data list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/dataAvailability/list"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "vector transfer daily list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/vector/daily"
+          },
+          "docs": "This API only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Transfer count statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/vector/statistics"
+          },
+          "docs": "This API only available for avail network."
+        },
+        {
+          "info": {
+            "name": "vector transfer list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/vector/transfer"
+          },
+          "docs": "This API only available for avail network."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

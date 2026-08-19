@@ -1,0 +1,778 @@
+{
+  "item": [
+    {
+      "id": "08e4b0f0-ec80-48d0-9b98-22baa574f8a8",
+      "name": "rc staking",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1c9c030b-0b0d-43a2-b766-abf0c6e2ca67",
+          "name": "Get staking information for a _Stash_ account on the relay chain.",
+          "request": {
+            "name": "Get staking information for a _Stash_ account on the relay chain.",
+            "description": {
+              "content": "Returns information about a _Stash_ account's staking activity on the relay chain. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for staking information. The _Stash_ account can be either a validator or nominator account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "accounts",
+                ":address",
+                "staking-info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to query the staking info for the specified account."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeClaimedRewards",
+                  "value": "true",
+                  "description": "When set to `false`, the `claimedRewards` field is not included in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<SS58>",
+                  "key": "address",
+                  "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "239473ba-84a1-42dd-ad47-0567504e8569",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "includeClaimedRewards",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"rewardDestination\": \"Stash\",\n  \"controller\": \"string\",\n  \"numSlashingSpans\": \"string\",\n  \"nominations\": {\n    \"targets\": [\n      \"string\",\n      \"string\"\n    ],\n    \"submittedIn\": \"string\",\n    \"suppressed\": false\n  },\n  \"staking\": {\n    \"stash\": \"string\",\n    \"total\": \"string\",\n    \"active\": \"string\",\n    \"unlocking\": \"string\",\n    \"claimedRewards\": [\n      {\n        \"era\": \"string\",\n        \"status\": \"partially claimed\"\n      },\n      {\n        \"era\": \"string\",\n        \"status\": \"partially claimed\"\n      }\n    ]\n  },\n  \"rcBlockHash\": \"string\",\n  \"rcBlockNumber\": \"string\",\n  \"ahTimestamp\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fbb641b-0044-4c1c-b3e1-5ce75303baec",
+              "name": "Invalid Address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "includeClaimedRewards",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82428ab7-2b37-429f-8f61-cb9b8a459e0c",
+              "name": "account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "includeClaimedRewards",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d6076c6-f267-4aeb-b8ad-7e591d13bbcb",
+          "name": "Get payout information for a _Stash_ account on the relay chain.",
+          "request": {
+            "name": "Get payout information for a _Stash_ account on the relay chain.",
+            "description": {
+              "content": "Returns payout information for the last specified eras on the relay chain. This endpoint is specifically for Asset Hub and queries the relay chain (Polkadot/Kusama) for staking payout information. If specifying both the depth and era query params, this endpoint will return information for (era - depth) through era. (i.e. if depth=5 and era=20 information will be returned for eras 16 through 20). The _Stash_ account can be either a validator or nominator account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "accounts",
+                ":address",
+                "staking-payouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to query staking payouts."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "1",
+                  "description": "The number of eras to query for payouts of. Must be less than or equal to `HISTORY_DEPTH`. In cases where `era - (depth -1)` is less than 0, the first era queried will be 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "era",
+                  "value": "<unsignedInteger>",
+                  "description": "The era to query at. Max era payout info is available for is the latest finished era (active_era - 1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "unclaimedOnly",
+                  "value": "true",
+                  "description": "Only return unclaimed rewards."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<SS58>",
+                  "key": "address",
+                  "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbb1c511-9910-4bbf-b656-a9adcce46c72",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "era",
+                      "value": "<unsignedInteger>"
+                    },
+                    {
+                      "key": "unclaimedOnly",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"erasPayouts\": [\n    {\n      \"era\": \"string\",\n      \"totalEraRewardPoints\": \"string\",\n      \"totalEraPayout\": \"string\",\n      \"payouts\": [\n        {\n          \"validatorId\": \"string\",\n          \"nominatorStakingPayout\": \"string\",\n          \"claimed\": false,\n          \"totalValidatorRewardPoints\": \"string\",\n          \"validatorCommission\": \"string\",\n          \"totalValidatorExposure\": \"string\",\n          \"nominatorExposure\": \"string\"\n        },\n        {\n          \"validatorId\": \"string\",\n          \"nominatorStakingPayout\": \"string\",\n          \"claimed\": false,\n          \"totalValidatorRewardPoints\": \"string\",\n          \"validatorCommission\": \"string\",\n          \"totalValidatorExposure\": \"string\",\n          \"nominatorExposure\": \"string\"\n        }\n      ]\n    },\n    {\n      \"era\": \"string\",\n      \"totalEraRewardPoints\": \"string\",\n      \"totalEraPayout\": \"string\",\n      \"payouts\": [\n        {\n          \"validatorId\": \"string\",\n          \"nominatorStakingPayout\": \"string\",\n          \"claimed\": false,\n          \"totalValidatorRewardPoints\": \"string\",\n          \"validatorCommission\": \"string\",\n          \"totalValidatorExposure\": \"string\",\n          \"nominatorExposure\": \"string\"\n        },\n        {\n          \"validatorId\": \"string\",\n          \"nominatorStakingPayout\": \"string\",\n          \"claimed\": true,\n          \"totalValidatorRewardPoints\": \"string\",\n          \"validatorCommission\": \"string\",\n          \"totalValidatorExposure\": \"string\",\n          \"nominatorExposure\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"rcBlockHash\": \"string\",\n  \"rcBlockNumber\": \"string\",\n  \"ahTimestamp\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1775052e-ad98-439c-9999-5a94a0f0c479",
+              "name": "Invalid Address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "era",
+                      "value": "<unsignedInteger>"
+                    },
+                    {
+                      "key": "unclaimedOnly",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61c82d1e-3bf7-432b-859f-897a96f3d312",
+              "name": "account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "accounts",
+                    ":address",
+                    "staking-payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "1"
+                    },
+                    {
+                      "key": "era",
+                      "value": "<unsignedInteger>"
+                    },
+                    {
+                      "key": "unclaimedOnly",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<SS58>",
+                      "key": "address",
+                      "description": "(Required) SS58 address of the account. Must be a _Stash_ account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8b32763-228d-4832-bc3f-70a012b2a745",
+          "name": "Get progress on the general Staking pallet system on Relay Chain.",
+          "request": {
+            "name": "Get progress on the general Staking pallet system on Relay Chain.",
+            "description": {
+              "content": "Returns information on the progress of key components of the staking system and estimates of future points of interest. If you are querying from Asset Hub for staking progress, this endpoint requires multi chain connections between the relay chain, and asset hub itself. Set the asset hub rpc to SAS_SUBSTRATE_URL, and add the relay chain to the SAS_SUBSTRATE_MULTI_CHAIN_URL env var. Refer to the README for the structure of the env vars. The `useRcBlock` parameter allows querying Asset Hub state using relay chain block numbers, enabling post-migration infrastructure to continue using relay chain block identifiers while accessing Asset Hub data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "pallets",
+                "staking",
+                "progress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve a staking progress report."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d159b04-aa44-4036-9394-3d41e27b1c66",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "pallets",
+                    "staking",
+                    "progress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"activeEra\": \"string\",\n  \"forceEra\": \"ForceNone\",\n  \"nextActiveEraEstimate\": \"string\",\n  \"nextSessionEstimate\": \"string\",\n  \"unappliedSlashes\": [\n    {\n      \"validator\": \"string\",\n      \"own\": \"string\",\n      \"others\": [\n        \"string\",\n        \"string\"\n      ],\n      \"reporters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"payout\": \"string\"\n    },\n    {\n      \"validator\": \"string\",\n      \"own\": \"string\",\n      \"others\": [\n        \"string\",\n        \"string\"\n      ],\n      \"reporters\": [\n        \"string\",\n        \"string\"\n      ],\n      \"payout\": \"string\"\n    }\n  ],\n  \"electionStatus\": {\n    \"status\": {},\n    \"toggleEstimate\": \"string\"\n  },\n  \"idealValidatorCount\": \"string\",\n  \"validatorSet\": [\n    \"string\",\n    \"string\"\n  ],\n  \"rcBlockHash\": \"string\",\n  \"rcBlockNumber\": \"string\",\n  \"ahTimestamp\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "424f6304-b6cc-4bee-b911-d8f8e4be37c7",
+              "name": "invalid blockId supplied for at query param, or invalid parameter combination",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "pallets",
+                    "staking",
+                    "progress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd2b2f4c-7d68-44cd-ac05-683ea0bdf0c6",
+          "name": "Get all validators (active/waiting) of a specific chain.",
+          "request": {
+            "name": "Get all validators (active/waiting) of a specific chain.",
+            "description": {
+              "content": "Returns a list of all validators addresses and their corresponding status which can be either active or waiting. For declared validators, it also includes their commission rate (as parts-per-billion) and nomination blocking status. It will also return a list of active validators that will not be part of the next era for staking. They will be under the key \"validatorsToBeChilled\". It's important to note, that addresses can be present in both the \"validators\" key, and \"validatorsToBeChilled\". Commission and blocked properties are not present for active validators that have been chilled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rc",
+                "pallets",
+                "staking",
+                "validators"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "at",
+                  "value": "<unsignedInteger or $hex>",
+                  "description": "Block at which to retrieve the list of validators."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ae7cd65-1825-4287-a820-ab9bbc9c2352",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "pallets",
+                    "staking",
+                    "validators"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"at\": {\n    \"hash\": \"string\",\n    \"height\": \"string\"\n  },\n  \"validators\": [\n    {\n      \"address\": \"string\",\n      \"status\": \"string\",\n      \"commission\": \"string\",\n      \"blocked\": false\n    },\n    {\n      \"address\": \"string\",\n      \"status\": \"string\",\n      \"commission\": \"string\",\n      \"blocked\": false\n    }\n  ],\n  \"validatorsToBeChilled\": [\n    {\n      \"address\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"address\": \"string\",\n      \"status\": \"string\"\n    }\n  ],\n  \"rcBlockHash\": \"string\",\n  \"rcBlockNumber\": \"string\",\n  \"ahTimestamp\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1784de6-08a6-433d-891f-6bc1106a79ec",
+              "name": "invalid blockId supplied for at query param, or invalid parameter combination",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rc",
+                    "pallets",
+                    "staking",
+                    "validators"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "at",
+                      "value": "<unsignedInteger or $hex>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6658.341566613694,\n  \"message\": \"string\",\n  \"stack\": \"string\",\n  \"level\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f60c4c16-1f2a-4ac4-bee4-325738f64991",
+    "name": "Polkadot REST Account rc staking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

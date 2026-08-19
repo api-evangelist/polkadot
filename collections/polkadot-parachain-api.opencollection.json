@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Parachain API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Parachain",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get parachain details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/info"
+          },
+          "docs": "Returns detailed parachain information with optional parachain-status filters. Only available on relay chains: Polkadot, Kusama, Westend, and Paseo."
+        },
+        {
+          "info": {
+            "name": "List parachains and parathreads",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/list"
+          },
+          "docs": "Returns a paginated list of parachains and parathreads with status and basic metadata. Only available on relay chains: Polkadot, Kusama, Westend, and Paseo."
+        },
+        {
+          "info": {
+            "name": "Get parachain metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/meta"
+          },
+          "docs": "Returns aggregate metadata for all parachains on the current relay chain. Only available on relay chains: Polkadot, Kusama, Westend, and Paseo."
+        },
+        {
+          "info": {
+            "name": "Get parachain registration info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/registerinfo"
+          },
+          "docs": "Returns the current relay-chain name and parachain registration mapping when parachain registration data is available."
+        },
+        {
+          "info": {
+            "name": "List relay parachain statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/statistics/list"
+          },
+          "docs": "Returns one cached aggregate row per parachain network for relay-level dashboards."
+        },
+        {
+          "info": {
+            "name": "Get relay parachain statistics overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/statistics/overview"
+          },
+          "docs": "Returns cached aggregate extrinsic, transfer, TPS, and XCM counters for parachains under the current relay chain. Reads pre-aggregated rollups only and does not fan out to parachain APIs."
+        },
+        {
+          "info": {
+            "name": "Get relay parachain statistics timeseries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/parachain/statistics/timeseries"
+          },
+          "docs": "Returns cached hourly or daily parachain metric rollups for chart rendering."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

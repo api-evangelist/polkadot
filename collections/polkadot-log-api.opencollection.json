@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Log API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Log",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get block log by index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/log"
+          },
+          "docs": "Returns a block log record by log index."
+        },
+        {
+          "info": {
+            "name": "List block logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/logs"
+          },
+          "docs": "Returns paginated block logs filtered by block range, engine ID, and log type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

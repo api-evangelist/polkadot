@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account NominationPools API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NominationPools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Nomination Pools Activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/activities"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        },
+        {
+          "info": {
+            "name": "Nomination Pools Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/pool"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        },
+        {
+          "info": {
+            "name": "Nomination Pools Member Vote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/pool/member/vote"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        },
+        {
+          "info": {
+            "name": "Nomination Pools Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/pool/members"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        },
+        {
+          "info": {
+            "name": "Nomination Pools List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/pools"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        },
+        {
+          "info": {
+            "name": "Nomination Pools Rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/nomination_pool/rewards"
+          },
+          "docs": "This API only supports networks with nominationPools frame"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

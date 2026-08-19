@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Currency API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Currency",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List supported native-token quote currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/open/currencies"
+          },
+          "docs": "Returns the supported currency codes that can be used for native-token price lookup and conversion."
+        },
+        {
+          "info": {
+            "name": "Get the native token price at a specific time",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/open/price"
+          },
+          "docs": "Returns the native-token price quote for the requested timestamp. Use this endpoint for historical token price lookup in supported quote currencies."
+        },
+        {
+          "info": {
+            "name": "Convert one token value between currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/open/price_converter"
+          },
+          "docs": "Converts a token amount from one supported currency into another using the price snapshot at the requested time. Returns both the converted output value and the quote data used for the calculation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

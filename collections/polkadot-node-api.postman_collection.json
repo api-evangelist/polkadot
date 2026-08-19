@@ -1,0 +1,690 @@
+{
+  "item": [
+    {
+      "id": "e59e4e14-b7d9-407a-a781-43a81ea0ecae",
+      "name": "node",
+      "description": {
+        "content": "Connected node information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd00fc60-5563-493a-b1eb-d1d5cb266782",
+          "name": "Node network info",
+          "request": {
+            "name": "Node network info",
+            "description": {
+              "content": "Returns the node's network information including peer count, syncing status, and local peer ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "node",
+                "network"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "884715e0-b7ea-46c3-8555-84de656e02cb",
+              "name": "Node network information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4694a3de-d84d-4174-b283-3aeae49f1db3",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "da47e73f-932c-4b4e-8927-b25c69eae306",
+              "name": "Service unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcb21763-273e-441c-b479-92e66f4314c9",
+          "name": "Transaction pool",
+          "request": {
+            "name": "Transaction pool",
+            "description": {
+              "content": "Returns the node's transaction pool with optional fee information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "node",
+                "transaction-pool"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeFee",
+                  "value": "<boolean>",
+                  "description": "Include fee details for each transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "902f4927-d09c-455f-be22-3695e2ecb891",
+              "name": "Transaction pool entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "transaction-pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFee",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pool\": [\n    {\n      \"hash\": \"string\",\n      \"encodedExtrinsic\": \"string\",\n      \"partialFee\": \"string\",\n      \"priority\": \"string\",\n      \"tip\": \"string\"\n    },\n    {\n      \"hash\": \"string\",\n      \"encodedExtrinsic\": \"string\",\n      \"partialFee\": \"string\",\n      \"priority\": \"string\",\n      \"tip\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28ceca41-574d-4c23-98dd-900fd905f7c8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "transaction-pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFee",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "590ef306-e0bf-4a0a-ae44-23287dff8df8",
+              "name": "Service unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "transaction-pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFee",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5d955b9-319e-48d9-90a5-0399e9008db9",
+          "name": "Node version",
+          "request": {
+            "name": "Node version",
+            "description": {
+              "content": "Returns the node's version information including client version, implementation name, and chain name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "node",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b470ad57-a3ec-45ca-8eec-8d380e73bce8",
+              "name": "Node version information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientVersion\": \"string\",\n  \"clientImplName\": \"string\",\n  \"chain\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "595ceb5b-fe14-4085-9132-dec8d15b71f1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c344fe7c-4364-4458-9cd7-f3a618589c89",
+              "name": "Service unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "node",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f9dd877-c57b-45fe-b3d5-568b8ff537b4",
+          "name": "Get information about the Substrate node's activity in the peer-to-peer network.",
+          "request": {
+            "name": "Get information about the Substrate node's activity in the peer-to-peer network.",
+            "description": {
+              "content": "Returns network related information of the node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "node",
+                "network"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c202bb9f-8c93-4ea8-be01-382056363bdc",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "node",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodeRoles\": \"Full\",\n  \"numPeers\": \"string\",\n  \"isSyncing\": false,\n  \"shouldHavePeers\": true,\n  \"localPeerId\": \"string\",\n  \"localListenAddresses\": [\n    \"string\",\n    \"string\"\n  ],\n  \"peersInfo\": [\n    {\n      \"peerId\": \"string\",\n      \"roles\": \"string\",\n      \"protocolVersion\": \"string\",\n      \"bestHash\": \"string\",\n      \"bestNumber\": \"string\"\n    },\n    {\n      \"peerId\": \"string\",\n      \"roles\": \"string\",\n      \"protocolVersion\": \"string\",\n      \"bestHash\": \"string\",\n      \"bestNumber\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72c90421-6dc4-472b-bf71-823b1bd5ddd9",
+          "name": "Get pending extrinsics from the Substrate node.",
+          "request": {
+            "name": "Get pending extrinsics from the Substrate node.",
+            "description": {
+              "content": "Returns the extrinsics that the node knows of that have not been included in a block.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "node",
+                "transaction-pool"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeFee",
+                  "value": "false",
+                  "description": "Boolean representing whether or not to include tips, partialFee, and priority in each extrinsic."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "174d788a-78af-49f5-aa30-1ed32334d4b0",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "node",
+                    "transaction-pool"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFee",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pool\": [\n    {\n      \"hash\": \"string\",\n      \"encodedExtrinsic\": \"string\",\n      \"tip\": \"string\",\n      \"priority\": \"string\",\n      \"partialFee\": \"string\"\n    },\n    {\n      \"hash\": \"string\",\n      \"encodedExtrinsic\": \"string\",\n      \"tip\": \"string\",\n      \"priority\": \"string\",\n      \"partialFee\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fff486f4-390c-4419-bb49-0b44182a8958",
+          "name": "Get information about the Substrates node's implementation and versioning.",
+          "request": {
+            "name": "Get information about the Substrates node's implementation and versioning.",
+            "description": {
+              "content": "Returns versioning information of the node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "node",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5af96cd-12df-4b4b-ab4e-79785f798aee",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "node",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientVersion\": \"string\",\n  \"clientImplName\": \"string\",\n  \"chain\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "346272ce-9fef-4086-877f-677db5c40a50",
+    "name": "Polkadot REST Account node API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}

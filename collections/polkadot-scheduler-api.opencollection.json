@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Scheduler API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scheduler",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get scheduled call details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/scheduler"
+          },
+          "docs": "Returns a scheduled call detail by ID or by (when,index)."
+        },
+        {
+          "info": {
+            "name": "List scheduled calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/schedulers"
+          },
+          "docs": "Returns paginated scheduled calls with module, status, and time-range filters."
+        },
+        {
+          "info": {
+            "name": "Get scheduler statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/schedulers/statistics"
+          },
+          "docs": "Returns aggregated scheduler statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

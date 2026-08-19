@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Extrinsic API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extrinsic",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get extrinsic details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/extrinsic"
+          },
+          "docs": "Returns extrinsic details by extrinsic_index or hash, with optional event and parameter controls."
+        },
+        {
+          "info": {
+            "name": "Get extrinsic parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/extrinsic/params"
+          },
+          "docs": "Returns parsed parameter payloads for up to 100 extrinsic indexes."
+        },
+        {
+          "info": {
+            "name": "List extrinsic reward records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/extrinsic/reward"
+          },
+          "docs": "Returns the reward records associated with one extrinsic index.\nThis API only supports networks with staking frame or parachain-staking pallet"
+        },
+        {
+          "info": {
+            "name": "Get raw extrinsic transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/getRawTx"
+          },
+          "docs": "Returns the raw transaction hex for an extrinsic index or extrinsic hash."
+        },
+        {
+          "info": {
+            "name": "List pending extrinsics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/pendingExtrinsics"
+          },
+          "docs": "Returns currently pending extrinsics in the mempool."
+        },
+        {
+          "info": {
+            "name": "List extrinsics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/v2/scan/extrinsics"
+          },
+          "docs": "Returns paginated extrinsics with module/call, signer, success, and block-range filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

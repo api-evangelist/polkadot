@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account CrustStorage API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CrustStorage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crust storage daily stat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/daily"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage group detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/group"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage group members",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/group/members"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/groups"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage group member detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/member"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage group member files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/member/files"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage group member orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/member/orders"
+          },
+          "docs": "This API is only available for avail network."
+        },
+        {
+          "info": {
+            "name": "Crust storage orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/swork/orders"
+          },
+          "docs": "This API is only available for avail network."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

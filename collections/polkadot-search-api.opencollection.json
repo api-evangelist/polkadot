@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Polkadot REST Account Search API",
+    "version": "0.1.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Identify the object type for a hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/v1/api/scan/check_hash"
+          },
+          "docs": "Resolves the supplied hash and returns the detected object type, such as account, extrinsic, EVM transaction, block, XCM message, or multisig call hash, together with any matching identifiers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "50885a84-2918-42ac-a501-ae03a7d13afe",
+      "name": "version",
+      "description": {
+        "content": "API version",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9e98e670-7d57-4fd8-8207-bb18629300e0",
+          "name": "API version",
+          "request": {
+            "name": "API version",
+            "description": {
+              "content": "Returns the current version of the Polkadot REST API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55a230d5-babf-4b57-8a77-529a08a09040",
+              "name": "API version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cc38579e-7b55-4a36-a099-88538a963a22",
+    "name": "Polkadot REST Account version API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.",
+      "type": "text/plain"
+    }
+  }
+}
