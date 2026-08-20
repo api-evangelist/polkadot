@@ -62,6 +62,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Account
+  tags_raw:
   - accounts
   properties:
   - type: OpenAPI
@@ -248,6 +250,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Blocks
+  tags_raw:
   - blocks
   properties:
   - type: OpenAPI
@@ -279,6 +283,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Capabilities
+  tags_raw:
   - capabilities
   properties:
   - type: OpenAPI
@@ -682,6 +688,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Health
+  tags_raw:
   - health
   properties:
   - type: OpenAPI
@@ -837,6 +845,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Multi-Chain
+  tags_raw:
   - MultiChain
   properties:
   - type: OpenAPI
@@ -899,6 +909,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - NFT
+  tags_raw:
   - NFTs
   properties:
   - type: OpenAPI
@@ -930,6 +942,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Node
+  tags_raw:
   - node
   properties:
   - type: OpenAPI
@@ -1395,6 +1409,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Runtime
+  tags_raw:
   - runtime
   properties:
   - type: OpenAPI
@@ -1612,6 +1628,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Trace
+  tags_raw:
   - trace
   properties:
   - type: OpenAPI
@@ -1643,6 +1661,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Transaction
+  tags_raw:
   - transaction
   properties:
   - type: OpenAPI
@@ -1705,6 +1725,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - Version
+  tags_raw:
   - version
   properties:
   - type: OpenAPI
