@@ -1,42 +1,36 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Block API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Block API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Block
 paths:
   /api/scan/block:
     post:
-      consumes:
-      - application/json
       description: Returns block details by block number, block hash, or the nearest block to a supplied block timestamp.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.blockParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ChainBlockJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ChainBlockJson'
+                  type: object
       summary: Get block details
       tags:
       - Block
@@ -45,30 +39,28 @@ paths:
       - scan
       - block height
       - block number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.blockParams'
+        description: params
+        required: true
   /api/scan/header:
     post:
-      consumes:
-      - application/json
       description: Returns the block header for the requested block number.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.blockHeaderParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.BlockHeader'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.BlockHeader'
+                  type: object
       summary: Get a block header
       tags:
       - Block
@@ -78,37 +70,35 @@ paths:
       - scan
       - block height
       - block number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.blockHeaderParams'
+        description: params
+        required: true
   /api/v2/scan/blocks:
     post:
-      consumes:
-      - application/json
       description: Returns a paginated block list with optional author and block-range filters.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.blocksParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    blocks:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.SampleBlockV2Json'
-                      type: array
-                    count:
-                      type: integer
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        blocks:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.SampleBlockV2Json'
+                          type: array
+                        count:
+                          type: integer
+                      type: object
                   type: object
-              type: object
       summary: List blocks
       tags:
       - Block
@@ -120,305 +110,313 @@ paths:
       - block heights
       - block height
       - block number
-definitions:
-  internal_server_http.blockHeaderParams:
-    properties:
-      block_num:
-        example: 10000
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.AccountParentJson:
-    properties:
-      address:
-        type: string
-      display:
-        type: string
-      identity:
-        type: boolean
-      sub_symbol:
-        type: string
-    type: object
-  subscan_internal_model.MerkleTag:
-    properties:
-      address_type:
-        type: string
-      tag_name:
-        type: string
-      tag_subtype:
-        type: string
-      tag_type:
-        type: string
-    type: object
-  subscan_internal_model.ChainExtrinsicJson:
-    properties:
-      account_display:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      account_id:
-        type: string
-      account_index:
-        type: string
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      call_module:
-        type: string
-      call_module_function:
-        type: string
-      extrinsic_hash:
-        type: string
-      extrinsic_index:
-        type: string
-      fee:
-        type: string
-      fee_used:
-        type: string
-      finalized:
-        type: boolean
-      from_hex:
-        type: string
-      nonce:
-        type: integer
-      params:
-        type: string
-      signature:
-        type: string
-      success:
-        type: boolean
-    type: object
-  subscan_internal_model.SampleIdentity:
-    properties:
-      display:
-        type: string
-      identity:
-        type: boolean
-      judgements:
-        items:
-          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
-        type: array
-      parent:
-        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
-    type: object
-  subscan_internal_model.ChainBlockJson:
-    properties:
-      account_display:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      additional_meta:
-        additionalProperties: true
-        type: object
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      event_count:
-        type: integer
-      events:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ChainEventJson'
-        type: array
-      extrinsics:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ChainExtrinsicJson'
-        type: array
-      extrinsics_count:
-        type: integer
-      extrinsics_root:
-        type: string
-      finalized:
-        type: boolean
-      hash:
-        type: string
-      logs:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ChainLogJson'
-        type: array
-      max_proof_size:
-        type: integer
-      max_ref_time:
-        type: integer
-      parent_hash:
-        type: string
-      proof_size:
-        type: integer
-      ref_time:
-        type: integer
-      spec_version:
-        type: integer
-      state_root:
-        type: string
-      validator:
-        type: string
-    type: object
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_model.ChainLogJson:
-    properties:
-      block_num:
-        type: integer
-      data:
-        type: string
-      engine:
-        type: string
-      id:
-        type: integer
-      log_index:
-        type: string
-      log_type:
-        type: string
-    type: object
-  subscan_internal_model.SampleBlockV2Json:
-    properties:
-      account_display:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      additional_meta:
-        additionalProperties: true
-        type: object
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      event_count:
-        type: integer
-      extrinsics_count:
-        type: integer
-      finalized:
-        type: boolean
-      hash:
-        type: string
-      max_proof_size:
-        type: integer
-      max_ref_time:
-        type: integer
-      proof_size:
-        type: integer
-      ref_time:
-        type: integer
-    type: object
-  subscan_internal_model.BlockHeader:
-    properties:
-      block_number:
-        type: integer
-      digest:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.blocksParams'
+        description: params
+        required: true
+components:
+  schemas:
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
           type: string
-        type: array
-      extrinsics_root:
-        type: string
-      parent_hash:
-        type: string
-      state_root:
-        type: string
-    type: object
-  internal_server_http.blocksParams:
-    properties:
-      after_id:
-        type: integer
-      author:
-        type: string
-      block_range:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.blockParams:
-    properties:
-      block_hash:
-        example: 76348355870982371260092528173678713874679923045094083042913560678924874744331
-        type: string
-      block_num:
-        example: 10000
-        minimum: 0
-        type: integer
-      block_timestamp:
-        type: integer
-      only_head:
-        type: boolean
-    type: object
-  subscan_internal_model.EvmAccountDisplay:
-    properties:
-      contract_name:
-        type: string
-      verify_source:
-        type: string
-    type: object
-  subscan_internal_model.ChainEventJson:
-    properties:
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      event_id:
-        type: string
-      event_idx:
-        type: integer
-      event_index:
-        type: string
-      extrinsic_hash:
-        type: string
-      extrinsic_idx:
-        type: integer
-      finalized:
-        type: boolean
-      module_id:
-        type: string
-      params:
-        type: string
-      phase:
-        type: integer
-    type: object
-  subscan_internal_model.RegistrationJudgementJson:
-    properties:
-      index:
-        type: integer
-      judgement:
-        type: string
-    type: object
-  subscan_internal_model.AccountDisplay:
-    properties:
-      account_index:
-        type: string
-      address:
-        description: Current network account
-        type: string
-      display:
-        type: string
-      evm_address:
-        type: string
-      evm_contract:
-        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
-      identity:
-        type: boolean
-      judgements:
-        items:
-          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
-        type: array
-      merkle:
-        $ref: '#/definitions/subscan_internal_model.MerkleTag'
-      parent:
-        allOf:
-        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
-        description: Parent account
-      people:
-        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
-    type: object
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.BlockHeader:
+      properties:
+        block_number:
+          type: integer
+        digest:
+          items:
+            type: string
+          type: array
+        extrinsics_root:
+          type: string
+        parent_hash:
+          type: string
+        state_root:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.ChainBlockJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        additional_meta:
+          additionalProperties: true
+          type: object
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_count:
+          type: integer
+        events:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ChainEventJson'
+          type: array
+        extrinsics:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ChainExtrinsicJson'
+          type: array
+        extrinsics_count:
+          type: integer
+        extrinsics_root:
+          type: string
+        finalized:
+          type: boolean
+        hash:
+          type: string
+        logs:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ChainLogJson'
+          type: array
+        max_proof_size:
+          type: integer
+        max_ref_time:
+          type: integer
+        parent_hash:
+          type: string
+        proof_size:
+          type: integer
+        ref_time:
+          type: integer
+        spec_version:
+          type: integer
+        state_root:
+          type: string
+        validator:
+          type: string
+      type: object
+    subscan_internal_model.ChainExtrinsicJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        account_id:
+          type: string
+        account_index:
+          type: string
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        call_module:
+          type: string
+        call_module_function:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_index:
+          type: string
+        fee:
+          type: string
+        fee_used:
+          type: string
+        finalized:
+          type: boolean
+        from_hex:
+          type: string
+        nonce:
+          type: integer
+        params:
+          type: string
+        signature:
+          type: string
+        success:
+          type: boolean
+      type: object
+    internal_server_http.blockHeaderParams:
+      properties:
+        block_num:
+          example: 10000
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.SampleBlockV2Json:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        additional_meta:
+          additionalProperties: true
+          type: object
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_count:
+          type: integer
+        extrinsics_count:
+          type: integer
+        finalized:
+          type: boolean
+        hash:
+          type: string
+        max_proof_size:
+          type: integer
+        max_ref_time:
+          type: integer
+        proof_size:
+          type: integer
+        ref_time:
+          type: integer
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.ChainEventJson:
+      properties:
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_idx:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_idx:
+          type: integer
+        finalized:
+          type: boolean
+        module_id:
+          type: string
+        params:
+          type: string
+        phase:
+          type: integer
+      type: object
+    subscan_internal_model.ChainLogJson:
+      properties:
+        block_num:
+          type: integer
+        data:
+          type: string
+        engine:
+          type: string
+        id:
+          type: integer
+        log_index:
+          type: string
+        log_type:
+          type: string
+      type: object
+    internal_server_http.blockParams:
+      properties:
+        block_hash:
+          example: 76348355870982371260092528173678713874679923045094083042913560678924874744331
+          type: string
+        block_num:
+          example: 10000
+          minimum: 0
+          type: integer
+        block_timestamp:
+          type: integer
+        only_head:
+          type: boolean
+      type: object
+    internal_server_http.blocksParams:
+      properties:
+        after_id:
+          type: integer
+        author:
+          type: string
+        block_range:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object

@@ -1,14 +1,50 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account rc node API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
+  title: Substrate API Sidecar rc node API
+  description: '> ⚠️ **Deprecation Notice** — `substrate-api-sidecar` is deprecated in favor of
+
+    > [`polkadot-rest-api`](https://github.com/paritytech/polkadot-rest-api), a ground-up Rust rewrite
+
+    > built on [`subxt`](https://github.com/paritytech/subxt) with 1:1 API compatibility (endpoints
+
+    > served under `/v1/`, e.g. `/v1/blocks/head`), stable memory under sustained load, significantly
+
+    > lower latency and higher throughput, and native SCALE decoding via `parity-scale-codec`.
+
+    >
+
+    > **Migrate today:** Docker `paritytech/polkadot-rest-api:v0.1.0` ·
+
+    > [crate](https://crates.io/crates/polkadot-rest-api) ·
+
+    > [migration guide](https://github.com/paritytech/polkadot-rest-api/blob/main/docs/guides/MIGRATION.md) ·
+
+    > [docs](https://paritytech.github.io/polkadot-rest-api/) ·
+
+    > [issues](https://github.com/paritytech/polkadot-rest-api/issues)
+
+
+    Substrate API Sidecar is a REST service that makes it easy to interact with blockchain nodes
+
+    built using Substrate''s FRAME framework.
+
+    '
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    url: https://github.com/paritytech/substrate-api-sidecar
   license:
     name: GPL-3.0-or-later
-  version: 0.1.3
+    url: https://github.com/paritytech/substrate-api-sidecar/blob/master/LICENSE
+  version: 20.14.1
 servers:
-- url: http://localhost:8080/v1
+- url: https://polkadot-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Parity public sidecar
+- url: https://kusama-public-sidecar.parity-chains.parity.io/
+  description: Kusama Parity public sidecar
+- url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Asset Hub Parity public sidecar
+- url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Kusama Asset Hub Parity public sidecar
+- url: http://localhost:8080
   description: Localhost
 tags:
 - name: rc node
@@ -65,19 +101,35 @@ paths:
                 $ref: '#/components/schemas/NodeVersion'
 components:
   schemas:
-    NodeVersion:
+    PeerInfo:
       type: object
       properties:
-        clientVersion:
+        peerId:
           type: string
-          description: Node's binary version.
-        clientImplName:
+          description: Peer ID.
+        roles:
           type: string
-          description: Node's implementation name.
-        chain:
+          description: Roles the peer is running
+        protocolVersion:
           type: string
-          description: Node's chain name.
-      description: Version information of the node.
+          description: Peer's protocol version.
+          format: unsignedInteger
+        bestHash:
+          type: string
+          description: Hash of the best block on the peer's canon chain.
+          format: hex
+        bestNumber:
+          type: string
+          description: Height of the best block on the peer's canon chain.
+          format: unsignedInteger
+    NodeRole:
+      type: string
+      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
+      enum:
+      - Full
+      - LightClient
+      - Authority
+      - Sentry
     TransactionPool:
       type: object
       properties:
@@ -133,32 +185,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PeerInfo'
-    NodeRole:
-      type: string
-      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
-      enum:
-      - Full
-      - LightClient
-      - Authority
-      - Sentry
-    PeerInfo:
+    NodeVersion:
       type: object
       properties:
-        peerId:
+        clientVersion:
           type: string
-          description: Peer ID.
-        roles:
+          description: Node's binary version.
+        clientImplName:
           type: string
-          description: Roles the peer is running
-        protocolVersion:
+          description: Node's implementation name.
+        chain:
           type: string
-          description: Peer's protocol version.
-          format: unsignedInteger
-        bestHash:
-          type: string
-          description: Hash of the best block on the peer's canon chain.
-          format: hex
-        bestNumber:
-          type: string
-          description: Height of the best block on the peer's canon chain.
-          format: unsignedInteger
+          description: Node's chain name.
+      description: Version information of the node.

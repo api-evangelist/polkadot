@@ -1,49 +1,43 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Sxt API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Sxt API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Sxt
 paths:
   /api/scan/sxt/holders:
     post:
-      consumes:
-      - application/json
       description: This API is only available for sxt network.
-      parameters:
-      - description: body
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_plugin_spaceTime_http.holderParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_plugin_spaceTime_db.Holder'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_plugin_spaceTime_db.Holder'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: sxt evm holder list
       tags:
       - Sxt
@@ -60,37 +54,35 @@ paths:
       - balance holder
       - owners
       - token holders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_plugin_spaceTime_http.holderParams'
+        description: body
+        required: true
   /api/scan/sxt/transfers:
     post:
-      consumes:
-      - application/json
       description: This API is only available for sxt network.
-      parameters:
-      - description: body
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_plugin_spaceTime_http.transferParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_plugin_spaceTime_db.TransferJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_plugin_spaceTime_db.TransferJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: sxt evm transfer list
       tags:
       - Sxt
@@ -105,96 +97,104 @@ paths:
       - frontier
       - send
       - asset movement
-definitions:
-  internal_plugin_spaceTime_http.transferParams:
-    properties:
-      address:
-        type: string
-      after_id:
-        type: integer
-      page:
-        minimum: 0
-        type: integer
-      receiver:
-        type: string
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-      sender:
-        type: string
-    type: object
-  subscan_internal_plugin_spaceTime_db.TransferJson:
-    properties:
-      amount:
-        type: string
-      amount_raw:
-        type: string
-      block_hash:
-        type: string
-      block_num:
-        type: integer
-      contract:
-        type: string
-      from:
-        $ref: '#/definitions/subscan_internal_plugin_spaceTime_db.HolderDisplay'
-      id:
-        type: integer
-      log_index:
-        type: integer
-      method:
-        type: string
-      timestamp:
-        type: integer
-      to:
-        $ref: '#/definitions/subscan_internal_plugin_spaceTime_db.HolderDisplay'
-      transaction_hash:
-        type: string
-    type: object
-  subscan_internal_plugin_share.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_plugin_spaceTime_db.HolderDisplay:
-    properties:
-      address:
-        type: string
-      is_contract:
-        type: boolean
-      is_verified:
-        type: boolean
-      name:
-        type: string
-    type: object
-  subscan_internal_plugin_spaceTime_db.Holder:
-    properties:
-      address:
-        type: string
-      balance:
-        type: string
-      is_contract:
-        type: boolean
-      is_verified:
-        type: boolean
-      name:
-        type: string
-    type: object
-  internal_plugin_spaceTime_http.holderParams:
-    properties:
-      page:
-        minimum: 0
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_plugin_spaceTime_http.transferParams'
+        description: body
+        required: true
+components:
+  schemas:
+    subscan_internal_plugin_spaceTime_db.Holder:
+      properties:
+        address:
+          type: string
+        balance:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
+      type: object
+    internal_plugin_spaceTime_http.transferParams:
+      properties:
+        address:
+          type: string
+        after_id:
+          type: integer
+        page:
+          minimum: 0
+          type: integer
+        receiver:
+          type: string
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        sender:
+          type: string
+      type: object
+    subscan_internal_plugin_spaceTime_db.TransferJson:
+      properties:
+        amount:
+          type: string
+        amount_raw:
+          type: string
+        block_hash:
+          type: string
+        block_num:
+          type: integer
+        contract:
+          type: string
+        from:
+          $ref: '#/components/schemas/subscan_internal_plugin_spaceTime_db.HolderDisplay'
+        id:
+          type: integer
+        log_index:
+          type: integer
+        method:
+          type: string
+        timestamp:
+          type: integer
+        to:
+          $ref: '#/components/schemas/subscan_internal_plugin_spaceTime_db.HolderDisplay'
+        transaction_hash:
+          type: string
+      type: object
+    internal_plugin_spaceTime_http.holderParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_plugin_spaceTime_db.HolderDisplay:
+      properties:
+        address:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
+      type: object

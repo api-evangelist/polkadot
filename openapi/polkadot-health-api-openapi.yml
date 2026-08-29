@@ -1,15 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account health API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
-  contact:
-    url: https://github.com/paritytech/polkadot-rest-api
-  license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+  title: Polkadot Health API
+  version: '1.0'
+  description: 'Operations tagged health across 2 of this provider''s published API definitions: polkadot-rest-api-openapi.json, subscan-swagger.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://localhost:8080/v1
   description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: health
   description: Health check
@@ -28,14 +25,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /healthz:
     get:
       description: Returns OK when the service process is alive.
       responses:
         '200':
           description: OK
-          schema:
-            type: string
+          content:
+            application/json:
+              schema:
+                type: string
       summary: Liveness health check
       tags:
       - health
@@ -44,14 +46,18 @@ paths:
       - health
       - check
       - healthz
+    servers:
+    - url: https://https://www.subscan.io/
   /readiness:
     get:
       description: Returns OK when the service is ready to serve traffic.
       responses:
         '200':
           description: OK
-          schema:
-            type: string
+          content:
+            application/json:
+              schema:
+                type: string
       summary: Readiness health check
       tags:
       - health
@@ -59,6 +65,8 @@ paths:
       - readiness
       - health
       - check
+    servers:
+    - url: https://https://www.subscan.io/
 components:
   schemas:
     HealthResponse:
@@ -79,3 +87,6 @@ components:
           - 'null'
           format: int64
           minimum: 0
+x-refined-from:
+- polkadot-rest-api-openapi.json
+- subscan-swagger.yaml

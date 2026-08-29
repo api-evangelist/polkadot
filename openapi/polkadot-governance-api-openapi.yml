@@ -1,51 +1,45 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Governance API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Governance API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Governance
 paths:
   /api/scan/account/referendum:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated referendum or democracy items associated with the specified account.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.accountReferendumParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.AccountReferendumJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.AccountReferendumJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List governance items for an account
       tags:
       - Governance
@@ -60,39 +54,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.accountReferendumParams'
+        description: params
+        required: true
   /api/scan/bounties/child:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated child-bounty list, optionally filtered by parent bounty ID.
 
         This API only supports networks with childbounties frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.childBountiesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ChildBountySampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ChildBountySampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List child bounties
       tags:
       - Governance
@@ -106,32 +98,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.childBountiesParams'
+        description: params
+        required: true
   /api/scan/bounties/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one bounty proposal.
 
         This API only supports networks with bounties frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.bountyParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.BountyJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.BountyJson'
+                  type: object
       summary: Get bounty details
       tags:
       - Governance
@@ -145,39 +135,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.bountyParams'
+        description: params
+        required: true
   /api/scan/bounties/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated bounty list with optional status filtering.
 
         This API only supports networks with bounties frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.bountiesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.BountySampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.BountySampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List bounties
       tags:
       - Governance
@@ -191,35 +179,33 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.bountiesParams'
+        description: params
+        required: true
   /api/scan/council/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one council proposal.
 
         This API only supports networks with council frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.councilProposalParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.CouncilProposalJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.CouncilProposalJson'
+                      type: object
                   type: object
-              type: object
       summary: Get council proposal details
       tags:
       - Governance
@@ -231,39 +217,37 @@ paths:
       - referendum
       - vote
       - treasury
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.councilProposalParams'
+        description: params
+        required: true
   /api/scan/council/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated council proposal list.
 
         This API only supports networks with council frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.councilProposalsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TechcommProposalSample'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TechcommProposalSample'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List council proposals
       tags:
       - Governance
@@ -275,35 +259,33 @@ paths:
       - referendum
       - vote
       - treasury
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.councilProposalsParams'
+        description: params
+        required: true
   /api/scan/democracy/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one democracy proposal.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.democracyParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.DemocracyJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.DemocracyJson'
+                      type: object
                   type: object
-              type: object
       summary: Get democracy proposal details
       tags:
       - Governance
@@ -316,39 +298,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.democracyParams'
+        description: params
+        required: true
   /api/scan/democracy/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated democracy proposal list with optional status and ordering controls.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.democraciesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.DemocracySampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.DemocracySampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List democracy proposals
       tags:
       - Governance
@@ -362,35 +342,33 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.democraciesParams'
+        description: params
+        required: true
   /api/scan/democracy/referendum:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one legacy democracy referendum.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.ReferendumJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.ReferendumJson'
+                      type: object
                   type: object
-              type: object
       summary: Get democracy referendum details (legacy)
       tags:
       - Governance
@@ -403,39 +381,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumParams'
+        description: params
+        required: true
   /api/scan/democracy/referendums:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated democracy referendum list with optional active/completed status filtering.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.DemocracyReferendumSampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.DemocracyReferendumSampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List democracy referendums
       tags:
       - Governance
@@ -448,39 +424,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumsParams'
+        description: params
+        required: true
   /api/scan/democracy/seconded:
     post:
-      consumes:
-      - application/json
       description: 'Returns the accounts that seconded a democracy proposal.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.democracySecondedParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.DemocracyProposalSeconded'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.DemocracyProposalSeconded'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List democracy seconders
       tags:
       - Governance
@@ -493,39 +467,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.democracySecondedParams'
+        description: params
+        required: true
   /api/scan/democracy/votes:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated vote records for a legacy democracy referendum or account.
 
         This API only supports networks with democracy frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumVotesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.DemocracyVoteJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.DemocracyVoteJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List democracy referendum votes (legacy)
       tags:
       - Governance
@@ -539,32 +511,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumVotesParams'
+        description: params
+        required: true
   /api/scan/fellowship/referendum:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one fellowship referendum.
 
         This API only supports networks with FellowshipReferenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.fellowshipReferendumParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ReferendumV2Json'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ReferendumV2Json'
+                  type: object
       summary: Get fellowship referendum details
       tags:
       - Governance
@@ -577,39 +547,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.fellowshipReferendumParams'
+        description: params
+        required: true
   /api/scan/fellowship/referendums:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated fellowship referenda list with origin, account, and call filters.
 
         This API only supports networks with FellowshipReferenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.fellowshipReferendumsV2Params'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ReferendumV2SampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ReferendumV2SampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List fellowship referenda
       tags:
       - Governance
@@ -623,25 +591,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.fellowshipReferendumsV2Params'
+        description: params
+        required: true
   /api/scan/fellowship/statistics:
     post:
-      consumes:
-      - application/json
       description: 'Returns aggregated statistics for fellowship referenda.
 
         This API only supports networks with FellowshipReferenda frame'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.FellowshipReferendumStatisticsJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.FellowshipReferendumStatisticsJson'
+                  type: object
       summary: Get fellowship referendum statistics
       tags:
       - Governance
@@ -656,25 +629,23 @@ paths:
       - council
   /api/scan/fellowship/tracks:
     post:
-      consumes:
-      - application/json
       description: 'Returns the available fellowship referendum tracks for the current network.
 
         This API only supports networks with FellowshipReferenda frame'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  additionalProperties:
-                    $ref: '#/definitions/subscan_libs_substrate_storage.ReferendumTracksInfo'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      additionalProperties:
+                        $ref: '#/components/schemas/subscan_libs_substrate_storage.ReferendumTracksInfo'
+                      type: object
                   type: object
-              type: object
       summary: List fellowship referendum tracks
       tags:
       - Governance
@@ -689,37 +660,28 @@ paths:
       - council
   /api/scan/fellowship/votes:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated vote records for one fellowship referendum.
 
         This API only supports networks with FellowshipReferenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.fellowshipReferendumVotesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ConvictionVoteJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ConvictionVoteJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List fellowship referendum votes
       tags:
       - Governance
@@ -732,30 +694,28 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.fellowshipReferendumVotesParams'
+        description: params
+        required: true
   /api/scan/governance/desc:
     post:
-      consumes:
-      - application/json
       description: Returns external governance posts and comments for the specified item. This endpoint is powered by Subsquare.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.governanceDescParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_libs_opengovResource.PostData'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_libs_opengovResource.PostData'
+                  type: object
       summary: Get external discussion for a governance item
       tags:
       - Governance
@@ -770,32 +730,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.governanceDescParam'
+        description: params
+        required: true
   /api/scan/preimage/details:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one governance preimage by hash.
 
         This API only supports networks with preimage frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.preimageDetailsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.PreimageJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.PreimageJson'
+                  type: object
       summary: Get governance preimage details
       tags:
       - Governance
@@ -807,39 +765,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.preimageDetailsParams'
+        description: params
+        required: true
   /api/scan/preimage/list:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated preimage list with optional status and source filters.
 
         This API only supports networks with preimage frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.preimageListParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.PreimageSampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.PreimageSampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List governance preimages
       tags:
       - Governance
@@ -851,32 +807,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.preimageListParams'
+        description: params
+        required: true
   /api/scan/referenda/delegate:
     post:
-      consumes:
-      - application/json
       description: 'Returns delegation details for one account in the referenda system.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumDelegateDetailsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ReferendumDelegateDetailsJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ReferendumDelegateDetailsJson'
+                  type: object
       summary: Get referendum delegator details
       tags:
       - Governance
@@ -890,39 +844,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumDelegateDetailsParams'
+        description: params
+        required: true
   /api/scan/referenda/delegate/votes:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated referendum vote records for one delegator or delegate account.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumDelegateVotesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ConvictionDelegateVoteJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ConvictionDelegateVoteJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List referendum delegator votes
       tags:
       - Governance
@@ -937,39 +889,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumDelegateVotesParams'
+        description: params
+        required: true
   /api/scan/referenda/delegates:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated delegation relationships for one account, including active and delegator/delegate filters.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumDelegateParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ReferendumDelegateJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ReferendumDelegateJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List referendum delegation relationships
       tags:
       - Governance
@@ -984,32 +934,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumDelegateParams'
+        description: params
+        required: true
   /api/scan/referenda/referendum:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one OpenGov referendum.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumV2Params'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ReferendumV2Json'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ReferendumV2Json'
+                  type: object
       summary: Get OpenGov referendum details
       tags:
       - Governance
@@ -1021,39 +969,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumV2Params'
+        description: params
+        required: true
   /api/scan/referenda/referendums:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated referenda list with origin, status, account, and call filters.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendumsV2Params'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ReferendumV2SampleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ReferendumV2SampleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List OpenGov referenda
       tags:
       - Governance
@@ -1066,25 +1012,30 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendumsV2Params'
+        description: params
+        required: true
   /api/scan/referenda/statistics:
     post:
-      consumes:
-      - application/json
       description: 'Returns aggregated referendum statistics for supported democracy or referenda networks.
 
         This API only supports networks with referenda/democracy frame'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ReferendumStatisticsJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ReferendumStatisticsJson'
+                  type: object
       summary: Get referendum statistics
       tags:
       - Governance
@@ -1099,25 +1050,23 @@ paths:
       - council
   /api/scan/referenda/tracks:
     post:
-      consumes:
-      - application/json
       description: 'Returns the available referendum tracks for the current OpenGov network.
 
         This API only supports networks with referenda frame'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  additionalProperties:
-                    $ref: '#/definitions/subscan_libs_substrate_storage.ReferendumTracksInfo'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      additionalProperties:
+                        $ref: '#/components/schemas/subscan_libs_substrate_storage.ReferendumTracksInfo'
+                      type: object
                   type: object
-              type: object
       summary: List referendum tracks
       tags:
       - Governance
@@ -1132,37 +1081,28 @@ paths:
       - council
   /api/scan/referenda/votes:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated vote records for an OpenGov referendum or account.
 
         This API only supports networks with referenda frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.referendaVotesV2Params'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ConvictionVoteJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ConvictionVoteJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List OpenGov referendum votes
       tags:
       - Governance
@@ -1175,35 +1115,33 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.referendaVotesV2Params'
+        description: params
+        required: true
   /api/scan/techcomm/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one technical-committee proposal.
 
         This API only supports networks with technicalCommittee frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.techcommProposalParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.TechcommProposalJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.TechcommProposalJson'
+                      type: object
                   type: object
-              type: object
       summary: Get technical-committee proposal details
       tags:
       - Governance
@@ -1216,39 +1154,37 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.techcommProposalParams'
+        description: params
+        required: true
   /api/scan/techcomm/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated technical-committee proposal list.
 
         This API only supports networks with technicalCommittee frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.techcommProposalsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TechcommProposalSample'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TechcommProposalSample'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List technical-committee proposals
       tags:
       - Governance
@@ -1261,35 +1197,33 @@ paths:
       - vote
       - treasury
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.techcommProposalsParams'
+        description: params
+        required: true
   /api/scan/treasury/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one treasury proposal.
 
         This API only supports networks with treasury frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryProposalParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.TreasuryProposalDetailJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.TreasuryProposalDetailJson'
+                      type: object
                   type: object
-              type: object
       summary: Get treasury proposal details
       tags:
       - Governance
@@ -1301,39 +1235,37 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryProposalParams'
+        description: params
+        required: true
   /api/scan/treasury/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated treasury proposal list.
 
         This API only supports networks with treasury frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryProposalsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasuryProposalJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasuryProposalJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury proposals
       tags:
       - Governance
@@ -1345,35 +1277,33 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryProposalsParams'
+        description: params
+        required: true
   /api/scan/treasury/tip:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one treasury tip.
 
         This API only supports networks with tips frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryTipParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.TreasuryTipJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.TreasuryTipJson'
+                      type: object
                   type: object
-              type: object
       summary: Get treasury tip details
       tags:
       - Governance
@@ -1385,37 +1315,35 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryTipParams'
+        description: params
+        required: true
   /api/scan/treasury/tippers:
     post:
-      consumes:
-      - application/json
       description: 'Returns the tipper accounts and votes for one treasury tip.
 
         This API only supports networks with tips frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryTipperParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasuryTipperJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasuryTipperJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury tippers
       tags:
       - Governance
@@ -1427,39 +1355,37 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryTipperParams'
+        description: params
+        required: true
   /api/scan/treasury/tips:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated treasury tip list.
 
         This API only supports networks with tips frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryTipsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasuryTip'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasuryTip'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury tips
       tags:
       - Governance
@@ -1471,35 +1397,33 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryTipsParams'
+        description: params
+        required: true
   /api/scan/treasury_council_collective/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one treasury council collective proposal.
 
         This API only supports networks with treasuryCouncilCollective(moonbeam/moonriver/moonbase) frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryCouncilCollectiveProposalParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.TreasuryCouncilCollectiveProposalDetailsJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.TreasuryCouncilCollectiveProposalDetailsJson'
+                      type: object
                   type: object
-              type: object
       summary: Get treasury council collective proposal details
       tags:
       - Governance
@@ -1512,39 +1436,37 @@ paths:
       - proposal
       - referendum
       - vote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryCouncilCollectiveProposalParam'
+        description: params
+        required: true
   /api/scan/treasury_council_collective/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated treasury council collective proposal list.
 
         This API only supports networks with treasuryCouncilCollective(moonbeam/moonriver/moonbase) frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryCouncilCollectiveProposalsParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasuryCouncilCollectiveProposalJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasuryCouncilCollectiveProposalJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury council collective proposals
       tags:
       - Governance
@@ -1557,39 +1479,37 @@ paths:
       - proposals
       - referendum
       - vote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryCouncilCollectiveProposalsParam'
+        description: params
+        required: true
   /api/scan/treasury_council_collective/votes:
     post:
-      consumes:
-      - application/json
       description: 'Returns paginated vote records for one treasury council collective proposal.
 
         This API only supports networks with treasuryCouncilCollective(moonbeam/moonriver/moonbase) frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryCouncilCollectiveVotesParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasuryCouncilCollectiveVoteJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasuryCouncilCollectiveVoteJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury council collective votes
       tags:
       - Governance
@@ -1602,35 +1522,33 @@ paths:
       - scan
       - votes
       - referendum
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryCouncilCollectiveVotesParam'
+        description: params
+        required: true
   /api/scan/treasury_spend/proposal:
     post:
-      consumes:
-      - application/json
       description: 'Returns details for one treasury spend proposal.
 
         This API only supports networks with treasury frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryProposalParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
-                      $ref: '#/definitions/subscan_internal_model.TreasurySpendProposalDetailJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        info:
+                          $ref: '#/components/schemas/subscan_internal_model.TreasurySpendProposalDetailJson'
+                      type: object
                   type: object
-              type: object
       summary: Get treasury spend proposal details
       tags:
       - Governance
@@ -1643,39 +1561,37 @@ paths:
       - referendum
       - vote
       - council
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryProposalParams'
+        description: params
+        required: true
   /api/scan/treasury_spend/proposals:
     post:
-      consumes:
-      - application/json
       description: 'Returns a paginated treasury spend proposal list.
 
         This API only supports networks with treasury frame'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.treasuryProposalsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TreasurySpendProposalJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TreasurySpendProposalJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List treasury spend proposals
       tags:
       - Governance
@@ -1688,1811 +1604,1819 @@ paths:
       - referendum
       - vote
       - council
-definitions:
-  subscan_internal_model.AccountParentJson:
-    properties:
-      address:
-        type: string
-      display:
-        type: string
-      identity:
-        type: boolean
-      sub_symbol:
-        type: string
-    type: object
-  internal_server_http.democracyParams:
-    properties:
-      democracy_id:
-        minimum: 0
-        type: integer
-    type: object
-  internal_server_http.referendumDelegateParams:
-    properties:
-      account:
-        type: string
-      is_active:
-        type: boolean
-      is_delegator:
-        type: boolean
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      order_field:
-        enum:
-        - origin
-        - value
-        - votes
-        type: string
-      origin:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    required:
-    - account
-    type: object
-  internal_server_http.fellowshipReferendumsV2Params:
-    properties:
-      account:
-        type: string
-      call_module:
-        type: string
-      call_name:
-        type: string
-      origin:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - completed
-        - active
-        type: string
-    type: object
-  subscan_internal_model.TreasuryProposalDetailJson:
-    properties:
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_timestamp:
-        type: integer
-      council:
-        $ref: '#/definitions/subscan_internal_model.CouncilJson'
-      council_id:
-        type: integer
-      created_block:
-        type: integer
-      period_block:
-        type: integer
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      referendum_id:
-        type: integer
-      reward:
-        type: string
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-    type: object
-  internal_server_http.councilProposalParams:
-    properties:
-      proposal_id:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.AccountDisplay:
-    properties:
-      account_index:
-        type: string
-      address:
-        description: Current network account
-        type: string
-      display:
-        type: string
-      evm_address:
-        type: string
-      evm_contract:
-        $ref: '#/definitions/subscan_internal_model.EvmAccountDisplay'
-      identity:
-        type: boolean
-      judgements:
-        items:
-          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
-        type: array
-      merkle:
-        $ref: '#/definitions/subscan_internal_model.MerkleTag'
-      parent:
-        allOf:
-        - $ref: '#/definitions/subscan_internal_model.AccountParentJson'
-        description: Parent account
-      people:
-        $ref: '#/definitions/subscan_internal_model.SampleIdentity'
-    type: object
-  subscan_internal_model.ExtrinsicParam:
-    properties:
-      name:
-        type: string
-      type:
-        type: string
-      type_name:
-        type: string
-      value: {}
-    type: object
-  subscan_libs_opengovResource.PostComment:
-    properties:
-      address:
-        type: string
-      content:
-        type: string
-      create_at:
-        type: string
-      ethereum_address:
-        type: string
-      id:
-        type: string
-      replies:
-        items:
-          $ref: '#/definitions/subscan_libs_opengovResource.PostComment'
-        type: array
-      source:
-        type: string
-      username:
-        type: string
-    type: object
-  internal_server_http.governanceDescParam:
-    properties:
-      gov:
-        enum:
-        - referendums_v2
-        - fellowship_referendums
-        - democracy_proposals
-        - referendums
-        - treasury_proposals
-        - treasury_spend
-        - tech_committee_proposals
-        - council_motions
-        - bounties
-        - tips
-        type: string
-      id:
-        minLength: 0
-        type: string
-    required:
-    - gov
-    - id
-    type: object
-  internal_server_http.democracySecondedParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      proposal_id:
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  subscan_internal_model.BountySampleJson:
-    properties:
-      block_timestamp:
-        type: integer
-      child_bounty_count:
-        type: integer
-      description:
-        type: string
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      relay_chain:
-        type: integer
-      status:
-        type: string
-      title:
-        type: string
-      value:
-        type: string
-    type: object
-  subscan_internal_model.BountyJson:
-    properties:
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      bond:
-        type: string
-      created_block:
-        type: integer
-      curator:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      curator_deposit:
-        type: string
-      curator_fee:
-        type: string
-      description:
-        type: string
-      expire_block:
-        type: integer
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      relay_chain:
-        type: integer
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      value:
-        type: string
-    type: object
-  internal_server_http.accountReferendumParams:
-    properties:
-      account:
-        type: string
-      module:
-        enum:
-        - democracy
-        - referendum
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    required:
-    - account
-    type: object
-  subscan_internal_model.ChildBountySampleJson:
-    properties:
-      amount:
-        type: string
-      index:
-        type: string
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      relay_chain:
-        type: integer
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-    type: object
-  subscan_internal_model.TechcommVoteJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      extrinsic_hash:
-        type: string
-      extrinsic_index:
-        type: string
-      passed:
-        type: boolean
-      voting_time:
-        type: integer
-    type: object
-  internal_server_http.techcommProposalsParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.fellowshipReferendumVotesParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      referendum_index:
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.referendumVotesParams:
-    properties:
-      account:
-        type: string
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      referendum_index:
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      sort:
-        enum:
-        - conviction
-        - amount
-        - votes
-        type: string
-      status:
-        enum:
-        - Ayes
-        - Nays
-        type: string
-      valid:
-        enum:
-        - valid
-        - invalid
-        type: string
-    type: object
-  subscan_internal_model.DemocracyProposalSeconded:
-    properties:
-      account:
-        type: string
-      account_display:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_num:
-        type: integer
-      event_index:
-        type: string
-      extrinsic_index:
-        type: string
-      proposal_id:
-        type: integer
-    type: object
-  subscan_internal_model.ReferendumJson:
-    properties:
-      aye_amount:
-        type: string
-      aye_without_conviction:
-        type: string
-      created_block:
-        type: integer
-      delay:
-        type: integer
-      end:
-        type: integer
-      executed_success:
-        type: boolean
-      nay_amount:
-        type: string
-      nay_without_conviction:
-        type: string
-      pre_image:
-        $ref: '#/definitions/subscan_internal_model.PreImageJson'
-      referendum_index:
-        type: integer
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      turnout:
-        type: string
-      updated_block:
-        type: integer
-      value:
-        type: string
-      vote_threshold:
-        type: string
-    type: object
-  subscan_internal_model.AccountReferendumJson:
-    properties:
-      conviction:
-        type: string
-      referendum_index:
-        type: integer
-      value:
-        type: string
-    type: object
-  internal_server_http.referendumV2Params:
-    properties:
-      referendum_index:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.TreasuryTipperJson:
-    properties:
-      amount:
-        type: string
-      extrinsic_index:
-        type: string
-      rewarder:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-    type: object
-  subscan_internal_model.CouncilJson:
-    properties:
-      aye_votes:
-        type: integer
-      created_block:
-        type: integer
-      member_count:
-        type: integer
-      nay_votes:
-        type: integer
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      status:
-        type: string
-      updated_block:
-        type: integer
-    type: object
-  internal_server_http.referendumsV2Params:
-    properties:
-      account:
-        type: string
-      call_module:
-        type: string
-      call_name:
-        type: string
-      multi_status:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.treasuryProposalsParams'
+        description: params
+        required: true
+components:
+  schemas:
+    internal_server_http.treasuryCouncilCollectiveProposalParam:
+      properties:
+        proposal_hash:
+          minLength: 0
           type: string
-        type: array
-      origin:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - completed
-        - active
-        - submitted
-        - decision
-        - confirmStarted
-        - confirm
-        - approved
-        - confirmAborted
-        - rejected
-        - cancelled
-        - timeout
-        - killed
-        - executed
-        - executedFailed
-        type: string
-    type: object
-  internal_server_http.democraciesParams:
-    properties:
-      order_field:
-        enum:
-        - seconded_count
-        - proposal_id
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - historical
-        - active
-        type: string
-    type: object
-  subscan_libs_substrate_storage.LinearDecreasing:
-    properties:
-      ceil:
-        type: integer
-      floor:
-        type: integer
-      length:
-        type: integer
-    type: object
-  subscan_internal_model.DemocracyReferendumSampleJson:
-    properties:
-      author:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_timestamp:
-        type: integer
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      end:
-        type: integer
-      referendum_index:
-        type: integer
-      status:
-        type: string
-      title:
-        type: string
-      vote_threshold:
-        type: string
-    type: object
-  subscan_internal_model.TreasuryTipJson:
-    properties:
-      amount:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      close_block_num:
-        type: integer
-      extrinsic_index:
-        type: string
-      finder:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      hash:
-        type: string
-      reason:
-        type: string
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      tipper_num:
-        type: integer
-    type: object
-  internal_server_http.bountiesParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - historical
-        - active
-        type: string
-    type: object
-  subscan_internal_model.ConvictionDelegateVoteJson:
-    properties:
-      delegated_votes:
-        type: string
-      delegator:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      extrinsic_index:
-        type: string
-      origins:
-        type: string
-      referendum_index:
-        type: integer
-      relay_chain:
-        type: integer
-      status:
-        type: string
-      valid:
-        type: boolean
-      votes:
-        type: string
-      voting_time:
-        type: integer
-    type: object
-  internal_server_http.childBountiesParams:
-    properties:
-      bounties_id:
-        example: 0
-        minimum: 0
-        type: integer
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.treasuryTipperParams:
-    properties:
-      hash:
-        type: string
-    type: object
-  internal_server_http.techcommProposalParams:
-    properties:
-      proposal_id:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.ReferendumStatisticsJson:
-    properties:
-      confirm_total:
-        type: integer
-      origins:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ReferendumStatisticsOriginsJson'
-        type: array
-      originsCount:
-        format: int64
-        type: integer
-      referendum_locked:
-        type: string
-      referendum_participate:
-        type: string
-      voting_total:
-        type: integer
-    type: object
-  subscan_internal_model.PreimageLinkJson:
-    properties:
-      id:
-        items:
+        proposal_id:
+          minimum: 0
           type: integer
-        type: array
-      module:
-        type: string
-    type: object
-  internal_server_http.referendaVotesV2Params:
-    properties:
-      account:
-        type: string
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      referendum_index:
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      sort:
-        enum:
-        - conviction
-        - amount
-        - votes
-        type: string
-      status:
-        enum:
-        - Ayes
-        - Nays
-        - Abstains
-        type: string
-      valid:
-        enum:
-        - valid
-        - invalid
-        type: string
-    type: object
-  internal_server_http.referendumParams:
-    properties:
-      referendum_index:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.ConvictionVoteJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      amount:
-        type: string
-      conviction:
-        type: string
-      delegate_account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      extrinsic_index:
-        type: string
-      referendum_index:
-        type: integer
-      relay_chain:
-        type: integer
-      status:
-        type: string
-      unlock_block:
-        type: integer
-      valid:
-        type: boolean
-      votes:
-        type: string
-      voting_time:
-        type: integer
-    type: object
-  subscan_libs_opengovResource.PostData:
-    properties:
-      comment:
-        items:
-          $ref: '#/definitions/subscan_libs_opengovResource.PostComment'
-        type: array
-      comment_count:
-        type: integer
-      content:
-        type: string
-      id:
-        type: integer
-      source:
-        type: string
-      title:
-        type: string
-    type: object
-  internal_server_http.treasuryProposalParams:
-    properties:
-      proposal_id:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.DemocracyVoteJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      amount:
-        type: string
-      conviction:
-        type: string
-      delegate_account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      extrinsic_index:
-        type: string
-      passed:
-        type: boolean
-      referendum_index:
-        type: integer
-      unlock_block:
-        type: integer
-      valid:
-        type: boolean
-      votes:
-        type: string
-      voting_time:
-        type: integer
-    type: object
-  subscan_internal_model.TreasurySpend:
-    properties:
-      amount:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      current_currency_amount:
-        type: string
-      decimals:
-        type: integer
-      history_currency_amount:
-        type: string
-      paraId:
-        type: integer
-      symbol:
-        type: string
-      token_unique_id:
-        type: string
-    type: object
-  subscan_libs_substrate_storage.Reciprocal:
-    properties:
-      factor:
-        type: string
-      x_offset:
-        type: string
-      y_offset:
-        type: string
-    type: object
-  internal_server_http.treasuryCouncilCollectiveVotesParam:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      proposal_hash:
-        minLength: 0
-        type: string
-      proposal_id:
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  subscan_internal_model.RegistrationJudgementJson:
-    properties:
-      index:
-        type: integer
-      judgement:
-        type: string
-    type: object
-  subscan_internal_model.ReferendumDelegateDetailsJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      active_delegated_count:
-        type: integer
-      origins:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ConvictionDelegateSum'
-        type: array
-      referendum_vote_abstain_count:
-        type: integer
-      referendum_vote_aye_count:
-        type: integer
-      referendum_vote_nay_count:
-        type: integer
-    type: object
-  subscan_internal_model.CouncilProposalJson:
-    properties:
-      aye_votes:
-        type: integer
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      executed_success:
-        type: boolean
-      member_count:
-        type: integer
-      nay_votes:
-        type: integer
-      params:
-        type: string
-      pre_image:
-        $ref: '#/definitions/subscan_internal_model.PreImageJson'
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      updated_block:
-        type: integer
-      value:
-        type: string
-      votes:
-        items:
-          $ref: '#/definitions/subscan_internal_model.CouncilVoteJson'
-        type: array
-    type: object
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_model.TreasurySpendProposalDetailJson:
-    properties:
-      amount:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_timestamp:
-        type: integer
-      created_block:
-        type: integer
-      expire_block:
-        type: integer
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      referendum_id:
-        type: integer
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      treasury_spend:
-        $ref: '#/definitions/subscan_internal_model.TreasurySpend'
-      valid_from:
-        type: integer
-    type: object
-  internal_server_http.preimageDetailsParams:
-    properties:
-      hash:
-        type: string
-    required:
-    - hash
-    type: object
-  internal_server_http.treasuryTipParams:
-    properties:
-      hash:
-        type: string
-    type: object
-  subscan_internal_model.TreasurySpendProposalJson:
-    properties:
-      amount:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_timestamp:
-        type: integer
-      created_block:
-        type: integer
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      status:
-        type: string
-      title:
-        type: string
-      treasury_spend:
-        $ref: '#/definitions/subscan_internal_model.TreasurySpend'
-    type: object
-  subscan_internal_model.SampleIdentity:
-    properties:
-      display:
-        type: string
-      identity:
-        type: boolean
-      judgements:
-        items:
-          $ref: '#/definitions/subscan_internal_model.RegistrationJudgementJson'
-        type: array
-      parent:
-        $ref: '#/definitions/subscan_internal_model.AccountParentJson'
-    type: object
-  internal_server_http.referendumDelegateVotesParams:
-    properties:
-      account:
-        type: string
-      is_delegator:
-        type: boolean
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      order_field:
-        enum:
-        - referendumId
-        - origin
-        - block
-        - result
-        type: string
-      origin:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - ayes
-        - nays
-        - abstains
-        type: string
-    required:
-    - account
-    type: object
-  subscan_internal_model.PreimageSampleJson:
-    properties:
-      author:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      created_timestamp:
-        type: integer
-      hash:
-        type: string
-      link:
-        items:
-          $ref: '#/definitions/subscan_internal_model.PreimageLinkJson'
-        type: array
-      source:
-        type: string
-      status:
-        type: string
-    type: object
-  internal_server_http.treasuryProposalsParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.treasuryTipsParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.bountyParams:
-    properties:
-      proposal_id:
-        minimum: 0
-        type: integer
-    type: object
-  subscan_internal_model.EvmAccountDisplay:
-    properties:
-      contract_name:
-        type: string
-      verify_source:
-        type: string
-    type: object
-  subscan_internal_model.PreImageJson:
-    properties:
-      amount:
-        type: string
-      author:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      hash:
-        type: string
-      params:
-        type: string
-      source:
-        type: string
-      status:
-        type: string
-      updated_block:
-        type: integer
-    type: object
-  subscan_internal_model.ConvictionDelegateSum:
-    properties:
-      amount:
-        type: string
-      count:
-        type: integer
-      origins:
-        type: string
-      votes:
-        type: string
-    type: object
-  subscan_internal_model.ReferendumV2SampleJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      approval_rate:
-        type: string
-      approval_threshold:
-        type: string
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      created_block_timestamp:
-        type: integer
-      latest_block_num:
-        type: integer
-      latest_block_timestamp:
-        type: integer
-      origins:
-        type: string
-      origins_id:
-        type: integer
-      referendum_index:
-        type: integer
-      status:
-        type: string
-      title:
-        type: string
-    type: object
-  subscan_internal_model.ReferendumV2Json:
-    properties:
-      abstains_count:
-        type: integer
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      approval_threshold:
-        type: string
-      ayes_amount:
-        type: string
-      ayes_count:
-        type: integer
-      bare_ayes:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      beneficiary_amount:
-        type: string
-      created_block:
-        type: integer
-      created_block_timestamp:
-        type: integer
-      decision_deposit_account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      decision_deposit_balance:
-        type: string
-      deposit_balance:
-        type: string
-      latest_block_num:
-        type: integer
-      latest_block_timestamp:
-        type: integer
-      nays_amount:
-        type: string
-      nays_count:
-        type: integer
-      origins:
-        type: string
-      origins_id:
-        type: integer
-      paid_expire_block:
-        type: integer
-      pre_image:
-        $ref: '#/definitions/subscan_internal_model.PreImageJson'
-      referendum_index:
-        type: integer
-      status:
-        type: string
-      support_amount:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      treasury_proposal_id:
-        type: integer
-      treasury_proposal_ids:
-        items:
+      type: object
+    subscan_internal_model.TreasurySpendProposalDetailJson:
+      properties:
+        amount:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
           type: integer
-        type: array
-      treasury_spend:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TreasurySpend'
-        type: array
-      treasury_spend_id:
-        type: integer
-      treasury_spend_ids:
-        items:
+        created_block:
           type: integer
-        type: array
-    type: object
-  subscan_libs_substrate_storage.ReferendaCurve:
-    properties:
-      LinearDecreasing:
-        $ref: '#/definitions/subscan_libs_substrate_storage.LinearDecreasing'
-      Reciprocal:
-        $ref: '#/definitions/subscan_libs_substrate_storage.Reciprocal'
-      SteppedDecreasing:
-        $ref: '#/definitions/subscan_libs_substrate_storage.SteppedDecreasing'
-    type: object
-  subscan_internal_model.TreasuryCouncilCollectiveVoteJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_num:
-        type: integer
-      event_index:
-        type: string
-      extrinsic_index:
-        type: string
-      passed:
-        type: boolean
-      proposal_hash:
-        type: string
-      voting_time:
-        type: integer
-    type: object
-  internal_server_http.treasuryCouncilCollectiveProposalParam:
-    properties:
-      proposal_hash:
-        minLength: 0
-        type: string
-      proposal_id:
-        minimum: 0
-        type: integer
-    type: object
-  internal_server_http.preimageListParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      source:
-        enum:
-        - inline
-        - preimage
-        type: string
-      status:
-        enum:
-        - cleared
-        - unrequested
-        - requested
-        type: string
-    type: object
-  subscan_internal_model.PreimageJson:
-    properties:
-      amount:
-        type: string
-      author:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      call_module:
-        type: string
-      call_name:
-        type: string
-      create_timestamp:
-        type: integer
-      created_block:
-        type: integer
-      hash:
-        type: string
-      len:
-        type: integer
-      link:
-        items:
-          $ref: '#/definitions/subscan_internal_model.PreimageLinkJson'
-        type: array
-      params:
-        type: string
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      updated_block:
-        type: integer
-    type: object
-  subscan_internal_model.ReferendumDelegateJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      amount:
-        type: string
-      conviction:
-        type: string
-      origins:
-        type: string
-      unlock_at:
-        type: integer
-      valid:
-        type: boolean
-      votes:
-        type: string
-    type: object
-  internal_server_http.referendumDelegateDetailsParams:
-    properties:
-      account:
-        type: string
-      is_delegator:
-        type: boolean
-    required:
-    - account
-    type: object
-  subscan_internal_model.CouncilVoteJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      extrinsic_hash:
-        type: string
-      extrinsic_index:
-        type: string
-      passed:
-        type: boolean
-      voting_time:
-        type: integer
-    type: object
-  internal_server_http.councilProposalsParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.treasuryCouncilCollectiveProposalsParam:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  subscan_internal_model.TechcommProposalSample:
-    properties:
-      aye_votes:
-        type: integer
-      block_timestamp:
-        type: integer
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      member_count:
-        type: integer
-      nay_votes:
-        type: integer
-      proposal_id:
-        type: integer
-      status:
-        type: string
-      title:
-        type: string
-    type: object
-  subscan_internal_model.MerkleTag:
-    properties:
-      address_type:
-        type: string
-      tag_name:
-        type: string
-      tag_subtype:
-        type: string
-      tag_type:
-        type: string
-    type: object
-  subscan_internal_model.DemocracySampleJson:
-    properties:
-      block_timestamp:
-        type: integer
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      proposal_id:
-        type: integer
-      seconded_count:
-        type: integer
-      status:
-        type: string
-      title:
-        type: string
-    type: object
-  subscan_internal_model.TechcommProposalJson:
-    properties:
-      aye_votes:
-        type: integer
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      executed_success:
-        type: boolean
-      member_count:
-        type: integer
-      nay_votes:
-        type: integer
-      params:
-        type: string
-      pre_image:
-        $ref: '#/definitions/subscan_internal_model.PreImageJson'
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      updated_block:
-        type: integer
-      value:
-        type: string
-      votes:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TechcommVoteJson'
-        type: array
-    type: object
-  subscan_internal_model.TreasuryCouncilCollectiveProposalJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      call:
-        type: string
-      created_block:
-        type: integer
-      created_block_timestamp:
-        type: integer
-      executed_success:
-        type: boolean
-      module:
-        type: string
-      'no':
-        type: integer
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      status:
-        type: string
-      threshold:
-        type: integer
-      treasury_id:
-        type: integer
-      treasury_type:
-        type: string
-      'yes':
-        type: integer
-    type: object
-  subscan_internal_model.TreasuryCouncilCollectiveProposalDetailsJson:
-    properties:
-      account:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      beneficiary_amount:
-        type: string
-      call:
-        type: string
-      created_block:
-        type: integer
-      created_block_timestamp:
-        type: integer
-      executed_success:
-        type: boolean
-      module:
-        type: string
-      'no':
-        type: integer
-      param:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ExtrinsicParam'
-        type: array
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      status:
-        type: string
-      threshold:
-        type: integer
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      treasury_id:
-        type: integer
-      treasury_spend:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TreasurySpend'
-        type: array
-      treasury_type:
-        type: string
-      updated_block:
-        type: integer
-      'yes':
-        type: integer
-    type: object
-  subscan_internal_model.DemocracyJson:
-    properties:
-      call_module:
-        type: string
-      call_name:
-        type: string
-      created_block:
-        type: integer
-      params:
-        type: string
-      pre_image:
-        $ref: '#/definitions/subscan_internal_model.PreImageJson'
-      proposal_hash:
-        type: string
-      proposal_id:
-        type: integer
-      seconded_count:
-        type: integer
-      status:
-        type: string
-      timeline:
-        items:
-          $ref: '#/definitions/subscan_internal_model.TimelineJson'
-        type: array
-      title:
-        type: string
-      updated_block:
-        type: integer
-      value:
-        type: string
-    type: object
-  internal_server_http.fellowshipReferendumParams:
-    properties:
-      referendum_index:
-        minimum: 0
-        type: integer
-    type: object
-  internal_server_http.referendumsParams:
-    properties:
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      status:
-        enum:
-        - completed
-        - active
-        type: string
-    type: object
-  subscan_internal_model.TreasuryTip:
-    properties:
-      amount:
-        type: string
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_num:
-        type: integer
-      block_timestamp:
-        type: integer
-      close_block_num:
-        type: integer
-      extrinsic_index:
-        type: string
-      finder:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      hash:
-        type: string
-      reason:
-        type: string
-      status:
-        type: string
-      tipper_num:
-        type: integer
-    type: object
-  subscan_internal_model.TreasuryProposalJson:
-    properties:
-      beneficiary:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      block_timestamp:
-        type: integer
-      created_block:
-        type: integer
-      period_block:
-        type: integer
-      proposal_id:
-        type: integer
-      proposer:
-        $ref: '#/definitions/subscan_internal_model.AccountDisplay'
-      reward:
-        type: string
-      status:
-        type: string
-      title:
-        type: string
-    type: object
-  subscan_internal_model.ReferendumStatisticsOriginsJson:
-    properties:
-      count:
-        format: int64
-        type: integer
-      id:
-        type: integer
-      origins:
-        type: string
-    type: object
-  subscan_internal_model.TimelineJson:
-    properties:
-      block:
-        type: integer
-      extrinsic_index:
-        type: string
-      index:
-        type: integer
-      params: {}
-      prophecy:
-        type: boolean
-      status:
-        type: string
-      time:
-        type: integer
-    type: object
-  subscan_libs_substrate_storage.ReferendumTracksInfo:
-    properties:
-      confirm_period:
-        type: integer
-      current_deciding:
-        description: custom field
-        type: integer
-      decision_deposit:
-        type: string
-      decision_period:
-        type: integer
-      max_deciding:
-        type: integer
-      min_approval:
-        $ref: '#/definitions/subscan_libs_substrate_storage.ReferendaCurve'
-      min_enactment_period:
-        type: integer
-      min_support:
-        $ref: '#/definitions/subscan_libs_substrate_storage.ReferendaCurve'
-      name:
-        type: string
-      prepare_period:
-        type: integer
-    type: object
-  subscan_internal_model.FellowshipReferendumStatisticsJson:
-    properties:
-      active_fellowship_members:
-        type: integer
-      confirm_total:
-        type: integer
-      fellowship_members:
-        type: integer
-      origins:
-        items:
-          $ref: '#/definitions/subscan_internal_model.ReferendumStatisticsOriginsJson'
-        type: array
-      originsCount:
-        format: int64
-        type: integer
-      voting_total:
-        type: integer
-    type: object
-  subscan_libs_substrate_storage.SteppedDecreasing:
-    properties:
-      begin:
-        type: integer
-      end:
-        type: integer
-      period:
-        type: integer
-      step:
-        type: integer
-    type: object
+        expire_block:
+          type: integer
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        referendum_id:
+          type: integer
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        treasury_spend:
+          $ref: '#/components/schemas/subscan_internal_model.TreasurySpend'
+        valid_from:
+          type: integer
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.ReferendumV2Json:
+      properties:
+        abstains_count:
+          type: integer
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        approval_threshold:
+          type: string
+        ayes_amount:
+          type: string
+        ayes_count:
+          type: integer
+        bare_ayes:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        beneficiary_amount:
+          type: string
+        created_block:
+          type: integer
+        created_block_timestamp:
+          type: integer
+        decision_deposit_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        decision_deposit_balance:
+          type: string
+        deposit_balance:
+          type: string
+        latest_block_num:
+          type: integer
+        latest_block_timestamp:
+          type: integer
+        nays_amount:
+          type: string
+        nays_count:
+          type: integer
+        origins:
+          type: string
+        origins_id:
+          type: integer
+        paid_expire_block:
+          type: integer
+        pre_image:
+          $ref: '#/components/schemas/subscan_internal_model.PreImageJson'
+        referendum_index:
+          type: integer
+        status:
+          type: string
+        support_amount:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        treasury_proposal_id:
+          type: integer
+        treasury_proposal_ids:
+          items:
+            type: integer
+          type: array
+        treasury_spend:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TreasurySpend'
+          type: array
+        treasury_spend_id:
+          type: integer
+        treasury_spend_ids:
+          items:
+            type: integer
+          type: array
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.FellowshipReferendumStatisticsJson:
+      properties:
+        active_fellowship_members:
+          type: integer
+        confirm_total:
+          type: integer
+        fellowship_members:
+          type: integer
+        origins:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ReferendumStatisticsOriginsJson'
+          type: array
+        originsCount:
+          format: int64
+          type: integer
+        voting_total:
+          type: integer
+      type: object
+    subscan_internal_model.ReferendumStatisticsOriginsJson:
+      properties:
+        count:
+          format: int64
+          type: integer
+        id:
+          type: integer
+        origins:
+          type: string
+      type: object
+    internal_server_http.referendumParams:
+      properties:
+        referendum_index:
+          minimum: 0
+          type: integer
+      type: object
+    internal_server_http.bountyParams:
+      properties:
+        proposal_id:
+          minimum: 0
+          type: integer
+      type: object
+    internal_server_http.referendumDelegateVotesParams:
+      properties:
+        account:
+          type: string
+        is_delegator:
+          type: boolean
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        order_field:
+          enum:
+          - referendumId
+          - origin
+          - block
+          - result
+          type: string
+        origin:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - ayes
+          - nays
+          - abstains
+          type: string
+      required:
+      - account
+      type: object
+    internal_server_http.techcommProposalParams:
+      properties:
+        proposal_id:
+          minimum: 0
+          type: integer
+      type: object
+    internal_server_http.childBountiesParams:
+      properties:
+        bounties_id:
+          example: 0
+          minimum: 0
+          type: integer
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.BountyJson:
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        bond:
+          type: string
+        created_block:
+          type: integer
+        curator:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        curator_deposit:
+          type: string
+        curator_fee:
+          type: string
+        description:
+          type: string
+        expire_block:
+          type: integer
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        relay_chain:
+          type: integer
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.TreasuryProposalJson:
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
+          type: integer
+        created_block:
+          type: integer
+        period_block:
+          type: integer
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        reward:
+          type: string
+        status:
+          type: string
+        title:
+          type: string
+      type: object
+    internal_server_http.referendumsV2Params:
+      properties:
+        account:
+          type: string
+        call_module:
+          type: string
+        call_name:
+          type: string
+        multi_status:
+          items:
+            type: string
+          type: array
+        origin:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - completed
+          - active
+          - submitted
+          - decision
+          - confirmStarted
+          - confirm
+          - approved
+          - confirmAborted
+          - rejected
+          - cancelled
+          - timeout
+          - killed
+          - executed
+          - executedFailed
+          type: string
+      type: object
+    subscan_libs_opengovResource.PostComment:
+      properties:
+        address:
+          type: string
+        content:
+          type: string
+        create_at:
+          type: string
+        ethereum_address:
+          type: string
+        id:
+          type: string
+        replies:
+          items:
+            $ref: '#/components/schemas/subscan_libs_opengovResource.PostComment'
+          type: array
+        source:
+          type: string
+        username:
+          type: string
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    internal_server_http.referendaVotesV2Params:
+      properties:
+        account:
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        referendum_index:
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        sort:
+          enum:
+          - conviction
+          - amount
+          - votes
+          type: string
+        status:
+          enum:
+          - Ayes
+          - Nays
+          - Abstains
+          type: string
+        valid:
+          enum:
+          - valid
+          - invalid
+          type: string
+      type: object
+    subscan_internal_model.DemocracyVoteJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        amount:
+          type: string
+        conviction:
+          type: string
+        delegate_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_index:
+          type: string
+        passed:
+          type: boolean
+        referendum_index:
+          type: integer
+        unlock_block:
+          type: integer
+        valid:
+          type: boolean
+        votes:
+          type: string
+        voting_time:
+          type: integer
+      type: object
+    subscan_internal_model.TreasurySpendProposalJson:
+      properties:
+        amount:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
+          type: integer
+        created_block:
+          type: integer
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
+          type: string
+        title:
+          type: string
+        treasury_spend:
+          $ref: '#/components/schemas/subscan_internal_model.TreasurySpend'
+      type: object
+    subscan_internal_model.ConvictionVoteJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        amount:
+          type: string
+        conviction:
+          type: string
+        delegate_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_index:
+          type: string
+        referendum_index:
+          type: integer
+        relay_chain:
+          type: integer
+        status:
+          type: string
+        unlock_block:
+          type: integer
+        valid:
+          type: boolean
+        votes:
+          type: string
+        voting_time:
+          type: integer
+      type: object
+    subscan_internal_model.DemocracyReferendumSampleJson:
+      properties:
+        author:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
+          type: integer
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        end:
+          type: integer
+        referendum_index:
+          type: integer
+        status:
+          type: string
+        title:
+          type: string
+        vote_threshold:
+          type: string
+      type: object
+    internal_server_http.treasuryTipParams:
+      properties:
+        hash:
+          type: string
+      type: object
+    internal_server_http.preimageListParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        source:
+          enum:
+          - inline
+          - preimage
+          type: string
+        status:
+          enum:
+          - cleared
+          - unrequested
+          - requested
+          type: string
+      type: object
+    subscan_internal_model.CouncilJson:
+      properties:
+        aye_votes:
+          type: integer
+        created_block:
+          type: integer
+        member_count:
+          type: integer
+        nay_votes:
+          type: integer
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
+          type: string
+        updated_block:
+          type: integer
+      type: object
+    internal_server_http.fellowshipReferendumParams:
+      properties:
+        referendum_index:
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.CouncilProposalJson:
+      properties:
+        aye_votes:
+          type: integer
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        executed_success:
+          type: boolean
+        member_count:
+          type: integer
+        nay_votes:
+          type: integer
+        params:
+          type: string
+        pre_image:
+          $ref: '#/components/schemas/subscan_internal_model.PreImageJson'
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        updated_block:
+          type: integer
+        value:
+          type: string
+        votes:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.CouncilVoteJson'
+          type: array
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_libs_substrate_storage.SteppedDecreasing:
+      properties:
+        begin:
+          type: integer
+        end:
+          type: integer
+        period:
+          type: integer
+        step:
+          type: integer
+      type: object
+    internal_server_http.referendumDelegateDetailsParams:
+      properties:
+        account:
+          type: string
+        is_delegator:
+          type: boolean
+      required:
+      - account
+      type: object
+    subscan_internal_model.TechcommProposalSample:
+      properties:
+        aye_votes:
+          type: integer
+        block_timestamp:
+          type: integer
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        member_count:
+          type: integer
+        nay_votes:
+          type: integer
+        proposal_id:
+          type: integer
+        status:
+          type: string
+        title:
+          type: string
+      type: object
+    subscan_internal_model.CouncilVoteJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_hash:
+          type: string
+        extrinsic_index:
+          type: string
+        passed:
+          type: boolean
+        voting_time:
+          type: integer
+      type: object
+    subscan_libs_substrate_storage.ReferendaCurve:
+      properties:
+        LinearDecreasing:
+          $ref: '#/components/schemas/subscan_libs_substrate_storage.LinearDecreasing'
+        Reciprocal:
+          $ref: '#/components/schemas/subscan_libs_substrate_storage.Reciprocal'
+        SteppedDecreasing:
+          $ref: '#/components/schemas/subscan_libs_substrate_storage.SteppedDecreasing'
+      type: object
+    internal_server_http.treasuryTipperParams:
+      properties:
+        hash:
+          type: string
+      type: object
+    subscan_internal_model.ReferendumJson:
+      properties:
+        aye_amount:
+          type: string
+        aye_without_conviction:
+          type: string
+        created_block:
+          type: integer
+        delay:
+          type: integer
+        end:
+          type: integer
+        executed_success:
+          type: boolean
+        nay_amount:
+          type: string
+        nay_without_conviction:
+          type: string
+        pre_image:
+          $ref: '#/components/schemas/subscan_internal_model.PreImageJson'
+        referendum_index:
+          type: integer
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        turnout:
+          type: string
+        updated_block:
+          type: integer
+        value:
+          type: string
+        vote_threshold:
+          type: string
+      type: object
+    subscan_internal_model.TimelineJson:
+      properties:
+        block:
+          type: integer
+        extrinsic_index:
+          type: string
+        index:
+          type: integer
+        params: {}
+        prophecy:
+          type: boolean
+        status:
+          type: string
+        time:
+          type: integer
+      type: object
+    subscan_internal_model.TreasuryCouncilCollectiveProposalJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        call:
+          type: string
+        created_block:
+          type: integer
+        created_block_timestamp:
+          type: integer
+        executed_success:
+          type: boolean
+        module:
+          type: string
+        'no':
+          type: integer
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        status:
+          type: string
+        threshold:
+          type: integer
+        treasury_id:
+          type: integer
+        treasury_type:
+          type: string
+        'yes':
+          type: integer
+      type: object
+    subscan_internal_model.DemocracySampleJson:
+      properties:
+        block_timestamp:
+          type: integer
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        proposal_id:
+          type: integer
+        seconded_count:
+          type: integer
+        status:
+          type: string
+        title:
+          type: string
+      type: object
+    internal_server_http.bountiesParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - historical
+          - active
+          type: string
+      type: object
+    subscan_internal_model.ConvictionDelegateSum:
+      properties:
+        amount:
+          type: string
+        count:
+          type: integer
+        origins:
+          type: string
+        votes:
+          type: string
+      type: object
+    internal_server_http.referendumDelegateParams:
+      properties:
+        account:
+          type: string
+        is_active:
+          type: boolean
+        is_delegator:
+          type: boolean
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        order_field:
+          enum:
+          - origin
+          - value
+          - votes
+          type: string
+        origin:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - account
+      type: object
+    subscan_internal_model.BountySampleJson:
+      properties:
+        block_timestamp:
+          type: integer
+        child_bounty_count:
+          type: integer
+        description:
+          type: string
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        relay_chain:
+          type: integer
+        status:
+          type: string
+        title:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.ExtrinsicParam:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
+      type: object
+    internal_server_http.democracyParams:
+      properties:
+        democracy_id:
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.TreasuryTip:
+      properties:
+        amount:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        close_block_num:
+          type: integer
+        extrinsic_index:
+          type: string
+        finder:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        hash:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+        tipper_num:
+          type: integer
+      type: object
+    internal_server_http.democracySecondedParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        proposal_id:
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.democraciesParams:
+      properties:
+        order_field:
+          enum:
+          - seconded_count
+          - proposal_id
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - historical
+          - active
+          type: string
+      type: object
+    subscan_internal_model.TechcommVoteJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_hash:
+          type: string
+        extrinsic_index:
+          type: string
+        passed:
+          type: boolean
+        voting_time:
+          type: integer
+      type: object
+    subscan_libs_opengovResource.PostData:
+      properties:
+        comment:
+          items:
+            $ref: '#/components/schemas/subscan_libs_opengovResource.PostComment'
+          type: array
+        comment_count:
+          type: integer
+        content:
+          type: string
+        id:
+          type: integer
+        source:
+          type: string
+        title:
+          type: string
+      type: object
+    subscan_internal_model.TreasurySpend:
+      properties:
+        amount:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        current_currency_amount:
+          type: string
+        decimals:
+          type: integer
+        history_currency_amount:
+          type: string
+        paraId:
+          type: integer
+        symbol:
+          type: string
+        token_unique_id:
+          type: string
+      type: object
+    subscan_internal_model.TreasuryCouncilCollectiveProposalDetailsJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        beneficiary_amount:
+          type: string
+        call:
+          type: string
+        created_block:
+          type: integer
+        created_block_timestamp:
+          type: integer
+        executed_success:
+          type: boolean
+        module:
+          type: string
+        'no':
+          type: integer
+        param:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicParam'
+          type: array
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        status:
+          type: string
+        threshold:
+          type: integer
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        treasury_id:
+          type: integer
+        treasury_spend:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TreasurySpend'
+          type: array
+        treasury_type:
+          type: string
+        updated_block:
+          type: integer
+        'yes':
+          type: integer
+      type: object
+    internal_server_http.treasuryProposalParams:
+      properties:
+        proposal_id:
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.ReferendumDelegateDetailsJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        active_delegated_count:
+          type: integer
+        origins:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ConvictionDelegateSum'
+          type: array
+        referendum_vote_abstain_count:
+          type: integer
+        referendum_vote_aye_count:
+          type: integer
+        referendum_vote_nay_count:
+          type: integer
+      type: object
+    subscan_internal_model.ConvictionDelegateVoteJson:
+      properties:
+        delegated_votes:
+          type: string
+        delegator:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_index:
+          type: string
+        origins:
+          type: string
+        referendum_index:
+          type: integer
+        relay_chain:
+          type: integer
+        status:
+          type: string
+        valid:
+          type: boolean
+        votes:
+          type: string
+        voting_time:
+          type: integer
+      type: object
+    subscan_libs_substrate_storage.LinearDecreasing:
+      properties:
+        ceil:
+          type: integer
+        floor:
+          type: integer
+        length:
+          type: integer
+      type: object
+    internal_server_http.referendumVotesParams:
+      properties:
+        account:
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        referendum_index:
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        sort:
+          enum:
+          - conviction
+          - amount
+          - votes
+          type: string
+        status:
+          enum:
+          - Ayes
+          - Nays
+          type: string
+        valid:
+          enum:
+          - valid
+          - invalid
+          type: string
+      type: object
+    subscan_internal_model.PreimageLinkJson:
+      properties:
+        id:
+          items:
+            type: integer
+          type: array
+        module:
+          type: string
+      type: object
+    subscan_libs_substrate_storage.Reciprocal:
+      properties:
+        factor:
+          type: string
+        x_offset:
+          type: string
+        y_offset:
+          type: string
+      type: object
+    subscan_internal_model.TechcommProposalJson:
+      properties:
+        aye_votes:
+          type: integer
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        executed_success:
+          type: boolean
+        member_count:
+          type: integer
+        nay_votes:
+          type: integer
+        params:
+          type: string
+        pre_image:
+          $ref: '#/components/schemas/subscan_internal_model.PreImageJson'
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        updated_block:
+          type: integer
+        value:
+          type: string
+        votes:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TechcommVoteJson'
+          type: array
+      type: object
+    subscan_internal_model.TreasuryTipperJson:
+      properties:
+        amount:
+          type: string
+        extrinsic_index:
+          type: string
+        rewarder:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+      type: object
+    internal_server_http.treasuryTipsParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.preimageDetailsParams:
+      properties:
+        hash:
+          type: string
+      required:
+      - hash
+      type: object
+    internal_server_http.fellowshipReferendumsV2Params:
+      properties:
+        account:
+          type: string
+        call_module:
+          type: string
+        call_name:
+          type: string
+        origin:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - completed
+          - active
+          type: string
+      type: object
+    subscan_libs_substrate_storage.ReferendumTracksInfo:
+      properties:
+        confirm_period:
+          type: integer
+        current_deciding:
+          description: custom field
+          type: integer
+        decision_deposit:
+          type: string
+        decision_period:
+          type: integer
+        max_deciding:
+          type: integer
+        min_approval:
+          $ref: '#/components/schemas/subscan_libs_substrate_storage.ReferendaCurve'
+        min_enactment_period:
+          type: integer
+        min_support:
+          $ref: '#/components/schemas/subscan_libs_substrate_storage.ReferendaCurve'
+        name:
+          type: string
+        prepare_period:
+          type: integer
+      type: object
+    subscan_internal_model.DemocracyJson:
+      properties:
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        params:
+          type: string
+        pre_image:
+          $ref: '#/components/schemas/subscan_internal_model.PreImageJson'
+        proposal_hash:
+          type: string
+        proposal_id:
+          type: integer
+        seconded_count:
+          type: integer
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+        updated_block:
+          type: integer
+        value:
+          type: string
+      type: object
+    subscan_internal_model.DemocracyProposalSeconded:
+      properties:
+        account:
+          type: string
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_num:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        proposal_id:
+          type: integer
+      type: object
+    subscan_internal_model.TreasuryTipJson:
+      properties:
+        amount:
+          type: string
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        close_block_num:
+          type: integer
+        extrinsic_index:
+          type: string
+        finder:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        hash:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        tipper_num:
+          type: integer
+      type: object
+    subscan_internal_model.AccountReferendumJson:
+      properties:
+        conviction:
+          type: string
+        referendum_index:
+          type: integer
+        value:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    internal_server_http.referendumsParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          enum:
+          - completed
+          - active
+          type: string
+      type: object
+    internal_server_http.councilProposalsParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.referendumV2Params:
+      properties:
+        referendum_index:
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.PreimageSampleJson:
+      properties:
+        author:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        created_timestamp:
+          type: integer
+        hash:
+          type: string
+        link:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.PreimageLinkJson'
+          type: array
+        source:
+          type: string
+        status:
+          type: string
+      type: object
+    subscan_internal_model.TreasuryProposalDetailJson:
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
+          type: integer
+        council:
+          $ref: '#/components/schemas/subscan_internal_model.CouncilJson'
+        council_id:
+          type: integer
+        created_block:
+          type: integer
+        period_block:
+          type: integer
+        proposal_id:
+          type: integer
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        referendum_id:
+          type: integer
+        reward:
+          type: string
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+      type: object
+    internal_server_http.accountReferendumParams:
+      properties:
+        account:
+          type: string
+        module:
+          enum:
+          - democracy
+          - referendum
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - account
+      type: object
+    internal_server_http.councilProposalParams:
+      properties:
+        proposal_id:
+          minimum: 0
+          type: integer
+      type: object
+    internal_server_http.treasuryCouncilCollectiveVotesParam:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        proposal_hash:
+          minLength: 0
+          type: string
+        proposal_id:
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.fellowshipReferendumVotesParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        referendum_index:
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.treasuryCouncilCollectiveProposalsParam:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.techcommProposalsParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.governanceDescParam:
+      properties:
+        gov:
+          enum:
+          - referendums_v2
+          - fellowship_referendums
+          - democracy_proposals
+          - referendums
+          - treasury_proposals
+          - treasury_spend
+          - tech_committee_proposals
+          - council_motions
+          - bounties
+          - tips
+          type: string
+        id:
+          minLength: 0
+          type: string
+      required:
+      - gov
+      - id
+      type: object
+    subscan_internal_model.ReferendumV2SampleJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        approval_rate:
+          type: string
+        approval_threshold:
+          type: string
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        created_block_timestamp:
+          type: integer
+        latest_block_num:
+          type: integer
+        latest_block_timestamp:
+          type: integer
+        origins:
+          type: string
+        origins_id:
+          type: integer
+        referendum_index:
+          type: integer
+        status:
+          type: string
+        title:
+          type: string
+      type: object
+    subscan_internal_model.TreasuryCouncilCollectiveVoteJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_num:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        passed:
+          type: boolean
+        proposal_hash:
+          type: string
+        voting_time:
+          type: integer
+      type: object
+    subscan_internal_model.PreImageJson:
+      properties:
+        amount:
+          type: string
+        author:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        call_module:
+          type: string
+        call_name:
+          type: string
+        created_block:
+          type: integer
+        hash:
+          type: string
+        params:
+          type: string
+        source:
+          type: string
+        status:
+          type: string
+        updated_block:
+          type: integer
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.PreimageJson:
+      properties:
+        amount:
+          type: string
+        author:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        call_module:
+          type: string
+        call_name:
+          type: string
+        create_timestamp:
+          type: integer
+        created_block:
+          type: integer
+        hash:
+          type: string
+        len:
+          type: integer
+        link:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.PreimageLinkJson'
+          type: array
+        params:
+          type: string
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        updated_block:
+          type: integer
+      type: object
+    subscan_internal_model.ReferendumStatisticsJson:
+      properties:
+        confirm_total:
+          type: integer
+        origins:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ReferendumStatisticsOriginsJson'
+          type: array
+        originsCount:
+          format: int64
+          type: integer
+        referendum_locked:
+          type: string
+        referendum_participate:
+          type: string
+        voting_total:
+          type: integer
+      type: object
+    subscan_internal_model.ReferendumDelegateJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        amount:
+          type: string
+        conviction:
+          type: string
+        origins:
+          type: string
+        unlock_at:
+          type: integer
+        valid:
+          type: boolean
+        votes:
+          type: string
+      type: object
+    subscan_internal_model.ChildBountySampleJson:
+      properties:
+        amount:
+          type: string
+        index:
+          type: string
+        proposer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        relay_chain:
+          type: integer
+        status:
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TimelineJson'
+          type: array
+        title:
+          type: string
+      type: object
+    internal_server_http.treasuryProposalsParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object

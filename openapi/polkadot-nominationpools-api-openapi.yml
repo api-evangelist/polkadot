@@ -1,36 +1,30 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account NominationPools API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Nomination Pools API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: NominationPools
 paths:
   /api/scan/nomination_pool/activities:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools Activities
       tags:
       - NominationPools
@@ -44,24 +38,22 @@ paths:
       - staking pool
       - delegation
       - nomination pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams'
+        description: params
+        required: true
   /api/scan/nomination_pool/pool:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools Info
       tags:
       - NominationPools
@@ -74,24 +66,22 @@ paths:
       - staking pool
       - delegation
       - nomination pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams'
+        description: params
+        required: true
   /api/scan/nomination_pool/pool/member/vote:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools Member Vote
       tags:
       - NominationPools
@@ -106,24 +96,22 @@ paths:
       - staking pool
       - delegation
       - nomination pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams'
+        description: params
+        required: true
   /api/scan/nomination_pool/pool/members:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools Members
       tags:
       - NominationPools
@@ -137,24 +125,22 @@ paths:
       - staking pool
       - delegation
       - nomination pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams'
+        description: params
+        required: true
   /api/scan/nomination_pool/pools:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsListParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools List
       tags:
       - NominationPools
@@ -167,24 +153,22 @@ paths:
       - staking pool
       - delegation
       - nomination pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsListParams'
+        description: params
+        required: true
   /api/scan/nomination_pool/rewards:
     post:
-      consumes:
-      - application/json
       description: This API only supports networks with nominationPools frame
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Nomination Pools Rewards
       tags:
       - NominationPools
@@ -200,70 +184,78 @@ paths:
       - reward
       - payout
       - nomination pool
-definitions:
-  internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
-    properties:
-      multi_state:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams'
+        description: params
+        required: true
+components:
+  schemas:
+    internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
+      properties:
+        multi_state:
+          items:
+            type: string
+          type: array
+        state:
+          enum:
+          - Destroying
+          - Open
+          - Blocked
+          - Destroyed
           type: string
-        type: array
-      state:
-        enum:
-        - Destroying
-        - Open
-        - Blocked
-        - Destroyed
-        type: string
-    type: object
-  internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
-    properties:
-      page:
-        minimum: 0
-        type: integer
-      pool_id:
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
-    properties:
-      address:
-        type: string
-      page:
-        minimum: 0
-        type: integer
-      pool_id:
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams:
-    properties:
-      address:
-        type: string
-    required:
-    - address
-    type: object
-  internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams:
-    properties:
-      page:
-        minimum: 0
-        type: integer
-      pool_id:
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-    required:
-    - row
-    type: object
-  internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
-    properties:
-      pool_id:
-        type: integer
-    type: object
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        pool_id:
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
+      properties:
+        pool_id:
+          type: integer
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
+      properties:
+        address:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        pool_id:
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        pool_id:
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - row
+      type: object

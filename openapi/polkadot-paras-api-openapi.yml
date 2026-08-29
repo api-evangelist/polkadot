@@ -1,14 +1,20 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account paras API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
-  contact:
-    url: https://github.com/paritytech/polkadot-rest-api
-  license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+  title: Polkadot Paras API
+  version: '1.0'
+  description: 'Operations tagged paras across 2 of this provider''s published API definitions: polkadot-rest-api-openapi.json, substrate-api-sidecar-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://localhost:8080/v1
+  description: Localhost
+- url: https://polkadot-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Parity public sidecar
+- url: https://kusama-public-sidecar.parity-chains.parity.io/
+  description: Kusama Parity public sidecar
+- url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Asset Hub Parity public sidecar
+- url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Kusama Asset Hub Parity public sidecar
+- url: http://localhost:8080
   description: Localhost
 tags:
 - name: paras
@@ -47,6 +53,9 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /paras:
     get:
       tags:
@@ -71,6 +80,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Paras'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/leases/current:
     get:
       tags:
@@ -110,6 +130,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasLeasesCurrent'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/auctions/current:
     get:
       tags:
@@ -146,6 +177,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasAuctionsCurrent'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/crowdloans:
     get:
       tags:
@@ -172,6 +214,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasCrowdloans'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/{paraId}/crowdloan-info:
     get:
       tags:
@@ -206,6 +259,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasCrowdloanInfo'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/{paraId}/lease-info:
     get:
       tags:
@@ -240,6 +304,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasLeaseInfo'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/head/included-candidates:
     get:
       tags:
@@ -268,6 +343,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasHeaders'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/head/backed-candidates:
     get:
       tags:
@@ -294,6 +380,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasHeaders'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /paras/{number}/inclusion:
     get:
       tags:
@@ -344,184 +441,19 @@ paths:
                   error:
                     type: string
                     example: Depth parameter must be divisible by 5 for optimal performance.
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
 components:
   schemas:
-    ParasLeasesCurrent:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        leasePeriodIndex:
-          type: string
-          format: unsignedInteger
-          description: Current lease period index. This value may be null when the current block now, substracted by the leaseOffset is less then zero.
-        endOfLeasePeriod:
-          type: string
-          format: unsignedInteger
-          description: Last block (number) of the current lease period. This value may be null when `leasePeriodIndex` is null.
-        currentLeaseHolders:
-          type: array
-          items:
-            type: string
-            format: unsignedInteger
-          description: List of `paraId`s that currently hold a lease.
-    ParasHeaders:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        paraId:
-          type: object
-          description: "The key is not named `paraId` and will be the number of the parachain. There is technically no limit to the number of paraId keys there can be. \n"
-          properties:
-            hash:
-              type: string
-              description: The block's hash.
-              format: hex
-            number:
-              type: string
-              description: The block's height.
-              format: unsignedInteger
-            parentHash:
-              type: string
-              description: The hash of the parent block.
-              format: hex
-            stateRoot:
-              type: string
-              description: The state root after executing this block.
-              format: hex
-            extrinsicsRoot:
-              type: string
-              description: The Merkle root of the extrinsics.
-              format: hex
-            digest:
-              type: object
-              properties:
-                logs:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/DigestItem'
-                  description: Array of `DigestItem`s associated with the block.
-    Paras:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        paras:
-          type: array
-          items:
-            $ref: '#/components/schemas/Para'
-    Para:
-      type: object
-      properties:
-        paraId:
-          type: string
-          format: unsignedInteger
-        paraLifecycle:
-          $ref: '#/components/schemas/ParaLifecycle'
-        onboardingAs:
-          $ref: '#/components/schemas/OnboardingAs'
-    ParasCrowdloans:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        funds:
-          type: array
-          items:
-            type: object
-            properties:
-              paraId:
-                type: string
-                format: unsignedInteger
-              fundInfo:
-                $ref: '#/components/schemas/FundInfo'
-          description: 'List of paras that have crowdloans.
-
-            '
-    WinningData:
-      type: object
-      properties:
-        bid:
-          type: object
-          properties:
-            accountId:
-              type: string
-            paraId:
-              type: string
-              format: unsignedInteger
-            amount:
-              type: string
-              format: unsignedInteger
-        leaseSet:
-          type: array
-          items:
-            type: string
-            format: unsignedInteger
-      description: 'A currently winning bid and the set of lease periods the bid is for. The
-
-        `amount` of the bid is per lease period. The `bid` property will be `null`
-
-        if no bid has been made for the corresponding `leaseSet`.
-
-        '
-    FundInfo:
-      type: object
-      properties:
-        depositor:
-          type: string
-        verifier:
-          type: string
-        deposit:
-          type: string
-          format: unsignedInteger
-        raised:
-          type: string
-          format: unsignedInteger
-        end:
-          type: string
-          format: unsignedInteger
-        cap:
-          type: string
-          format: unsignedInteger
-        lastConstribution:
-          type: string
-          enum:
-          - preEnding
-          - ending
-        firstPeriod:
-          type: string
-          format: unsignedInteger
-        lastPeriod:
-          type: string
-          format: unsignedInteger
-        trieIndex:
-          type: string
-          format: unsignedInteger
-    DigestItem:
-      type: object
-      properties:
-        type:
-          type: string
-        index:
-          type: string
-          format: unsignedInteger
-        value:
-          type: array
-          items:
-            type: string
-    OnboardingAs:
-      type: string
-      enum:
-      - parachain
-      - parathread
-      description: 'This property only shows up when `paraLifecycle=onboarding`. It
-
-        describes if a particular para is onboarding as a `parachain` or a
-
-        `parathread`.
-
-        '
     ParasAuctionsCurrent:
       type: object
       properties:
@@ -582,6 +514,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WinningData'
+    ParaLifecycle:
+      type: string
+      enum:
+      - onboarding
+      - parathread
+      - parachain
+      - upgradingParathread
+      - downgradingParachain
+      - offboardingParathread
+      - offboardingParachain
+      description: 'The possible states of a para, to take into account delayed lifecycle
+
+        changes.
+
+        '
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
     ParachainInclusion:
       type: object
       properties:
@@ -599,8 +557,9 @@ components:
           type: integer
           description: The relay chain block number used as parent during parachain block production.
         inclusionNumber:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: The relay chain block number where the parachain block was included (null if not found).
         found:
           type: boolean
@@ -612,21 +571,6 @@ components:
       - relayParentNumber
       - inclusionNumber
       - found
-    ParaLifecycle:
-      type: string
-      enum:
-      - onboarding
-      - parathread
-      - parachain
-      - upgradingParathread
-      - downgradingParachain
-      - offboardingParathread
-      - offboardingParachain
-      description: 'The possible states of a para, to take into account delayed lifecycle
-
-        changes.
-
-        '
     ParasLeaseInfo:
       type: object
       properties:
@@ -654,17 +598,69 @@ components:
             the deposit held and the associated `accountId`.
 
             '
-    BlockIdentifiers:
+    ParasCrowdloans:
       type: object
       properties:
-        hash:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        funds:
+          type: array
+          items:
+            type: object
+            properties:
+              paraId:
+                type: string
+                format: unsignedInteger
+              fundInfo:
+                $ref: '#/components/schemas/FundInfo'
+          description: 'List of paras that have crowdloans.
+
+            '
+    FundInfo:
+      type: object
+      properties:
+        depositor:
           type: string
-          description: The block's hash.
-          format: hex
-        height:
+        verifier:
           type: string
-          description: The block's height.
+        deposit:
+          type: string
           format: unsignedInteger
+        raised:
+          type: string
+          format: unsignedInteger
+        end:
+          type: string
+          format: unsignedInteger
+        cap:
+          type: string
+          format: unsignedInteger
+        lastConstribution:
+          type: string
+          enum:
+          - preEnding
+          - ending
+        firstPeriod:
+          type: string
+          format: unsignedInteger
+        lastPeriod:
+          type: string
+          format: unsignedInteger
+        trieIndex:
+          type: string
+          format: unsignedInteger
+    DigestItem:
+      type: object
+      properties:
+        type:
+          type: string
+        index:
+          type: string
+          format: unsignedInteger
+        value:
+          type: array
+          items:
+            type: string
     ParasCrowdloanInfo:
       type: object
       properties:
@@ -678,3 +674,119 @@ components:
             type: string
             format: unsignedInteger
           description: Lease periods the crowdloan can bid on.
+    OnboardingAs:
+      type: string
+      enum:
+      - parachain
+      - parathread
+      description: 'This property only shows up when `paraLifecycle=onboarding`. It
+
+        describes if a particular para is onboarding as a `parachain` or a
+
+        `parathread`.
+
+        '
+    Para:
+      type: object
+      properties:
+        paraId:
+          type: string
+          format: unsignedInteger
+        paraLifecycle:
+          $ref: '#/components/schemas/ParaLifecycle'
+        onboardingAs:
+          $ref: '#/components/schemas/OnboardingAs'
+    WinningData:
+      type: object
+      properties:
+        bid:
+          type: object
+          properties:
+            accountId:
+              type: string
+            paraId:
+              type: string
+              format: unsignedInteger
+            amount:
+              type: string
+              format: unsignedInteger
+        leaseSet:
+          type: array
+          items:
+            type: string
+            format: unsignedInteger
+      description: 'A currently winning bid and the set of lease periods the bid is for. The
+
+        `amount` of the bid is per lease period. The `bid` property will be `null`
+
+        if no bid has been made for the corresponding `leaseSet`.
+
+        '
+    ParasHeaders:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        paraId:
+          type: object
+          description: "The key is not named `paraId` and will be the number of the parachain. There is technically no limit to the number of paraId keys there can be. \n"
+          properties:
+            hash:
+              type: string
+              description: The block's hash.
+              format: hex
+            number:
+              type: string
+              description: The block's height.
+              format: unsignedInteger
+            parentHash:
+              type: string
+              description: The hash of the parent block.
+              format: hex
+            stateRoot:
+              type: string
+              description: The state root after executing this block.
+              format: hex
+            extrinsicsRoot:
+              type: string
+              description: The Merkle root of the extrinsics.
+              format: hex
+            digest:
+              type: object
+              properties:
+                logs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DigestItem'
+                  description: Array of `DigestItem`s associated with the block.
+    Paras:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        paras:
+          type: array
+          items:
+            $ref: '#/components/schemas/Para'
+    ParasLeasesCurrent:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        leasePeriodIndex:
+          type: string
+          format: unsignedInteger
+          description: Current lease period index. This value may be null when the current block now, substracted by the leaseOffset is less then zero.
+        endOfLeasePeriod:
+          type: string
+          format: unsignedInteger
+          description: Last block (number) of the current lease period. This value may be null when `leasePeriodIndex` is null.
+        currentLeaseHolders:
+          type: array
+          items:
+            type: string
+            format: unsignedInteger
+          description: List of `paraId`s that currently hold a lease.
+x-refined-from:
+- polkadot-rest-api-openapi.json
+- substrate-api-sidecar-openapi.yaml

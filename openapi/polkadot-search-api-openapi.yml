@@ -1,36 +1,30 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Search API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Search API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Search
 paths:
   /api/scan/check_hash:
     post:
-      consumes:
-      - application/json
       description: Resolves the supplied hash and returns the detected object type, such as account, extrinsic, EVM transaction, block, XCM message, or multisig call hash, together with any matching identifiers.
-      parameters:
-      - description: param
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.checkHashParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema: {}
+          content:
+            application/json:
+              schema: {}
       summary: Identify the object type for a hash
       tags:
       - Search
@@ -43,9 +37,17 @@ paths:
       - lookup
       - find
       - query
-definitions:
-  internal_server_http.checkHashParam:
-    properties:
-      hash:
-        type: string
-    type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.checkHashParam'
+        description: param
+        required: true
+components:
+  schemas:
+    internal_server_http.checkHashParam:
+      properties:
+        hash:
+          type: string
+      type: object

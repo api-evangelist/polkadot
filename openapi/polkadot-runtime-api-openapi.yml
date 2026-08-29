@@ -1,14 +1,21 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account runtime API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
-  contact:
-    url: https://github.com/paritytech/polkadot-rest-api
-  license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+  title: Polkadot Runtime API
+  version: '1.0'
+  description: 'Operations tagged runtime across 3 of this provider''s published API definitions: polkadot-rest-api-openapi.json, subscan-swagger.yaml, substrate-api-sidecar-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://localhost:8080/v1
+  description: Localhost
+- url: https://https://www.subscan.io/
+- url: https://polkadot-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Parity public sidecar
+- url: https://kusama-public-sidecar.parity-chains.parity.io/
+  description: Kusama Parity public sidecar
+- url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Polkadot Asset Hub Parity public sidecar
+- url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+  description: Kusama Asset Hub Parity public sidecar
+- url: http://localhost:8080
   description: Localhost
 tags:
 - name: runtime
@@ -41,6 +48,9 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /v1/runtime/metadata:
     get:
       tags:
@@ -68,6 +78,9 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /v1/runtime/metadata/versions:
     get:
       tags:
@@ -97,6 +110,9 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /v1/runtime/metadata/{version}:
     get:
       tags:
@@ -130,6 +146,9 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /v1/runtime/spec:
     get:
       tags:
@@ -157,28 +176,29 @@ paths:
           description: Internal server error
         '503':
           description: Service unavailable
+    servers:
+    - url: http://localhost:8080/v1
+      description: Localhost
   /api/scan/runtime/list:
     post:
-      consumes:
-      - application/json
       description: Returns runtime version history for the current network.
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.RuntimeVersion'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.RuntimeVersion'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List runtime versions
       tags:
       - runtime
@@ -188,38 +208,31 @@ paths:
       - scan
       - spec version
       - runtime version
+    servers:
+    - url: https://https://www.subscan.io/
   /api/scan/runtime/metadata:
     post:
-      consumes:
-      - application/json
       description: Returns runtime metadata modules for the specified runtime spec version.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.runtimeMetadataParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    info:
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
                       properties:
-                        metadata:
-                          items:
-                            $ref: '#/definitions/types.MetadataModules'
-                          type: array
+                        info:
+                          properties:
+                            metadata:
+                              items:
+                                $ref: '#/components/schemas/types.MetadataModules'
+                              type: array
+                          type: object
                       type: object
                   type: object
-              type: object
       summary: Get runtime metadata
       tags:
       - runtime
@@ -231,35 +244,35 @@ paths:
       - runtime version
       - meta
       - chain info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.runtimeMetadataParams'
+        description: params
+        required: true
+    servers:
+    - url: https://https://www.subscan.io/
   /api/scan/runtime/modules:
     post:
-      consumes:
-      - application/json
       description: Returns runtime modules for the specified runtime spec version.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.runtimeModuleParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.RuntimeModuleJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List runtime modules
       tags:
       - runtime
@@ -269,6 +282,15 @@ paths:
       - scan
       - spec version
       - runtime version
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.runtimeModuleParams'
+        description: params
+        required: true
+    servers:
+    - url: https://https://www.subscan.io/
   /runtime/metadata:
     get:
       tags:
@@ -291,6 +313,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RuntimeMetadata'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /runtime/metadata/{metadataVersion}:
     get:
       tags:
@@ -319,6 +352,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RuntimeMetadata'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /runtime/metadata/versions:
     get:
       tags:
@@ -344,6 +388,17 @@ paths:
                 items:
                   type: string
                 description: An array with the available metadata versions.
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /runtime/code:
     get:
       tags:
@@ -366,6 +421,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RuntimeCode'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
   /runtime/spec:
     get:
       tags:
@@ -388,8 +454,272 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RuntimeSpec'
+    servers:
+    - url: https://polkadot-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Parity public sidecar
+    - url: https://kusama-public-sidecar.parity-chains.parity.io/
+      description: Kusama Parity public sidecar
+    - url: https://polkadot-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Polkadot Asset Hub Parity public sidecar
+    - url: https://kusama-asset-hub-public-sidecar.parity-chains.parity.io/
+      description: Kusama Asset Hub Parity public sidecar
+    - url: http://localhost:8080
+      description: Localhost
 components:
   schemas:
+    types.MapType:
+      properties:
+        hasher:
+          type: string
+        isLinked:
+          type: boolean
+        key:
+          type: string
+        key2:
+          type: string
+        key2Hasher:
+          type: string
+        value:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    types.MetadataConstants:
+      properties:
+        constants_value:
+          type: string
+        docs:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+        type:
+          type: string
+        type_value:
+          type: integer
+      type: object
+    types.MetadataCalls:
+      properties:
+        args:
+          items:
+            $ref: '#/components/schemas/types.MetadataModuleCallArgument'
+          type: array
+        docs:
+          items:
+            type: string
+          type: array
+        lookup:
+          type: string
+        name:
+          type: string
+      type: object
+    subscan_internal_model.RuntimeModuleJson:
+      properties:
+        modules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleItemJson'
+          type: array
+        spec_version:
+          type: integer
+      type: object
+    types.MetadataModuleCallArgument:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
+    subscan_internal_model.RuntimeModuleItemJson:
+      properties:
+        call:
+          items:
+            type: string
+          type: array
+        event:
+          items:
+            type: string
+          type: array
+        module:
+          type: string
+      type: object
+    internal_server_http.runtimeModuleParams:
+      properties:
+        all:
+          example: true
+          type: boolean
+        spec:
+          description: Runtime version
+          example: 9430
+          type: integer
+      type: object
+    types.StorageType:
+      properties:
+        PlainTypeValue:
+          type: integer
+        double_map_type:
+          $ref: '#/components/schemas/types.MapType'
+        map_type:
+          $ref: '#/components/schemas/types.MapType'
+        n_map_type:
+          $ref: '#/components/schemas/types.NMapType'
+        origin:
+          type: string
+        plain_type:
+          type: string
+      type: object
+    internal_server_http.runtimeMetadataParams:
+      properties:
+        spec:
+          description: Runtime version
+          example: 9430
+          type: integer
+      type: object
+    types.MetadataModules:
+      properties:
+        calls:
+          items:
+            $ref: '#/components/schemas/types.MetadataCalls'
+          type: array
+        calls_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        constants:
+          items:
+            $ref: '#/components/schemas/types.MetadataConstants'
+          type: array
+        errors:
+          items:
+            $ref: '#/components/schemas/types.MetadataModuleError'
+          type: array
+        errors_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        events:
+          items:
+            $ref: '#/components/schemas/types.MetadataEvents'
+          type: array
+        events_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        index:
+          type: integer
+        name:
+          type: string
+        prefix:
+          type: string
+        storage:
+          items:
+            $ref: '#/components/schemas/types.MetadataStorage'
+          type: array
+      type: object
+    subscan_internal_model.RuntimeVersion:
+      properties:
+        block_num:
+          type: integer
+        modules:
+          type: string
+        spec_version:
+          type: integer
+      type: object
+    types.MetadataModuleError:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        fields:
+          items:
+            $ref: '#/components/schemas/types.ModuleErrorField'
+          type: array
+        index:
+          type: integer
+        name:
+          type: string
+      type: object
+    types.ModuleErrorField:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
+    types.NMapType:
+      properties:
+        hashers:
+          items:
+            type: string
+          type: array
+        key_vec:
+          items:
+            type: string
+          type: array
+        keys_id:
+          type: integer
+        value:
+          type: string
+        value_id:
+          type: integer
+      type: object
+    types.MetadataEvents:
+      properties:
+        args:
+          items:
+            type: string
+          type: array
+        args_name:
+          items:
+            type: string
+          type: array
+        args_type_name:
+          items:
+            type: string
+          type: array
+        docs:
+          items:
+            type: string
+          type: array
+        lookup:
+          type: string
+        name:
+          type: string
+      type: object
+    types.PalletLookUp:
+      properties:
+        type:
+          type: integer
+      type: object
+    types.MetadataStorage:
+      properties:
+        docs:
+          items:
+            type: string
+          type: array
+        fallback:
+          type: string
+        hasher:
+          type: string
+        modifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/types.StorageType'
+      type: object
     BlockIdentifiers:
       type: object
       properties:
@@ -406,46 +736,31 @@ components:
       description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
       properties:
         live:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
         development:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
         local:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
         custom:
           type: string
       example: '{"live": null}'
-    RuntimeMetadata:
+    RuntimeCode:
       type: object
-      description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
-
-        The structure varies significantly between different runtime versions (V9-V16) and different chains.
-
-        This is a generic container that preserves the actual metadata structure as returned by the runtime.
-
-        '
       properties:
-        magicNumber:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        code:
           type: string
-          description: The magic number identifying this as Substrate metadata (typically "1635018093")
-          example: '1635018093'
-        metadata:
-          type: object
-          description: 'Version-specific metadata content. The structure depends entirely on the runtime metadata version
-
-            and can include various combinations of pallets, lookup registries, extrinsics, APIs, and other
-
-            runtime-specific information.
-
-            '
-      required:
-      - magicNumber
-      - metadata
+          format: hex
     RuntimeSpec:
       type: object
       properties:
@@ -472,265 +787,33 @@ components:
           type: object
           description: Arbitrary properties defined in the chain spec.
       description: Version information related to the runtime.
-    RuntimeCode:
+    RuntimeMetadata:
       type: object
+      description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
+
+        The structure varies significantly between different runtime versions (V9-V16) and different chains.
+
+        This is a generic container that preserves the actual metadata structure as returned by the runtime.
+
+        '
       properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        code:
+        magicNumber:
           type: string
-          format: hex
-definitions:
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  types.MetadataModuleError:
-    properties:
-      doc:
-        items:
-          type: string
-        type: array
-      fields:
-        items:
-          $ref: '#/definitions/types.ModuleErrorField'
-        type: array
-      index:
-        type: integer
-      name:
-        type: string
-    type: object
-  types.StorageType:
-    properties:
-      PlainTypeValue:
-        type: integer
-      double_map_type:
-        $ref: '#/definitions/types.MapType'
-      map_type:
-        $ref: '#/definitions/types.MapType'
-      n_map_type:
-        $ref: '#/definitions/types.NMapType'
-      origin:
-        type: string
-      plain_type:
-        type: string
-    type: object
-  internal_server_http.runtimeMetadataParams:
-    properties:
-      spec:
-        description: Runtime version
-        example: 9430
-        type: integer
-    type: object
-  types.MetadataConstants:
-    properties:
-      constants_value:
-        type: string
-      docs:
-        items:
-          type: string
-        type: array
-      name:
-        type: string
-      type:
-        type: string
-      type_value:
-        type: integer
-    type: object
-  subscan_internal_model.RuntimeVersion:
-    properties:
-      block_num:
-        type: integer
-      modules:
-        type: string
-      spec_version:
-        type: integer
-    type: object
-  types.MetadataEvents:
-    properties:
-      args:
-        items:
-          type: string
-        type: array
-      args_name:
-        items:
-          type: string
-        type: array
-      args_type_name:
-        items:
-          type: string
-        type: array
-      docs:
-        items:
-          type: string
-        type: array
-      lookup:
-        type: string
-      name:
-        type: string
-    type: object
-  subscan_internal_model.RuntimeModuleItemJson:
-    properties:
-      call:
-        items:
-          type: string
-        type: array
-      event:
-        items:
-          type: string
-        type: array
-      module:
-        type: string
-    type: object
-  types.MetadataModuleCallArgument:
-    properties:
-      name:
-        type: string
-      type:
-        type: string
-      type_name:
-        type: string
-    type: object
-  types.MetadataStorage:
-    properties:
-      docs:
-        items:
-          type: string
-        type: array
-      fallback:
-        type: string
-      hasher:
-        type: string
-      modifier:
-        type: string
-      name:
-        type: string
-      type:
-        $ref: '#/definitions/types.StorageType'
-    type: object
-  types.MetadataCalls:
-    properties:
-      args:
-        items:
-          $ref: '#/definitions/types.MetadataModuleCallArgument'
-        type: array
-      docs:
-        items:
-          type: string
-        type: array
-      lookup:
-        type: string
-      name:
-        type: string
-    type: object
-  types.PalletLookUp:
-    properties:
-      type:
-        type: integer
-    type: object
-  types.NMapType:
-    properties:
-      hashers:
-        items:
-          type: string
-        type: array
-      key_vec:
-        items:
-          type: string
-        type: array
-      keys_id:
-        type: integer
-      value:
-        type: string
-      value_id:
-        type: integer
-    type: object
-  types.MapType:
-    properties:
-      hasher:
-        type: string
-      isLinked:
-        type: boolean
-      key:
-        type: string
-      key2:
-        type: string
-      key2Hasher:
-        type: string
-      value:
-        type: string
-    type: object
-  subscan_internal_model.RuntimeModuleJson:
-    properties:
-      modules:
-        items:
-          $ref: '#/definitions/subscan_internal_model.RuntimeModuleItemJson'
-        type: array
-      spec_version:
-        type: integer
-    type: object
-  types.MetadataModules:
-    properties:
-      calls:
-        items:
-          $ref: '#/definitions/types.MetadataCalls'
-        type: array
-      calls_value:
-        $ref: '#/definitions/types.PalletLookUp'
-      constants:
-        items:
-          $ref: '#/definitions/types.MetadataConstants'
-        type: array
-      errors:
-        items:
-          $ref: '#/definitions/types.MetadataModuleError'
-        type: array
-      errors_value:
-        $ref: '#/definitions/types.PalletLookUp'
-      events:
-        items:
-          $ref: '#/definitions/types.MetadataEvents'
-        type: array
-      events_value:
-        $ref: '#/definitions/types.PalletLookUp'
-      index:
-        type: integer
-      name:
-        type: string
-      prefix:
-        type: string
-      storage:
-        items:
-          $ref: '#/definitions/types.MetadataStorage'
-        type: array
-    type: object
-  internal_server_http.runtimeModuleParams:
-    properties:
-      all:
-        example: true
-        type: boolean
-      spec:
-        description: Runtime version
-        example: 9430
-        type: integer
-    type: object
-  types.ModuleErrorField:
-    properties:
-      doc:
-        items:
-          type: string
-        type: array
-      type:
-        type: string
-      type_name:
-        type: string
-    type: object
+          description: The magic number identifying this as Substrate metadata (typically "1635018093")
+          example: '1635018093'
+        metadata:
+          type: object
+          description: 'Version-specific metadata content. The structure depends entirely on the runtime metadata version
+
+            and can include various combinations of pallets, lookup registries, extrinsics, APIs, and other
+
+            runtime-specific information.
+
+            '
+      required:
+      - magicNumber
+      - metadata
+x-refined-from:
+- polkadot-rest-api-openapi.json
+- subscan-swagger.yaml
+- substrate-api-sidecar-openapi.yaml

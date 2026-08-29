@@ -1,42 +1,36 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Log API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Log API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Log
 paths:
   /api/scan/log:
     post:
-      consumes:
-      - application/json
       description: Returns a block log record by log index.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.logInfoParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ChainLogJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ChainLogJson'
+                  type: object
       summary: Get block log by index
       tags:
       - Log
@@ -47,37 +41,35 @@ paths:
       - scan
       - block height
       - block number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.logInfoParam'
+        description: params
+        required: true
   /api/v2/scan/logs:
     post:
-      consumes:
-      - application/json
       description: Returns paginated block logs filtered by block range, engine ID, and log type.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.logsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    logs:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ChainLogJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        logs:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ChainLogJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List block logs
       tags:
       - Log
@@ -88,64 +80,72 @@ paths:
       - scan
       - block height
       - block number
-definitions:
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_model.ChainLogJson:
-    properties:
-      block_num:
-        type: integer
-      data:
-        type: string
-      engine:
-        type: string
-      id:
-        type: integer
-      log_index:
-        type: string
-      log_type:
-        type: string
-    type: object
-  internal_server_http.logInfoParam:
-    properties:
-      log_index:
-        type: string
-    required:
-    - log_index
-    type: object
-  internal_server_http.logsParams:
-    properties:
-      after_id:
-        type: integer
-      block_num:
-        minimum: 0
-        type: integer
-      block_range:
-        type: string
-      engine:
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      type:
-        type: string
-    type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.logsParams'
+        description: params
+        required: true
+components:
+  schemas:
+    subscan_internal_model.ChainLogJson:
+      properties:
+        block_num:
+          type: integer
+        data:
+          type: string
+        engine:
+          type: string
+        id:
+          type: integer
+        log_index:
+          type: string
+        log_type:
+          type: string
+      type: object
+    internal_server_http.logsParams:
+      properties:
+        after_id:
+          type: integer
+        block_num:
+          minimum: 0
+          type: integer
+        block_range:
+          type: string
+        engine:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        type:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_server_http.logInfoParam:
+      properties:
+        log_index:
+          type: string
+      required:
+      - log_index
+      type: object

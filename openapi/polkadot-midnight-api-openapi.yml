@@ -1,35 +1,38 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Midnight API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Midnight API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Midnight
 paths:
   /api/scan/midnight/compact_version:
     post:
       description: This API is only available midnight network
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  items:
-                    type: string
-                  type: array
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      items:
+                        type: string
+                      type: array
+                  type: object
       summary: Midnight Supported Compact Compiler Versions
       tags:
       - Midnight
@@ -43,28 +46,19 @@ paths:
       - version
   /api/scan/midnight/contract:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightContractParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidContract'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidContract'
+                  type: object
       summary: Midnight Contract Detail
       tags:
       - Midnight
@@ -75,32 +69,30 @@ paths:
       - smart contract
       - wasm contract
       - evm contract
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightContractParams'
+        description: params
+        required: true
   /api/scan/midnight/contract/cma:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightContractParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  items:
-                    type: string
-                  type: array
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      items:
+                        type: string
+                      type: array
+                  type: object
       summary: Midnight Contract CMA info
       tags:
       - Midnight
@@ -112,31 +104,29 @@ paths:
       - smart contract
       - wasm contract
       - evm contract
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightContractParams'
+        description: params
+        required: true
   /api/scan/midnight/contract/state:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightContractState'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  additionalProperties: true
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      additionalProperties: true
+                      type: object
                   type: object
-              type: object
       summary: Midnight Contract State
       tags:
       - Midnight
@@ -148,37 +138,35 @@ paths:
       - smart contract
       - wasm contract
       - evm contract
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightContractState'
+        description: params
+        required: true
   /api/scan/midnight/contracts:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightContractsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidContract'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidContract'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: Midnight Contracts
       tags:
       - Midnight
@@ -186,30 +174,28 @@ paths:
       - midnight
       - contracts
       - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightContractsParams'
+        description: params
+        required: true
   /api/scan/midnight/transaction:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.midnightTransactionParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidCallJson'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidCallJson'
+                  type: object
       summary: Midnight Transaction Detail
       tags:
       - Midnight
@@ -219,37 +205,35 @@ paths:
       - scan
       - extrinsic
       - tx
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.midnightTransactionParams'
+        description: params
+        required: true
   /api/scan/midnight/transactions:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightTransactionsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidCallJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidCallJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: Midnight Transactions
       tags:
       - Midnight
@@ -257,30 +241,28 @@ paths:
       - midnight
       - transactions
       - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightTransactionsParams'
+        description: params
+        required: true
   /api/scan/midnight/unshielded_tokens/balance:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network and supports optional address, direction, extrinsic, time, and value filters.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult'
+                  type: object
       summary: Midnight Unshielded Balance
       tags:
       - Midnight
@@ -290,37 +272,35 @@ paths:
       - balance
       - account
       - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceParams'
+        description: params
+        required: true
   /api/scan/midnight/unshielded_tokens/balances:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: Midnight Unshielded Token Balance List
       tags:
       - Midnight
@@ -331,30 +311,28 @@ paths:
       - balances
       - list
       - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams'
+        description: params
+        required: true
   /api/scan/midnight/unshielded_tokens/ledger:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult'
+                  type: object
       summary: Midnight Unshielded Ledger
       tags:
       - Midnight
@@ -365,37 +343,35 @@ paths:
       - account
       - history
       - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams'
+        description: params
+        required: true
   /api/scan/midnight/unshielded_tokens/types:
     post:
-      consumes:
-      - application/json
       description: This API is only available midnight network
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/subscan_internal_plugin_share.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    list:
-                      items:
-                        $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/subscan_internal_plugin_share.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        list:
+                          items:
+                            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: Midnight Unshielded Token Type List
       tags:
       - Midnight
@@ -406,293 +382,301 @@ paths:
       - types
       - list
       - scan
-definitions:
-  internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams:
-    properties:
-      page:
-        minimum: 0
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-    required:
-    - row
-    type: object
-  internal_pluginv2_customizeds_midnight.MidCallJson:
-    properties:
-      contract:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams'
+        description: params
+        required: true
+components:
+  schemas:
+    internal_pluginv2_customizeds_midnight.VerificationKey:
+      additionalProperties:
         type: string
-      contract_actions:
-        items:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidContractActionJson'
-        type: array
-      cost_fee:
-        type: string
-      event_index:
-        type: string
-      extrinsic_index:
-        type: string
-      id:
-        type: integer
-      public_identifiers:
-        items:
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractState:
+      properties:
+        contract:
           type: string
-        type: array
-      timestamp:
-        type: integer
-      tx_hash:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem:
-    properties:
-      address:
-        type: string
-      direction:
-        type: string
-      event_at:
-        type: integer
-      event_index:
-        type: string
-      extrinsic_index:
-        type: string
-      intent_hash:
-        type: string
-      output_no:
-        type: integer
-      token_type:
-        type: string
-      txn_hash:
-        type: string
-      value:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult:
-    properties:
-      has_more:
-        type: boolean
-      list:
-        items:
-          $ref: '#/definitions/internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem'
-        type: array
-      next_cursor:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.VerificationKey:
-    additionalProperties:
-      type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceParams:
-    properties:
-      address:
-        type: string
-      token_type:
-        type: string
-    required:
-    - address
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightContractState:
-    properties:
-      contract:
-        type: string
-      hash:
-        description: optional, if not provided, get latest state
-        type: string
-    required:
-    - contract
-    type: object
-  subscan_internal_plugin_share.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.midnightTransactionParams:
-    properties:
-      extrinsic_index:
-        type: string
-      tx_hash:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidContract:
-    properties:
-      abi: {}
-      address:
-        type: string
-      circuits_count:
-        type: integer
-      cma:
-        description: 'VerifiedCircuits int            `json:"verified_circuits" gorm:"size:32"`
+        hash:
+          description: optional, if not provided, get latest state
+          type: string
+      required:
+      - contract
+      type: object
+    internal_pluginv2_customizeds_midnight.midnightTransactionParams:
+      properties:
+        extrinsic_index:
+          type: string
+        tx_hash:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractsParams:
+      properties:
+        order:
+          description: asc or desc
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        sort:
+          description: sort by transaction_count or verify_time
+          enum:
+          - transaction_count
+          - verify_time
+          type: string
+        verified:
+          type: boolean
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidCallJson:
+      properties:
+        contract:
+          type: string
+        contract_actions:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidContractActionJson'
+          type: array
+        cost_fee:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        id:
+          type: integer
+        public_identifiers:
+          items:
+            type: string
+          type: array
+        timestamp:
+          type: integer
+        tx_hash:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidContract:
+      properties:
+        abi: {}
+        address:
+          type: string
+        circuits_count:
+          type: integer
+        cma:
+          description: 'VerifiedCircuits int            `json:"verified_circuits" gorm:"size:32"`
 
-          maintain info'
-      compiler_version:
-        type: string
-      create_at:
-        type: integer
-      event_index:
-        type: integer
-      extrinsic_index:
-        type: integer
-      last_verify_error:
-        type: string
-      source_code:
-        type: string
-      source_type:
-        description: single_file, multi_file
-        type: string
-      transaction_count:
-        type: integer
-      tx_hash:
-        type: string
-      verification_key:
-        allOf:
-        - $ref: '#/definitions/internal_pluginv2_customizeds_midnight.VerificationKey'
-        description: '{"circuit_name"=>"key"}'
-      verify_time:
-        type: integer
-      verifying:
-        type: boolean
-      viewer: {}
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams:
-    properties:
-      page:
-        minimum: 0
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-      token_type:
-        type: string
-    required:
-    - row
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams:
-    properties:
-      address:
-        type: string
-      cursor:
-        type: string
-      direction:
-        type: string
-      end_time:
-        minimum: 0
-        type: integer
-      extrinsic_index:
-        type: string
-      max_value:
-        type: string
-      min_value:
-        type: string
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-      start_time:
-        minimum: 0
-        type: integer
-      token_type:
-        type: string
-    required:
-    - row
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightTransactionsParams:
-    properties:
-      after_id:
-        description: optional, for pagination, get records after this ID
-        minimum: 0
-        type: integer
-      block_range:
-        description: optional, e.g. "1000-2000"
-        type: string
-      contract:
-        type: string
-      page:
-        minimum: 0
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-      txn_type:
-        description: optional, filter by transaction type
-        enum:
-        - zk
-        - contract
-        type: string
-    required:
-    - row
-    type: object
-  internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult:
-    properties:
-      address:
-        type: string
-      balances:
-        additionalProperties:
+            maintain info'
+        compiler_version:
           type: string
-        type: object
-    type: object
-  internal_pluginv2_customizeds_midnight.MidContractActionJson:
-    properties:
-      contract:
-        type: string
-      entry_point:
-        type: string
-      operations_type:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem:
-    properties:
-      token_type:
-        type: string
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightContractsParams:
-    properties:
-      order:
-        description: asc or desc
-        enum:
-        - asc
-        - desc
-        type: string
-      page:
-        minimum: 0
-        type: integer
-      row:
-        maximum: 100
-        minimum: 1
-        type: integer
-      sort:
-        description: sort by transaction_count or verify_time
-        enum:
-        - transaction_count
-        - verify_time
-        type: string
-      verified:
-        type: boolean
-    required:
-    - row
-    type: object
-  internal_pluginv2_customizeds_midnight.MidnightContractParams:
-    properties:
-      contract:
-        type: string
-    required:
-    - contract
-    type: object
-  internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem:
-    properties:
-      address:
-        type: string
-      balance:
-        type: string
-      token_type:
-        type: string
-    type: object
+        create_at:
+          type: integer
+        event_index:
+          type: integer
+        extrinsic_index:
+          type: integer
+        last_verify_error:
+          type: string
+        source_code:
+          type: string
+        source_type:
+          description: single_file, multi_file
+          type: string
+        transaction_count:
+          type: integer
+        tx_hash:
+          type: string
+        verification_key:
+          allOf:
+          - $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.VerificationKey'
+          description: '{"circuit_name"=>"key"}'
+        verify_time:
+          type: integer
+        verifying:
+          type: boolean
+        viewer: {}
+      type: object
+    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem:
+      properties:
+        address:
+          type: string
+        balance:
+          type: string
+        token_type:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceParams:
+      properties:
+        address:
+          type: string
+        token_type:
+          type: string
+      required:
+      - address
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult:
+      properties:
+        has_more:
+          type: boolean
+        list:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem'
+          type: array
+        next_cursor:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        token_type:
+          type: string
+      required:
+      - row
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem:
+      properties:
+        token_type:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult:
+      properties:
+        address:
+          type: string
+        balances:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightTransactionsParams:
+      properties:
+        after_id:
+          description: optional, for pagination, get records after this ID
+          minimum: 0
+          type: integer
+        block_range:
+          description: optional, e.g. "1000-2000"
+          type: string
+        contract:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        txn_type:
+          description: optional, filter by transaction type
+          enum:
+          - zk
+          - contract
+          type: string
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractParams:
+      properties:
+        contract:
+          type: string
+      required:
+      - contract
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams:
+      properties:
+        address:
+          type: string
+        cursor:
+          type: string
+        direction:
+          type: string
+        end_time:
+          minimum: 0
+          type: integer
+        extrinsic_index:
+          type: string
+        max_value:
+          type: string
+        min_value:
+          type: string
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        start_time:
+          minimum: 0
+          type: integer
+        token_type:
+          type: string
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem:
+      properties:
+        address:
+          type: string
+        direction:
+          type: string
+        event_at:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        intent_hash:
+          type: string
+        output_no:
+          type: integer
+        token_type:
+          type: string
+        txn_hash:
+          type: string
+        value:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidContractActionJson:
+      properties:
+        contract:
+          type: string
+        entry_point:
+          type: string
+        operations_type:
+          type: string
+      type: object

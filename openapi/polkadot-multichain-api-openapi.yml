@@ -1,44 +1,38 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account MultiChain API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Multi Chain API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: MultiChain
 paths:
   /api/scan/multiChain/account/count:
     post:
-      consumes:
-      - application/json
       description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the number of multichain asset records associated with one account.
 
         Support Network: polkadot'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.multiChainAccountParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  type: integer
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      type: integer
+                  type: object
       summary: '[PRO] Count multichain account assets'
       tags:
       - MultiChain
@@ -50,34 +44,32 @@ paths:
       - wallet
       - address
       - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.multiChainAccountParams'
+        description: params
+        required: true
   /api/scan/multiChain/balance_value_history:
     post:
-      consumes:
-      - application/json
       description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the historical total balance value for one account over the requested date range. Dates use the format YYYY-MM-DD.
 
         Support Network: polkadot'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.accountBalanceValueHistoryParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/subscan_internal_dao.AccountBalanceValueHistory'
-                  type: array
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/subscan_internal_dao.AccountBalanceValueHistory'
+                      type: array
+                  type: object
       summary: '[PRO] Get multichain account balance-value history'
       tags:
       - MultiChain
@@ -91,45 +83,43 @@ paths:
       - wallet
       - address
       - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.accountBalanceValueHistoryParams'
+        description: params
+        required: true
   /api/scan/multiChain/balance_value_stat:
     post:
-      consumes:
-      - application/json
       description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the maximum, minimum, and previous-24-hour balance values for one account.
 
         Support Network: polkadot'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.accountBalanceValueStatParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    asset_max:
-                      type: number
-                    asset_min:
-                      type: number
-                    asset_prev24H:
-                      type: number
-                    max:
-                      type: number
-                    min:
-                      type: number
-                    prev24H:
-                      type: number
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        asset_max:
+                          type: number
+                        asset_min:
+                          type: number
+                        asset_prev24H:
+                          type: number
+                        max:
+                          type: number
+                        min:
+                          type: number
+                        prev24H:
+                          type: number
+                      type: object
                   type: object
-              type: object
       summary: '[PRO] Get multichain account balance-value statistics'
       tags:
       - MultiChain
@@ -143,33 +133,31 @@ paths:
       - wallet
       - address
       - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.accountBalanceValueStatParams'
+        description: params
+        required: true
   /api/scan/multiChain/price:
     post:
-      consumes:
-      - application/json
       description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the available multichain price data, optionally including price-change information.
 
         Support Network: polkadot'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.identitiesParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  additionalProperties: true
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      additionalProperties: true
+                      type: object
                   type: object
-              type: object
       summary: '[PRO] List multichain price snapshots'
       tags:
       - MultiChain
@@ -179,39 +167,37 @@ paths:
       - scan
       - rate
       - valuation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.identitiesParams'
+        description: params
+        required: true
   /api/v2/scan/multiChain/account:
     post:
-      consumes:
-      - application/json
       description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns aggregated multichain asset balances for one account together with related DeFi participation data.
 
         Support Network: polkadot'
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.multiChainAccountParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    assets:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.AssetsJson'
-                      type: array
-                    defi:
-                      $ref: '#/definitions/subscan_internal_service_scan.DefiJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        assets:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.AssetsJson'
+                          type: array
+                        defi:
+                          $ref: '#/components/schemas/subscan_internal_service_scan.DefiJson'
+                      type: object
                   type: object
-              type: object
       summary: '[PRO] Get multichain account assets'
       tags:
       - MultiChain
@@ -222,216 +208,224 @@ paths:
       - wallet
       - address
       - user
-definitions:
-  subscan_internal_service_scan.DefiStaking:
-    properties:
-      enable_staking_network:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.multiChainAccountParams'
+        description: params
+        required: true
+components:
+  schemas:
+    subscan_internal_service_scan.DefiBifrost:
+      properties:
+        farming:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrostFarming'
+          type: array
+        liquid_staking:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLiquidStaking'
+          type: array
+        loop_stake:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLoopStake'
+          type: array
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
-        type: array
-      staking_v2:
-        items:
-          $ref: '#/definitions/subscan_internal_service_scan.StakingV2'
-        type: array
-    type: object
-  subscan_internal_model.LpTokenInfo:
-    properties:
-      amount:
-        type: string
-      decimals:
-        type: integer
-      price:
-        type: string
-      symbol:
-        type: string
-      unique_id:
-        type: string
-    type: object
-  subscan_internal_service_scan.DefiJson:
-    properties:
-      bifrost_defi:
-        additionalProperties:
-          $ref: '#/definitions/subscan_internal_service_scan.DefiBifrost'
-        type: object
-      defi_nomination_pool:
-        items:
-          $ref: '#/definitions/subscan_internal_service_scan.DefiNominationPool'
-        type: array
-      staking:
-        $ref: '#/definitions/subscan_internal_service_scan.DefiStaking'
-    type: object
-  internal_server_http.identitiesParams:
-    properties:
-      address:
-        type: string
-    required:
-    - address
-    type: object
-  subscan_internal_service_scan.DefiBifrostFarming:
-    properties:
-      bonded_redeem:
-        items:
-          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
-        type: array
-      redeem:
-        items:
-          $ref: '#/definitions/subscan_internal_model.LpTokenInfo'
-        type: array
-      token_unique_id:
-        type: string
-    type: object
-  subscan_internal_service_scan.DefiLiquidStaking:
-    properties:
-      bonded:
-        type: string
-      exchange_ratio:
-        type: string
-      price:
-        type: string
-      token_unique_id:
-        type: string
-      unbonding:
-        type: string
-    type: object
-  subscan_internal_service_scan.DefiNominationPool:
-    properties:
-      SENJ_amount:
-        type: string
-      bonded:
-        type: string
-      network:
-        type: string
-      token_unique_id:
-        type: string
-      unbonding:
-        type: string
-      unclaimed:
-        type: string
-    type: object
-  internal_server_http.accountBalanceValueHistoryParams:
-    properties:
-      address:
-        type: string
-      end:
-        type: string
-      start:
-        type: string
-    required:
-    - address
-    - end
-    - start
-    type: object
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_service_scan.DefiBifrost:
-    properties:
-      farming:
-        items:
-          $ref: '#/definitions/subscan_internal_service_scan.DefiBifrostFarming'
-        type: array
-      liquid_staking:
-        items:
-          $ref: '#/definitions/subscan_internal_service_scan.DefiLiquidStaking'
-        type: array
-      loop_stake:
-        items:
-          $ref: '#/definitions/subscan_internal_service_scan.DefiLoopStake'
-        type: array
-    type: object
-  internal_server_http.multiChainAccountParams:
-    properties:
-      address:
-        type: string
-    required:
-    - address
-    type: object
-  subscan_internal_dao.AccountBalanceValueHistory:
-    properties:
-      asset_value:
-        type: string
-      date:
-        type: string
-      defi_value:
-        type: string
-      value:
-        type: string
-    type: object
-  subscan_internal_model.AssetsJson:
-    properties:
-      asset_id:
-        type: string
-      balance:
-        type: string
-      bonded:
-        type: string
-      category:
-        type: string
-      contract:
-        type: string
-      conviction_lock:
-        type: string
-      currency_id:
-        type: string
-      decimal:
-        type: integer
-      democracy_lock:
-        type: string
-      election_lock:
-        type: string
-      label:
-        type: string
-      locked:
-        type: string
-      network:
-        type: string
-      nomination_bonded:
-        type: string
-      price:
-        type: string
-      reserved:
-        type: string
-      symbol:
-        type: string
-      token_unique_id:
-        type: string
-      unbonding:
-        type: string
-    type: object
-  internal_server_http.accountBalanceValueStatParams:
-    properties:
-      address:
-        type: string
-    required:
-    - address
-    type: object
-  subscan_internal_service_scan.StakingV2:
-    properties:
-      network:
-        type: string
-      token_unique_id:
-        type: string
-      unclaimed:
-        type: string
-    type: object
-  subscan_internal_service_scan.DefiLoopStake:
-    properties:
-      bonded:
-        type: string
-      price:
-        type: string
-      token_unique_id:
-        type: string
-      unbonding:
-        type: string
-    type: object
+      type: object
+    subscan_internal_service_scan.DefiNominationPool:
+      properties:
+        SENJ_amount:
+          type: string
+        bonded:
+          type: string
+        network:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+        unclaimed:
+          type: string
+      type: object
+    subscan_internal_model.AssetsJson:
+      properties:
+        asset_id:
+          type: string
+        balance:
+          type: string
+        bonded:
+          type: string
+        category:
+          type: string
+        contract:
+          type: string
+        conviction_lock:
+          type: string
+        currency_id:
+          type: string
+        decimal:
+          type: integer
+        democracy_lock:
+          type: string
+        election_lock:
+          type: string
+        label:
+          type: string
+        locked:
+          type: string
+        network:
+          type: string
+        nomination_bonded:
+          type: string
+        price:
+          type: string
+        reserved:
+          type: string
+        symbol:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+      type: object
+    subscan_internal_service_scan.StakingV2:
+      properties:
+        network:
+          type: string
+        token_unique_id:
+          type: string
+        unclaimed:
+          type: string
+      type: object
+    internal_server_http.identitiesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_service_scan.DefiJson:
+      properties:
+        bifrost_defi:
+          additionalProperties:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrost'
+          type: object
+        defi_nomination_pool:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiNominationPool'
+          type: array
+        staking:
+          $ref: '#/components/schemas/subscan_internal_service_scan.DefiStaking'
+      type: object
+    internal_server_http.multiChainAccountParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_server_http.accountBalanceValueStatParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_service_scan.DefiLoopStake:
+      properties:
+        bonded:
+          type: string
+        price:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+      type: object
+    internal_server_http.accountBalanceValueHistoryParams:
+      properties:
+        address:
+          type: string
+        end:
+          type: string
+        start:
+          type: string
+      required:
+      - address
+      - end
+      - start
+      type: object
+    subscan_internal_dao.AccountBalanceValueHistory:
+      properties:
+        asset_value:
+          type: string
+        date:
+          type: string
+        defi_value:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.LpTokenInfo:
+      properties:
+        amount:
+          type: string
+        decimals:
+          type: integer
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    subscan_internal_service_scan.DefiStaking:
+      properties:
+        enable_staking_network:
+          items:
+            type: string
+          type: array
+        staking_v2:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.StakingV2'
+          type: array
+      type: object
+    subscan_internal_service_scan.DefiLiquidStaking:
+      properties:
+        bonded:
+          type: string
+        exchange_ratio:
+          type: string
+        price:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+      type: object
+    subscan_internal_service_scan.DefiBifrostFarming:
+      properties:
+        bonded_redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        token_unique_id:
+          type: string
+      type: object

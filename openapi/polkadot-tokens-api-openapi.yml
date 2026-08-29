@@ -1,47 +1,41 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Tokens API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Tokens API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Tokens
 paths:
   /api/scan/search/tokens:
     post:
-      consumes:
-      - application/json
       description: Searches token metadata by a free-form token key such as token name, ticker symbol, or unique ID.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.searchTokenParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    list:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.TokenSearchJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        list:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.TokenSearchJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: Search tokens by name, symbol, or unique ID
       tags:
       - Tokens
@@ -57,32 +51,37 @@ paths:
       - query
       - asset
       - coin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.searchTokenParams'
+        description: params
+        required: true
   /api/scan/token:
     get:
-      consumes:
-      - application/json
       description: Returns network token symbols and token metadata keyed by symbol.
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    detail:
-                      additionalProperties:
-                        $ref: '#/definitions/subscan_internal_service_scan_token.Token'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        detail:
+                          additionalProperties:
+                            $ref: '#/components/schemas/subscan_internal_service_scan_token.Token'
+                          type: object
+                        token:
+                          items:
+                            type: string
+                          type: array
                       type: object
-                    token:
-                      items:
-                        type: string
-                      type: array
                   type: object
-              type: object
       summary: List tokens by symbol
       tags:
       - Tokens
@@ -95,23 +94,21 @@ paths:
       - coin
   /api/scan/token/price:
     get:
-      consumes:
-      - application/json
       description: Returns the latest price list for available tokens.
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/subscan_internal_model.AssetTokenPriceJson'
-                  type: array
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/subscan_internal_model.AssetTokenPriceJson'
+                      type: array
+                  type: object
       summary: List token prices
       tags:
       - Tokens
@@ -127,41 +124,32 @@ paths:
       - valuation
   /api/scan/token/unique_id:
     get:
-      consumes:
-      - application/json
       description: Returns network token symbols, unique IDs, and token metadata keyed by unique_id.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.TokenUniqueIDParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    detail:
-                      additionalProperties:
-                        $ref: '#/definitions/subscan_internal_service_scan_token.Token'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        detail:
+                          additionalProperties:
+                            $ref: '#/components/schemas/subscan_internal_service_scan_token.Token'
+                          type: object
+                        token:
+                          items:
+                            type: string
+                          type: array
+                        unique_id:
+                          items:
+                            type: string
+                          type: array
                       type: object
-                    token:
-                      items:
-                        type: string
-                      type: array
-                    unique_id:
-                      items:
-                        type: string
-                      type: array
                   type: object
-              type: object
       summary: List tokens by unique ID
       tags:
       - Tokens
@@ -173,35 +161,33 @@ paths:
       - token
       - asset
       - coin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.TokenUniqueIDParams'
+        description: params
+        required: true
   /api/v2/scan/token/native:
     post:
-      consumes:
-      - application/json
       description: Returns the native token and provider information for the current network.
-      parameters:
-      - description: param
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.tokenNativeParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    provider:
-                      type: string
-                    token:
-                      $ref: '#/definitions/internal_server_http.tokenJson'
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        provider:
+                          type: string
+                        token:
+                          $ref: '#/components/schemas/internal_server_http.tokenJson'
+                      type: object
                   type: object
-              type: object
       summary: Get native token
       tags:
       - Tokens
@@ -212,28 +198,33 @@ paths:
       - scan
       - asset
       - coin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.tokenNativeParam'
+        description: param
+        required: true
   /api/v2/scan/token/providers:
     get:
-      consumes:
-      - application/json
       description: Returns active token providers and their capabilities.
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    providers:
-                      items:
-                        $ref: '#/definitions/internal_server_http.providerActiveJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        providers:
+                          items:
+                            $ref: '#/components/schemas/internal_server_http.providerActiveJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List token providers
       tags:
       - Tokens
@@ -246,32 +237,23 @@ paths:
       - coin
   /api/v2/scan/token/search:
     post:
-      consumes:
-      - application/json
       description: Returns tokens grouped by provider for the requested unique IDs.
-      parameters:
-      - description: param
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.tokensSearchParam'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  additionalProperties:
-                    items:
-                      $ref: '#/definitions/internal_server_http.tokenJson'
-                    type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      additionalProperties:
+                        items:
+                          $ref: '#/components/schemas/internal_server_http.tokenJson'
+                        type: array
+                      type: object
                   type: object
-              type: object
       summary: Search tokens (v2)
       tags:
       - Tokens
@@ -285,252 +267,258 @@ paths:
       - query
       - asset
       - coin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.tokensSearchParam'
+        description: param
+        required: true
   /api/v2/scan/tokens:
     post:
-      consumes:
-      - application/json
       description: Returns paginated tokens from the selected provider with optional search, ordering, and extended fields.
-      parameters:
-      - description: param
-        in: body
-        name: param
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.tokensV2Param'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    provider:
-                      type: string
-                    tokens:
-                      items:
-                        $ref: '#/definitions/internal_server_http.tokenJson'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        provider:
+                          type: string
+                        tokens:
+                          items:
+                            $ref: '#/components/schemas/internal_server_http.tokenJson'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List tokens (v2)
       tags:
       - Tokens
       x-synonyms:
       - tokens
       - scan
-definitions:
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  subscan_internal_service_scan_token.AssetType:
-    enum:
-    - native
-    - builtin
-    type: string
-    x-enum-varnames:
-    - TypeNative
-    - TypeBuiltin
-  subscan_internal_model.TokenSearchJson:
-    properties:
-      category:
-        type: string
-      contract:
-        type: string
-      currency_id:
-        type: string
-      price:
-        type: string
-      symbol:
-        type: string
-      unique_id:
-        type: string
-    type: object
-  internal_server_http.TokenUniqueIDParams:
-    properties:
-      new_algorithm:
-        description: use new algorithm sum(free - max(0, frozen - reserve))
-        type: boolean
-    type: object
-  subscan_internal_service_scan_token.ExternalDataSource:
-    properties:
-      authorization_source:
-        type: string
-      circulating_supply:
-        type: string
-      source:
-        type: string
-    type: object
-  internal_server_http.searchTokenParams:
-    properties:
-      key:
-        type: string
-    required:
-    - key
-    type: object
-  internal_server_http.providerActiveJson:
-    properties:
-      can_legacy:
-        type: boolean
-      id:
-        type: string
-      is_primary:
-        type: boolean
-      name:
-        type: string
-    type: object
-  internal_server_http.tokenJson:
-    properties:
-      category:
-        type: string
-      currency_id:
-        type: string
-      decimals:
-        type: integer
-      extends:
-        $ref: '#/definitions/internal_server_http.tokenExtendsJson'
-      is_native:
-        type: boolean
-      market_cap:
-        type: string
-      metadata: {}
-      name:
-        type: string
-      price:
-        type: string
-      symbol:
-        type: string
-      total_issuance:
-        type: string
-      transfer_count:
-        type: integer
-      unique_id:
-        type: string
-    type: object
-  internal_server_http.tokenExtendsJson:
-    properties:
-      holders:
-        type: integer
-    type: object
-  subscan_internal_service_scan_token.Token:
-    properties:
-      asset_type:
-        $ref: '#/definitions/subscan_internal_service_scan_token.AssetType'
-      available_balance:
-        type: string
-      bonded_locked_balance:
-        type: string
-      conviction_lock_balance:
-        type: string
-      democracy_locked_balance:
-        type: string
-      display_name:
-        type: string
-      election_locked_balance:
-        type: string
-      external_data:
-        $ref: '#/definitions/subscan_internal_service_scan_token.ExternalDataSource'
-      free_balance:
-        type: string
-      inflation:
-        type: string
-      locked_balance:
-        type: string
-      nominator_bonded:
-        type: string
-      price:
-        type: string
-      price_change:
-        type: string
-      reserved_balance:
-        type: string
-      symbol:
-        type: string
-      token_decimals:
-        type: integer
-      total_issuance:
-        type: string
-      treasury_balance:
-        type: string
-      unbonded_locked_balance:
-        type: string
-      unique_id:
-        type: string
-      validator_bonded:
-        type: string
-      vesting_balance:
-        type: string
-    type: object
-  internal_server_http.tokensSearchParam:
-    properties:
-      include_extends:
-        type: boolean
-      unique_ids:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.tokensV2Param'
+        description: param
+        required: true
+components:
+  schemas:
+    internal_server_http.searchTokenParams:
+      properties:
+        key:
           type: string
-        type: array
-    type: object
-  internal_server_http.tokenNativeParam:
-    properties:
-      include_extends:
-        type: boolean
-    type: object
-  internal_server_http.tokensV2Param:
-    properties:
-      include_extends:
-        type: boolean
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      order_field:
-        enum:
-        - currency_id
-        - symbol
-        - holders
-        - token_id
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      provider:
-        type: string
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-      search:
-        description: symbol
-        maxLength: 256
-        minLength: 1
-        type: string
-    type: object
-  subscan_internal_model.AssetTokenPriceJson:
-    properties:
-      price:
-        type: string
-      price_change:
-        type: string
-      unique_id:
-        type: string
-    type: object
+      required:
+      - key
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.TokenSearchJson:
+      properties:
+        category:
+          type: string
+        contract:
+          type: string
+        currency_id:
+          type: string
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.tokenJson:
+      properties:
+        category:
+          type: string
+        currency_id:
+          type: string
+        decimals:
+          type: integer
+        extends:
+          $ref: '#/components/schemas/internal_server_http.tokenExtendsJson'
+        is_native:
+          type: boolean
+        market_cap:
+          type: string
+        metadata: {}
+        name:
+          type: string
+        price:
+          type: string
+        symbol:
+          type: string
+        total_issuance:
+          type: string
+        transfer_count:
+          type: integer
+        unique_id:
+          type: string
+      type: object
+    subscan_internal_service_scan_token.AssetType:
+      enum:
+      - native
+      - builtin
+      type: string
+      x-enum-varnames:
+      - TypeNative
+      - TypeBuiltin
+    internal_server_http.tokenNativeParam:
+      properties:
+        include_extends:
+          type: boolean
+      type: object
+    internal_server_http.TokenUniqueIDParams:
+      properties:
+        new_algorithm:
+          description: use new algorithm sum(free - max(0, frozen - reserve))
+          type: boolean
+      type: object
+    internal_server_http.tokensSearchParam:
+      properties:
+        include_extends:
+          type: boolean
+        unique_ids:
+          items:
+            type: string
+          type: array
+      type: object
+    subscan_internal_model.AssetTokenPriceJson:
+      properties:
+        price:
+          type: string
+        price_change:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    subscan_internal_service_scan_token.Token:
+      properties:
+        asset_type:
+          $ref: '#/components/schemas/subscan_internal_service_scan_token.AssetType'
+        available_balance:
+          type: string
+        bonded_locked_balance:
+          type: string
+        conviction_lock_balance:
+          type: string
+        democracy_locked_balance:
+          type: string
+        display_name:
+          type: string
+        election_locked_balance:
+          type: string
+        external_data:
+          $ref: '#/components/schemas/subscan_internal_service_scan_token.ExternalDataSource'
+        free_balance:
+          type: string
+        inflation:
+          type: string
+        locked_balance:
+          type: string
+        nominator_bonded:
+          type: string
+        price:
+          type: string
+        price_change:
+          type: string
+        reserved_balance:
+          type: string
+        symbol:
+          type: string
+        token_decimals:
+          type: integer
+        total_issuance:
+          type: string
+        treasury_balance:
+          type: string
+        unbonded_locked_balance:
+          type: string
+        unique_id:
+          type: string
+        validator_bonded:
+          type: string
+        vesting_balance:
+          type: string
+      type: object
+    internal_server_http.tokenExtendsJson:
+      properties:
+        holders:
+          type: integer
+      type: object
+    internal_server_http.providerActiveJson:
+      properties:
+        can_legacy:
+          type: boolean
+        id:
+          type: string
+        is_primary:
+          type: boolean
+        name:
+          type: string
+      type: object
+    internal_server_http.tokensV2Param:
+      properties:
+        include_extends:
+          type: boolean
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        order_field:
+          enum:
+          - currency_id
+          - symbol
+          - holders
+          - token_id
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        provider:
+          type: string
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        search:
+          description: symbol
+          maxLength: 256
+          minLength: 1
+          type: string
+      type: object
+    subscan_internal_service_scan_token.ExternalDataSource:
+      properties:
+        authorization_source:
+          type: string
+        circulating_supply:
+          type: string
+        source:
+          type: string
+      type: object

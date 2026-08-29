@@ -1,42 +1,36 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Polkadot REST Account Event API
-  description: High-performance Rust REST API for Substrate/Polkadot blockchain data. Drop-in replacement for substrate-api-sidecar.
   contact:
-    url: https://github.com/paritytech/polkadot-rest-api
+    email: bruce.sun@itering.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a subscan API server.
   license:
-    name: GPL-3.0-or-later
-  version: 0.1.3
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Subscan Event API
+  version: '1.0'
 servers:
-- url: http://localhost:8080/v1
-  description: Localhost
+- url: https://https://www.subscan.io/
 tags:
 - name: Event
 paths:
   /api/scan/event:
     post:
-      consumes:
-      - application/json
       description: Returns event details for a specific event index.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.eventInfoParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  $ref: '#/definitions/subscan_internal_model.ChainEvent'
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      $ref: '#/components/schemas/subscan_internal_model.ChainEvent'
+                  type: object
       summary: Get event by index
       tags:
       - Event
@@ -46,32 +40,30 @@ paths:
       - scan
       - log
       - on-chain event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.eventInfoParams'
+        description: params
+        required: true
   /api/scan/event/params:
     post:
-      consumes:
-      - application/json
       description: Returns parsed parameter payloads for up to 100 event indexes.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.eventParamsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/subscan_internal_model.ChainEventParams'
-                  type: array
-              type: object
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/subscan_internal_model.ChainEventParams'
+                      type: array
+                  type: object
       summary: Get event parameters by index
       tags:
       - Event
@@ -83,37 +75,35 @@ paths:
       - params
       - log
       - on-chain event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.eventParamsParams'
+        description: params
+        required: true
   /api/v2/scan/events:
     post:
-      consumes:
-      - application/json
       description: Returns paginated events with module/event filters, block constraints, and optional address matching.
-      parameters:
-      - description: params
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/internal_server_http.eventsParams'
-      produces:
-      - application/json
       responses:
         '200':
           description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/internal_server_http.J'
-            - properties:
-                data:
-                  properties:
-                    count:
-                      type: integer
-                    events:
-                      items:
-                        $ref: '#/definitions/subscan_internal_model.ChainEventV2Json'
-                      type: array
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/internal_server_http.J'
+                - properties:
+                    data:
+                      properties:
+                        count:
+                          type: integer
+                        events:
+                          items:
+                            $ref: '#/components/schemas/subscan_internal_model.ChainEventV2Json'
+                          type: array
+                      type: object
                   type: object
-              type: object
       summary: List events
       tags:
       - Event
@@ -125,168 +115,176 @@ paths:
       - on-chain events
       - log
       - on-chain event
-definitions:
-  subscan_internal_model.EventParam:
-    properties:
-      name:
-        type: string
-      raw_value:
-        items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/internal_server_http.eventsParams'
+        description: params
+        required: true
+components:
+  schemas:
+    subscan_internal_model.ChainEventV2Json:
+      properties:
+        block_timestamp:
           type: integer
-        type: array
-      type:
-        type: string
-      type_name:
-        type: string
-      value: {}
-    type: object
-  subscan_internal_model.ChainEventParams:
-    properties:
-      event_index:
-        type: string
-      params:
-        items:
-          $ref: '#/definitions/subscan_internal_model.EventParam'
-        type: array
-      params_decode: {}
-    type: object
-  subscan_internal_model.ChainEvent:
-    properties:
-      block_num:
-        type: integer
-      es_params:
-        items:
+        event_id:
           type: string
-        type: array
-      event_id:
-        type: string
-      event_idx:
-        type: integer
-      event_index:
-        type: string
-      extrinsic_hash:
-        type: string
-      extrinsic_idx:
-        type: integer
-      extrinsic_module:
-        type: string
-      finalized:
-        type: boolean
-      id:
-        type: integer
-      module_id:
-        type: string
-      params:
-        items:
-          $ref: '#/definitions/subscan_internal_model.EventParam'
-        type: array
-      params_raw:
-        type: string
-      phase:
-        type: integer
-    type: object
-  internal_server_http.eventsParams:
-    properties:
-      address:
-        type: string
-      after_id:
-        type: integer
-      block_num:
-        minimum: 0
-        type: integer
-      block_range:
-        type: string
-      event_id:
-        type: string
-      extrinsic_index:
-        type: string
-      finalized:
-        type: boolean
-      focus:
-        type: string
-      module:
-        type: string
-      module_event:
-        items:
-          $ref: '#/definitions/internal_server_http.moduleEventFilterParams'
-        type: array
-      order:
-        enum:
-        - asc
-        - desc
-        type: string
-      page:
-        description: Page number, starting from 0
-        example: 0
-        minimum: 0
-        type: integer
-      phase:
-        enum:
-        - 0
-        - 1
-        - 2
-        type: integer
-      row:
-        description: Data size per page
-        example: 10
-        maximum: 100
-        minimum: 1
-        type: integer
-    type: object
-  internal_server_http.eventParamsParams:
-    properties:
-      event_index:
-        items:
+        event_index:
           type: string
-        type: array
-    required:
-    - event_index
-    type: object
-  internal_server_http.J:
-    properties:
-      code:
-        example: 0
-        type: integer
-      data: {}
-      generated_at:
-        example: 1699600641
-        type: integer
-      message:
-        example: Success
-        type: string
-    type: object
-  internal_server_http.moduleEventFilterParams:
-    properties:
-      event_id:
-        type: string
-      module:
-        type: string
-    type: object
-  internal_server_http.eventInfoParams:
-    properties:
-      event_index:
-        type: string
-    required:
-    - event_index
-    type: object
-  subscan_internal_model.ChainEventV2Json:
-    properties:
-      block_timestamp:
-        type: integer
-      event_id:
-        type: string
-      event_index:
-        type: string
-      extrinsic_hash:
-        type: string
-      extrinsic_index:
-        type: string
-      finalized:
-        type: boolean
-      id:
-        type: integer
-      module_id:
-        type: string
-      phase:
-        type: integer
-    type: object
+        extrinsic_hash:
+          type: string
+        extrinsic_index:
+          type: string
+        finalized:
+          type: boolean
+        id:
+          type: integer
+        module_id:
+          type: string
+        phase:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.EventParam:
+      properties:
+        name:
+          type: string
+        raw_value:
+          items:
+            type: integer
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
+      type: object
+    subscan_internal_model.ChainEvent:
+      properties:
+        block_num:
+          type: integer
+        es_params:
+          items:
+            type: string
+          type: array
+        event_id:
+          type: string
+        event_idx:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_idx:
+          type: integer
+        extrinsic_module:
+          type: string
+        finalized:
+          type: boolean
+        id:
+          type: integer
+        module_id:
+          type: string
+        params:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.EventParam'
+          type: array
+        params_raw:
+          type: string
+        phase:
+          type: integer
+      type: object
+    internal_server_http.moduleEventFilterParams:
+      properties:
+        event_id:
+          type: string
+        module:
+          type: string
+      type: object
+    internal_server_http.eventsParams:
+      properties:
+        address:
+          type: string
+        after_id:
+          type: integer
+        block_num:
+          minimum: 0
+          type: integer
+        block_range:
+          type: string
+        event_id:
+          type: string
+        extrinsic_index:
+          type: string
+        finalized:
+          type: boolean
+        focus:
+          type: string
+        module:
+          type: string
+        module_event:
+          items:
+            $ref: '#/components/schemas/internal_server_http.moduleEventFilterParams'
+          type: array
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        phase:
+          enum:
+          - 0
+          - 1
+          - 2
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.eventParamsParams:
+      properties:
+        event_index:
+          items:
+            type: string
+          type: array
+      required:
+      - event_index
+      type: object
+    subscan_internal_model.ChainEventParams:
+      properties:
+        event_index:
+          type: string
+        params:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.EventParam'
+          type: array
+        params_decode: {}
+      type: object
+    internal_server_http.eventInfoParams:
+      properties:
+        event_index:
+          type: string
+      required:
+      - event_index
+      type: object
