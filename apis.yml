@@ -1,5 +1,19 @@
 name: Polkadot
 description: Polkadot is a multi-chain blockchain network that enables interoperability between specialized blockchains called parachains. Developer APIs are provided through Subscan (a multi-chain block explorer with a hosted HTTP API) and the Substrate API Sidecar (a REST interface for Polkadot SDK-based chains), enabling queries against extrinsics, events, accounts, blocks, staking data, and parachain state on Polkadot, Kusama, and related networks.
+deliveryModel:
+  model: open-core
+  license: GPL-3.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
@@ -1815,6 +1829,10 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 common:
+  - type: IssueTracker
+    url: https://github.com/paritytech/substrate-api-sidecar/issues
+  - type: Releases
+    url: https://github.com/paritytech/substrate-api-sidecar/releases
   - type: License
     name: GPL-3.0
     url: https://github.com/paritytech/substrate-api-sidecar/blob/master/LICENSE
