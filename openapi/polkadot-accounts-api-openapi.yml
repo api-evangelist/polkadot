@@ -1439,62 +1439,23 @@ paths:
       description: Localhost
 components:
   schemas:
-    EraPayoutsData:
+    AssetBalancesResponse:
       type: object
-      description: Actual payout data for an era
-      required:
-      - era
-      - totalEraRewardPoints
-      - totalEraPayout
-      - payouts
-      properties:
-        era:
-          type: string
-          description: Era index
-        payouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorPayout'
-          description: Individual payouts for validators nominated
-        totalEraPayout:
-          type: string
-          description: Total payout for the era
-        totalEraRewardPoints:
-          type: string
-          description: Total reward points for the era
-    BlockInfo:
-      type: object
-      description: Block information
-      required:
-      - hash
-      - height
-      properties:
-        hash:
-          type: string
-        height:
-          type: string
-    ProxyInfoResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/proxy-info
+      description: Response for GET /accounts/{accountId}/asset-balances
       required:
       - at
-      - delegatedAccounts
-      - depositHeld
+      - assets
       properties:
         ahTimestamp:
           type:
           - string
           - 'null'
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        delegatedAccounts:
+        assets:
           type: array
           items:
-            $ref: '#/components/schemas/ProxyDefinition'
-          description: Array of delegated accounts with their proxy definitions
-        depositHeld:
-          type: string
-          description: The deposit held for the proxies
+            $ref: '#/components/schemas/AssetBalance'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
         rcBlockHash:
           type:
           - string
@@ -1503,6 +1464,211 @@ components:
           type:
           - string
           - 'null'
+    PoolAssetApprovalResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/pool-asset-approvals
+      required:
+      - at
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        amount:
+          type:
+          - string
+          - 'null'
+          description: The approved amount (null if approval doesn't exist)
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        deposit:
+          type:
+          - string
+          - 'null'
+          description: The deposit associated with the approval (null if approval doesn't exist)
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+    AccountCompareResponse:
+      type: object
+      description: Response for GET /accounts/compare
+      required:
+      - areEqual
+      - addresses
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressDetails'
+          description: Details for each address
+        areEqual:
+          type: boolean
+          description: Whether all addresses have the same underlying public key
+    VestingSchedule:
+      type: object
+      description: A vesting schedule
+      required:
+      - locked
+      - perBlock
+      - startingBlock
+      properties:
+        locked:
+          type: string
+          description: Total tokens locked at start of vesting
+        perBlock:
+          type: string
+          description: Tokens unlocked per block
+        startingBlock:
+          type: string
+          description: Block when vesting begins
+    NominationsInfo:
+      type: object
+      description: Nominations information for a nominator
+      required:
+      - targets
+      - submittedIn
+      - suppressed
+      properties:
+        submittedIn:
+          type: string
+          description: Era in which nomination was submitted
+        suppressed:
+          type: boolean
+          description: Whether nominations are suppressed
+        targets:
+          type: array
+          items:
+            type: string
+          description: List of validator addresses being nominated
+    AddressDetails:
+      type: object
+      description: Details about a single address
+      required:
+      - ss58Format
+      properties:
+        network:
+          type:
+          - string
+          - 'null'
+          description: The network name for the prefix (null if invalid/unknown)
+        publicKey:
+          type:
+          - string
+          - 'null'
+          description: The public key in hex format (null if invalid)
+        ss58Format:
+          type: string
+          description: The original SS58 format address
+        ss58Prefix:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The SS58 prefix (null if invalid)
+          minimum: 0
+    VestingInfoResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/vesting-info
+      required:
+      - at
+      - vesting
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+        vesting:
+          type: array
+          items:
+            $ref: '#/components/schemas/VestingSchedule'
+          description: Array of vesting schedules (empty array if no vesting)
+    AssetBalance:
+      type: object
+      description: Asset balance information
+      required:
+      - assetId
+      - balance
+      - isFrozen
+      - isSufficient
+      properties:
+        assetId:
+          type: string
+          description: Asset ID as string (matches Sidecar format)
+        balance:
+          type: string
+          description: Balance as string (u128 serialized as decimal string)
+        isFrozen:
+          type: boolean
+        isSufficient:
+          type: boolean
+    EraPayouts:
+      oneOf:
+      - $ref: '#/components/schemas/EraPayoutsData'
+        description: Successful payout data for an era
+      - type: object
+        description: Error message when payouts cannot be calculated
+        required:
+        - message
+        properties:
+          message:
+            type: string
+      description: Payouts for a single era - can be either actual payouts or an error message
+    AccountValidateResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/validate
+      required:
+      - isValid
+      properties:
+        accountId:
+          type:
+          - string
+          - 'null'
+          description: The account ID in hex format (null if invalid)
+        isValid:
+          type: boolean
+          description: Whether the address is valid
+        network:
+          type:
+          - string
+          - 'null'
+          description: The network name for the prefix (null if invalid/unknown)
+        ss58Prefix:
+          type:
+          - string
+          - 'null'
+          description: The SS58 prefix (null if invalid)
+    ProxyDefinition:
+      type: object
+      description: A proxy definition containing the delegate, proxy type, and delay
+      required:
+      - delegate
+      - proxyType
+      - delay
+      properties:
+        delay:
+          type: string
+          description: The announcement delay in blocks
+        delegate:
+          type: string
+          description: The delegate address that can act on behalf of the account
+        proxyType:
+          type: string
+          description: The type of proxy (e.g., "Any", "Staking", "Governance", etc.)
     RewardDestination:
       oneOf:
       - type: object
@@ -1542,40 +1708,91 @@ components:
             type: string
             description: Rewards are sent to a specific account
       description: 'Reward destination - e.g. { "staked": null }, { "stash": null }, { "account": "..." }'
-    BalanceLock:
+    StakingLedger:
       type: object
-      description: Balance lock information
+      description: Staking ledger information
       required:
-      - id
-      - amount
-      - reasons
+      - stash
+      - total
+      - active
+      - unlocking
       properties:
-        amount:
+        active:
           type: string
-          description: Amount locked
-        id:
+          description: Active staked balance
+        claimedRewards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimedReward'
+          description: Claimed rewards per era (only when includeClaimedRewards=true)
+        stash:
           type: string
-          description: Lock identifier
-        reasons:
+          description: Stash account address
+        total:
           type: string
-          description: Lock reasons (Fee = 0, Misc = 1, All = 2)
-    AssetBalancesResponse:
+          description: Total locked balance (active + unlocking)
+        unlocking:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnlockingChunk'
+          description: Unlocking chunks with value and era
+    ValidatorPayout:
       type: object
-      description: Response for GET /accounts/{accountId}/asset-balances
+      description: Payout information for a single validator
+      required:
+      - validatorId
+      - nominatorStakingPayout
+      - claimed
+      - totalValidatorRewardPoints
+      - validatorCommission
+      - totalValidatorExposure
+      - nominatorExposure
+      properties:
+        claimed:
+          type: boolean
+          description: Whether the reward has been claimed
+        nominatorExposure:
+          type: string
+          description: Nominator's stake behind this validator
+        nominatorStakingPayout:
+          type: string
+          description: Calculated payout amount for the nominator
+        totalValidatorExposure:
+          type: string
+          description: Total stake behind this validator
+        totalValidatorRewardPoints:
+          type: string
+          description: Validator's reward points for this era
+        validatorCommission:
+          type: string
+          description: Validator's commission (as parts per billion, 0-1000000000)
+        validatorId:
+          type: string
+          description: Validator stash account ID
+    AssetApprovalResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/asset-approvals
       required:
       - at
-      - assets
       properties:
         ahTimestamp:
           type:
           - string
           - 'null'
-        assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetBalance'
+        amount:
+          type:
+          - string
+          - 'null'
+          description: The approved amount (null if approval doesn't exist)
         at:
           $ref: '#/components/schemas/BlockInfo'
+        deposit:
+          type:
+          - string
+          - 'null'
+          description: The deposit associated with the approval (null if approval doesn't exist)
         rcBlockHash:
           type:
           - string
@@ -1584,6 +1801,238 @@ components:
           type:
           - string
           - 'null'
+    ClaimedReward:
+      type: object
+      description: Claimed reward status for a specific era
+      required:
+      - era
+      - status
+      properties:
+        era:
+          type: string
+          description: Era index
+        status:
+          type: string
+          description: Claim status ("claimed" or "unclaimed")
+    StakingInfoResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/staking-info
+      required:
+      - at
+      - controller
+      - rewardDestination
+      - numSlashingSpans
+      - staking
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        controller:
+          type: string
+          description: Controller address
+        nominations:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/NominationsInfo'
+            description: Nomination info (null if not a nominator)
+        numSlashingSpans:
+          type: string
+          description: Number of slashing spans
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+        rewardDestination:
+          $ref: '#/components/schemas/RewardDestination'
+          description: Reward destination configuration
+        staking:
+          $ref: '#/components/schemas/StakingLedger'
+          description: Staking ledger information
+    PoolAssetBalancesResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/pool-asset-balances
+      required:
+      - at
+      - poolAssets
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        poolAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/PoolAssetBalance'
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+    StakingPayoutsResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/staking-payouts
+      required:
+      - at
+      - erasPayouts
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        erasPayouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/EraPayouts'
+          description: Array of era payouts
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+    ProxyInfoResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/proxy-info
+      required:
+      - at
+      - delegatedAccounts
+      - depositHeld
+      properties:
+        ahTimestamp:
+          type:
+          - string
+          - 'null'
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        delegatedAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProxyDefinition'
+          description: Array of delegated accounts with their proxy definitions
+        depositHeld:
+          type: string
+          description: The deposit held for the proxies
+        rcBlockHash:
+          type:
+          - string
+          - 'null'
+        rcBlockNumber:
+          type:
+          - string
+          - 'null'
+    AccountConvertResponse:
+      type: object
+      description: Response for GET /accounts/{accountId}/convert
+      required:
+      - ss58Prefix
+      - network
+      - address
+      - accountId
+      - scheme
+      - publicKey
+      properties:
+        accountId:
+          type: string
+          description: The original AccountId (hex)
+        address:
+          type: string
+          description: The SS58-encoded address
+        network:
+          type: string
+          description: Network name corresponding to the SS58 prefix
+        publicKey:
+          type: boolean
+          description: Whether the input was treated as a public key
+        scheme:
+          type: string
+          description: The cryptographic scheme used
+        ss58Prefix:
+          type: integer
+          format: int32
+          description: SS58 prefix used for encoding
+          minimum: 0
+    EraPayoutsData:
+      type: object
+      description: Actual payout data for an era
+      required:
+      - era
+      - totalEraRewardPoints
+      - totalEraPayout
+      - payouts
+      properties:
+        era:
+          type: string
+          description: Era index
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorPayout'
+          description: Individual payouts for validators nominated
+        totalEraPayout:
+          type: string
+          description: Total payout for the era
+        totalEraRewardPoints:
+          type: string
+          description: Total reward points for the era
+    PoolAssetBalance:
+      type: object
+      description: Pool asset balance information
+      required:
+      - assetId
+      - balance
+      - isFrozen
+      - isSufficient
+      properties:
+        assetId:
+          type: string
+          description: Asset ID as string (matches Sidecar format)
+        balance:
+          type: string
+          description: Balance as string (u128 serialized as decimal string)
+        isFrozen:
+          type: boolean
+        isSufficient:
+          type: boolean
+    BlockInfo:
+      type: object
+      description: Block information
+      required:
+      - hash
+      - height
+      properties:
+        hash:
+          type: string
+        height:
+          type: string
+    UnlockingChunk:
+      type: object
+      description: Unlocking chunk with value and era when funds become available
+      required:
+      - value
+      - era
+      properties:
+        era:
+          type: string
+          description: Era when funds become available
+        value:
+          type: string
+          description: Amount being unlocked
     BalanceInfoResponse:
       type: object
       description: Response for GET /accounts/{accountId}/balance-info
@@ -1646,472 +2095,93 @@ components:
         transferable:
           type: string
           description: 'Calculated transferable balance using: free - max(maybeED, frozen - reserved)'
-    ClaimedReward:
+    BalanceLock:
       type: object
-      description: Claimed reward status for a specific era
+      description: Balance lock information
       required:
-      - era
-      - status
+      - id
+      - amount
+      - reasons
       properties:
-        era:
+        amount:
           type: string
-          description: Era index
-        status:
+          description: Amount locked
+        id:
           type: string
-          description: Claim status ("claimed" or "unclaimed")
-    VestingSchedule:
+          description: Lock identifier
+        reasons:
+          type: string
+          description: Lock reasons (Fee = 0, Misc = 1, All = 2)
+    AssetsBalance:
       type: object
-      description: A vesting schedule
-      required:
-      - locked
-      - perBlock
-      - startingBlock
-      properties:
-        locked:
-          type: string
-          description: Total tokens locked at start of vesting
-        perBlock:
-          type: string
-          description: Tokens unlocked per block
-        startingBlock:
-          type: string
-          description: Block when vesting begins
-    PoolAssetBalancesResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/pool-asset-balances
-      required:
-      - at
-      - poolAssets
-      properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        poolAssets:
-          type: array
-          items:
-            $ref: '#/components/schemas/PoolAssetBalance'
-        rcBlockHash:
-          type:
-          - string
-          - 'null'
-        rcBlockNumber:
-          type:
-          - string
-          - 'null'
-    NominationsInfo:
-      type: object
-      description: Nominations information for a nominator
-      required:
-      - targets
-      - submittedIn
-      - suppressed
-      properties:
-        submittedIn:
-          type: string
-          description: Era in which nomination was submitted
-        suppressed:
-          type: boolean
-          description: Whether nominations are suppressed
-        targets:
-          type: array
-          items:
-            type: string
-          description: List of validator addresses being nominated
-    AssetBalance:
-      type: object
-      description: Asset balance information
-      required:
-      - assetId
-      - balance
-      - isFrozen
-      - isSufficient
       properties:
         assetId:
           type: string
-          description: Asset ID as string (matches Sidecar format)
+          description: The identifier of the asset.
+          format: unsignedInteger
         balance:
           type: string
-          description: Balance as string (u128 serialized as decimal string)
+          description: The balance of the asset.
+          format: unsignedInteger
         isFrozen:
           type: boolean
+          description: Whether the asset is frozen for non-admin transfers. Note, that some runtimes may not have support for isFrozen and if so the following will be returned `isFrozen does not exist for this runtime`
         isSufficient:
           type: boolean
-    StakingPayoutsResponse:
+          description: Whether a non-zero balance of this asset is a deposit of sufficient value to account for the state bloat associated with its balance storage. If set to `true`, then non-zero balances may be stored without a `consumer` reference (and thus an ED in the Balances pallet or whatever else is used to control user-account state growth).
+    ForeignAssetBalance:
       type: object
-      description: Response for GET /accounts/{accountId}/staking-payouts
-      required:
-      - at
-      - erasPayouts
       properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        erasPayouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/EraPayouts'
-          description: Array of era payouts
-        rcBlockHash:
-          type:
-          - string
-          - 'null'
-        rcBlockNumber:
-          type:
-          - string
-          - 'null'
-    PoolAssetBalance:
-      type: object
-      description: Pool asset balance information
-      required:
-      - assetId
-      - balance
-      - isFrozen
-      - isSufficient
-      properties:
-        assetId:
-          type: string
-          description: Asset ID as string (matches Sidecar format)
+        multiLocation:
+          type: object
+          description: The multilocation identifier of the foreign asset. This is an XCM multilocation object that uniquely identifies an asset across different parachains.
         balance:
           type: string
-          description: Balance as string (u128 serialized as decimal string)
+          description: The balance of the foreign asset.
+          format: unsignedInteger
         isFrozen:
           type: boolean
+          description: Whether the asset is frozen for non-admin transfers. Returns false if the runtime does not support isFrozen.
         isSufficient:
           type: boolean
-    StakingLedger:
+          description: Whether a non-zero balance of this asset is a deposit of sufficient value to account for the state bloat associated with its balance storage. If set to `true`, then non-zero balances may be stored without a `consumer` reference (and thus an ED in the Balances pallet or whatever else is used to control user-account state growth).
+    AddressDetails_2:
       type: object
-      description: Staking ledger information
-      required:
-      - stash
-      - total
-      - active
-      - unlocking
       properties:
-        active:
-          type: string
-          description: Active staked balance
-        claimedRewards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClaimedReward'
-          description: Claimed rewards per era (only when includeClaimedRewards=true)
-        stash:
-          type: string
-          description: Stash account address
-        total:
-          type: string
-          description: Total locked balance (active + unlocking)
-        unlocking:
-          type: array
-          items:
-            $ref: '#/components/schemas/UnlockingChunk'
-          description: Unlocking chunks with value and era
-    UnlockingChunk:
-      type: object
-      description: Unlocking chunk with value and era when funds become available
-      required:
-      - value
-      - era
-      properties:
-        era:
-          type: string
-          description: Era when funds become available
-        value:
-          type: string
-          description: Amount being unlocked
-    EraPayouts:
-      oneOf:
-      - $ref: '#/components/schemas/EraPayoutsData'
-        description: Successful payout data for an era
-      - type: object
-        description: Error message when payouts cannot be calculated
-        required:
-        - message
-        properties:
-          message:
-            type: string
-      description: Payouts for a single era - can be either actual payouts or an error message
-    AddressDetails:
-      type: object
-      description: Details about a single address
-      required:
-      - ss58Format
-      properties:
-        network:
-          type:
-          - string
-          - 'null'
-          description: The network name for the prefix (null if invalid/unknown)
-        publicKey:
-          type:
-          - string
-          - 'null'
-          description: The public key in hex format (null if invalid)
         ss58Format:
           type: string
-          description: The original SS58 format address
+          description: The queried SS58 address.
         ss58Prefix:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The SS58 prefix (null if invalid)
-          minimum: 0
-    AccountCompareResponse:
-      type: object
-      description: Response for GET /accounts/compare
-      required:
-      - areEqual
-      - addresses
-      properties:
-        addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddressDetails'
-          description: Details for each address
-        areEqual:
-          type: boolean
-          description: Whether all addresses have the same underlying public key
-    ValidatorPayout:
-      type: object
-      description: Payout information for a single validator
-      required:
-      - validatorId
-      - nominatorStakingPayout
-      - claimed
-      - totalValidatorRewardPoints
-      - validatorCommission
-      - totalValidatorExposure
-      - nominatorExposure
-      properties:
-        claimed:
-          type: boolean
-          description: Whether the reward has been claimed
-        nominatorExposure:
           type: string
-          description: Nominator's stake behind this validator
-        nominatorStakingPayout:
-          type: string
-          description: Calculated payout amount for the nominator
-        totalValidatorExposure:
-          type: string
-          description: Total stake behind this validator
-        totalValidatorRewardPoints:
-          type: string
-          description: Validator's reward points for this era
-        validatorCommission:
-          type: string
-          description: Validator's commission (as parts per billion, 0-1000000000)
-        validatorId:
-          type: string
-          description: Validator stash account ID
-    VestingInfoResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/vesting-info
-      required:
-      - at
-      - vesting
-      properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        rcBlockHash:
-          type:
-          - string
-          - 'null'
-        rcBlockNumber:
-          type:
-          - string
-          - 'null'
-        vesting:
-          type: array
-          items:
-            $ref: '#/components/schemas/VestingSchedule'
-          description: Array of vesting schedules (empty array if no vesting)
-    AssetApprovalResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/asset-approvals
-      required:
-      - at
-      properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        amount:
-          type:
-          - string
-          - 'null'
-          description: The approved amount (null if approval doesn't exist)
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        deposit:
-          type:
-          - string
-          - 'null'
-          description: The deposit associated with the approval (null if approval doesn't exist)
-        rcBlockHash:
-          type:
-          - string
-          - 'null'
-        rcBlockNumber:
-          type:
-          - string
-          - 'null'
-    StakingInfoResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/staking-info
-      required:
-      - at
-      - controller
-      - rewardDestination
-      - numSlashingSpans
-      - staking
-      properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        controller:
-          type: string
-          description: Controller address
-        nominations:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/NominationsInfo'
-            description: Nomination info (null if not a nominator)
-        numSlashingSpans:
-          type: string
-          description: Number of slashing spans
-        rcBlockHash:
-          type:
-          - string
-          - 'null'
-        rcBlockNumber:
-          type:
-          - string
-          - 'null'
-        rewardDestination:
-          $ref: '#/components/schemas/RewardDestination'
-          description: Reward destination configuration
-        staking:
-          $ref: '#/components/schemas/StakingLedger'
-          description: Staking ledger information
-    AccountConvertResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/convert
-      required:
-      - ss58Prefix
-      - network
-      - address
-      - accountId
-      - scheme
-      - publicKey
-      properties:
-        accountId:
-          type: string
-          description: The original AccountId (hex)
-        address:
-          type: string
-          description: The SS58-encoded address
+          description: SS58 prefix of the given address.
+          format: unsignedInteger
         network:
           type: string
-          description: Network name corresponding to the SS58 prefix
+          description: The network based on which the given address is encoded.
         publicKey:
-          type: boolean
-          description: Whether the input was treated as a public key
-        scheme:
           type: string
-          description: The cryptographic scheme used
-        ss58Prefix:
-          type: integer
-          format: int32
-          description: SS58 prefix used for encoding
-          minimum: 0
-    PoolAssetApprovalResponse:
+          description: The account ID/Public Key (hex) of the queried SS58 address.
+    AccountPoolAssetsBalances:
       type: object
-      description: Response for GET /accounts/{accountId}/pool-asset-approvals
-      required:
-      - at
       properties:
-        ahTimestamp:
-          type:
-          - string
-          - 'null'
-        amount:
-          type:
-          - string
-          - 'null'
-          description: The approved amount (null if approval doesn't exist)
         at:
-          $ref: '#/components/schemas/BlockInfo'
-        deposit:
-          type:
-          - string
-          - 'null'
-          description: The deposit associated with the approval (null if approval doesn't exist)
+          $ref: '#/components/schemas/BlockIdentifiers'
+        poolAssets:
+          type: array
+          description: An array of queried assets.
+          items:
+            $ref: '#/components/schemas/AssetsBalance'
         rcBlockHash:
-          type:
-          - string
-          - 'null'
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
         rcBlockNumber:
-          type:
-          - string
-          - 'null'
-    AccountValidateResponse:
-      type: object
-      description: Response for GET /accounts/{accountId}/validate
-      required:
-      - isValid
-      properties:
-        accountId:
-          type:
-          - string
-          - 'null'
-          description: The account ID in hex format (null if invalid)
-        isValid:
-          type: boolean
-          description: Whether the address is valid
-        network:
-          type:
-          - string
-          - 'null'
-          description: The network name for the prefix (null if invalid/unknown)
-        ss58Prefix:
-          type:
-          - string
-          - 'null'
-          description: The SS58 prefix (null if invalid)
-    ProxyDefinition:
-      type: object
-      description: A proxy definition containing the delegate, proxy type, and delay
-      required:
-      - delegate
-      - proxyType
-      - delay
-      properties:
-        delay:
           type: string
-          description: The announcement delay in blocks
-        delegate:
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
           type: string
-          description: The delegate address that can act on behalf of the account
-        proxyType:
-          type: string
-          description: The type of proxy (e.g., "Any", "Staking", "Governance", etc.)
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
     AccountForeignAssetsBalances:
       type: object
       properties:
@@ -2122,6 +2192,121 @@ components:
           description: An array of queried foreign assets.
           items:
             $ref: '#/components/schemas/ForeignAssetBalance'
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    AccountAssetsApproval:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        amount:
+          type: string
+          description: The amount of funds approved for the balance transfer from the owner to some delegated target.
+          format: unsignedInteger
+        deposit:
+          type: string
+          description: The amount reserved on the owner's account to hold this item in storage.
+          format: unsignedInteger
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    AccountConvert:
+      type: object
+      properties:
+        ss58Prefix:
+          type: string
+          description: SS58 prefix based on which the account ID or Public Key (hex) is converted to an SS58 address.
+          format: unsignedInteger
+        network:
+          type: string
+          description: The network based on which the returned address is encoded. It depends on the prefix that was given as a query param.
+        address:
+          type: string
+          description: The returned SS58 address which is the result of the conversion of the account ID or Public Key (hex).
+        accountId:
+          type: string
+          description: The given account ID or Public Key (hex) that is converted to an SS58 address.
+        scheme:
+          type: string
+          description: The cryptographic scheme/algorithm used to encode the given account ID or Public Key (hex).
+        publicKey:
+          type: boolean
+          description: Whether the given path parameter is a Public Key (hex) or not.
+    AccountValidation:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+          description: Whether the given address is valid ss58 formatted.
+        ss58Prefix:
+          type: string
+          description: SS58 prefix of the given address. If the address is a valid base58 format, but incorrect ss58, a prefix for the given address will still be returned.
+          format: unsignedInteger
+        network:
+          type: string
+          description: The network based on which the given address is encoded.
+        accountId:
+          type: string
+          description: The account id of the given address.
+    AccountBalanceInfo:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        nonce:
+          type: string
+          description: Account nonce.
+          format: unsignedInteger
+        tokenSymbol:
+          type: string
+          description: Token symbol of the balances displayed in this response.
+          format: unsignedInteger
+        free:
+          type: string
+          description: Free balance of the account. Not equivalent to _spendable_ balance. This is the only balance that matters in terms of most operations on tokens.
+          format: unsignedInteger
+        reserved:
+          type: string
+          description: Reserved balance of the account.
+          format: unsignedInteger
+        miscFrozen:
+          type: string
+          description: The amount that `free` may not drop below when withdrawing for anything except transaction fee payment. Note, that some runtimes may not have support for miscFrozen and if so the following will be returned `miscFrozen does not exist for this runtime`
+          format: unsignedInteger
+        feeFrozen:
+          type: string
+          description: The amount that `free` may not drop below when withdrawing specifically for transaction fee payment. Note, that some runtimes may not have support for feeFrozen and if so the following will be returned `feeFrozen does not exist for this runtime`
+          format: unsignedInteger
+        frozen:
+          type: string
+          description: The amount that `free` may not drop below when reducing the balance, except for actions where the account owner cannot reasonably benefit from the balance reduction, such as slashing. Note, that some runtimes may not have support for frozen and if so the following will be returned `frozen does not exist for this runtime`
+          format: unsignedInteger
+        transferable:
+          type: string
+          description: The amount that can be transferred from this account. This is calculated using the formula `free - max(maybeEd, frozen - reserve)` where `maybeEd` is the existential deposit if there are frozen funds or reserves, otherwise it is zero. This represents the actual spendable balance. Note, that some historical runtimes may not have support for the current formula used and if so the following will be returned `transferable not supported for this runtime`.
+          format: unsignedInteger
+        locks:
+          type: array
+          description: Array of locks on a balance. There can be many of these on an account and they "overlap", so the same balance is frozen by multiple locks
+          items:
+            $ref: '#/components/schemas/BalanceLock_2'
         rcBlockHash:
           type: string
           description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
@@ -2187,59 +2372,6 @@ components:
           enum:
           - relay
           - self
-    AccountBalanceInfo:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        nonce:
-          type: string
-          description: Account nonce.
-          format: unsignedInteger
-        tokenSymbol:
-          type: string
-          description: Token symbol of the balances displayed in this response.
-          format: unsignedInteger
-        free:
-          type: string
-          description: Free balance of the account. Not equivalent to _spendable_ balance. This is the only balance that matters in terms of most operations on tokens.
-          format: unsignedInteger
-        reserved:
-          type: string
-          description: Reserved balance of the account.
-          format: unsignedInteger
-        miscFrozen:
-          type: string
-          description: The amount that `free` may not drop below when withdrawing for anything except transaction fee payment. Note, that some runtimes may not have support for miscFrozen and if so the following will be returned `miscFrozen does not exist for this runtime`
-          format: unsignedInteger
-        feeFrozen:
-          type: string
-          description: The amount that `free` may not drop below when withdrawing specifically for transaction fee payment. Note, that some runtimes may not have support for feeFrozen and if so the following will be returned `feeFrozen does not exist for this runtime`
-          format: unsignedInteger
-        frozen:
-          type: string
-          description: The amount that `free` may not drop below when reducing the balance, except for actions where the account owner cannot reasonably benefit from the balance reduction, such as slashing. Note, that some runtimes may not have support for frozen and if so the following will be returned `frozen does not exist for this runtime`
-          format: unsignedInteger
-        transferable:
-          type: string
-          description: The amount that can be transferred from this account. This is calculated using the formula `free - max(maybeEd, frozen - reserve)` where `maybeEd` is the existential deposit if there are frozen funds or reserves, otherwise it is zero. This represents the actual spendable balance. Note, that some historical runtimes may not have support for the current formula used and if so the following will be returned `transferable not supported for this runtime`.
-          format: unsignedInteger
-        locks:
-          type: array
-          description: Array of locks on a balance. There can be many of these on an account and they "overlap", so the same balance is frozen by multiple locks
-          items:
-            $ref: '#/components/schemas/BalanceLock_2'
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     Error:
       type: object
       properties:
@@ -2251,12 +2383,12 @@ components:
           type: string
         level:
           type: string
-    AccountPoolAssetsBalances:
+    AccountAssetsBalances:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        poolAssets:
+        assets:
           type: array
           description: An array of queried assets.
           items:
@@ -2272,96 +2404,17 @@ components:
           type: string
           description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
           format: unsignedInteger
-    AssetsBalance:
+    AccountCompare:
       type: object
       properties:
-        assetId:
-          type: string
-          description: The identifier of the asset.
-          format: unsignedInteger
-        balance:
-          type: string
-          description: The balance of the asset.
-          format: unsignedInteger
-        isFrozen:
+        areEqual:
           type: boolean
-          description: Whether the asset is frozen for non-admin transfers. Note, that some runtimes may not have support for isFrozen and if so the following will be returned `isFrozen does not exist for this runtime`
-        isSufficient:
-          type: boolean
-          description: Whether a non-zero balance of this asset is a deposit of sufficient value to account for the state bloat associated with its balance storage. If set to `true`, then non-zero balances may be stored without a `consumer` reference (and thus an ED in the Balances pallet or whatever else is used to control user-account state growth).
-    AccountValidation:
-      type: object
-      properties:
-        isValid:
-          type: boolean
-          description: Whether the given address is valid ss58 formatted.
-        ss58Prefix:
-          type: string
-          description: SS58 prefix of the given address. If the address is a valid base58 format, but incorrect ss58, a prefix for the given address will still be returned.
-          format: unsignedInteger
-        network:
-          type: string
-          description: The network based on which the given address is encoded.
-        accountId:
-          type: string
-          description: The account id of the given address.
-    ForeignAssetBalance:
-      type: object
-      properties:
-        multiLocation:
-          type: object
-          description: The multilocation identifier of the foreign asset. This is an XCM multilocation object that uniquely identifies an asset across different parachains.
-        balance:
-          type: string
-          description: The balance of the foreign asset.
-          format: unsignedInteger
-        isFrozen:
-          type: boolean
-          description: Whether the asset is frozen for non-admin transfers. Returns false if the runtime does not support isFrozen.
-        isSufficient:
-          type: boolean
-          description: Whether a non-zero balance of this asset is a deposit of sufficient value to account for the state bloat associated with its balance storage. If set to `true`, then non-zero balances may be stored without a `consumer` reference (and thus an ED in the Balances pallet or whatever else is used to control user-account state growth).
-    AccountAssetsApproval:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        amount:
-          type: string
-          description: The amount of funds approved for the balance transfer from the owner to some delegated target.
-          format: unsignedInteger
-        deposit:
-          type: string
-          description: The amount reserved on the owner's account to hold this item in storage.
-          format: unsignedInteger
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-    BalanceLock_2:
-      type: object
-      properties:
-        id:
-          type: string
-          description: An identifier for this lock. Only one lock may be in existence for each identifier.
-        amount:
-          type: string
-          description: The amount below which the free balance may not drop with this lock in effect.
-          format: unsignedInteger
-        reasons:
-          type: string
-          description: Reasons for withdrawing balance.
-          enum:
-          - Fee = 0
-          - Misc = 1
-          - All = 2
+          description: Whether the given SS58 addresses are equal or not. Equality is determined by comparing the accountId/publicKey of each address.
+        addresses:
+          type: array
+          description: An array that contains detailed information for each of the queried SS58 addresses.
+          items:
+            $ref: '#/components/schemas/AddressDetails_2'
     VestingSchedule_2:
       type: object
       properties:
@@ -2382,44 +2435,23 @@ components:
           description: Amount that has vested based on time elapsed for this schedule. Only present when `includeClaimable` parameter is used.
           format: unsignedInteger
       description: Vesting schedule for an account.
-    AddressDetails_2:
+    BalanceLock_2:
       type: object
       properties:
-        ss58Format:
+        id:
           type: string
-          description: The queried SS58 address.
-        ss58Prefix:
+          description: An identifier for this lock. Only one lock may be in existence for each identifier.
+        amount:
           type: string
-          description: SS58 prefix of the given address.
+          description: The amount below which the free balance may not drop with this lock in effect.
           format: unsignedInteger
-        network:
+        reasons:
           type: string
-          description: The network based on which the given address is encoded.
-        publicKey:
-          type: string
-          description: The account ID/Public Key (hex) of the queried SS58 address.
-    AccountConvert:
-      type: object
-      properties:
-        ss58Prefix:
-          type: string
-          description: SS58 prefix based on which the account ID or Public Key (hex) is converted to an SS58 address.
-          format: unsignedInteger
-        network:
-          type: string
-          description: The network based on which the returned address is encoded. It depends on the prefix that was given as a query param.
-        address:
-          type: string
-          description: The returned SS58 address which is the result of the conversion of the account ID or Public Key (hex).
-        accountId:
-          type: string
-          description: The given account ID or Public Key (hex) that is converted to an SS58 address.
-        scheme:
-          type: string
-          description: The cryptographic scheme/algorithm used to encode the given account ID or Public Key (hex).
-        publicKey:
-          type: boolean
-          description: Whether the given path parameter is a Public Key (hex) or not.
+          description: Reasons for withdrawing balance.
+          enum:
+          - Fee = 0
+          - Misc = 1
+          - All = 2
     AccountProxyInfo:
       type: object
       properties:
@@ -2445,38 +2477,6 @@ components:
           type: string
           format: unsignedInteger
           description: The held deposit.
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-    AccountCompare:
-      type: object
-      properties:
-        areEqual:
-          type: boolean
-          description: Whether the given SS58 addresses are equal or not. Equality is determined by comparing the accountId/publicKey of each address.
-        addresses:
-          type: array
-          description: An array that contains detailed information for each of the queried SS58 addresses.
-          items:
-            $ref: '#/components/schemas/AddressDetails_2'
-    AccountAssetsBalances:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        assets:
-          type: array
-          description: An array of queried assets.
-          items:
-            $ref: '#/components/schemas/AssetsBalance'
         rcBlockHash:
           type: string
           description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.

@@ -229,101 +229,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    Error:
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-        stack:
-          type: string
-        level:
-          type: string
-    ElectionStatus:
-      type: object
-      properties:
-        status:
-          type: object
-          description: '[Deprecated](Works for polkadot runtimes before v0.8.30).
-
-            Era election status: either `Close: null` or `Open: <BlockNumber>`. A status of `Close` indicates that the submission window for solutions from off-chain Phragmen is not open. A status of `Open` indicates that the submission window for off-chain Phragmen solutions has been open since BlockNumber. N.B. when the submission window is open, certain extrinsics are not allowed because they would mutate the state that the off-chain Phragmen calculation relies on for calculating results.'
-        toggleEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the `status` will switch.
-          format: unsignedInteger
-      description: Information about the off-chain election. Not included in response when `forceEra.isForceNone`.
-    Nominations:
-      type: object
-      properties:
-        targets:
-          type: array
-          items:
-            type: string
-          description: The targets of the nomination.
-        submittedIn:
-          type: string
-          format: unsignedInteger
-          description: The era the nominations were submitted. (Except for initial nominations which are considered submitted at era 0.)
-        suppressed:
-          type: boolean
-          description: Whether the nominations have been suppressed.
-    StakingValidators:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        validators:
-          type: array
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                description: Address of validator.
-              status:
-                type: string
-                description: Status of individual validator (active/waiting).
-              commission:
-                type: string
-                description: The validator's commission rate as parts-per-billion (e.g., "100000000" = 10%). Not present for chilled validators.
-              blocked:
-                type: boolean
-                description: Whether the validator is blocked from receiving new nominations. Not present for chilled validators.
-        validatorsToBeChilled:
-          description: Validators that will not be participating in the next era.
-          type: array
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                description: Address of validator.
-              status:
-                type: string
-                description: Status of individual validator (active/waiting).
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     UnappliedSlash:
       type: object
       properties:
@@ -351,6 +256,76 @@ components:
           type: string
           description: Amount of bounty payout to reporters.
           format: unsignedInteger
+    StakingProgress:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        activeEra:
+          type: string
+          description: '`EraIndex` of the era being rewarded.
+
+            '
+          format: unsignedInteger
+        forceEra:
+          type: string
+          description: Current status of era forcing.
+          enum:
+          - ForceNone
+          - NotForcing
+          - ForceAlways
+          - ForceNew
+        nextActiveEraEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the next active era will start. Not included in response when `forceEra.isForceNone`.
+          format: unsignedInteger
+        nextSessionEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the next session will start.
+          format: unsignedInteger
+        unappliedSlashes:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnappliedSlash'
+          description: Array of upcoming `UnappliedSlash` indexed by era.
+        electionStatus:
+          $ref: '#/components/schemas/ElectionStatus'
+        idealValidatorCount:
+          type: string
+          description: Upper bound of validator set size; considered the ideal size. Not included in response when `forceEra.isForceNone`.
+          format: unsignedInteger
+        validatorSet:
+          type: array
+          description: Stash account IDs of the validators for the current session. Not included in response when `forceEra.isForceNone`.
+          items:
+            type: string
+            format: ss58
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    Nominations:
+      type: object
+      properties:
+        targets:
+          type: array
+          items:
+            type: string
+          description: The targets of the nomination.
+        submittedIn:
+          type: string
+          format: unsignedInteger
+          description: The era the nominations were submitted. (Except for initial nominations which are considered submitted at era 0.)
+        suppressed:
+          type: boolean
+          description: Whether the nominations have been suppressed.
     StakingLedger:
       type: object
       properties:
@@ -388,41 +363,6 @@ components:
                 - unclaimed
                 - partially claimed
       description: The staking ledger.
-    AccountStakingPayouts:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        erasPayouts:
-          type: array
-          items:
-            type: object
-            properties:
-              era:
-                type: string
-                format: unsignedInteger
-                description: Era this information is associated with.
-              totalEraRewardPoints:
-                type: string
-                format: unsignedInteger
-                description: Total reward points for the era. Equals the sum of reward points for all the validators in the set.
-              totalEraPayout:
-                type: string
-                format: unsignedInteger
-                description: Total payout for the era. Validators split the payout based on the portion of `totalEraRewardPoints` they have.
-              payouts:
-                $ref: '#/components/schemas/Payouts'
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     Payouts:
       type: array
       items:
@@ -492,50 +432,30 @@ components:
           description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
           format: unsignedInteger
       description: 'Note: For Sidecar versions prior to v.20.0.0, in field `claimedRewards` under `staking`, we return whatever we would find under `StakingLedger` with no further calculations. From v.20.0.0 onwards, `claimedRewards` is calculated based on different calls: `lastReward`, `claimedRewards` or `legacyClaimedRewards`. Note on lastReward: Runtime versions of Kusama less than 1062 will either have `lastReward` in place of `claimedRewards`, or no field at all. This is related to changes in reward distribution. See: [Lazy Payouts](https://github.com/paritytech/substrate/pull/4474), [Simple Payouts](https://github.com/paritytech/substrate/pull/5406)'
-    StakingProgress:
+    AccountStakingPayouts:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        activeEra:
-          type: string
-          description: '`EraIndex` of the era being rewarded.
-
-            '
-          format: unsignedInteger
-        forceEra:
-          type: string
-          description: Current status of era forcing.
-          enum:
-          - ForceNone
-          - NotForcing
-          - ForceAlways
-          - ForceNew
-        nextActiveEraEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the next active era will start. Not included in response when `forceEra.isForceNone`.
-          format: unsignedInteger
-        nextSessionEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the next session will start.
-          format: unsignedInteger
-        unappliedSlashes:
+        erasPayouts:
           type: array
           items:
-            $ref: '#/components/schemas/UnappliedSlash'
-          description: Array of upcoming `UnappliedSlash` indexed by era.
-        electionStatus:
-          $ref: '#/components/schemas/ElectionStatus'
-        idealValidatorCount:
-          type: string
-          description: Upper bound of validator set size; considered the ideal size. Not included in response when `forceEra.isForceNone`.
-          format: unsignedInteger
-        validatorSet:
-          type: array
-          description: Stash account IDs of the validators for the current session. Not included in response when `forceEra.isForceNone`.
-          items:
-            type: string
-            format: ss58
+            type: object
+            properties:
+              era:
+                type: string
+                format: unsignedInteger
+                description: Era this information is associated with.
+              totalEraRewardPoints:
+                type: string
+                format: unsignedInteger
+                description: Total reward points for the era. Equals the sum of reward points for all the validators in the set.
+              totalEraPayout:
+                type: string
+                format: unsignedInteger
+                description: Total payout for the era. Validators split the payout based on the portion of `totalEraRewardPoints` they have.
+              payouts:
+                $ref: '#/components/schemas/Payouts'
         rcBlockHash:
           type: string
           description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
@@ -547,3 +467,83 @@ components:
           type: string
           description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
           format: unsignedInteger
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    StakingValidators:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        validators:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: Address of validator.
+              status:
+                type: string
+                description: Status of individual validator (active/waiting).
+              commission:
+                type: string
+                description: The validator's commission rate as parts-per-billion (e.g., "100000000" = 10%). Not present for chilled validators.
+              blocked:
+                type: boolean
+                description: Whether the validator is blocked from receiving new nominations. Not present for chilled validators.
+        validatorsToBeChilled:
+          description: Validators that will not be participating in the next era.
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: Address of validator.
+              status:
+                type: string
+                description: Status of individual validator (active/waiting).
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    ElectionStatus:
+      type: object
+      properties:
+        status:
+          type: object
+          description: '[Deprecated](Works for polkadot runtimes before v0.8.30).
+
+            Era election status: either `Close: null` or `Open: <BlockNumber>`. A status of `Close` indicates that the submission window for solutions from off-chain Phragmen is not open. A status of `Open` indicates that the submission window for off-chain Phragmen solutions has been open since BlockNumber. N.B. when the submission window is open, certain extrinsics are not allowed because they would mutate the state that the off-chain Phragmen calculation relies on for calculating results.'
+        toggleEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the `status` will switch.
+          format: unsignedInteger
+      description: Information about the off-chain election. Not included in response when `forceEra.isForceNone`.

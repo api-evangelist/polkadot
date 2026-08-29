@@ -124,54 +124,6 @@ paths:
         required: true
 components:
   schemas:
-    subscan_internal_model.ChainEventV2Json:
-      properties:
-        block_timestamp:
-          type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_hash:
-          type: string
-        extrinsic_index:
-          type: string
-        finalized:
-          type: boolean
-        id:
-          type: integer
-        module_id:
-          type: string
-        phase:
-          type: integer
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_model.EventParam:
-      properties:
-        name:
-          type: string
-        raw_value:
-          items:
-            type: integer
-          type: array
-        type:
-          type: string
-        type_name:
-          type: string
-        value: {}
-      type: object
     subscan_internal_model.ChainEvent:
       properties:
         block_num:
@@ -207,12 +159,14 @@ components:
         phase:
           type: integer
       type: object
-    internal_server_http.moduleEventFilterParams:
+    internal_server_http.eventParamsParams:
       properties:
-        event_id:
-          type: string
-        module:
-          type: string
+        event_index:
+          items:
+            type: string
+          type: array
+      required:
+      - event_index
       type: object
     internal_server_http.eventsParams:
       properties:
@@ -262,12 +216,38 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_server_http.eventParamsParams:
+    internal_server_http.moduleEventFilterParams:
+      properties:
+        event_id:
+          type: string
+        module:
+          type: string
+      type: object
+    subscan_internal_model.ChainEventV2Json:
+      properties:
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_index:
+          type: string
+        finalized:
+          type: boolean
+        id:
+          type: integer
+        module_id:
+          type: string
+        phase:
+          type: integer
+      type: object
+    internal_server_http.eventInfoParams:
       properties:
         event_index:
-          items:
-            type: string
-          type: array
+          type: string
       required:
       - event_index
       type: object
@@ -281,10 +261,30 @@ components:
           type: array
         params_decode: {}
       type: object
-    internal_server_http.eventInfoParams:
+    subscan_internal_model.EventParam:
       properties:
-        event_index:
+        name:
           type: string
-      required:
-      - event_index
+        raw_value:
+          items:
+            type: integer
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
       type: object

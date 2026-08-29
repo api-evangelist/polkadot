@@ -262,314 +262,6 @@ paths:
         required: true
 components:
   schemas:
-    internal_server_http.parachainMetricParams:
-      properties:
-        end:
-          example: '2026-05-20'
-          type: string
-        format:
-          enum:
-          - hour
-          - day
-          example: day
-          type: string
-        metrics:
-          items:
-            type: string
-          type: array
-        networks:
-          items:
-            type: string
-          type: array
-        para_ids:
-          items:
-            type: integer
-          type: array
-        relay_network:
-          example: polkadot
-          type: string
-        start:
-          example: '2026-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_model.ParaChainSample:
-      properties:
-        begin_period:
-          type: integer
-        bid_id:
-          type: string
-        first_period:
-          type: integer
-        fund_id:
-          type: string
-        last_period:
-          type: integer
-        manager_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        open_channel_count:
-          type: integer
-        para_id:
-          type: integer
-        reserved_extrinsic_index:
-          type: string
-        status:
-          type: string
-        xcm_receive_message_count:
-          type: integer
-        xcm_receive_transfer_count:
-          type: integer
-        xcm_send_message_count:
-          type: integer
-        xcm_send_transfer_count:
-          type: integer
-      type: object
-    subscan_internal_model.ParachainMetricNetworkStat:
-      properties:
-        avg_tps:
-          type: string
-        extrinsic_count:
-          type: integer
-        network:
-          type: string
-        para_id:
-          type: integer
-        peak_tps:
-          type: string
-        relay_network:
-          type: string
-        transfer_count:
-          type: integer
-        updated_at:
-          type: string
-        xcm_receive_count:
-          type: integer
-        xcm_send_count:
-          type: integer
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.ParaChainMetaJson:
-      properties:
-        auction_active:
-          type: boolean
-        auction_count:
-          type: integer
-        ending_period:
-          type: integer
-        lease_offset:
-          type: integer
-        lease_period:
-          type: integer
-        lease_periods_per_slot:
-          type: integer
-        online_count:
-          type: integer
-        retirement_period:
-          type: integer
-        total_slot_num:
-          type: integer
-        upcoming_count:
-          type: integer
-      type: object
-    subscan_internal_model.ParachainMetricSeriesPoint:
-      properties:
-        avg_tps:
-          type: string
-        bucket_format:
-          type: string
-        bucket_time:
-          type: string
-        extrinsic_count:
-          type: integer
-        network:
-          type: string
-        para_id:
-          type: integer
-        peak_tps:
-          type: string
-        relay_network:
-          type: string
-        transfer_count:
-          type: integer
-        updated_at:
-          type: string
-        xcm_receive_count:
-          type: integer
-        xcm_send_count:
-          type: integer
-      type: object
-    subscan_internal_model.ParachainMetricTotal:
-      properties:
-        avg_tps:
-          type: string
-        extrinsic_count:
-          type: integer
-        peak_tps:
-          type: string
-        transfer_count:
-          type: integer
-        updated_at:
-          type: string
-        xcm_receive_count:
-          type: integer
-        xcm_send_count:
-          type: integer
-      type: object
-    internal_server_http.parachainMetricListParams:
-      properties:
-        end:
-          example: '2026-05-20'
-          type: string
-        format:
-          enum:
-          - hour
-          - day
-          example: day
-          type: string
-        metrics:
-          items:
-            type: string
-          type: array
-        networks:
-          items:
-            type: string
-          type: array
-        order:
-          enum:
-          - asc
-          - desc
-          example: desc
-          type: string
-        order_field:
-          example: extrinsic_count
-          type: string
-        page:
-          example: 0
-          minimum: 0
-          type: integer
-        para_ids:
-          items:
-            type: integer
-          type: array
-        relay_network:
-          example: polkadot
-          type: string
-        row:
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        start:
-          example: '2026-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    internal_server_http.parachainInfoParams:
-      properties:
-        filter_anonymous:
-          type: boolean
-        order:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        para_id:
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        status:
-          items:
-            type: string
-          type: array
-      type: object
     subscan_internal_model.ParachainInfoJson:
       properties:
         auction_index:
@@ -626,7 +318,20 @@ components:
         xcm_send_transfer_count:
           type: integer
       type: object
-    internal_server_http.paraChainListParams:
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    internal_server_http.parachainInfoParams:
       properties:
         filter_anonymous:
           type: boolean
@@ -659,5 +364,300 @@ components:
         identity:
           type: boolean
         sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.parachainMetricListParams:
+      properties:
+        end:
+          example: '2026-05-20'
+          type: string
+        format:
+          enum:
+          - hour
+          - day
+          example: day
+          type: string
+        metrics:
+          items:
+            type: string
+          type: array
+        networks:
+          items:
+            type: string
+          type: array
+        order:
+          enum:
+          - asc
+          - desc
+          example: desc
+          type: string
+        order_field:
+          example: extrinsic_count
+          type: string
+        page:
+          example: 0
+          minimum: 0
+          type: integer
+        para_ids:
+          items:
+            type: integer
+          type: array
+        relay_network:
+          example: polkadot
+          type: string
+        row:
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        start:
+          example: '2026-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.ParaChainSample:
+      properties:
+        begin_period:
+          type: integer
+        bid_id:
+          type: string
+        first_period:
+          type: integer
+        fund_id:
+          type: string
+        last_period:
+          type: integer
+        manager_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        open_channel_count:
+          type: integer
+        para_id:
+          type: integer
+        reserved_extrinsic_index:
+          type: string
+        status:
+          type: string
+        xcm_receive_message_count:
+          type: integer
+        xcm_receive_transfer_count:
+          type: integer
+        xcm_send_message_count:
+          type: integer
+        xcm_send_transfer_count:
+          type: integer
+      type: object
+    subscan_internal_model.ParachainMetricNetworkStat:
+      properties:
+        avg_tps:
+          type: string
+        extrinsic_count:
+          type: integer
+        network:
+          type: string
+        para_id:
+          type: integer
+        peak_tps:
+          type: string
+        relay_network:
+          type: string
+        transfer_count:
+          type: integer
+        updated_at:
+          type: string
+        xcm_receive_count:
+          type: integer
+        xcm_send_count:
+          type: integer
+      type: object
+    subscan_internal_model.ParachainMetricSeriesPoint:
+      properties:
+        avg_tps:
+          type: string
+        bucket_format:
+          type: string
+        bucket_time:
+          type: string
+        extrinsic_count:
+          type: integer
+        network:
+          type: string
+        para_id:
+          type: integer
+        peak_tps:
+          type: string
+        relay_network:
+          type: string
+        transfer_count:
+          type: integer
+        updated_at:
+          type: string
+        xcm_receive_count:
+          type: integer
+        xcm_send_count:
+          type: integer
+      type: object
+    subscan_internal_model.ParaChainMetaJson:
+      properties:
+        auction_active:
+          type: boolean
+        auction_count:
+          type: integer
+        ending_period:
+          type: integer
+        lease_offset:
+          type: integer
+        lease_period:
+          type: integer
+        lease_periods_per_slot:
+          type: integer
+        online_count:
+          type: integer
+        retirement_period:
+          type: integer
+        total_slot_num:
+          type: integer
+        upcoming_count:
+          type: integer
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_server_http.parachainMetricParams:
+      properties:
+        end:
+          example: '2026-05-20'
+          type: string
+        format:
+          enum:
+          - hour
+          - day
+          example: day
+          type: string
+        metrics:
+          items:
+            type: string
+          type: array
+        networks:
+          items:
+            type: string
+          type: array
+        para_ids:
+          items:
+            type: integer
+          type: array
+        relay_network:
+          example: polkadot
+          type: string
+        start:
+          example: '2026-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.ParachainMetricTotal:
+      properties:
+        avg_tps:
+          type: string
+        extrinsic_count:
+          type: integer
+        peak_tps:
+          type: string
+        transfer_count:
+          type: integer
+        updated_at:
+          type: string
+        xcm_receive_count:
+          type: integer
+        xcm_send_count:
+          type: integer
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    internal_server_http.paraChainListParams:
+      properties:
+        filter_anonymous:
+          type: boolean
+        order:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        para_id:
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          items:
+            type: string
+          type: array
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object

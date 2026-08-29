@@ -129,6 +129,13 @@ components:
         type:
           type: string
       type: object
+    internal_server_http.logInfoParam:
+      properties:
+        log_index:
+          type: string
+      required:
+      - log_index
+      type: object
     internal_server_http.J:
       properties:
         code:
@@ -141,11 +148,4 @@ components:
         message:
           example: Success
           type: string
-      type: object
-    internal_server_http.logInfoParam:
-      properties:
-        log_index:
-          type: string
-      required:
-      - log_index
       type: object

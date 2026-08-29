@@ -177,6 +177,126 @@ paths:
         required: true
 components:
   schemas:
+    internal_server_http.dailyStatV2Param:
+      properties:
+        category:
+          type: string
+        end:
+          example: '2023-06-01'
+          type: string
+        format:
+          enum:
+          - day
+          - hour
+          - 6hour
+          - minute
+          - 7d
+          - month
+          - year
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    internal_server_http.priceHistoryParams:
+      properties:
+        currency:
+          type: string
+        end:
+          example: '2023-06-01'
+          type: string
+        format:
+          enum:
+          - day
+          - hour
+          - 6hour
+          - 12hour
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.OtherDetail:
+      properties:
+        conviction_locked_balance:
+          type: string
+        democracy_locked_balance:
+          type: string
+        election_locked_balance:
+          type: string
+        nominator_bonded:
+          type: string
+        reserved_balance:
+          type: string
+        unbonded_locked_balance:
+          type: string
+        validator_bonded:
+          type: string
+        vesting_balance:
+          type: string
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.MonthStatistics:
+      properties:
+        active_account:
+          type: integer
+        time_utc:
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.dailyTokenStatParams:
+      properties:
+        end:
+          example: '2023-06-01'
+          type: string
+        format:
+          enum:
+          - day
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+        symbol:
+          type: string
+      required:
+      - end
+      - start
+      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -205,17 +325,36 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    internal_server_http.J:
+    subscan_internal_model.DailyStaticJsonV2:
       properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        time_utc:
+          type: string
+        total:
+          type: string
+        transfer_amount:
+          type: string
+      type: object
+    internal_server_http.accountsMAUHandleParams:
+      properties:
+        end:
+          example: '2025-07-25'
+          type: string
+        start:
+          example: '2025-07-22'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
           type: string
       type: object
     subscan_internal_model.DailyTokenStatusJson:
@@ -239,128 +378,6 @@ components:
         treasury_amount:
           type: string
       type: object
-    internal_server_http.accountsMAUHandleParams:
-      properties:
-        end:
-          example: '2025-07-25'
-          type: string
-        start:
-          example: '2025-07-22'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    internal_server_http.priceHistoryParams:
-      properties:
-        currency:
-          type: string
-        end:
-          example: '2023-06-01'
-          type: string
-        format:
-          enum:
-          - day
-          - hour
-          - 6hour
-          - 12hour
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_server_http.dailyStatV2Param:
-      properties:
-        category:
-          type: string
-        end:
-          example: '2023-06-01'
-          type: string
-        format:
-          enum:
-          - day
-          - hour
-          - 6hour
-          - minute
-          - 7d
-          - month
-          - year
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    internal_server_http.dailyTokenStatParams:
-      properties:
-        end:
-          example: '2023-06-01'
-          type: string
-        format:
-          enum:
-          - day
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-        symbol:
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    subscan_internal_model.DailyStaticJsonV2:
-      properties:
-        time_utc:
-          type: string
-        total:
-          type: string
-        transfer_amount:
-          type: string
-      type: object
     subscan_internal_model.AccountBalanceDetailJson:
       properties:
         account_display:
@@ -370,13 +387,6 @@ components:
         balance:
           type: string
       type: object
-    subscan_internal_model.MonthStatistics:
-      properties:
-        active_account:
-          type: integer
-        time_utc:
-          type: string
-      type: object
     subscan_internal_service_scan.Price:
       properties:
         feed_at:
@@ -384,33 +394,23 @@ components:
         price:
           type: string
       type: object
-    subscan_internal_model.OtherDetail:
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
-        conviction_locked_balance:
-          type: string
-        democracy_locked_balance:
-          type: string
-        election_locked_balance:
-          type: string
-        nominator_bonded:
-          type: string
-        reserved_balance:
-          type: string
-        unbonded_locked_balance:
-          type: string
-        validator_bonded:
-          type: string
-        vesting_balance:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object
-    subscan_internal_model.AccountParentJson:
+    internal_server_http.J:
       properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object

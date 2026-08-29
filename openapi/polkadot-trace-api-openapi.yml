@@ -258,17 +258,14 @@ paths:
                 $ref: '#/components/schemas/BlocksTraceOperations'
 components:
   schemas:
-    BlockIdentifiers:
+    OperationAmount:
       type: object
       properties:
-        hash:
+        values:
           type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
           format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
     BlocksTrace:
       type: object
       properties:
@@ -292,6 +289,12 @@ components:
         tracingTargets:
           type: string
           description: Targets used to filter spans and events.
+    OperationAmountCurrency:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: KSM
     SpanId:
       type: object
       properties:
@@ -302,64 +305,6 @@ components:
         id:
           type: string
           format: unsignedInteger
-    TraceEvent:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            stringValues:
-              $ref: '#/components/schemas/TraceEventDataStringValues'
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
-    BlocksTraceOperations:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
-    OperationAmountCurrency:
-      type: object
-      properties:
-        symbol:
-          type: string
-          example: KSM
-    TraceSpan:
-      type: object
-      properties:
-        id:
-          type: string
-          format: unsignedInteger
-        name:
-          type: string
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
-        wasm:
-          type: boolean
-    TraceEventDataStringValues:
-      type: object
-      properties:
-        key:
-          type: string
-          format: hex
-          description: The complete storage key for the entry.
-        method:
-          type: string
-          description: Normally one of Put or Get.
-        result:
-          type: string
-          format: hex
-          description: Hex scale encoded storage value.
-      description: Note these exact values will only be present for storage events.
     Operation:
       type: object
       properties:
@@ -401,14 +346,6 @@ components:
                 '
         amount:
           $ref: '#/components/schemas/OperationAmount'
-    OperationAmount:
-      type: object
-      properties:
-        values:
-          type: string
-          format: unsignedInteger
-        currency:
-          $ref: '#/components/schemas/OperationAmountCurrency'
     OperationPhase:
       type: object
       properties:
@@ -429,3 +366,66 @@ components:
             the extrinsic. Otherwise this field will not be present.
 
             '
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+    BlocksTraceOperations:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+    TraceSpan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: unsignedInteger
+        name:
+          type: string
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+        wasm:
+          type: boolean
+    TraceEventDataStringValues:
+      type: object
+      properties:
+        key:
+          type: string
+          format: hex
+          description: The complete storage key for the entry.
+        method:
+          type: string
+          description: Normally one of Put or Get.
+        result:
+          type: string
+          format: hex
+          description: Hex scale encoded storage value.
+      description: Note these exact values will only be present for storage events.

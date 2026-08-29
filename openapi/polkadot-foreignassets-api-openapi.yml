@@ -219,98 +219,6 @@ paths:
         required: true
 components:
   schemas:
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    internal_plugin_foreignAssets_http.assetActivitiesParams:
-      properties:
-        asset_id:
-          minLength: 1
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - asset_id
-      type: object
-    subscan_internal_plugin_foreignAssets_db.AssetBalance:
-      properties:
-        asset_id:
-          type: string
-        balance:
-          type: string
-        decimals:
-          type: integer
-        multi_location: {}
-        name:
-          type: string
-        symbol:
-          type: string
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_plugin_foreignAssets_db.StateAssetSampleJson:
-      properties:
-        asset_id:
-          type: string
-        holders:
-          type: integer
-        issuer:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        market_cap:
-          type: string
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_plugin_foreignAssets_db.Metadata'
-        multi_location: {}
-        owner:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        price:
-          type: string
-        supply:
-          type: string
-        transfer_count:
-          type: integer
-        unique_id:
-          type: string
-      type: object
     subscan_internal_plugin_foreignAssets_db.Metadata:
       properties:
         decimals:
@@ -318,13 +226,6 @@ components:
         name:
           type: string
         symbol:
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
           type: string
       type: object
     internal_plugin_foreignAssets_http.assetHolderParams:
@@ -343,48 +244,6 @@ components:
       required:
       - asset_id
       type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_plugin_foreignAssets_http.assetBalancesParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_plugin_foreignAssets_db.StateAssetHolderJson:
-      properties:
-        balance:
-          type: string
-        holder:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        lock:
-          type: string
-      type: object
     subscan_internal_plugin_foreignAssets_db.ForeignAssetRelateExtrinsicJson:
       properties:
         asset_id:
@@ -402,38 +261,15 @@ components:
         module_id:
           type: string
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_model.MerkleTag:
       properties:
-        address:
+        address_type:
           type: string
-        display:
+        tag_name:
           type: string
-        identity:
-          type: boolean
-        sub_symbol:
+        tag_subtype:
           type: string
-      type: object
-    subscan_internal_plugin_foreignAssets_db.AssetsListAllJson:
-      properties:
-        asset_id:
-          type: string
-        decimals:
-          type: integer
-        symbol:
-          type: string
-      type: object
-    internal_plugin_foreignAssets_http.assetParam:
-      properties:
-        asset_id:
-          type: string
-      required:
-      - asset_id
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
+        tag_type:
           type: string
       type: object
     subscan_internal_plugin_foreignAssets_db.StateAssetJson:
@@ -464,6 +300,136 @@ components:
         unique_id:
           type: string
       type: object
+    internal_plugin_foreignAssets_http.assetActivitiesParams:
+      properties:
+        asset_id:
+          minLength: 1
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - asset_id
+      type: object
+    subscan_internal_plugin_foreignAssets_db.AssetsListAllJson:
+      properties:
+        asset_id:
+          type: string
+        decimals:
+          type: integer
+        symbol:
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_plugin_foreignAssets_db.StateAssetSampleJson:
+      properties:
+        asset_id:
+          type: string
+        holders:
+          type: integer
+        issuer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        market_cap:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_plugin_foreignAssets_db.Metadata'
+        multi_location: {}
+        owner:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        price:
+          type: string
+        supply:
+          type: string
+        transfer_count:
+          type: integer
+        unique_id:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_plugin_foreignAssets_http.assetParam:
+      properties:
+        asset_id:
+          type: string
+      required:
+      - asset_id
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_plugin_foreignAssets_db.StateAssetHolderJson:
+      properties:
+        balance:
+          type: string
+        holder:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        lock:
+          type: string
+      type: object
     internal_plugin_foreignAssets_http.assetsParam:
       properties:
         asset_id:
@@ -492,5 +458,39 @@ components:
           description: assets symbol or name
           maxLength: 256
           minLength: 1
+          type: string
+      type: object
+    internal_plugin_foreignAssets_http.assetBalancesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_plugin_foreignAssets_db.AssetBalance:
+      properties:
+        asset_id:
+          type: string
+        balance:
+          type: string
+        decimals:
+          type: integer
+        multi_location: {}
+        name:
+          type: string
+        symbol:
           type: string
       type: object

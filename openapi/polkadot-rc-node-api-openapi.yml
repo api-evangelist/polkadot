@@ -101,35 +101,6 @@ paths:
                 $ref: '#/components/schemas/NodeVersion'
 components:
   schemas:
-    PeerInfo:
-      type: object
-      properties:
-        peerId:
-          type: string
-          description: Peer ID.
-        roles:
-          type: string
-          description: Roles the peer is running
-        protocolVersion:
-          type: string
-          description: Peer's protocol version.
-          format: unsignedInteger
-        bestHash:
-          type: string
-          description: Hash of the best block on the peer's canon chain.
-          format: hex
-        bestNumber:
-          type: string
-          description: Height of the best block on the peer's canon chain.
-          format: unsignedInteger
-    NodeRole:
-      type: string
-      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
-      enum:
-      - Full
-      - LightClient
-      - Authority
-      - Sentry
     TransactionPool:
       type: object
       properties:
@@ -158,6 +129,14 @@ components:
                 type: string
                 format: unsignedInteger
                 description: Provided `partialFee` of an extrinsic. Only included if the query param `includeFee` is set to true.
+    NodeRole:
+      type: string
+      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
+      enum:
+      - Full
+      - LightClient
+      - Authority
+      - Sentry
     NodeNetwork:
       type: object
       properties:
@@ -185,6 +164,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PeerInfo'
+    PeerInfo:
+      type: object
+      properties:
+        peerId:
+          type: string
+          description: Peer ID.
+        roles:
+          type: string
+          description: Roles the peer is running
+        protocolVersion:
+          type: string
+          description: Peer's protocol version.
+          format: unsignedInteger
+        bestHash:
+          type: string
+          description: Hash of the best block on the peer's canon chain.
+          format: hex
+        bestNumber:
+          type: string
+          description: Height of the best block on the peer's canon chain.
+          format: unsignedInteger
     NodeVersion:
       type: object
       properties:

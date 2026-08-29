@@ -313,39 +313,24 @@ paths:
         required: true
 components:
   schemas:
-    internal_server_http.searchTokenParams:
+    internal_server_http.tokensSearchParam:
       properties:
-        key:
-          type: string
-      required:
-      - key
+        include_extends:
+          type: boolean
+        unique_ids:
+          items:
+            type: string
+          type: array
       type: object
-    internal_server_http.J:
+    internal_server_http.providerActiveJson:
       properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        can_legacy:
+          type: boolean
+        id:
           type: string
-      type: object
-    subscan_internal_model.TokenSearchJson:
-      properties:
-        category:
-          type: string
-        contract:
-          type: string
-        currency_id:
-          type: string
-        price:
-          type: string
-        symbol:
-          type: string
-        unique_id:
+        is_primary:
+          type: boolean
+        name:
           type: string
       type: object
     internal_server_http.tokenJson:
@@ -376,34 +361,6 @@ components:
         unique_id:
           type: string
       type: object
-    subscan_internal_service_scan_token.AssetType:
-      enum:
-      - native
-      - builtin
-      type: string
-      x-enum-varnames:
-      - TypeNative
-      - TypeBuiltin
-    internal_server_http.tokenNativeParam:
-      properties:
-        include_extends:
-          type: boolean
-      type: object
-    internal_server_http.TokenUniqueIDParams:
-      properties:
-        new_algorithm:
-          description: use new algorithm sum(free - max(0, frozen - reserve))
-          type: boolean
-      type: object
-    internal_server_http.tokensSearchParam:
-      properties:
-        include_extends:
-          type: boolean
-        unique_ids:
-          items:
-            type: string
-          type: array
-      type: object
     subscan_internal_model.AssetTokenPriceJson:
       properties:
         price:
@@ -412,6 +369,11 @@ components:
           type: string
         unique_id:
           type: string
+      type: object
+    internal_server_http.tokenNativeParam:
+      properties:
+        include_extends:
+          type: boolean
       type: object
     subscan_internal_service_scan_token.Token:
       properties:
@@ -462,20 +424,13 @@ components:
         vesting_balance:
           type: string
       type: object
-    internal_server_http.tokenExtendsJson:
+    subscan_internal_service_scan_token.ExternalDataSource:
       properties:
-        holders:
-          type: integer
-      type: object
-    internal_server_http.providerActiveJson:
-      properties:
-        can_legacy:
-          type: boolean
-        id:
+        authorization_source:
           type: string
-        is_primary:
-          type: boolean
-        name:
+        circulating_supply:
+          type: string
+        source:
           type: string
       type: object
     internal_server_http.tokensV2Param:
@@ -513,12 +468,57 @@ components:
           minLength: 1
           type: string
       type: object
-    subscan_internal_service_scan_token.ExternalDataSource:
+    internal_server_http.TokenUniqueIDParams:
       properties:
-        authorization_source:
+        new_algorithm:
+          description: use new algorithm sum(free - max(0, frozen - reserve))
+          type: boolean
+      type: object
+    internal_server_http.tokenExtendsJson:
+      properties:
+        holders:
+          type: integer
+      type: object
+    subscan_internal_service_scan_token.AssetType:
+      enum:
+      - native
+      - builtin
+      type: string
+      x-enum-varnames:
+      - TypeNative
+      - TypeBuiltin
+    internal_server_http.searchTokenParams:
+      properties:
+        key:
           type: string
-        circulating_supply:
+      required:
+      - key
+      type: object
+    subscan_internal_model.TokenSearchJson:
+      properties:
+        category:
           type: string
-        source:
+        contract:
+          type: string
+        currency_id:
+          type: string
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object

@@ -929,44 +929,40 @@ paths:
       description: Localhost
 components:
   schemas:
-    subscan_internal_model.AccountDisplay:
+    subscan_internal_model.ValidatorJson:
       properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
+        blocked:
           type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
+        bonded_nominators:
           type: string
-        tag_name:
+        bonded_owner:
           type: string
-        tag_subtype:
+        bonded_total:
           type: string
-        tag_type:
+        controller_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        count_nominators:
+          type: integer
+        grandpa_vote:
+          type: integer
+        latest_mining:
+          type: integer
+        next_session_selected:
+          type: boolean
+        rank_validator:
+          type: integer
+        reward_point:
+          type: integer
+        session_key:
+          $ref: '#/components/schemas/subscan_internal_model.SessionKeys'
+        staking_rewards_tag:
+          $ref: '#/components/schemas/subscan_libs_stakingrewards.Provider'
+        stash_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
           type: string
+        validator_prefs_value:
+          type: integer
       type: object
     subscan_internal_model.AccountNominateList:
       properties:
@@ -1007,306 +1003,6 @@ components:
         validator_prefs_value:
           type: integer
       type: object
-    internal_server_http.eraStatParams:
-      properties:
-        address:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    internal_server_http.nominatorParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    internal_server_http.commissionHistoryParams:
-      properties:
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        stash:
-          type: string
-      required:
-      - stash
-      type: object
-    subscan_internal_model.StakingAccount:
-      properties:
-        controller:
-          type: string
-        controller_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        reward_account:
-          type: string
-        reward_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-      type: object
-    subscan_libs_stakingrewards.Provider:
-      properties:
-        isVerified:
-          type: boolean
-        name:
-          type: string
-        slug:
-          type: string
-      type: object
-    internal_server_http.stakingRewardParams:
-      properties:
-        address:
-          type: string
-        block_range:
-          type: string
-        end:
-          example: '2023-06-01'
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-      required:
-      - address
-      type: object
-    internal_server_http.validatorParams:
-      properties:
-        stash:
-          type: string
-      required:
-      - stash
-      type: object
-    internal_server_http.dailyRewardSlashParams:
-      properties:
-        address:
-          type: string
-        category:
-          enum:
-          - Reward
-          - Slash
-          type: string
-        end:
-          example: '2024-07-02'
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        start:
-          example: '2024-07-01'
-          type: string
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    internal_server_http.bondStatParams:
-      properties:
-        stash:
-          type: string
-      required:
-      - stash
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    internal_server_http.votedParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.NominatorDetail:
-      properties:
-        bonded:
-          type: string
-        nominator_stash:
-          type: string
-        staking_info:
-          $ref: '#/components/schemas/subscan_internal_model.StakingAccount'
-        stash_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        status:
-          type: string
-      type: object
-    subscan_internal_model.AccountEventJson:
-      properties:
-        account:
-          type: string
-        amount:
-          type: string
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        event_id:
-          type: string
-        event_idx:
-          type: integer
-        event_index:
-          type: string
-        event_method:
-          type: string
-        extrinsic_hash:
-          type: string
-        extrinsic_idx:
-          type: integer
-        extrinsic_index:
-          type: string
-        id:
-          type: integer
-        module_id:
-          type: string
-        params:
-          type: string
-        stash:
-          type: string
-      type: object
-    internal_server_http.dailyRewardPayoutParams:
-      properties:
-        end:
-          example: '2024-07-02'
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        start:
-          example: '2024-07-01'
-          type: string
-      type: object
-    subscan_internal_model.ValidatorJson:
-      properties:
-        blocked:
-          type: boolean
-        bonded_nominators:
-          type: string
-        bonded_owner:
-          type: string
-        bonded_total:
-          type: string
-        controller_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        count_nominators:
-          type: integer
-        grandpa_vote:
-          type: integer
-        latest_mining:
-          type: integer
-        next_session_selected:
-          type: boolean
-        rank_validator:
-          type: integer
-        reward_point:
-          type: integer
-        session_key:
-          $ref: '#/components/schemas/subscan_internal_model.SessionKeys'
-        staking_rewards_tag:
-          $ref: '#/components/schemas/subscan_libs_stakingrewards.Provider'
-        stash_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        status:
-          type: string
-        validator_prefs_value:
-          type: integer
-      type: object
-    internal_server_http.validatorsParams:
-      properties:
-        blocked:
-          type: boolean
-        commission_range:
-          type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - rank_validator
-          - bonded_nominators
-          - bonded_owner
-          - count_nominators
-          - validator_prefs_value
-          - bonded_total
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 0
-          type: integer
-      type: object
     subscan_internal_model.DailyRewardSlashJson:
       properties:
         account:
@@ -1316,196 +1012,6 @@ components:
         reward:
           type: string
         slash:
-          type: string
-      type: object
-    internal_server_http.nominatorsParams:
-      properties:
-        address:
-          type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - rank_nominator
-          - bonded
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    subscan_internal_model.ValidatorStatJson:
-      properties:
-        block_produced:
-          type: string
-        end_block_num:
-          type: integer
-        era:
-          type: integer
-        reward_point:
-          type: integer
-        start_block_num:
-          type: integer
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    subscan_internal_model.ValidatorWaiting:
-      properties:
-        bonded_nominators:
-          type: string
-        bonded_owner:
-          type: string
-        count_nominators:
-          type: integer
-        next_session_selected:
-          type: boolean
-        stash_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        sum_nominators_bonded:
-          type: string
-        validator_prefs_value:
-          type: integer
-      type: object
-    subscan_internal_model.SessionKeys:
-      properties:
-        aura:
-          type: string
-        authority_discovery:
-          type: string
-        avn:
-          description: AVN specific, energywebx
-          type: string
-        babe:
-          type: string
-        grandpa:
-          type: string
-        im_online:
-          type: string
-      type: object
-    internal_server_http.unbondingParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.NominatorJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        bonded:
-          type: string
-        nominator_stash:
-          type: string
-        rank_nominator:
-          type: integer
-        validator_stash:
-          type: string
-      type: object
-    subscan_internal_model.DailyRewardPayoutJson:
-      properties:
-        date:
-          type: string
-        reward:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_model.StakingCommissionHistoryJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        commission:
-          type: integer
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        force:
-          type: boolean
-        timestamp:
-          type: integer
-      type: object
-    internal_server_http.rewardSlashParams:
-      properties:
-        address:
-          type: string
-        after_id:
-          type: integer
-        block_range:
-          type: string
-        category:
-          enum:
-          - Reward
-          - Slash
-          type: string
-        is_stash:
-          type: boolean
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        timeout:
-          type: integer
-      required:
-      - address
-      type: object
-    subscan_internal_model.StakingAccountEventJson:
-      properties:
-        account:
-          type: string
-        amount:
-          type: string
-        block_timestamp:
-          type: integer
-        era:
-          type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        invalid_era:
-          type: boolean
-        module_id:
-          type: string
-        stash:
-          type: string
-        validator_stash:
           type: string
       type: object
     internal_server_http.rewardSlashV2Params:
@@ -1542,6 +1048,44 @@ components:
       required:
       - address
       type: object
+    internal_server_http.rewardSlashParams:
+      properties:
+        address:
+          type: string
+        after_id:
+          type: integer
+        block_range:
+          type: string
+        category:
+          enum:
+          - Reward
+          - Slash
+          type: string
+        is_stash:
+          type: boolean
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        timeout:
+          type: integer
+      required:
+      - address
+      type: object
+    subscan_libs_substrate_derive.Unbonding:
+      properties:
+        amount:
+          type: string
+        until:
+          type: integer
+      type: object
     internal_server_http.waitingValidatorsParams:
       properties:
         commission_range:
@@ -1560,12 +1104,468 @@ components:
           - sum_nominators_bonded
           type: string
       type: object
-    subscan_libs_substrate_derive.Unbonding:
+    subscan_internal_model.AccountEventJson:
       properties:
+        account:
+          type: string
         amount:
           type: string
-        until:
+        block_num:
           type: integer
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_idx:
+          type: integer
+        event_index:
+          type: string
+        event_method:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_idx:
+          type: integer
+        extrinsic_index:
+          type: string
+        id:
+          type: integer
+        module_id:
+          type: string
+        params:
+          type: string
+        stash:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_server_http.nominatorParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_server_http.eraStatParams:
+      properties:
+        address:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    subscan_internal_model.DailyRewardPayoutJson:
+      properties:
+        date:
+          type: string
+        reward:
+          type: string
+      type: object
+    internal_server_http.validatorParams:
+      properties:
+        stash:
+          type: string
+      required:
+      - stash
+      type: object
+    subscan_internal_model.ValidatorStatJson:
+      properties:
+        block_produced:
+          type: string
+        end_block_num:
+          type: integer
+        era:
+          type: integer
+        reward_point:
+          type: integer
+        start_block_num:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_server_http.votedParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.NominatorDetail:
+      properties:
+        bonded:
+          type: string
+        nominator_stash:
+          type: string
+        staking_info:
+          $ref: '#/components/schemas/subscan_internal_model.StakingAccount'
+        stash_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        status:
+          type: string
+      type: object
+    internal_server_http.dailyRewardPayoutParams:
+      properties:
+        end:
+          example: '2024-07-02'
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        start:
+          example: '2024-07-01'
+          type: string
+      type: object
+    internal_server_http.dailyRewardSlashParams:
+      properties:
+        address:
+          type: string
+        category:
+          enum:
+          - Reward
+          - Slash
+          type: string
+        end:
+          example: '2024-07-02'
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        start:
+          example: '2024-07-01'
+          type: string
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.SessionKeys:
+      properties:
+        aura:
+          type: string
+        authority_discovery:
+          type: string
+        avn:
+          description: AVN specific, energywebx
+          type: string
+        babe:
+          type: string
+        grandpa:
+          type: string
+        im_online:
+          type: string
+      type: object
+    internal_server_http.commissionHistoryParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        stash:
+          type: string
+      required:
+      - stash
+      type: object
+    subscan_internal_model.NominatorJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        bonded:
+          type: string
+        nominator_stash:
+          type: string
+        rank_nominator:
+          type: integer
+        validator_stash:
+          type: string
+      type: object
+    subscan_internal_model.StakingAccountEventJson:
+      properties:
+        account:
+          type: string
+        amount:
+          type: string
+        block_timestamp:
+          type: integer
+        era:
+          type: integer
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        invalid_era:
+          type: boolean
+        module_id:
+          type: string
+        stash:
+          type: string
+        validator_stash:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_model.StakingCommissionHistoryJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        commission:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        force:
+          type: boolean
+        timestamp:
+          type: integer
+      type: object
+    internal_server_http.stakingRewardParams:
+      properties:
+        address:
+          type: string
+        block_range:
+          type: string
+        end:
+          example: '2023-06-01'
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.ValidatorWaiting:
+      properties:
+        bonded_nominators:
+          type: string
+        bonded_owner:
+          type: string
+        count_nominators:
+          type: integer
+        next_session_selected:
+          type: boolean
+        stash_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        sum_nominators_bonded:
+          type: string
+        validator_prefs_value:
+          type: integer
+      type: object
+    internal_server_http.unbondingParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_libs_stakingrewards.Provider:
+      properties:
+        isVerified:
+          type: boolean
+        name:
+          type: string
+        slug:
+          type: string
+      type: object
+    internal_server_http.nominatorsParams:
+      properties:
+        address:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - rank_nominator
+          - bonded
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_server_http.bondStatParams:
+      properties:
+        stash:
+          type: string
+      required:
+      - stash
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    internal_server_http.validatorsParams:
+      properties:
+        blocked:
+          type: boolean
+        commission_range:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - rank_validator
+          - bonded_nominators
+          - bonded_owner
+          - count_nominators
+          - validator_prefs_value
+          - bonded_total
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.StakingAccount:
+      properties:
+        controller:
+          type: string
+        controller_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        reward_account:
+          type: string
+        reward_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
       type: object
     subscan_internal_model.EraBondStat:
       properties:
@@ -1580,101 +1580,6 @@ components:
         total_bond:
           type: string
       type: object
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    Error:
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-        stack:
-          type: string
-        level:
-          type: string
-    ElectionStatus:
-      type: object
-      properties:
-        status:
-          type: object
-          description: '[Deprecated](Works for polkadot runtimes before v0.8.30).
-
-            Era election status: either `Close: null` or `Open: <BlockNumber>`. A status of `Close` indicates that the submission window for solutions from off-chain Phragmen is not open. A status of `Open` indicates that the submission window for off-chain Phragmen solutions has been open since BlockNumber. N.B. when the submission window is open, certain extrinsics are not allowed because they would mutate the state that the off-chain Phragmen calculation relies on for calculating results.'
-        toggleEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the `status` will switch.
-          format: unsignedInteger
-      description: Information about the off-chain election. Not included in response when `forceEra.isForceNone`.
-    Nominations:
-      type: object
-      properties:
-        targets:
-          type: array
-          items:
-            type: string
-          description: The targets of the nomination.
-        submittedIn:
-          type: string
-          format: unsignedInteger
-          description: The era the nominations were submitted. (Except for initial nominations which are considered submitted at era 0.)
-        suppressed:
-          type: boolean
-          description: Whether the nominations have been suppressed.
-    StakingValidators:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        validators:
-          type: array
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                description: Address of validator.
-              status:
-                type: string
-                description: Status of individual validator (active/waiting).
-              commission:
-                type: string
-                description: The validator's commission rate as parts-per-billion (e.g., "100000000" = 10%). Not present for chilled validators.
-              blocked:
-                type: boolean
-                description: Whether the validator is blocked from receiving new nominations. Not present for chilled validators.
-        validatorsToBeChilled:
-          description: Validators that will not be participating in the next era.
-          type: array
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                description: Address of validator.
-              status:
-                type: string
-                description: Status of individual validator (active/waiting).
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     UnappliedSlash:
       type: object
       properties:
@@ -1702,6 +1607,76 @@ components:
           type: string
           description: Amount of bounty payout to reporters.
           format: unsignedInteger
+    StakingProgress:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        activeEra:
+          type: string
+          description: '`EraIndex` of the era being rewarded.
+
+            '
+          format: unsignedInteger
+        forceEra:
+          type: string
+          description: Current status of era forcing.
+          enum:
+          - ForceNone
+          - NotForcing
+          - ForceAlways
+          - ForceNew
+        nextActiveEraEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the next active era will start. Not included in response when `forceEra.isForceNone`.
+          format: unsignedInteger
+        nextSessionEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the next session will start.
+          format: unsignedInteger
+        unappliedSlashes:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnappliedSlash'
+          description: Array of upcoming `UnappliedSlash` indexed by era.
+        electionStatus:
+          $ref: '#/components/schemas/ElectionStatus'
+        idealValidatorCount:
+          type: string
+          description: Upper bound of validator set size; considered the ideal size. Not included in response when `forceEra.isForceNone`.
+          format: unsignedInteger
+        validatorSet:
+          type: array
+          description: Stash account IDs of the validators for the current session. Not included in response when `forceEra.isForceNone`.
+          items:
+            type: string
+            format: ss58
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    Nominations:
+      type: object
+      properties:
+        targets:
+          type: array
+          items:
+            type: string
+          description: The targets of the nomination.
+        submittedIn:
+          type: string
+          format: unsignedInteger
+          description: The era the nominations were submitted. (Except for initial nominations which are considered submitted at era 0.)
+        suppressed:
+          type: boolean
+          description: Whether the nominations have been suppressed.
     StakingLedger:
       type: object
       properties:
@@ -1739,41 +1714,6 @@ components:
                 - unclaimed
                 - partially claimed
       description: The staking ledger.
-    AccountStakingPayouts:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        erasPayouts:
-          type: array
-          items:
-            type: object
-            properties:
-              era:
-                type: string
-                format: unsignedInteger
-                description: Era this information is associated with.
-              totalEraRewardPoints:
-                type: string
-                format: unsignedInteger
-                description: Total reward points for the era. Equals the sum of reward points for all the validators in the set.
-              totalEraPayout:
-                type: string
-                format: unsignedInteger
-                description: Total payout for the era. Validators split the payout based on the portion of `totalEraRewardPoints` they have.
-              payouts:
-                $ref: '#/components/schemas/Payouts'
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     Payouts:
       type: array
       items:
@@ -1843,50 +1783,30 @@ components:
           description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
           format: unsignedInteger
       description: 'Note: For Sidecar versions prior to v.20.0.0, in field `claimedRewards` under `staking`, we return whatever we would find under `StakingLedger` with no further calculations. From v.20.0.0 onwards, `claimedRewards` is calculated based on different calls: `lastReward`, `claimedRewards` or `legacyClaimedRewards`. Note on lastReward: Runtime versions of Kusama less than 1062 will either have `lastReward` in place of `claimedRewards`, or no field at all. This is related to changes in reward distribution. See: [Lazy Payouts](https://github.com/paritytech/substrate/pull/4474), [Simple Payouts](https://github.com/paritytech/substrate/pull/5406)'
-    StakingProgress:
+    AccountStakingPayouts:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        activeEra:
-          type: string
-          description: '`EraIndex` of the era being rewarded.
-
-            '
-          format: unsignedInteger
-        forceEra:
-          type: string
-          description: Current status of era forcing.
-          enum:
-          - ForceNone
-          - NotForcing
-          - ForceAlways
-          - ForceNew
-        nextActiveEraEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the next active era will start. Not included in response when `forceEra.isForceNone`.
-          format: unsignedInteger
-        nextSessionEstimate:
-          type: string
-          description: Upper bound estimate of the block height at which the next session will start.
-          format: unsignedInteger
-        unappliedSlashes:
+        erasPayouts:
           type: array
           items:
-            $ref: '#/components/schemas/UnappliedSlash'
-          description: Array of upcoming `UnappliedSlash` indexed by era.
-        electionStatus:
-          $ref: '#/components/schemas/ElectionStatus'
-        idealValidatorCount:
-          type: string
-          description: Upper bound of validator set size; considered the ideal size. Not included in response when `forceEra.isForceNone`.
-          format: unsignedInteger
-        validatorSet:
-          type: array
-          description: Stash account IDs of the validators for the current session. Not included in response when `forceEra.isForceNone`.
-          items:
-            type: string
-            format: ss58
+            type: object
+            properties:
+              era:
+                type: string
+                format: unsignedInteger
+                description: Era this information is associated with.
+              totalEraRewardPoints:
+                type: string
+                format: unsignedInteger
+                description: Total reward points for the era. Equals the sum of reward points for all the validators in the set.
+              totalEraPayout:
+                type: string
+                format: unsignedInteger
+                description: Total payout for the era. Validators split the payout based on the portion of `totalEraRewardPoints` they have.
+              payouts:
+                $ref: '#/components/schemas/Payouts'
         rcBlockHash:
           type: string
           description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
@@ -1898,6 +1818,86 @@ components:
           type: string
           description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
           format: unsignedInteger
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    StakingValidators:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        validators:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: Address of validator.
+              status:
+                type: string
+                description: Status of individual validator (active/waiting).
+              commission:
+                type: string
+                description: The validator's commission rate as parts-per-billion (e.g., "100000000" = 10%). Not present for chilled validators.
+              blocked:
+                type: boolean
+                description: Whether the validator is blocked from receiving new nominations. Not present for chilled validators.
+        validatorsToBeChilled:
+          description: Validators that will not be participating in the next era.
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: Address of validator.
+              status:
+                type: string
+                description: Status of individual validator (active/waiting).
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    ElectionStatus:
+      type: object
+      properties:
+        status:
+          type: object
+          description: '[Deprecated](Works for polkadot runtimes before v0.8.30).
+
+            Era election status: either `Close: null` or `Open: <BlockNumber>`. A status of `Close` indicates that the submission window for solutions from off-chain Phragmen is not open. A status of `Open` indicates that the submission window for off-chain Phragmen solutions has been open since BlockNumber. N.B. when the submission window is open, certain extrinsics are not allowed because they would mutate the state that the off-chain Phragmen calculation relies on for calculating results.'
+        toggleEstimate:
+          type: string
+          description: Upper bound estimate of the block height at which the `status` will switch.
+          format: unsignedInteger
+      description: Information about the off-chain election. Not included in response when `forceEra.isForceNone`.
 x-refined-from:
 - subscan-swagger.yaml
 - substrate-api-sidecar-openapi.yaml

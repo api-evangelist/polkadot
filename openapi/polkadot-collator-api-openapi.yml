@@ -159,27 +159,80 @@ paths:
         required: true
 components:
   schemas:
-    internal_pluginv2_pallets_collator.CollatorTimelineJson:
+    internal_pluginv2_pallets_collator.collatorTimelineParams:
       properties:
         account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        action:
           type: string
-        block_num:
+        page:
+          minimum: 0
           type: integer
-        event_index:
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_collator.collatorListParams:
+      properties:
+        account:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - account
+          - bond
+          - last_change_block
+          - last_authored_block
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_dao.CollatorStatus'
+          enum:
+          - 0
+          - 1
+          - 2
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
-    subscan_internal_dao.CollatorStatus:
-      enum:
-      - 1
-      - 2
-      - 3
-      type: integer
-      x-enum-varnames:
-      - CollatorInvulnerable
-      - CollatorCandidate
-      - CollatorRetired
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
     internal_pluginv2_pallets_collator.CollatorJson:
       properties:
         account_display:
@@ -193,6 +246,13 @@ components:
           type: integer
         status:
           $ref: '#/components/schemas/subscan_internal_dao.CollatorStatus'
+      type: object
+    internal_pluginv2_pallets_collator.collatorInfoParams:
+      properties:
+        account:
+          type: string
+      required:
+      - account
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -235,32 +295,6 @@ components:
         invulnerables:
           type: integer
       type: object
-    internal_pluginv2_pallets_collator.collatorTimelineParams:
-      properties:
-        account:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
     subscan_internal_model.MerkleTag:
       properties:
         address_type:
@@ -272,65 +306,31 @@ components:
         tag_type:
           type: string
       type: object
-    subscan_internal_model.SampleIdentity:
+    subscan_internal_dao.CollatorStatus:
+      enum:
+      - 1
+      - 2
+      - 3
+      type: integer
+      x-enum-varnames:
+      - CollatorInvulnerable
+      - CollatorCandidate
+      - CollatorRetired
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
-        display:
+        index:
+          type: integer
+        judgement:
           type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object
-    internal_pluginv2_pallets_collator.collatorListParams:
+    internal_pluginv2_pallets_collator.CollatorTimelineJson:
       properties:
         account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        action:
           type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - account
-          - bond
-          - last_change_block
-          - last_authored_block
-          type: string
-        page:
-          minimum: 0
+        block_num:
           type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        status:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_dao.CollatorStatus'
-          enum:
-          - 0
-          - 1
-          - 2
-      type: object
-    internal_pluginv2_pallets_collator.collatorInfoParams:
-      properties:
-        account:
-          type: string
-      required:
-      - account
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
+        event_index:
           type: string
       type: object

@@ -249,25 +249,21 @@ paths:
         required: true
 components:
   schemas:
-    internal_plugin_crust_swork_http.CrustOrdersParams:
+    internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
       properties:
-        address:
-          items:
-            type: string
-          type: array
-        expired_status:
+        category:
           enum:
-          - 1
-          - 2
-          - 3
-          type: integer
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
+          - nodes
+          - storage
+          - files
+          type: string
+        end:
+          type: string
+        start:
+          type: string
+      required:
+      - end
+      - start
       type: object
     internal_plugin_crust_swork_http.CrustMembersParams:
       properties:
@@ -283,12 +279,17 @@ components:
       required:
       - group_owner
       type: object
-    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+    internal_plugin_crust_swork_http.CrustGroupParams:
+      properties:
+        group_owner:
+          type: string
+      required:
+      - group_owner
+      type: object
+    internal_plugin_crust_swork_http.CrustFilesParams:
       properties:
         address:
           type: string
-        all_orders:
-          type: boolean
         page:
           minimum: 0
           type: integer
@@ -296,13 +297,6 @@ components:
           maximum: 100
           minimum: 1
           type: integer
-      required:
-      - address
-      type: object
-    internal_plugin_crust_swork_http.CrustMemberParams:
-      properties:
-        address:
-          type: string
       required:
       - address
       type: object
@@ -330,26 +324,12 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
-      properties:
-        category:
-          enum:
-          - nodes
-          - storage
-          - files
-          type: string
-        end:
-          type: string
-        start:
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    internal_plugin_crust_swork_http.CrustFilesParams:
+    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
       properties:
         address:
           type: string
+        all_orders:
+          type: boolean
         page:
           minimum: 0
           type: integer
@@ -360,10 +340,30 @@ components:
       required:
       - address
       type: object
-    internal_plugin_crust_swork_http.CrustGroupParams:
+    internal_plugin_crust_swork_http.CrustOrdersParams:
       properties:
-        group_owner:
+        address:
+          items:
+            type: string
+          type: array
+        expired_status:
+          enum:
+          - 1
+          - 2
+          - 3
+          type: integer
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_crust_swork_http.CrustMemberParams:
+      properties:
+        address:
           type: string
       required:
-      - group_owner
+      - address
       type: object

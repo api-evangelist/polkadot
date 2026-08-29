@@ -54,17 +54,13 @@ paths:
         required: true
 components:
   schemas:
-    internal_server_http.J:
+    subscan_internal_model.VestingRelease:
       properties:
-        code:
-          example: 0
+        amount:
+          type: string
+        block_num:
           type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        day:
           type: string
       type: object
     internal_server_http.vestingReleaseParams:
@@ -79,12 +75,16 @@ components:
       - end
       - start
       type: object
-    subscan_internal_model.VestingRelease:
+    internal_server_http.J:
       properties:
-        amount:
-          type: string
-        block_num:
+        code:
+          example: 0
           type: integer
-        day:
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object

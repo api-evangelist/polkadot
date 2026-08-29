@@ -57,6 +57,21 @@ paths:
         required: true
 components:
   schemas:
+    internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward:
+      properties:
+        amount:
+          type: string
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        module_id:
+          type: string
+      type: object
     internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams:
       properties:
         address:
@@ -80,20 +95,5 @@ components:
           type: integer
         message:
           example: Success
-          type: string
-      type: object
-    internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward:
-      properties:
-        amount:
-          type: string
-        block_timestamp:
-          type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        module_id:
           type: string
       type: object

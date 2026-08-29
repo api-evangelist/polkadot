@@ -109,53 +109,6 @@ paths:
         required: true
 components:
   schemas:
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    internal_server_http.currencyConverterParams:
-      properties:
-        from:
-          type: string
-        quote:
-          type: string
-        time:
-          type: integer
-        value:
-          type: string
-      required:
-      - from
-      - quote
-      - value
-      type: object
-    internal_server_http.currencyPriceParams:
-      properties:
-        base:
-          type: string
-        quote:
-          enum:
-          - USD
-          type: string
-        time:
-          minimum: 1
-          type: integer
-      type: object
-    internal_server_http.CurrencyConverter:
-      properties:
-        output:
-          type: string
-        price:
-          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
-      type: object
     subscan_internal_service_scan.CurrencyPrice:
       properties:
         price:
@@ -173,4 +126,51 @@ components:
           type: string
         time:
           type: integer
+      type: object
+    internal_server_http.currencyPriceParams:
+      properties:
+        base:
+          type: string
+        quote:
+          enum:
+          - USD
+          type: string
+        time:
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.currencyConverterParams:
+      properties:
+        from:
+          type: string
+        quote:
+          type: string
+        time:
+          type: integer
+        value:
+          type: string
+      required:
+      - from
+      - quote
+      - value
+      type: object
+    internal_server_http.CurrencyConverter:
+      properties:
+        output:
+          type: string
+        price:
+          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
       type: object

@@ -239,119 +239,6 @@ paths:
         required: true
 components:
   schemas:
-    internal_plugin_uniques_http.UniquesActivitiesParams:
-      properties:
-        collection_id:
-          type: string
-        item_id:
-          type: integer
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    internal_plugin_uniques_http.UniquesHoldersParams:
-      properties:
-        collection_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    internal_plugin_uniques_http.uniqueItemParams:
-      properties:
-        collection_id:
-          type: string
-        item_id:
-          type: integer
-      type: object
-    internal_plugin_uniques_http.uniqueItemsParams:
-      properties:
-        collection_id:
-          type: string
-        order:
-          description: Optional, order sort, default desc
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          description: Optional, order field
-          enum:
-          - item_id
-          - create_at
-          - transfer_count
-          type: string
-        owner:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
     subscan_internal_model.SampleIdentity:
       properties:
         display:
@@ -396,64 +283,22 @@ components:
           minLength: 1
           type: string
       type: object
-    subscan_internal_model.MetadataMedia:
-      properties:
-        types:
-          type: string
-        url:
-          type: string
-      type: object
-    internal_plugin_uniques_http.UniquesBalancesParams:
+    subscan_internal_model.AccountParentJson:
       properties:
         address:
-          example: EaBRZ3VBUFEd6GT9kxXXk9C5gsYC6zAsNfxahmpusrYPtPf
           type: string
-        collection_id:
-          example: '1'
+        display:
           type: string
-        page:
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
-    subscan_internal_plugin_uniques_db.ItemSample:
+    subscan_internal_model.EvmAccountDisplay:
       properties:
-        collection_id:
+        contract_name:
           type: string
-        collection_name:
-          type: string
-        item_id:
-          type: integer
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
-        owner:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transfer_count:
-          type: integer
-      type: object
-    internal_plugin_uniques_http.uniqueParam:
-      properties:
-        collection_id:
+        verify_source:
           type: string
       type: object
     subscan_internal_model.StandardMetadata:
@@ -488,14 +333,169 @@ components:
         thumbnail:
           type: string
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_plugin_share.J:
       properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_plugin_uniques_http.UniquesActivitiesParams:
+      properties:
+        collection_id:
+          type: string
+        item_id:
+          type: integer
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_uniques_http.uniqueParam:
+      properties:
+        collection_id:
+          type: string
+      type: object
+    internal_plugin_uniques_http.uniqueItemParams:
+      properties:
+        collection_id:
+          type: string
+        item_id:
+          type: integer
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
         address:
+          description: Current network account
           type: string
         display:
           type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
         identity:
           type: boolean
-        sub_symbol:
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    internal_plugin_uniques_http.UniquesBalancesParams:
+      properties:
+        address:
+          example: EaBRZ3VBUFEd6GT9kxXXk9C5gsYC6zAsNfxahmpusrYPtPf
+          type: string
+        collection_id:
+          example: '1'
+          type: string
+        page:
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_plugin_uniques_http.UniquesHoldersParams:
+      properties:
+        collection_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_uniques_http.uniqueItemsParams:
+      properties:
+        collection_id:
+          type: string
+        order:
+          description: Optional, order sort, default desc
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          description: Optional, order field
+          enum:
+          - item_id
+          - create_at
+          - transfer_count
+          type: string
+        owner:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.MetadataMedia:
+      properties:
+        types:
+          type: string
+        url:
+          type: string
+      type: object
+    subscan_internal_plugin_uniques_db.ItemSample:
+      properties:
+        collection_id:
+          type: string
+        collection_name:
+          type: string
+        item_id:
+          type: integer
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
+        owner:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        transfer_count:
+          type: integer
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object

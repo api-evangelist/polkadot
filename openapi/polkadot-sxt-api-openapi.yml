@@ -106,19 +106,6 @@ paths:
         required: true
 components:
   schemas:
-    subscan_internal_plugin_spaceTime_db.Holder:
-      properties:
-        address:
-          type: string
-        balance:
-          type: string
-        is_contract:
-          type: boolean
-        is_verified:
-          type: boolean
-        name:
-          type: string
-      type: object
     internal_plugin_spaceTime_http.transferParams:
       properties:
         address:
@@ -164,15 +151,16 @@ components:
         transaction_hash:
           type: string
       type: object
-    internal_plugin_spaceTime_http.holderParams:
+    subscan_internal_plugin_spaceTime_db.HolderDisplay:
       properties:
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
+        address:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
       type: object
     subscan_internal_plugin_share.J:
       properties:
@@ -187,9 +175,21 @@ components:
           example: Success
           type: string
       type: object
-    subscan_internal_plugin_spaceTime_db.HolderDisplay:
+    internal_plugin_spaceTime_http.holderParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_plugin_spaceTime_db.Holder:
       properties:
         address:
+          type: string
+        balance:
           type: string
         is_contract:
           type: boolean

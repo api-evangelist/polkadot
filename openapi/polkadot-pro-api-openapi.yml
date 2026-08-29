@@ -646,156 +646,6 @@ paths:
         required: true
 components:
   schemas:
-    subscan_internal_model.BridgeStatStatJson:
-      properties:
-        time_utc:
-          type: string
-        total:
-          type: integer
-      type: object
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    internal_server_http.XcmHashParams:
-      properties:
-        dest_event_id:
-          description: receiver event id
-          type: string
-        dest_para_id:
-          description: receiver parachain id
-          type: integer
-        message_hash:
-          description: message hash
-          type: string
-        origin_event_id:
-          description: sender event id
-          type: string
-        origin_para_id:
-          description: sender parachain id
-          type: integer
-      type: object
-    internal_server_http.xcmSenderStatParams:
-      properties:
-        direction:
-          enum:
-          - in
-          - out
-          type: string
-        end:
-          description: 'end date, format: 2006-01-02'
-          type: string
-        filter_para_id:
-          description: filter by parachain id, optional，if filter_para_id =-1 ，return all parachain send stat
-          minimum: -1
-          type: integer
-        start:
-          description: 'start date, format: 2006-01-02'
-          type: string
-      type: object
-    subscan_internal_model.AssetsJson:
-      properties:
-        asset_id:
-          type: string
-        balance:
-          type: string
-        bonded:
-          type: string
-        category:
-          type: string
-        contract:
-          type: string
-        conviction_lock:
-          type: string
-        currency_id:
-          type: string
-        decimal:
-          type: integer
-        democracy_lock:
-          type: string
-        election_lock:
-          type: string
-        label:
-          type: string
-        locked:
-          type: string
-        network:
-          type: string
-        nomination_bonded:
-          type: string
-        price:
-          type: string
-        reserved:
-          type: string
-        symbol:
-          type: string
-        token_unique_id:
-          type: string
-        unbonding:
-          type: string
-      type: object
-    subscan_internal_service_scan.StakingV2:
-      properties:
-        network:
-          type: string
-        token_unique_id:
-          type: string
-        unclaimed:
-          type: string
-      type: object
-    subscan_internal_model.XcmErrorMsg:
-      properties:
-        doc:
-          type: string
-        name:
-          type: string
-      type: object
-    subscan_internal_model.XcmMessageCountStatJson:
-      properties:
-        message_total:
-          type: integer
-        recipient:
-          type: integer
-        sender:
-          type: integer
-        transfer_total:
-          type: integer
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
     subscan_internal_model.XcmMessageEmbeddedJson:
       properties:
         block_num:
@@ -899,118 +749,282 @@ components:
           description: xcm version
           type: integer
       type: object
-    internal_server_http.XcmMessageV2Params:
+    subscan_internal_model.CrossChainProtocol:
+      enum:
+      - UMP
+      - DMP
+      - HRMP
+      - SnowBridge
+      - SnowbridgeTanssi
+      type: string
+      x-enum-varnames:
+      - UMPProtocol
+      - DMPProtocol
+      - HRMPProtocol
+      - SnowBridge
+      - SnowbridgeTanssi
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_service_scan.DefiLiquidStaking:
+      properties:
+        bonded:
+          type: string
+        exchange_ratio:
+          type: string
+        price:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+      type: object
+    internal_server_http.accountBalanceValueHistoryParams:
       properties:
         address:
-          description: filter by address
           type: string
-        after_id:
-          description: Pagination, the last message id of the previous page
+        end:
           type: string
-        block_range:
-          description: 'filter by block range,eg: 1000-2000'
-          example: 20000-30000
+        start:
           type: string
-        bridge_type:
-          description: filter by bridge type
-          items:
-            type: string
-          type: array
-        dest_para_id:
-          description: filter by receiver parachain id
-          type: integer
-        extrinsic_index:
-          description: filter by send extrinsic index
+      required:
+      - address
+      - end
+      - start
+      type: object
+    subscan_internal_dao.AccountBalanceValueHistory:
+      properties:
+        asset_value:
           type: string
+        date:
+          type: string
+        defi_value:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_service_scan.DefiNominationPool:
+      properties:
+        SENJ_amount:
+          type: string
+        bonded:
+          type: string
+        network:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+        unclaimed:
+          type: string
+      type: object
+    internal_server_http.XcmChannelParams:
+      properties:
         filter_para_id:
-          description: filter by parachain id(sender or receiver)
+          description: filter by parachain id(sender or recipient)
           minimum: 1
           type: integer
-        filter_symbol:
-          description: filter by asset symbol
-          type: string
-        include_total:
-          type: boolean
-        message_hash:
-          description: filter by message hash
-          type: string
-        message_type:
-          description: filter by message type
-          enum:
-          - transfer
-          - message
-          type: string
-        origin_para_id:
-          description: filter by sender origin parachain id
+        recipient:
+          description: HRMP recipient parachain id
+          minimum: 1
           type: integer
-        page:
-          description: page number, start from 0
-          minimum: 0
-          type: integer
-        protocol:
-          description: filter by XCM protocol
-          enum:
-          - HRMP
-          - VMP
-          - UMP
-          - DMP
-          type: string
-        row:
-          description: page size
-          maximum: 100
-          minimum: 0
+        sender:
+          description: HRMP sender parachain id
+          minimum: 1
           type: integer
         status:
           description: filter by status
           enum:
-          - pending
-          - relayed
-          - success
-          - failed
+          - closed
+          - accepted
+          - canceled
+          - requested
           type: string
       type: object
-    subscan_internal_model.LpTokenInfo:
+    internal_server_http.accountBalanceValueStatParams:
       properties:
-        amount:
+        address:
           type: string
-        decimals:
+      required:
+      - address
+      type: object
+    subscan_internal_model.HrmpChannel:
+      properties:
+        active_at:
           type: integer
-        price:
+        message_count:
+          type: integer
+        proposed_max_capacity:
+          type: integer
+        proposed_max_message_size:
+          type: integer
+        recipient:
+          type: integer
+        sender:
+          type: integer
+        status:
           type: string
-        symbol:
-          type: string
-        unique_id:
-          type: string
+        transfer_count:
+          type: integer
       type: object
-    internal_server_http.accountNetAssetsParams:
+    subscan_internal_model.XcmMeta:
       properties:
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        page:
-          description: Page number, starting from 0
+        all_channel:
+          type: integer
+        connected_parachain_count:
+          type: integer
+        online_parachain:
+          type: integer
+        open_channel:
+          type: integer
+        parachain_count_with_requested:
+          type: integer
+        received_xcm_message_count:
+          type: integer
+        received_xcm_transfer_count:
+          type: integer
+        relayed_message_count:
+          type: integer
+        relayed_transfer_count:
+          type: integer
+        send_xcm_message_count:
+          type: integer
+        send_xcm_transfer_count:
+          type: integer
+        support_parachain:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
           example: 0
-          minimum: 0
           type: integer
-        row:
-          description: Data size per page
-          example: 20
-          maximum: 100
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.BoxProposal:
+      properties:
+        call_index:
+          type: string
+        call_module:
+          type: string
+        call_name:
+          type: string
+        params:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicParam'
+          type: array
+      type: object
+    subscan_internal_model.BridgeStatStatJson:
+      properties:
+        time_utc:
+          type: string
+        total:
+          type: integer
+      type: object
+    internal_server_http.identitiesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.XcmErrorMsg:
+      properties:
+        doc:
+          type: string
+        name:
+          type: string
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    internal_server_http.XcmStatParams:
+      properties:
+        end:
+          description: 'end date, format: 2006-01-02'
+          type: string
+        filter_para_id:
+          description: filter by parachain id, optional
           minimum: 1
           type: integer
+        start:
+          description: 'start date, format: 2006-01-02'
+          type: string
+      required:
+      - end
+      - start
       type: object
-    subscan_internal_model.ExecutionFee:
+    subscan_internal_model.XcmMessageStatJson:
       properties:
-        asset_unique_id:
-          type: string
-        decimals:
+        message_total:
           type: integer
-        estimate_fee:
+        time_utc:
           type: string
-        symbol:
+        total:
+          type: integer
+      type: object
+    subscan_internal_model.AccountNetAssetJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        evm_account:
           type: string
+        priced_token_count:
+          type: integer
+        total_value:
+          type: string
+        unpriced_token_count:
+          type: integer
       type: object
     subscan_internal_model.MultiAssets:
       properties:
@@ -1036,36 +1050,84 @@ components:
         version:
           type: string
       type: object
-    internal_server_http.XcmChannelInfoParams:
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    internal_server_http.XcmHashParams:
+      properties:
+        dest_event_id:
+          description: receiver event id
+          type: string
+        dest_para_id:
+          description: receiver parachain id
+          type: integer
+        message_hash:
+          description: message hash
+          type: string
+        origin_event_id:
+          description: sender event id
+          type: string
+        origin_para_id:
+          description: sender parachain id
+          type: integer
+      type: object
+    subscan_internal_service_scan.DefiBifrost:
+      properties:
+        farming:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrostFarming'
+          type: array
+        liquid_staking:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLiquidStaking'
+          type: array
+        loop_stake:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLoopStake'
+          type: array
+      type: object
+    internal_server_http.xcmSenderStatParams:
+      properties:
+        direction:
+          enum:
+          - in
+          - out
+          type: string
+        end:
+          description: 'end date, format: 2006-01-02'
+          type: string
+        filter_para_id:
+          description: filter by parachain id, optional，if filter_para_id =-1 ，return all parachain send stat
+          minimum: -1
+          type: integer
+        start:
+          description: 'start date, format: 2006-01-02'
+          type: string
+      type: object
+    subscan_internal_model.XcmMessageCountStatJson:
+      properties:
+        message_total:
+          type: integer
         recipient:
-          description: HRMP recipient parachain id
-          minimum: 1
           type: integer
         sender:
-          description: HRMP sender parachain id
-          minimum: 1
+          type: integer
+        transfer_total:
           type: integer
       type: object
-    internal_server_http.J:
+    subscan_internal_model.ExtrinsicParam:
       properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        name:
           type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
+        type:
           type: string
-        verify_source:
+        type_name:
           type: string
+        value: {}
       type: object
     internal_server_http.XcmMessageParams:
       properties:
@@ -1135,161 +1197,6 @@ components:
           - failed
           type: string
       type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_service_scan.DefiLoopStake:
-      properties:
-        bonded:
-          type: string
-        price:
-          type: string
-        token_unique_id:
-          type: string
-        unbonding:
-          type: string
-      type: object
-    subscan_internal_model.AccountNetAssetJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        evm_account:
-          type: string
-        priced_token_count:
-          type: integer
-        total_value:
-          type: string
-        unpriced_token_count:
-          type: integer
-      type: object
-    internal_server_http.XcmMetaParams:
-      properties:
-        para_id:
-          description: optional, if not set or set 0, will return all parachain statistics
-          type: integer
-      type: object
-    internal_server_http.accountBalanceValueStatParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    internal_server_http.multiChainAccountParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.CrossChainMetadata:
-      properties:
-        lane_id:
-          description: s2s message laneId
-          type: string
-        message_id:
-          description: ethBridge messageId
-          type: string
-        nonce:
-          description: s2s message nonce
-          type: integer
-        send_at:
-          description: ethBridge send time or received time
-          type: integer
-        tx_hash:
-          description: ethBridge transaction hash
-          type: string
-      type: object
-    subscan_internal_service_scan.DefiBifrostFarming:
-      properties:
-        bonded_redeem:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        redeem:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        token_unique_id:
-          type: string
-      type: object
-    subscan_internal_model.XcmMessageStatJson:
-      properties:
-        message_total:
-          type: integer
-        time_utc:
-          type: string
-        total:
-          type: integer
-      type: object
-    subscan_internal_model.BoxProposal:
-      properties:
-        call_index:
-          type: string
-        call_module:
-          type: string
-        call_name:
-          type: string
-        params:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicParam'
-          type: array
-      type: object
-    subscan_internal_service_scan.DefiNominationPool:
-      properties:
-        SENJ_amount:
-          type: string
-        bonded:
-          type: string
-        network:
-          type: string
-        token_unique_id:
-          type: string
-        unbonding:
-          type: string
-        unclaimed:
-          type: string
-      type: object
-    internal_server_http.XcmChannelParams:
-      properties:
-        filter_para_id:
-          description: filter by parachain id(sender or recipient)
-          minimum: 1
-          type: integer
-        recipient:
-          description: HRMP recipient parachain id
-          minimum: 1
-          type: integer
-        sender:
-          description: HRMP sender parachain id
-          minimum: 1
-          type: integer
-        status:
-          description: filter by status
-          enum:
-          - closed
-          - accepted
-          - canceled
-          - requested
-          type: string
-      type: object
-    internal_server_http.identitiesParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
     subscan_internal_model.ParaXcmMessageTokenTotalJson:
       properties:
         count:
@@ -1303,6 +1210,73 @@ components:
         value:
           type: string
       type: object
+    subscan_internal_model.AssetsJson:
+      properties:
+        asset_id:
+          type: string
+        balance:
+          type: string
+        bonded:
+          type: string
+        category:
+          type: string
+        contract:
+          type: string
+        conviction_lock:
+          type: string
+        currency_id:
+          type: string
+        decimal:
+          type: integer
+        democracy_lock:
+          type: string
+        election_lock:
+          type: string
+        label:
+          type: string
+        locked:
+          type: string
+        network:
+          type: string
+        nomination_bonded:
+          type: string
+        price:
+          type: string
+        reserved:
+          type: string
+        symbol:
+          type: string
+        token_unique_id:
+          type: string
+        unbonding:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.XcmMetaParams:
+      properties:
+        para_id:
+          description: optional, if not set or set 0, will return all parachain statistics
+          type: integer
+      type: object
+    subscan_internal_model.LpTokenInfo:
+      properties:
+        amount:
+          type: string
+        decimals:
+          type: integer
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
     subscan_internal_model.ParaXcmMessageTokenDailyCountJson:
       properties:
         count:
@@ -1310,43 +1284,60 @@ components:
         time:
           type: string
       type: object
-    subscan_internal_dao.AccountBalanceValueHistory:
+    subscan_internal_service_scan.DefiJson:
       properties:
-        asset_value:
+        bifrost_defi:
+          additionalProperties:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrost'
+          type: object
+        defi_nomination_pool:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiNominationPool'
+          type: array
+        staking:
+          $ref: '#/components/schemas/subscan_internal_service_scan.DefiStaking'
+      type: object
+    internal_server_http.XcmMessageDetailParams:
+      properties:
+        origin_event_id:
+          description: sender event id, need with origin_para_id
           type: string
-        date:
-          type: string
-        defi_value:
-          type: string
-        value:
+        origin_para_id:
+          description: sender parachain id, need with origin_event_id
+          type: integer
+        unique_id:
+          description: unique id of the message
           type: string
       type: object
-    subscan_internal_service_scan.DefiStaking:
+    internal_server_http.XcmChannelInfoParams:
       properties:
-        enable_staking_network:
-          items:
-            type: string
-          type: array
-        staking_v2:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.StakingV2'
-          type: array
-      type: object
-    internal_server_http.XcmStatParams:
-      properties:
-        end:
-          description: 'end date, format: 2006-01-02'
-          type: string
-        filter_para_id:
-          description: filter by parachain id, optional
+        recipient:
+          description: HRMP recipient parachain id
           minimum: 1
           type: integer
-        start:
-          description: 'start date, format: 2006-01-02'
+        sender:
+          description: HRMP sender parachain id
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.accountNetAssetsParams:
+      properties:
+        order:
+          enum:
+          - desc
+          - asc
           type: string
-      required:
-      - end
-      - start
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 20
+          maximum: 100
+          minimum: 1
+          type: integer
       type: object
     subscan_internal_model.ParaXcmMessageJson:
       properties:
@@ -1455,50 +1446,56 @@ components:
           description: xcm version
           type: integer
       type: object
-    subscan_internal_model.HrmpChannel:
+    subscan_internal_service_scan.DefiStaking:
       properties:
-        active_at:
-          type: integer
-        message_count:
-          type: integer
-        proposed_max_capacity:
-          type: integer
-        proposed_max_message_size:
-          type: integer
-        recipient:
-          type: integer
-        sender:
-          type: integer
-        status:
-          type: string
-        transfer_count:
-          type: integer
+        enable_staking_network:
+          items:
+            type: string
+          type: array
+        staking_v2:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.StakingV2'
+          type: array
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_service_scan.DefiLoopStake:
       properties:
-        address:
+        bonded:
           type: string
-        display:
+        price:
           type: string
-        identity:
-          type: boolean
-        sub_symbol:
+        token_unique_id:
+          type: string
+        unbonding:
           type: string
       type: object
-    subscan_internal_service_scan.DefiBifrost:
+    subscan_internal_model.CrossChainMetadata:
       properties:
-        farming:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrostFarming'
-          type: array
-        liquid_staking:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLiquidStaking'
-          type: array
-        loop_stake:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLoopStake'
-          type: array
+        lane_id:
+          description: s2s message laneId
+          type: string
+        message_id:
+          description: ethBridge messageId
+          type: string
+        nonce:
+          description: s2s message nonce
+          type: integer
+        send_at:
+          description: ethBridge send time or received time
+          type: integer
+        tx_hash:
+          description: ethBridge transaction hash
+          type: string
+      type: object
+    subscan_internal_model.ExecutionFee:
+      properties:
+        asset_unique_id:
+          type: string
+        decimals:
+          type: integer
+        estimate_fee:
+          type: string
+        symbol:
+          type: string
       type: object
     internal_server_http.BridgeStatParams:
       properties:
@@ -1519,112 +1516,115 @@ components:
       - end
       - start
       type: object
-    internal_server_http.accountBalanceValueHistoryParams:
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    internal_server_http.multiChainAccountParams:
       properties:
         address:
           type: string
-        end:
-          type: string
-        start:
-          type: string
       required:
       - address
-      - end
-      - start
       type: object
-    subscan_internal_service_scan.DefiJson:
+    internal_server_http.XcmMessageV2Params:
       properties:
-        bifrost_defi:
-          additionalProperties:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrost'
-          type: object
-        defi_nomination_pool:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiNominationPool'
-          type: array
-        staking:
-          $ref: '#/components/schemas/subscan_internal_service_scan.DefiStaking'
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
+        address:
+          description: filter by address
           type: string
-      type: object
-    subscan_internal_model.XcmMeta:
-      properties:
-        all_channel:
+        after_id:
+          description: Pagination, the last message id of the previous page
+          type: string
+        block_range:
+          description: 'filter by block range,eg: 1000-2000'
+          example: 20000-30000
+          type: string
+        bridge_type:
+          description: filter by bridge type
+          items:
+            type: string
+          type: array
+        dest_para_id:
+          description: filter by receiver parachain id
           type: integer
-        connected_parachain_count:
+        extrinsic_index:
+          description: filter by send extrinsic index
+          type: string
+        filter_para_id:
+          description: filter by parachain id(sender or receiver)
+          minimum: 1
           type: integer
-        online_parachain:
-          type: integer
-        open_channel:
-          type: integer
-        parachain_count_with_requested:
-          type: integer
-        received_xcm_message_count:
-          type: integer
-        received_xcm_transfer_count:
-          type: integer
-        relayed_message_count:
-          type: integer
-        relayed_transfer_count:
-          type: integer
-        send_xcm_message_count:
-          type: integer
-        send_xcm_transfer_count:
-          type: integer
-        support_parachain:
-          type: integer
-      type: object
-    internal_server_http.XcmMessageDetailParams:
-      properties:
-        origin_event_id:
-          description: sender event id, need with origin_para_id
+        filter_symbol:
+          description: filter by asset symbol
+          type: string
+        include_total:
+          type: boolean
+        message_hash:
+          description: filter by message hash
+          type: string
+        message_type:
+          description: filter by message type
+          enum:
+          - transfer
+          - message
           type: string
         origin_para_id:
-          description: sender parachain id, need with origin_event_id
+          description: filter by sender origin parachain id
           type: integer
-        unique_id:
-          description: unique id of the message
+        page:
+          description: page number, start from 0
+          minimum: 0
+          type: integer
+        protocol:
+          description: filter by XCM protocol
+          enum:
+          - HRMP
+          - VMP
+          - UMP
+          - DMP
+          type: string
+        row:
+          description: page size
+          maximum: 100
+          minimum: 0
+          type: integer
+        status:
+          description: filter by status
+          enum:
+          - pending
+          - relayed
+          - success
+          - failed
           type: string
       type: object
-    subscan_internal_model.ExtrinsicParam:
+    subscan_internal_service_scan.DefiBifrostFarming:
       properties:
-        name:
+        bonded_redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        token_unique_id:
           type: string
-        type:
-          type: string
-        type_name:
-          type: string
-        value: {}
       type: object
-    subscan_internal_model.CrossChainProtocol:
-      enum:
-      - UMP
-      - DMP
-      - HRMP
-      - SnowBridge
-      - SnowbridgeTanssi
-      type: string
-      x-enum-varnames:
-      - UMPProtocol
-      - DMPProtocol
-      - HRMPProtocol
-      - SnowBridge
-      - SnowbridgeTanssi
-    subscan_internal_service_scan.DefiLiquidStaking:
+    subscan_internal_service_scan.StakingV2:
       properties:
-        bonded:
-          type: string
-        exchange_ratio:
-          type: string
-        price:
+        network:
           type: string
         token_unique_id:
           type: string
-        unbonding:
+        unclaimed:
           type: string
       type: object
