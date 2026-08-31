@@ -297,7 +297,7 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
-  - Capabilities
+  - capabilities
   tags_raw:
   - capabilities
   properties:
@@ -859,7 +859,7 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
-  - Multi-Chain
+  - MultiChain
   tags_raw:
   - MultiChain
   properties:
@@ -923,7 +923,7 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
-  - NFT
+  - NFTs
   tags_raw:
   - NFTs
   properties:
@@ -1423,7 +1423,7 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
-  - Runtime
+  - runtime
   tags_raw:
   - runtime
   properties:
@@ -1642,7 +1642,7 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
-  - Trace
+  - trace
   tags_raw:
   - trace
   properties:
