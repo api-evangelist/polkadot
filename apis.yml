@@ -1801,6 +1801,8 @@ apis:
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
   tags:
+  - NFT
+  tags_raw:
   - NFTs
   properties:
   - type: OpenAPI
