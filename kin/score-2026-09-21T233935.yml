@@ -1,24 +1,22 @@
-# Kin Score artifact — polkadot — 2026-08-20T191845
+# Kin Score artifact — polkadot — 2026-09-21T233935
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: polkadot
-  schema_version: 0.12.0
-  scored_at: '2026-08-20'
-  run_ts: 2026-08-20T191845
-  composite: 34.1
+  schema_version: 0.22.0
+  scored_at: '2026-09-21'
+  run_ts: 2026-09-21T233935
+  composite: 37.4
   band: thin
   facets:
     discoverability: 68.5
-    contract_quality: 50.2
-    governance: 0.0
-    operational_transparency: 52.6
-    developer_ergonomics: 0.0
-    commercial_clarity: 39.5
+    contract_quality: 52.1
     contract_governance: 0.0
+    operational_transparency: 68.4
+    developer_ergonomics: 14.3
     access_clarity: 39.5
   agent_readiness:
-    score: 30.3
+    score: 25.5
     band: agent-aware
     dimensions:
       spec_presence: true
@@ -36,10 +34,17 @@ kin_score:
       consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
+  open_source:
+    applies: true
+    score: 25.0
   provenance:
     agentic_access: derived
     contracts:
       total: 57
       derived: 0
       coverage: 0.0
-      callable: 0.0
+      callable: 37.0
