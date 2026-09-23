@@ -45,6 +45,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolActivities
+      x-operation-id-source: derived
   /api/scan/nomination_pool/pool:
     post:
       description: This API only supports networks with nominationPools frame
@@ -73,6 +75,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolPool
+      x-operation-id-source: derived
   /api/scan/nomination_pool/pool/member/vote:
     post:
       description: This API only supports networks with nominationPools frame
@@ -103,6 +107,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolPoolMemberVote
+      x-operation-id-source: derived
   /api/scan/nomination_pool/pool/members:
     post:
       description: This API only supports networks with nominationPools frame
@@ -132,6 +138,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolPoolMembers
+      x-operation-id-source: derived
   /api/scan/nomination_pool/pools:
     post:
       description: This API only supports networks with nominationPools frame
@@ -160,6 +168,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsListParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolPools
+      x-operation-id-source: derived
   /api/scan/nomination_pool/rewards:
     post:
       description: This API only supports networks with nominationPools frame
@@ -191,6 +201,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams'
         description: params
         required: true
+      operationId: postApiScanNominationPoolRewards
+      x-operation-id-source: derived
 components:
   schemas:
     internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
@@ -206,6 +218,11 @@ components:
           - Blocked
           - Destroyed
           type: string
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
+      properties:
+        pool_id:
+          type: integer
       type: object
     internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams:
       properties:
@@ -228,10 +245,8 @@ components:
       required:
       - row
       type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
+    internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
       properties:
-        address:
-          type: string
         page:
           minimum: 0
           type: integer
@@ -242,13 +257,10 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
+    internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
       properties:
-        pool_id:
-          type: integer
-      type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
-      properties:
+        address:
+          type: string
         page:
           minimum: 0
           type: integer

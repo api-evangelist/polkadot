@@ -64,7 +64,9 @@
     "polkadot-rc-transaction-api-openapi.yml",
     "polkadot-trace-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -130,7 +132,9 @@
     "tag 'runtime' spans 3 source specs (polkadot-rest-api-openapi.json, subscan-swagger.yaml, substrate-api-sidecar-openapi.yaml): per-path servers applied",
     "tag 'transaction' spans 2 source specs (polkadot-rest-api-openapi.json, substrate-api-sidecar-openapi.yaml): per-path servers applied",
     "tag 'Contracts' spans 2 source specs (subscan-swagger.yaml, substrate-api-sidecar-openapi.yaml): per-path servers applied",
-    "tag 'Staking' spans 2 source specs (subscan-swagger.yaml, substrate-api-sidecar-openapi.yaml): per-path servers applied"
+    "tag 'Staking' spans 2 source specs (subscan-swagger.yaml, substrate-api-sidecar-openapi.yaml): per-path servers applied",
+    "superseded outputs removed: polkadot-nf-ts-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 57 total)"
   ],
   "skipped": [
     "polkadot-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -161,7 +165,7 @@
     "polkadot-moonbeam-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "polkadot-multichain-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "polkadot-multisig-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "polkadot-nfts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polkadot-nf-ts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "polkadot-node-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "polkadot-nominationpools-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "polkadot-pallets-api-openapi.yml: previously refined output, superseded by openapi/_original/",

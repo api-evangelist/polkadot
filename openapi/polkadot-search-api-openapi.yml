@@ -44,6 +44,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.checkHashParam'
         description: param
         required: true
+      operationId: postApiScanCheckHash
+      x-operation-id-source: derived
 components:
   schemas:
     internal_server_http.checkHashParam:

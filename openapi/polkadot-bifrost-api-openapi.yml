@@ -57,6 +57,8 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_pallets_liquidStaking.operationParams'
         description: params
         required: true
+      operationId: postApiScanLiquidstakingOperations
+      x-operation-id-source: derived
   /api/scan/tokengateway/transfers:
     post:
       description: Returns paginated Bifrost TokenGateway transfer records for one address from the dedicated TokenGateway table. Supports filtering by transfer status, source and destination accounts, source and destination chains, block time range, scaled amount range, and asset unique ID. Results are ordered by newest block timestamp first, then by descending row id. The address must be a valid Substrate or EVM address that can be normalized into the indexed account format.
@@ -101,128 +103,28 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_customizeds_bifrost_tokengateway.TransfersParams'
         description: address, pagination, and optional TokenGateway filters
         required: true
+      operationId: postApiScanTokengatewayTransfers
+      x-operation-id-source: derived
 components:
   schemas:
+    subscan_internal_model.BifrostTokenGatewayStatus:
+      enum:
+      - pending
+      - success
+      - failed
+      - timeout
+      type: string
+      x-enum-varnames:
+      - BifrostTokenGatewayStatusPending
+      - BifrostTokenGatewayStatusSuccess
+      - BifrostTokenGatewayStatusFailed
+      - BifrostTokenGatewayStatusTimeout
     subscan_internal_model.RegistrationJudgementJson:
       properties:
         index:
           type: integer
         judgement:
           type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_pluginv2_pallets_liquidStaking.OperationRecordJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        id:
-          type: integer
-        module_id:
-          type: string
-        param:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.EventParam'
-          type: array
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.BifrostTokenGatewayAssetJSON:
-      properties:
-        amount:
-          type: string
-        decimals:
-          type: integer
-        symbol:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    subscan_internal_model.BifrostTokenGatewayTransferJSON:
-      properties:
-        asset:
-          $ref: '#/components/schemas/subscan_internal_model.BifrostTokenGatewayAssetJSON'
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        cross_chain_status:
-          type: integer
-        dest_account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        dest_chain:
-          type: string
-        event_index:
-          type: string
-        event_type:
-          type: string
-        extrinsic_index:
-          type: string
-        id:
-          type: integer
-        source_account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        source_chain:
-          type: string
-        status:
-          $ref: '#/components/schemas/subscan_internal_model.BifrostTokenGatewayStatus'
-      type: object
-    internal_pluginv2_pallets_liquidStaking.operationParams:
-      properties:
-        address:
-          type: string
-        module:
-          items:
-            type: string
-          type: array
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -251,6 +153,116 @@ components:
           description: Parent account
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_pluginv2_pallets_liquidStaking.operationParams:
+      properties:
+        address:
+          type: string
+        module:
+          items:
+            type: string
+          type: array
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.BifrostTokenGatewayAssetJSON:
+      properties:
+        amount:
+          type: string
+        decimals:
+          type: integer
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_pluginv2_pallets_liquidStaking.OperationRecordJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        id:
+          type: integer
+        module_id:
+          type: string
+        param:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.EventParam'
+          type: array
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.EventParam:
+      properties:
+        name:
+          type: string
+        raw_value:
+          items:
+            type: integer
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
       type: object
     internal_pluginv2_customizeds_bifrost_tokengateway.TransfersParams:
       properties:
@@ -299,43 +311,35 @@ components:
       required:
       - row
       type: object
-    subscan_internal_model.MerkleTag:
+    subscan_internal_model.BifrostTokenGatewayTransferJSON:
       properties:
-        address_type:
+        asset:
+          $ref: '#/components/schemas/subscan_internal_model.BifrostTokenGatewayAssetJSON'
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        cross_chain_status:
+          type: integer
+        dest_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        dest_chain:
           type: string
-        tag_name:
+        event_index:
           type: string
-        tag_subtype:
+        event_type:
           type: string
-        tag_type:
+        extrinsic_index:
           type: string
+        id:
+          type: integer
+        source_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        source_chain:
+          type: string
+        status:
+          $ref: '#/components/schemas/subscan_internal_model.BifrostTokenGatewayStatus'
       type: object
-    subscan_internal_model.EventParam:
-      properties:
-        name:
-          type: string
-        raw_value:
-          items:
-            type: integer
-          type: array
-        type:
-          type: string
-        type_name:
-          type: string
-        value: {}
-      type: object
-    subscan_internal_model.BifrostTokenGatewayStatus:
-      enum:
-      - pending
-      - success
-      - failed
-      - timeout
-      type: string
-      x-enum-varnames:
-      - BifrostTokenGatewayStatusPending
-      - BifrostTokenGatewayStatusSuccess
-      - BifrostTokenGatewayStatusFailed
-      - BifrostTokenGatewayStatusTimeout
     subscan_internal_model.BifrostTokenGatewayTransferListJSON:
       properties:
         count:

@@ -55,21 +55,21 @@ paths:
               $ref: '#/components/schemas/internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams'
         description: param
         required: true
+      operationId: postApiScanOrbitersRewards
+      x-operation-id-source: derived
 components:
   schemas:
-    internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward:
+    subscan_internal_plugin_share.J:
       properties:
-        amount:
-          type: string
-        block_timestamp:
+        code:
+          example: 0
           type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        module_id:
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object
     internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams:
@@ -84,16 +84,18 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_plugin_share.J:
+    internal_pluginv2_customizeds_moonbeam_orbiters.OrbiterReward:
       properties:
-        code:
-          example: 0
+        amount:
+          type: string
+        block_timestamp:
           type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        module_id:
           type: string
       type: object

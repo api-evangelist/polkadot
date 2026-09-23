@@ -48,6 +48,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.logInfoParam'
         description: params
         required: true
+      operationId: postApiScanLog
+      x-operation-id-source: derived
   /api/v2/scan/logs:
     post:
       description: Returns paginated block logs filtered by block range, engine ID, and log type.
@@ -87,21 +89,21 @@ paths:
               $ref: '#/components/schemas/internal_server_http.logsParams'
         description: params
         required: true
+      operationId: postApiV2ScanLogs
+      x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.ChainLogJson:
+    internal_server_http.J:
       properties:
-        block_num:
+        code:
+          example: 0
           type: integer
-        data:
-          type: string
-        engine:
-          type: string
-        id:
+        data: {}
+        generated_at:
+          example: 1699600641
           type: integer
-        log_index:
-          type: string
-        log_type:
+        message:
+          example: Success
           type: string
       type: object
     internal_server_http.logsParams:
@@ -136,16 +138,18 @@ components:
       required:
       - log_index
       type: object
-    internal_server_http.J:
+    subscan_internal_model.ChainLogJson:
       properties:
-        code:
-          example: 0
+        block_num:
           type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
+        data:
+          type: string
+        engine:
+          type: string
+        id:
           type: integer
-        message:
-          example: Success
+        log_index:
+          type: string
+        log_type:
           type: string
       type: object

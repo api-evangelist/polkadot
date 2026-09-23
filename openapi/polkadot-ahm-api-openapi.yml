@@ -43,7 +43,7 @@ paths:
     get:
       tags:
       - ahm
-      summary: Get Asset Hub Migration information.
+      summary: Get Asset Hub Migration information
       description: Returns information about Asset Hub Migration (AHM) including migration start and end blocks for both relay chain and Asset Hub. The endpoint automatically detects whether you're connected to a relay chain or Asset Hub and provides relevant migration data. Returns static migration boundaries for known networks or queries on-chain migration pallets for dynamic information.
       operationId: getAhmInfo
       responses:
@@ -78,17 +78,6 @@ paths:
       description: Localhost
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-        stack:
-          type: string
-        level:
-          type: string
     AhmInfo:
       type: object
       description: Asset Hub Migration information including migration boundaries for both relay chain and Asset Hub.
@@ -132,6 +121,17 @@ components:
         assetHub:
           startBlock: 11716733
           endBlock: 11736597
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - substrate-api-sidecar-openapi.yaml

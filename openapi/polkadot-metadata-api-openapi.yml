@@ -43,6 +43,8 @@ paths:
       - scan
       - meta
       - chain info
+      operationId: postApiScanMetadata
+      x-operation-id-source: derived
 components:
   schemas:
     internal_server_http.J:

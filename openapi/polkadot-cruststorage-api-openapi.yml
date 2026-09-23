@@ -45,6 +45,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustStorageDailyStatParams'
         description: params
         required: true
+      operationId: postApiScanSworkDaily
+      x-operation-id-source: derived
   /api/scan/swork/group:
     post:
       description: This API is only available for avail network.
@@ -73,6 +75,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustGroupParams'
         description: params
         required: true
+      operationId: postApiScanSworkGroup
+      x-operation-id-source: derived
   /api/scan/swork/group/members:
     post:
       description: This API is only available for avail network.
@@ -102,6 +106,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustMembersParams'
         description: params
         required: true
+      operationId: postApiScanSworkGroupMembers
+      x-operation-id-source: derived
   /api/scan/swork/groups:
     post:
       description: This API is only available for avail network.
@@ -130,6 +136,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustGroupsParams'
         description: params
         required: true
+      operationId: postApiScanSworkGroups
+      x-operation-id-source: derived
   /api/scan/swork/member:
     post:
       description: This API is only available for avail network.
@@ -159,6 +167,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustMemberParams'
         description: params
         required: true
+      operationId: postApiScanSworkMember
+      x-operation-id-source: derived
   /api/scan/swork/member/files:
     post:
       description: This API is only available for avail network.
@@ -189,6 +199,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustFilesParams'
         description: params
         required: true
+      operationId: postApiScanSworkMemberFiles
+      x-operation-id-source: derived
   /api/scan/swork/member/orders:
     post:
       description: This API is only available for avail network.
@@ -219,6 +231,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustMemberOrdersParams'
         description: params
         required: true
+      operationId: postApiScanSworkMemberOrders
+      x-operation-id-source: derived
   /api/scan/swork/orders:
     post:
       description: This API is only available for avail network.
@@ -247,8 +261,26 @@ paths:
               $ref: '#/components/schemas/internal_plugin_crust_swork_http.CrustOrdersParams'
         description: params
         required: true
+      operationId: postApiScanSworkOrders
+      x-operation-id-source: derived
 components:
   schemas:
+    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+      properties:
+        address:
+          type: string
+        all_orders:
+          type: boolean
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
     internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
       properties:
         category:
@@ -264,6 +296,20 @@ components:
       required:
       - end
       - start
+      type: object
+    internal_plugin_crust_swork_http.CrustFilesParams:
+      properties:
+        address:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
       type: object
     internal_plugin_crust_swork_http.CrustMembersParams:
       properties:
@@ -285,20 +331,6 @@ components:
           type: string
       required:
       - group_owner
-      type: object
-    internal_plugin_crust_swork_http.CrustFilesParams:
-      properties:
-        address:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
       type: object
     internal_plugin_crust_swork_http.CrustGroupsParams:
       properties:
@@ -324,19 +356,10 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+    internal_plugin_crust_swork_http.CrustMemberParams:
       properties:
         address:
           type: string
-        all_orders:
-          type: boolean
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
       required:
       - address
       type: object
@@ -359,11 +382,4 @@ components:
           maximum: 100
           minimum: 1
           type: integer
-      type: object
-    internal_plugin_crust_swork_http.CrustMemberParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
       type: object

@@ -46,6 +46,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.schedulersDetailsParams'
         description: params
         required: true
+      operationId: postApiScanScheduler
+      x-operation-id-source: derived
   /api/scan/schedulers:
     post:
       description: Returns paginated scheduled calls with module, status, and time-range filters.
@@ -84,6 +86,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.schedulersParams'
         description: params
         required: true
+      operationId: postApiScanSchedulers
+      x-operation-id-source: derived
   /api/scan/schedulers/statistics:
     post:
       description: Returns aggregated scheduler statistics.
@@ -107,67 +111,32 @@ paths:
       - statistics
       - scan
       - schedulers
+      operationId: postApiScanSchedulersStatistics
+      x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.schedulersDetailsParams:
+    subscan_internal_model.SampleIdentity:
       properties:
-        id:
-          minimum: 0
-          type: integer
-        index:
-          minimum: 0
-          type: integer
-        when:
-          minimum: 0
-          type: integer
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
+        display:
           type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.MultiAction:
-      enum:
-      - Approval
-      - Executed
-      - Cancelled
-      - Failed
-      type: string
-      x-enum-varnames:
-      - MultiActionApproval
-      - MultiActionExecuted
-      - MultiActionCancelled
-      - MultiActionExecuteFailed
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_libs_substrate.MetadataModuleError:
-      properties:
-        doc:
+        identity:
+          type: boolean
+        judgements:
           items:
-            type: string
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
           type: array
-        module:
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
           type: string
-        name:
+        display:
           type: string
-        value:
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
     subscan_internal_model.SchedulerJson:
@@ -198,32 +167,12 @@ components:
         when_timestamp:
           type: integer
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    subscan_internal_model.TimelineJson:
-      properties:
-        block:
-          type: integer
-        extrinsic_index:
-          type: string
         index:
           type: integer
-        params: {}
-        prophecy:
-          type: boolean
-        status:
+        judgement:
           type: string
-        time:
-          type: integer
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -253,11 +202,196 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.RegistrationJudgementJson:
+    subscan_internal_model.TimelineJson:
       properties:
+        block:
+          type: integer
+        extrinsic_index:
+          type: string
         index:
           type: integer
-        judgement:
+        params: {}
+        prophecy:
+          type: boolean
+        status:
+          type: string
+        time:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.SchedulerStatisticsJson:
+      properties:
+        call_unavailable_count:
+          type: integer
+        cancel_count:
+          type: integer
+        executed_count:
+          type: integer
+        executed_failed_count:
+          type: integer
+        scheduled_count:
+          type: integer
+      type: object
+    subscan_libs_substrate.MetadataModuleError:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        module:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.ExtrinsicSubCallJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        exec_result:
+          $ref: '#/components/schemas/subscan_libs_substrate.MetadataModuleError'
+        exec_status:
+          type: string
+        module:
+          type: string
+        multisig:
+          $ref: '#/components/schemas/subscan_internal_model.MultisigJson'
+        name:
+          type: string
+        param: {}
+        sub_calls:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicSubCallJson'
+          type: array
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.ExtrinsicError:
+      properties:
+        batch_index:
+          type: integer
+        doc:
+          type: string
+        module:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        version:
+          type: integer
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.schedulersDetailsParams:
+      properties:
+        id:
+          minimum: 0
+          type: integer
+        index:
+          minimum: 0
+          type: integer
+        when:
+          minimum: 0
+          type: integer
+      type: object
+    subscan_internal_model.MultiAction:
+      enum:
+      - Approval
+      - Executed
+      - Cancelled
+      - Failed
+      type: string
+      x-enum-varnames:
+      - MultiActionApproval
+      - MultiActionExecuted
+      - MultiActionCancelled
+      - MultiActionExecuteFailed
+    subscan_internal_model.MultisigJson:
+      properties:
+        call_hash:
+          type: string
+        call_module:
+          type: string
+        call_module_function:
+          type: string
+        error:
+          $ref: '#/components/schemas/subscan_internal_model.ExtrinsicError'
+        extrinsic_index:
+          type: string
+        multi_id:
+          type: string
+        multisig_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        multisig_status:
+          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
+        processing:
+          type: integer
+        threshold:
+          type: integer
+      type: object
+    internal_server_http.schedulersParams:
+      properties:
+        after_id:
+          description: '[exec_time,id]'
+          items:
+            type: integer
+          type: array
+        block_range:
+          type: string
+        call:
+          type: string
+        end_date:
+          type: string
+        module:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        start_date:
+          type: string
+        status:
+          enum:
+          - Scheduled
+          - Cancel
+          - CallUnavailable
+          - Executed
+          - ExecutedFailed
           type: string
       type: object
     subscan_internal_model.ExtrinsicParam:
@@ -308,133 +442,5 @@ components:
         when:
           type: integer
         when_timestamp:
-          type: integer
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.ExtrinsicError:
-      properties:
-        batch_index:
-          type: integer
-        doc:
-          type: string
-        module:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        version:
-          type: integer
-      type: object
-    internal_server_http.schedulersParams:
-      properties:
-        after_id:
-          description: '[exec_time,id]'
-          items:
-            type: integer
-          type: array
-        block_range:
-          type: string
-        call:
-          type: string
-        end_date:
-          type: string
-        module:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        start_date:
-          type: string
-        status:
-          enum:
-          - Scheduled
-          - Cancel
-          - CallUnavailable
-          - Executed
-          - ExecutedFailed
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.ExtrinsicSubCallJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        exec_result:
-          $ref: '#/components/schemas/subscan_libs_substrate.MetadataModuleError'
-        exec_status:
-          type: string
-        module:
-          type: string
-        multisig:
-          $ref: '#/components/schemas/subscan_internal_model.MultisigJson'
-        name:
-          type: string
-        param: {}
-        sub_calls:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicSubCallJson'
-          type: array
-      type: object
-    subscan_internal_model.MultisigJson:
-      properties:
-        call_hash:
-          type: string
-        call_module:
-          type: string
-        call_module_function:
-          type: string
-        error:
-          $ref: '#/components/schemas/subscan_internal_model.ExtrinsicError'
-        extrinsic_index:
-          type: string
-        multi_id:
-          type: string
-        multisig_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        multisig_status:
-          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
-        processing:
-          type: integer
-        threshold:
-          type: integer
-      type: object
-    subscan_internal_model.SchedulerStatisticsJson:
-      properties:
-        call_unavailable_count:
-          type: integer
-        cancel_count:
-          type: integer
-        executed_count:
-          type: integer
-        executed_failed_count:
-          type: integer
-        scheduled_count:
           type: integer
       type: object

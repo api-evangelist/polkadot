@@ -52,17 +52,10 @@ paths:
               $ref: '#/components/schemas/internal_server_http.vestingReleaseParams'
         description: params
         required: true
+      operationId: postApiScanVestingRelease
+      x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.VestingRelease:
-      properties:
-        amount:
-          type: string
-        block_num:
-          type: integer
-        day:
-          type: string
-      type: object
     internal_server_http.vestingReleaseParams:
       properties:
         end:
@@ -86,5 +79,14 @@ components:
           type: integer
         message:
           example: Success
+          type: string
+      type: object
+    subscan_internal_model.VestingRelease:
+      properties:
+        amount:
+          type: string
+        block_num:
+          type: integer
+        day:
           type: string
       type: object

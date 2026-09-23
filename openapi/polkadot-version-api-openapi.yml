@@ -11,13 +11,13 @@ servers:
 - url: http://localhost:8080/v1
   description: Localhost
 tags:
-- name: version
+- name: Version
   description: API version
 paths:
   /v1/version:
     get:
       tags:
-      - version
+      - Version
       summary: API version
       description: Returns the current version of the Polkadot REST API.
       operationId: get_version

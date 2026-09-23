@@ -58,6 +58,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.searchTokenParams'
         description: params
         required: true
+      operationId: postApiScanSearchTokens
+      x-operation-id-source: derived
   /api/scan/token:
     get:
       description: Returns network token symbols and token metadata keyed by symbol.
@@ -92,6 +94,8 @@ paths:
       - token
       - asset
       - coin
+      operationId: getApiScanToken
+      x-operation-id-source: derived
   /api/scan/token/price:
     get:
       description: Returns the latest price list for available tokens.
@@ -122,6 +126,8 @@ paths:
       - coin
       - rate
       - valuation
+      operationId: getApiScanTokenPrice
+      x-operation-id-source: derived
   /api/scan/token/unique_id:
     get:
       description: Returns network token symbols, unique IDs, and token metadata keyed by unique_id.
@@ -168,6 +174,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.TokenUniqueIDParams'
         description: params
         required: true
+      operationId: getApiScanTokenUniqueId
+      x-operation-id-source: derived
   /api/v2/scan/token/native:
     post:
       description: Returns the native token and provider information for the current network.
@@ -205,6 +213,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.tokenNativeParam'
         description: param
         required: true
+      operationId: postApiV2ScanTokenNative
+      x-operation-id-source: derived
   /api/v2/scan/token/providers:
     get:
       description: Returns active token providers and their capabilities.
@@ -235,6 +245,8 @@ paths:
       - scan
       - asset
       - coin
+      operationId: getApiV2ScanTokenProviders
+      x-operation-id-source: derived
   /api/v2/scan/token/search:
     post:
       description: Returns tokens grouped by provider for the requested unique IDs.
@@ -274,6 +286,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.tokensSearchParam'
         description: param
         required: true
+      operationId: postApiV2ScanTokenSearch
+      x-operation-id-source: derived
   /api/v2/scan/tokens:
     post:
       description: Returns paginated tokens from the selected provider with optional search, ordering, and extended fields.
@@ -311,70 +325,10 @@ paths:
               $ref: '#/components/schemas/internal_server_http.tokensV2Param'
         description: param
         required: true
+      operationId: postApiV2ScanTokens
+      x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.tokensSearchParam:
-      properties:
-        include_extends:
-          type: boolean
-        unique_ids:
-          items:
-            type: string
-          type: array
-      type: object
-    internal_server_http.providerActiveJson:
-      properties:
-        can_legacy:
-          type: boolean
-        id:
-          type: string
-        is_primary:
-          type: boolean
-        name:
-          type: string
-      type: object
-    internal_server_http.tokenJson:
-      properties:
-        category:
-          type: string
-        currency_id:
-          type: string
-        decimals:
-          type: integer
-        extends:
-          $ref: '#/components/schemas/internal_server_http.tokenExtendsJson'
-        is_native:
-          type: boolean
-        market_cap:
-          type: string
-        metadata: {}
-        name:
-          type: string
-        price:
-          type: string
-        symbol:
-          type: string
-        total_issuance:
-          type: string
-        transfer_count:
-          type: integer
-        unique_id:
-          type: string
-      type: object
-    subscan_internal_model.AssetTokenPriceJson:
-      properties:
-        price:
-          type: string
-        price_change:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    internal_server_http.tokenNativeParam:
-      properties:
-        include_extends:
-          type: boolean
-      type: object
     subscan_internal_service_scan_token.Token:
       properties:
         asset_type:
@@ -424,13 +378,37 @@ components:
         vesting_balance:
           type: string
       type: object
-    subscan_internal_service_scan_token.ExternalDataSource:
+    internal_server_http.TokenUniqueIDParams:
       properties:
-        authorization_source:
+        new_algorithm:
+          description: use new algorithm sum(free - max(0, frozen - reserve))
+          type: boolean
+      type: object
+    internal_server_http.tokenNativeParam:
+      properties:
+        include_extends:
+          type: boolean
+      type: object
+    subscan_internal_model.AssetTokenPriceJson:
+      properties:
+        price:
           type: string
-        circulating_supply:
+        price_change:
           type: string
-        source:
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object
     internal_server_http.tokensV2Param:
@@ -468,31 +446,28 @@ components:
           minLength: 1
           type: string
       type: object
-    internal_server_http.TokenUniqueIDParams:
+    internal_server_http.providerActiveJson:
       properties:
-        new_algorithm:
-          description: use new algorithm sum(free - max(0, frozen - reserve))
+        can_legacy:
           type: boolean
+        id:
+          type: string
+        is_primary:
+          type: boolean
+        name:
+          type: string
       type: object
-    internal_server_http.tokenExtendsJson:
-      properties:
-        holders:
-          type: integer
-      type: object
-    subscan_internal_service_scan_token.AssetType:
-      enum:
-      - native
-      - builtin
-      type: string
-      x-enum-varnames:
-      - TypeNative
-      - TypeBuiltin
     internal_server_http.searchTokenParams:
       properties:
         key:
           type: string
       required:
       - key
+      type: object
+    internal_server_http.tokenExtendsJson:
+      properties:
+        holders:
+          type: integer
       type: object
     subscan_internal_model.TokenSearchJson:
       properties:
@@ -509,16 +484,57 @@ components:
         unique_id:
           type: string
       type: object
-    internal_server_http.J:
+    subscan_internal_service_scan_token.ExternalDataSource:
       properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        authorization_source:
+          type: string
+        circulating_supply:
+          type: string
+        source:
           type: string
       type: object
+    internal_server_http.tokensSearchParam:
+      properties:
+        include_extends:
+          type: boolean
+        unique_ids:
+          items:
+            type: string
+          type: array
+      type: object
+    internal_server_http.tokenJson:
+      properties:
+        category:
+          type: string
+        currency_id:
+          type: string
+        decimals:
+          type: integer
+        extends:
+          $ref: '#/components/schemas/internal_server_http.tokenExtendsJson'
+        is_native:
+          type: boolean
+        market_cap:
+          type: string
+        metadata: {}
+        name:
+          type: string
+        price:
+          type: string
+        symbol:
+          type: string
+        total_issuance:
+          type: string
+        transfer_count:
+          type: integer
+        unique_id:
+          type: string
+      type: object
+    subscan_internal_service_scan_token.AssetType:
+      enum:
+      - native
+      - builtin
+      type: string
+      x-enum-varnames:
+      - TypeNative
+      - TypeBuiltin

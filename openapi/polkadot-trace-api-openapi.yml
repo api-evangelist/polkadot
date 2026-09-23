@@ -3,32 +3,11 @@ info:
   title: Substrate API Sidecar Trace API
   description: '> ⚠️ **Deprecation Notice** — `substrate-api-sidecar` is deprecated in favor of
 
-    > [`polkadot-rest-api`](https://github.com/paritytech/polkadot-rest-api), a ground-up Rust rewrite
+    > `polkadot-rest-api`, a ground-up Rust rewrite
 
-    > built on [`subxt`](https://github.com/paritytech/subxt) with 1:1 API compatibility (endpoints
+    > built on `subxt` with 1:1 API compatibility (endpoints
 
-    > served under `/v1/`, e.g. `/v1/blocks/head`), stable memory under sustained load, significantly
-
-    > lower latency and higher throughput, and native SCALE decoding via `parity-scale-codec`.
-
-    >
-
-    > **Migrate today:** Docker `paritytech/polkadot-rest-api:v0.1.0` ·
-
-    > [crate](https://crates.io/crates/polkadot-rest-api) ·
-
-    > [migration guide](https://github.com/paritytech/polkadot-rest-api/blob/main/docs/guides/MIGRATION.md) ·
-
-    > [docs](https://paritytech.github.io/polkadot-rest-api/) ·
-
-    > [issues](https://github.com/paritytech/polkadot-rest-api/issues)
-
-
-    Substrate API Sidecar is a REST service that makes it easy to interact with blockchain nodes
-
-    built using Substrate''s FRAME framework.
-
-    '
+    > served under `/v1/`, e.g.'
   contact:
     url: https://github.com/paritytech/substrate-api-sidecar
   license:
@@ -47,24 +26,18 @@ servers:
 - url: http://localhost:8080
   description: Localhost
 tags:
-- name: trace
+- name: Trace
 paths:
   /experimental/blocks/head/traces:
     get:
       tags:
-      - trace
-      summary: '[Experimental - subject to breaking change.] Get traces for the most
-
-        recently finalized block.
-
-        '
+      - Trace
+      summary: '[Experimental - subject to breaking change.] Get traces for the most recently…'
       description: 'Returns traces (spans and events) of the most recently finalized block from
 
-        RPC `state_straceBlock`. Consult the [RPC docs](https://github.com/paritytech/substrate/blob/aba876001651506f85c14baf26e006b36092e1a0/client/rpc-api/src/state/mod.rs#L140)
+        RPC `state_straceBlock`. Consult the RPC docs
 
-        for conceptual info.
-
-        '
+        for conceptual info.'
       responses:
         '200':
           description: successful operation
@@ -72,18 +45,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlocksTrace'
+      operationId: getExperimentalBlocksHeadTraces
+      x-operation-id-source: derived
   /experimental/blocks/{blockId}/traces:
     get:
       tags:
-      - trace
-      summary: '[Experimental - subject to breaking change.] Get traces for the given `blockId`.
-
-        '
+      - Trace
+      summary: '[Experimental - subject to breaking change.] Get traces for the given `blockId`'
       description: 'Returns traces (spans and events) of the specified block from
 
-        RPC `state_straceBlock`. Consult the [RPC docs](https://github.com/paritytech/substrate/blob/aba876001651506f85c14baf26e006b36092e1a0/client/rpc-api/src/state/mod.rs#L140) for conceptual info.
-
-        '
+        RPC `state_straceBlock`. Consult the RPC docs for conceptual info.'
       parameters:
       - name: blockId
         in: path
@@ -99,15 +70,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlocksTrace'
+      operationId: getExperimentalBlocksByBlockIdTraces
+      x-operation-id-source: derived
   /experimental/blocks/head/traces/operations:
     get:
       tags:
-      - trace
-      summary: '[Experimental - subject to breaking change.] Get the operations from the
-
-        most recently finalized block.
-
-        '
+      - Trace
+      summary: '[Experimental - subject to breaking change.] Get the operations from the most…'
       description: 'Returns the operations from the most recently finalized block. Operations
 
         represent one side of a balance change. For example if Alice transfers
@@ -156,9 +125,7 @@ paths:
 
         To learn more about operation and action group creation please consult
 
-        [this diagram](https://docs.google.com/drawings/d/1vZoJo9jaXlz0LmrdTOgHck9_1LsfuQPRmTr-5g1tOis/edit?usp=sharing)
-
-        '
+        this diagram'
       parameters:
       - name: actions
         in: query
@@ -174,15 +141,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlocksTraceOperations'
+      operationId: getExperimentalBlocksHeadTracesOperations
+      x-operation-id-source: derived
   /experimental/blocks/{blockId}/traces/operations:
     get:
       tags:
-      - trace
-      summary: '[Experimental - subject to breaking change.] Get the operations from the
-
-        specified block.
-
-        '
+      - Trace
+      summary: '[Experimental - subject to breaking change.] Get the operations from the…'
       description: 'Returns the operations from the most recently finalized block. Operations
 
         represent one side of a balance change. For example if Alice transfers
@@ -231,9 +196,7 @@ paths:
 
         To learn more about operation and action group creation please consult
 
-        [this diagram](https://docs.google.com/drawings/d/1vZoJo9jaXlz0LmrdTOgHck9_1LsfuQPRmTr-5g1tOis/edit?usp=sharing)
-
-        '
+        this diagram'
       parameters:
       - name: blockId
         in: path
@@ -256,16 +219,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlocksTraceOperations'
+      operationId: getExperimentalBlocksByBlockIdTracesOperations
+      x-operation-id-source: derived
 components:
   schemas:
-    OperationAmount:
-      type: object
-      properties:
-        values:
-          type: string
-          format: unsignedInteger
-        currency:
-          $ref: '#/components/schemas/OperationAmountCurrency'
     BlocksTrace:
       type: object
       properties:
@@ -289,12 +246,6 @@ components:
         tracingTargets:
           type: string
           description: Targets used to filter spans and events.
-    OperationAmountCurrency:
-      type: object
-      properties:
-        symbol:
-          type: string
-          example: KSM
     SpanId:
       type: object
       properties:
@@ -305,6 +256,47 @@ components:
         id:
           type: string
           format: unsignedInteger
+    OperationPhase:
+      type: object
+      properties:
+        variant:
+          type: string
+          enum:
+          - onInitialize
+          - initialChecks
+          - applyExtrinsic
+          - onFinalize
+          - finalChecks
+          description: Phase of block execution pipeline.
+        extrinsicIndex:
+          type: string
+          format: unsignedInteger
+          description: 'If phase variant is `applyExtrinsic` this will be the index of
+
+            the extrinsic. Otherwise this field will not be present.
+
+            '
+    TraceEventDataStringValues:
+      type: object
+      properties:
+        key:
+          type: string
+          format: hex
+          description: The complete storage key for the entry.
+        method:
+          type: string
+          description: Normally one of Put or Get.
+        result:
+          type: string
+          format: hex
+          description: Hex scale encoded storage value.
+      description: Note these exact values will only be present for storage events.
+    OperationAmountCurrency:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: KSM
     Operation:
       type: object
       properties:
@@ -346,59 +338,6 @@ components:
                 '
         amount:
           $ref: '#/components/schemas/OperationAmount'
-    OperationPhase:
-      type: object
-      properties:
-        variant:
-          type: string
-          enum:
-          - onInitialize
-          - initialChecks
-          - applyExtrinsic
-          - onFinalize
-          - finalChecks
-          description: Phase of block execution pipeline.
-        extrinsicIndex:
-          type: string
-          format: unsignedInteger
-          description: 'If phase variant is `applyExtrinsic` this will be the index of
-
-            the extrinsic. Otherwise this field will not be present.
-
-            '
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    TraceEvent:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            stringValues:
-              $ref: '#/components/schemas/TraceEventDataStringValues'
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
-    BlocksTraceOperations:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
     TraceSpan:
       type: object
       properties:
@@ -414,18 +353,44 @@ components:
           type: string
         wasm:
           type: boolean
-    TraceEventDataStringValues:
+    BlocksTraceOperations:
       type: object
       properties:
-        key:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+    OperationAmount:
+      type: object
+      properties:
+        values:
           type: string
+          format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
           format: hex
-          description: The complete storage key for the entry.
-        method:
+        height:
           type: string
-          description: Normally one of Put or Get.
-        result:
-          type: string
-          format: hex
-          description: Hex scale encoded storage value.
-      description: Note these exact values will only be present for storage events.
+          description: The block's height.
+          format: unsignedInteger

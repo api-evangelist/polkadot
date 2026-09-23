@@ -8,13 +8,13 @@ servers:
   description: Localhost
 - url: https://https://www.subscan.io/
 tags:
-- name: health
+- name: Health
   description: Health check
 paths:
   /v1/health:
     get:
       tags:
-      - health
+      - Health
       summary: Health check
       description: Returns the health status of the API server.
       operationId: get_health
@@ -40,12 +40,14 @@ paths:
                 type: string
       summary: Liveness health check
       tags:
-      - health
+      - Health
       x-synonyms:
       - liveness
       - health
       - check
       - healthz
+      operationId: getHealthz
+      x-operation-id-source: derived
     servers:
     - url: https://https://www.subscan.io/
   /readiness:
@@ -60,11 +62,13 @@ paths:
                 type: string
       summary: Readiness health check
       tags:
-      - health
+      - Health
       x-synonyms:
       - readiness
       - health
       - check
+      operationId: getReadiness
+      x-operation-id-source: derived
     servers:
     - url: https://https://www.subscan.io/
 components:

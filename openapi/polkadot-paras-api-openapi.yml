@@ -60,9 +60,7 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] List all registered paras (parathreads & parachains).
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] List all…'
       description: Returns all registered parachains and parathreads with lifecycle info.
       parameters:
       - name: at
@@ -80,6 +78,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Paras'
+      operationId: getParas
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -95,12 +95,8 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get general information about the current lease period.
-
-        '
-      description: 'Returns an overview of the current lease period, including lease holders.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get general…'
+      description: Returns an overview of the current lease period, including lease holders.
       parameters:
       - name: at
         in: query
@@ -130,6 +126,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasLeasesCurrent'
+      operationId: getParasLeasesCurrent
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -145,9 +143,7 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the status of the current auction.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the status of…'
       description: 'Returns an overview of the current auction. There is only one auction
 
         at a time. If there is no auction most fields will be `null`. If the current
@@ -158,9 +154,7 @@ paths:
 
         for that auction as there technically are no winners during the `vrfDelay` and thus
 
-        the field is `null`.
-
-        '
+        the field is `null`.'
       parameters:
       - name: at
         in: query
@@ -177,6 +171,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasAuctionsCurrent'
+      operationId: getParasAuctionsCurrent
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -192,12 +188,8 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] List all stored crowdloans.
-
-        '
-      description: 'Returns a list of all the crowdloans and their associated paraIds.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] List all stored…'
+      description: Returns a list of all the crowdloans and their associated paraIds.
       parameters:
       - name: at
         in: query
@@ -214,6 +206,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasCrowdloans'
+      operationId: getParasCrowdloans
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -229,14 +223,10 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get crowdloan information for a `paraId`.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get crowdloan…'
       description: 'Returns crowdloan''s `fundInfo` and the set of `leasePeriods` the crowdloan`
 
-        covers.
-
-        '
+        covers.'
       parameters:
       - name: paraId
         in: path
@@ -259,6 +249,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasCrowdloanInfo'
+      operationId: getParasByParaIdCrowdloanInfo
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -274,14 +266,10 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get current and future leases as well as the lifecycle stage for a given `paraId`.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get current and…'
       description: 'Returns a list of leases that belong to the `paraId` as well as the
 
-        `paraId`''s current lifecycle stage.
-
-        '
+        `paraId`''s current lifecycle stage.'
       parameters:
       - name: paraId
         in: path
@@ -304,6 +292,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasLeaseInfo'
+      operationId: getParasByParaIdLeaseInfo
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -319,14 +309,8 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the heads of the included (backed and considered available) parachain candidates at the
-
-        specified block height or at the most recent finalized head otherwise.
-
-        '
-      description: 'Returns an object with all the parachain id''s as keys, and their headers as values.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the heads of…'
+      description: Returns an object with all the parachain id's as keys, and their headers as values.
       parameters:
       - name: at
         in: query
@@ -343,6 +327,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasHeaders'
+      operationId: getParasHeadIncludedCandidates
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -358,12 +344,8 @@ paths:
     get:
       tags:
       - paras
-      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the heads of the backed parachain candidates at the specified block height or at the most recent finalized head otherwise.
-
-        '
-      description: 'Returns an object with all the parachain id''s as keys, and their headers as values.
-
-        '
+      summary: '[DEPRECATION NOTE: PHASED OUT ENDPOINT IN FAVOR OF CORETIME] Get the heads of…'
+      description: Returns an object with all the parachain id's as keys, and their headers as values.
       parameters:
       - name: at
         in: query
@@ -380,6 +362,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParasHeaders'
+      operationId: getParasHeadBackedCandidates
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -395,7 +379,7 @@ paths:
     get:
       tags:
       - paras
-      summary: Get relay chain inclusion information for a specific parachain block.
+      summary: Get relay chain inclusion information for a specific parachain block
       description: 'Returns the relay chain block number where a parachain block was included,
 
         along with the relay parent number used during production. This endpoint helps
@@ -403,9 +387,7 @@ paths:
         track the lifecycle of parachain blocks from production to inclusion.
 
 
-        **Note**: This endpoint requires a multi-chain connection (both parachain and relay chain APIs).
-
-        '
+        **Note**: This endpoint requires a multi-chain connection (both parachain and relay chain APIs).'
       parameters:
       - name: number
         in: path
@@ -441,6 +423,8 @@ paths:
                   error:
                     type: string
                     example: Depth parameter must be divisible by 5 for optimal performance.
+      operationId: getParasByNumberInclusion
+      x-operation-id-source: derived
     servers:
     - url: https://polkadot-public-sidecar.parity-chains.parity.io/
       description: Polkadot Parity public sidecar
@@ -454,6 +438,25 @@ paths:
       description: Localhost
 components:
   schemas:
+    ParasLeasesCurrent:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        leasePeriodIndex:
+          type: string
+          format: unsignedInteger
+          description: Current lease period index. This value may be null when the current block now, substracted by the leaseOffset is less then zero.
+        endOfLeasePeriod:
+          type: string
+          format: unsignedInteger
+          description: Last block (number) of the current lease period. This value may be null when `leasePeriodIndex` is null.
+        currentLeaseHolders:
+          type: array
+          items:
+            type: string
+            format: unsignedInteger
+          description: List of `paraId`s that currently hold a lease.
     OnboardingAs:
       type: string
       enum:
@@ -466,115 +469,6 @@ components:
         `parathread`.
 
         '
-    DigestItem:
-      type: object
-      properties:
-        type:
-          type: string
-        index:
-          type: string
-          format: unsignedInteger
-        value:
-          type: array
-          items:
-            type: string
-    ParachainInclusion:
-      type: object
-      properties:
-        parachainBlock:
-          type: integer
-          description: The parachain block number that was searched for.
-        parachainBlockHash:
-          type: string
-          format: hex
-          description: The hash of the parachain block.
-        parachainId:
-          type: integer
-          description: The parachain ID.
-        relayParentNumber:
-          type: integer
-          description: The relay chain block number used as parent during parachain block production.
-        inclusionNumber:
-          type:
-          - integer
-          - 'null'
-          description: The relay chain block number where the parachain block was included (null if not found).
-        found:
-          type: boolean
-          description: Whether the inclusion was found within the search depth.
-      required:
-      - parachainBlock
-      - parachainBlockHash
-      - parachainId
-      - relayParentNumber
-      - inclusionNumber
-      - found
-    WinningData:
-      type: object
-      properties:
-        bid:
-          type: object
-          properties:
-            accountId:
-              type: string
-            paraId:
-              type: string
-              format: unsignedInteger
-            amount:
-              type: string
-              format: unsignedInteger
-        leaseSet:
-          type: array
-          items:
-            type: string
-            format: unsignedInteger
-      description: 'A currently winning bid and the set of lease periods the bid is for. The
-
-        `amount` of the bid is per lease period. The `bid` property will be `null`
-
-        if no bid has been made for the corresponding `leaseSet`.
-
-        '
-    Paras:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        paras:
-          type: array
-          items:
-            $ref: '#/components/schemas/Para'
-    ParasCrowdloans:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        funds:
-          type: array
-          items:
-            type: object
-            properties:
-              paraId:
-                type: string
-                format: unsignedInteger
-              fundInfo:
-                $ref: '#/components/schemas/FundInfo'
-          description: 'List of paras that have crowdloans.
-
-            '
-    ParasCrowdloanInfo:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        fundInfo:
-          $ref: '#/components/schemas/FundInfo'
-        leasePeriods:
-          type: array
-          items:
-            type: string
-            format: unsignedInteger
-          description: Lease periods the crowdloan can bid on.
     ParasAuctionsCurrent:
       type: object
       properties:
@@ -662,65 +556,47 @@ components:
             the deposit held and the associated `accountId`.
 
             '
-    BlockIdentifiers:
+    Para:
       type: object
       properties:
-        hash:
+        paraId:
           type: string
-          description: The block's hash.
+          format: unsignedInteger
+        paraLifecycle:
+          $ref: '#/components/schemas/ParaLifecycle'
+        onboardingAs:
+          $ref: '#/components/schemas/OnboardingAs'
+    ParachainInclusion:
+      type: object
+      properties:
+        parachainBlock:
+          type: integer
+          description: The parachain block number that was searched for.
+        parachainBlockHash:
+          type: string
           format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    ParaLifecycle:
-      type: string
-      enum:
-      - onboarding
-      - parathread
-      - parachain
-      - upgradingParathread
-      - downgradingParachain
-      - offboardingParathread
-      - offboardingParachain
-      description: 'The possible states of a para, to take into account delayed lifecycle
-
-        changes.
-
-        '
-    FundInfo:
-      type: object
-      properties:
-        depositor:
-          type: string
-        verifier:
-          type: string
-        deposit:
-          type: string
-          format: unsignedInteger
-        raised:
-          type: string
-          format: unsignedInteger
-        end:
-          type: string
-          format: unsignedInteger
-        cap:
-          type: string
-          format: unsignedInteger
-        lastConstribution:
-          type: string
-          enum:
-          - preEnding
-          - ending
-        firstPeriod:
-          type: string
-          format: unsignedInteger
-        lastPeriod:
-          type: string
-          format: unsignedInteger
-        trieIndex:
-          type: string
-          format: unsignedInteger
+          description: The hash of the parachain block.
+        parachainId:
+          type: integer
+          description: The parachain ID.
+        relayParentNumber:
+          type: integer
+          description: The relay chain block number used as parent during parachain block production.
+        inclusionNumber:
+          type:
+          - integer
+          - 'null'
+          description: The relay chain block number where the parachain block was included (null if not found).
+        found:
+          type: boolean
+          description: Whether the inclusion was found within the search depth.
+      required:
+      - parachainBlock
+      - parachainBlockHash
+      - parachainId
+      - relayParentNumber
+      - inclusionNumber
+      - found
     ParasHeaders:
       type: object
       properties:
@@ -758,35 +634,143 @@ components:
                   items:
                     $ref: '#/components/schemas/DigestItem'
                   description: Array of `DigestItem`s associated with the block.
-    ParasLeasesCurrent:
+    ParaLifecycle:
+      type: string
+      enum:
+      - onboarding
+      - parathread
+      - parachain
+      - upgradingParathread
+      - downgradingParachain
+      - offboardingParathread
+      - offboardingParachain
+      description: 'The possible states of a para, to take into account delayed lifecycle
+
+        changes.
+
+        '
+    Paras:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        leasePeriodIndex:
+        paras:
+          type: array
+          items:
+            $ref: '#/components/schemas/Para'
+    DigestItem:
+      type: object
+      properties:
+        type:
+          type: string
+        index:
           type: string
           format: unsignedInteger
-          description: Current lease period index. This value may be null when the current block now, substracted by the leaseOffset is less then zero.
-        endOfLeasePeriod:
+        value:
+          type: array
+          items:
+            type: string
+    FundInfo:
+      type: object
+      properties:
+        depositor:
+          type: string
+        verifier:
+          type: string
+        deposit:
           type: string
           format: unsignedInteger
-          description: Last block (number) of the current lease period. This value may be null when `leasePeriodIndex` is null.
-        currentLeaseHolders:
+        raised:
+          type: string
+          format: unsignedInteger
+        end:
+          type: string
+          format: unsignedInteger
+        cap:
+          type: string
+          format: unsignedInteger
+        lastConstribution:
+          type: string
+          enum:
+          - preEnding
+          - ending
+        firstPeriod:
+          type: string
+          format: unsignedInteger
+        lastPeriod:
+          type: string
+          format: unsignedInteger
+        trieIndex:
+          type: string
+          format: unsignedInteger
+    ParasCrowdloans:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        funds:
+          type: array
+          items:
+            type: object
+            properties:
+              paraId:
+                type: string
+                format: unsignedInteger
+              fundInfo:
+                $ref: '#/components/schemas/FundInfo'
+          description: 'List of paras that have crowdloans.
+
+            '
+    WinningData:
+      type: object
+      properties:
+        bid:
+          type: object
+          properties:
+            accountId:
+              type: string
+            paraId:
+              type: string
+              format: unsignedInteger
+            amount:
+              type: string
+              format: unsignedInteger
+        leaseSet:
           type: array
           items:
             type: string
             format: unsignedInteger
-          description: List of `paraId`s that currently hold a lease.
-    Para:
+      description: 'A currently winning bid and the set of lease periods the bid is for. The
+
+        `amount` of the bid is per lease period. The `bid` property will be `null`
+
+        if no bid has been made for the corresponding `leaseSet`.
+
+        '
+    ParasCrowdloanInfo:
       type: object
       properties:
-        paraId:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        fundInfo:
+          $ref: '#/components/schemas/FundInfo'
+        leasePeriods:
+          type: array
+          items:
+            type: string
+            format: unsignedInteger
+          description: Lease periods the crowdloan can bid on.
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
           type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
           format: unsignedInteger
-        paraLifecycle:
-          $ref: '#/components/schemas/ParaLifecycle'
-        onboardingAs:
-          $ref: '#/components/schemas/OnboardingAs'
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - substrate-api-sidecar-openapi.yaml

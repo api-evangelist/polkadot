@@ -48,6 +48,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_assets_http.assetBalancesParams'
         description: param
         required: true
+      operationId: postApiScanAssetsAccountBalances
+      x-operation-id-source: derived
   /api/scan/assets/activities:
     post:
       description: 'Get asset activities(include asset Created/Issued/Burned...) by asset id
@@ -76,6 +78,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_assets_http.assetActivitiesParams'
         description: param
         required: true
+      operationId: postApiScanAssetsActivities
+      x-operation-id-source: derived
   /api/scan/assets/asset:
     post:
       description: 'Get asset info by asset id
@@ -103,6 +107,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_assets_http.assetParam'
         description: param
         required: true
+      operationId: postApiScanAssetsAsset
+      x-operation-id-source: derived
   /api/scan/assets/asset/holders:
     post:
       description: 'Get asset holders by asset id
@@ -133,6 +139,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_assets_http.assetHolderParams'
         description: param
         required: true
+      operationId: postApiScanAssetsAssetHolders
+      x-operation-id-source: derived
   /api/scan/assets/assets:
     post:
       description: 'Assets token list
@@ -172,101 +180,27 @@ paths:
               $ref: '#/components/schemas/internal_plugin_assets_http.assetsParam'
         description: param
         required: true
+      operationId: postApiScanAssetsAssets
+      x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.SampleIdentity:
+    subscan_internal_model.MerkleTag:
       properties:
-        display:
+        address_type:
           type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
       type: object
-    internal_plugin_assets_http.assetsParam:
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
-        asset_id:
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        order_field:
-          enum:
-          - asset_id
-          - symbol
-          - holders
-          type: string
-        page:
-          minimum: 0
+        index:
           type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        search:
-          description: assets symbol or name
-          maxLength: 256
-          minLength: 1
+        judgement:
           type: string
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_plugin_assets_db.Metadata:
-      properties:
-        decimals:
-          type: integer
-        deposit:
-          type: string
-        name:
-          type: string
-        symbol:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetHolderParams:
-      properties:
-        asset_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    internal_plugin_assets_http.assetParam:
-      properties:
-        asset_id:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetBalancesParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -296,15 +230,32 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.MerkleTag:
+    internal_plugin_assets_http.assetsParam:
       properties:
-        address_type:
+        asset_id:
           type: string
-        tag_name:
+        order:
+          enum:
+          - asc
+          - desc
           type: string
-        tag_subtype:
+        order_field:
+          enum:
+          - asset_id
+          - symbol
+          - holders
           type: string
-        tag_type:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        search:
+          description: assets symbol or name
+          maxLength: 256
+          minLength: 1
           type: string
       type: object
     subscan_internal_plugin_assets_db.StateAssetSampleJson:
@@ -342,10 +293,69 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_model.RegistrationJudgementJson:
+    internal_plugin_assets_http.assetParam:
       properties:
-        index:
+        asset_id:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_plugin_assets_db.Metadata:
+      properties:
+        decimals:
           type: integer
-        judgement:
+        deposit:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetHolderParams:
+      properties:
+        asset_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_assets_http.assetBalancesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object

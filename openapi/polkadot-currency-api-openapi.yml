@@ -44,6 +44,8 @@ paths:
       - currencies
       - currency
       - open
+      operationId: postApiOpenCurrencies
+      x-operation-id-source: derived
   /api/open/price:
     post:
       description: Returns the native-token price quote for the requested timestamp. Use this endpoint for historical token price lookup in supported quote currencies.
@@ -75,6 +77,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.currencyPriceParams'
         description: params
         required: true
+      operationId: postApiOpenPrice
+      x-operation-id-source: derived
   /api/open/price_converter:
     post:
       description: Converts a token amount from one supported currency into another using the price snapshot at the requested time. Returns both the converted output value and the quote data used for the calculation.
@@ -107,36 +111,15 @@ paths:
               $ref: '#/components/schemas/internal_server_http.currencyConverterParams'
         description: params
         required: true
+      operationId: postApiOpenPriceConverter
+      x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_service_scan.CurrencyPrice:
-      properties:
-        price:
-          type: string
-        records:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.PriceRecord'
-          type: array
-        time:
-          type: integer
-      type: object
     subscan_internal_service_scan.PriceRecord:
       properties:
         price:
           type: string
         time:
-          type: integer
-      type: object
-    internal_server_http.currencyPriceParams:
-      properties:
-        base:
-          type: string
-        quote:
-          enum:
-          - USD
-          type: string
-        time:
-          minimum: 1
           type: integer
       type: object
     internal_server_http.currencyConverterParams:
@@ -154,13 +137,6 @@ components:
       - quote
       - value
       type: object
-    internal_server_http.CurrencyConverter:
-      properties:
-        output:
-          type: string
-        price:
-          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
-      type: object
     internal_server_http.J:
       properties:
         code:
@@ -173,4 +149,34 @@ components:
         message:
           example: Success
           type: string
+      type: object
+    internal_server_http.currencyPriceParams:
+      properties:
+        base:
+          type: string
+        quote:
+          enum:
+          - USD
+          type: string
+        time:
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.CurrencyConverter:
+      properties:
+        output:
+          type: string
+        price:
+          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
+      type: object
+    subscan_internal_service_scan.CurrencyPrice:
+      properties:
+        price:
+          type: string
+        records:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.PriceRecord'
+          type: array
+        time:
+          type: integer
       type: object

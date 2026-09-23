@@ -61,6 +61,8 @@ paths:
               $ref: '#/components/schemas/internal_plugin_spaceTime_http.holderParams'
         description: body
         required: true
+      operationId: postApiScanSxtHolders
+      x-operation-id-source: derived
   /api/scan/sxt/transfers:
     post:
       description: This API is only available for sxt network.
@@ -104,25 +106,19 @@ paths:
               $ref: '#/components/schemas/internal_plugin_spaceTime_http.transferParams'
         description: body
         required: true
+      operationId: postApiScanSxtTransfers
+      x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_spaceTime_http.transferParams:
+    internal_plugin_spaceTime_http.holderParams:
       properties:
-        address:
-          type: string
-        after_id:
-          type: integer
         page:
           minimum: 0
           type: integer
-        receiver:
-          type: string
         row:
           maximum: 100
           minimum: 1
           type: integer
-        sender:
-          type: string
       type: object
     subscan_internal_plugin_spaceTime_db.TransferJson:
       properties:
@@ -162,6 +158,19 @@ components:
         name:
           type: string
       type: object
+    subscan_internal_plugin_spaceTime_db.Holder:
+      properties:
+        address:
+          type: string
+        balance:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
+      type: object
     subscan_internal_plugin_share.J:
       properties:
         code:
@@ -175,26 +184,21 @@ components:
           example: Success
           type: string
       type: object
-    internal_plugin_spaceTime_http.holderParams:
+    internal_plugin_spaceTime_http.transferParams:
       properties:
+        address:
+          type: string
+        after_id:
+          type: integer
         page:
           minimum: 0
           type: integer
+        receiver:
+          type: string
         row:
           maximum: 100
           minimum: 1
           type: integer
-      type: object
-    subscan_internal_plugin_spaceTime_db.Holder:
-      properties:
-        address:
-          type: string
-        balance:
-          type: string
-        is_contract:
-          type: boolean
-        is_verified:
-          type: boolean
-        name:
+        sender:
           type: string
       type: object

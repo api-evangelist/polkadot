@@ -11,13 +11,13 @@ servers:
 - url: http://localhost:8080/v1
   description: Localhost
 tags:
-- name: capabilities
+- name: Capabilities
   description: API capabilities and chain pallets
 paths:
   /v1/capabilities:
     get:
       tags:
-      - capabilities
+      - Capabilities
       summary: API capabilities
       description: Returns the chain name and list of available pallets in the runtime metadata.
       operationId: get_capabilities

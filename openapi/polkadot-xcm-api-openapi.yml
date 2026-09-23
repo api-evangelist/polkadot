@@ -18,7 +18,7 @@ tags:
 paths:
   /api/scan/xcm/bridge_stat:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns bridge-type XCM statistics grouped by time format.'
+      description: '**PRO API**: Requires a Pro plan. Returns bridge-type XCM statistics grouped by time format.'
       responses:
         '200':
           description: OK
@@ -55,9 +55,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.BridgeStatParams'
         description: params
         required: true
+      operationId: postApiScanXcmBridgeStat
+      x-operation-id-source: derived
   /api/scan/xcm/channel:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns one XCM/HRMP channel by sender and recipient parachain IDs.'
+      description: '**PRO API**: Requires a Pro plan. Returns one XCM/HRMP channel by sender and recipient parachain IDs.'
       responses:
         '200':
           description: OK
@@ -88,9 +90,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmChannelInfoParams'
         description: params
         required: true
+      operationId: postApiScanXcmChannel
+      x-operation-id-source: derived
   /api/scan/xcm/channels:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM/HRMP channel list filtered by sender, recipient, status, or para_id.'
+      description: '**PRO API**: Requires a Pro plan. Returns XCM/HRMP channel list filtered by sender, recipient, status, or para_id.'
       responses:
         '200':
           description: OK
@@ -126,9 +130,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmChannelParams'
         description: params
         required: true
+      operationId: postApiScanXcmChannels
+      x-operation-id-source: derived
   /api/scan/xcm/check_hash:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns the XCM message unique ID from origin or destination event/hash inputs.'
+      description: '**PRO API**: Requires a Pro plan. Returns the XCM message unique ID from origin or destination event/hash inputs.'
       responses:
         '200':
           description: OK
@@ -163,9 +169,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmHashParams'
         description: params
         required: true
+      operationId: postApiScanXcmCheckHash
+      x-operation-id-source: derived
   /api/scan/xcm/info:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns detailed information for one XCM message by unique_id or origin identifiers.'
+      description: '**PRO API**: Requires a Pro plan. Returns detailed information for one XCM message by unique_id or origin identifiers.'
       responses:
         '200':
           description: OK
@@ -196,9 +204,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmMessageDetailParams'
         description: params
         required: true
+      operationId: postApiScanXcmInfo
+      x-operation-id-source: derived
   /api/scan/xcm/list:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns paginated XCM messages with protocol, status, asset, and block-range filters.'
+      description: '**PRO API**: Requires a Pro plan. Returns paginated XCM messages with protocol, status, asset, and block-range filters.'
       responses:
         '200':
           description: OK
@@ -236,9 +246,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmMessageParams'
         description: params
         required: true
+      operationId: postApiScanXcmList
+      x-operation-id-source: derived
   /api/scan/xcm/meta:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM metadata and parachain statistics, optionally filtered by para_id.'
+      description: '**PRO API**: Requires a Pro plan. Returns XCM metadata and parachain statistics, optionally filtered by para_id.'
       responses:
         '200':
           description: OK
@@ -271,9 +283,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmMetaParams'
         description: params
         required: true
+      operationId: postApiScanXcmMeta
+      x-operation-id-source: derived
   /api/scan/xcm/parachain/stat:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM parachain send/receive statistics with optional direction and date filters.'
+      description: '**PRO API**: Requires a Pro plan. Returns XCM parachain send/receive statistics with optional direction and date filters.'
       responses:
         '200':
           description: OK
@@ -310,9 +324,11 @@ paths:
               $ref: '#/components/schemas/internal_server_http.xcmSenderStatParams'
         description: params
         required: true
+      operationId: postApiScanXcmParachainStat
+      x-operation-id-source: derived
   /api/scan/xcm/stat:
     post:
-      description: '**PRO API**: Requires a [Pro plan](http://pro.subscan.io/). Returns XCM traffic statistics for a date range and optional parachain filter.'
+      description: '**PRO API**: Requires a Pro plan. Returns XCM traffic statistics for a date range and optional parachain filter.'
       responses:
         '200':
           description: OK
@@ -357,6 +373,8 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmStatParams'
         description: params
         required: true
+      operationId: postApiScanXcmStat
+      x-operation-id-source: derived
   /api/v2/scan/xcm/list:
     post:
       description: '**PRO API**: Requires a Pro plan. Returns paginated XCM messages with protocol, status, asset, and block-range filters.'
@@ -405,234 +423,10 @@ paths:
               $ref: '#/components/schemas/internal_server_http.XcmMessageV2Params'
         description: params
         required: true
+      operationId: postApiV2ScanXcmList
+      x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.XcmMessageEmbeddedJson:
-      properties:
-        block_num:
-          description: relay chain block num
-          type: integer
-        bridge_type:
-          description: bridge type, like e2s(ethereum to substrate), s2e(substrate to ethereum), s2s(substrate to substrate)
-          type: string
-        call_data:
-          description: xcm transact call data
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.BoxProposal'
-          type: array
-        child_dest:
-          type: string
-        child_message:
-          $ref: '#/components/schemas/subscan_internal_model.XcmMessageEmbeddedJson'
-        child_para_id:
-          type: integer
-        confirm_block_timestamp:
-          type: integer
-        cross_chain_status:
-          description: 'cross chain status, 0: not cross chain, 1: cross chain unconfirmed, 2: cross chain confirmed, 3: cross chain completed'
-          type: integer
-        dest_chain:
-          description: dest chain, like Polkadot.kusama,Ethereum
-          type: string
-        dest_event_index:
-          description: receive message event index
-          type: string
-        dest_extrinsic_index:
-          description: receive message extrinsic index
-          type: string
-        dest_para_id:
-          description: eq 0 if to relay chain
-          type: integer
-        dest_raw: {}
-        error_msg:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.XcmErrorMsg'
-          description: message dispatch error msg
-        extrinsic_index:
-          description: Send message extrinsic index
-          type: string
-        fee_asset:
-          $ref: '#/components/schemas/subscan_internal_model.ExecutionFee'
-        from_account_id:
-          description: sender address
-          type: string
-        from_chain:
-          description: source chain, like Polkadot.kusama,Ethereum
-          type: string
-        message_hash:
-          description: xcm message hash,
-          type: string
-        message_relay_chain:
-          description: message relay chain name
-          type: string
-        message_type:
-          description: transfer/message
-          type: string
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_model.CrossChainMetadata'
-        origin_block_timestamp:
-          type: integer
-        origin_event_index:
-          description: send message event index
-          type: string
-        origin_para_id:
-          description: origin parachain id
-          type: integer
-        protocol:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.CrossChainProtocol'
-          description: UMP/DMP/HRMP
-        relayed_block_timestamp:
-          type: integer
-        relayed_event_index:
-          description: relaychain include message event index,only for HRMP protocol
-          type: string
-        relayed_extrinsic_index:
-          description: relaychain include message extrinsic index,only for HRMP protocol
-          type: string
-        s2s_dest_para_id:
-          description: s2s dest parachain id
-          type: integer
-        status:
-          description: pending, success, failed
-          type: string
-        to_account_id:
-          description: receiver address
-          type: string
-        to_account_raw: {}
-        unique_id:
-          description: global xcm message unique id
-          type: string
-        used_fee:
-          description: used gas
-          type: string
-        xcm_version:
-          description: xcm version
-          type: integer
-      type: object
-    subscan_internal_model.CrossChainProtocol:
-      enum:
-      - UMP
-      - DMP
-      - HRMP
-      - SnowBridge
-      - SnowbridgeTanssi
-      type: string
-      x-enum-varnames:
-      - UMPProtocol
-      - DMPProtocol
-      - HRMPProtocol
-      - SnowBridge
-      - SnowbridgeTanssi
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_model.XcmMeta:
-      properties:
-        all_channel:
-          type: integer
-        connected_parachain_count:
-          type: integer
-        online_parachain:
-          type: integer
-        open_channel:
-          type: integer
-        parachain_count_with_requested:
-          type: integer
-        received_xcm_message_count:
-          type: integer
-        received_xcm_transfer_count:
-          type: integer
-        relayed_message_count:
-          type: integer
-        relayed_transfer_count:
-          type: integer
-        send_xcm_message_count:
-          type: integer
-        send_xcm_transfer_count:
-          type: integer
-        support_parachain:
-          type: integer
-      type: object
-    internal_server_http.XcmChannelParams:
-      properties:
-        filter_para_id:
-          description: filter by parachain id(sender or recipient)
-          minimum: 1
-          type: integer
-        recipient:
-          description: HRMP recipient parachain id
-          minimum: 1
-          type: integer
-        sender:
-          description: HRMP sender parachain id
-          minimum: 1
-          type: integer
-        status:
-          description: filter by status
-          enum:
-          - closed
-          - accepted
-          - canceled
-          - requested
-          type: string
-      type: object
-    subscan_internal_model.HrmpChannel:
-      properties:
-        active_at:
-          type: integer
-        message_count:
-          type: integer
-        proposed_max_capacity:
-          type: integer
-        proposed_max_message_size:
-          type: integer
-        recipient:
-          type: integer
-        sender:
-          type: integer
-        status:
-          type: string
-        transfer_count:
-          type: integer
-      type: object
-    subscan_internal_model.BoxProposal:
-      properties:
-        call_index:
-          type: string
-        call_module:
-          type: string
-        call_name:
-          type: string
-        params:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicParam'
-          type: array
-      type: object
-    subscan_internal_model.BridgeStatStatJson:
-      properties:
-        time_utc:
-          type: string
-        total:
-          type: integer
-      type: object
-    subscan_internal_model.XcmErrorMsg:
-      properties:
-        doc:
-          type: string
-        name:
-          type: string
-      type: object
     internal_server_http.XcmStatParams:
       properties:
         end:
@@ -649,175 +443,22 @@ components:
       - end
       - start
       type: object
-    subscan_internal_model.XcmMessageStatJson:
+    subscan_internal_model.CrossChainMetadata:
       properties:
-        message_total:
+        lane_id:
+          description: s2s message laneId
+          type: string
+        message_id:
+          description: ethBridge messageId
+          type: string
+        nonce:
+          description: s2s message nonce
           type: integer
-        time_utc:
-          type: string
-        total:
+        send_at:
+          description: ethBridge send time or received time
           type: integer
-      type: object
-    subscan_internal_model.MultiAssets:
-      properties:
-        amount:
-          type: string
-        asset_module:
-          type: string
-        asset_unique_id:
-          type: string
-        current_currency_amount:
-          type: string
-        decimals:
-          type: integer
-        enum_key:
-          type: string
-        history_currency_amount:
-          type: string
-        network:
-          type: string
-        raw: {}
-        symbol:
-          type: string
-        version:
-          type: string
-      type: object
-    internal_server_http.XcmHashParams:
-      properties:
-        dest_event_id:
-          description: receiver event id
-          type: string
-        dest_para_id:
-          description: receiver parachain id
-          type: integer
-        message_hash:
-          description: message hash
-          type: string
-        origin_event_id:
-          description: sender event id
-          type: string
-        origin_para_id:
-          description: sender parachain id
-          type: integer
-      type: object
-    internal_server_http.xcmSenderStatParams:
-      properties:
-        direction:
-          enum:
-          - in
-          - out
-          type: string
-        end:
-          description: 'end date, format: 2006-01-02'
-          type: string
-        filter_para_id:
-          description: filter by parachain id, optional，if filter_para_id =-1 ，return all parachain send stat
-          minimum: -1
-          type: integer
-        start:
-          description: 'start date, format: 2006-01-02'
-          type: string
-      type: object
-    subscan_internal_model.XcmMessageCountStatJson:
-      properties:
-        message_total:
-          type: integer
-        recipient:
-          type: integer
-        sender:
-          type: integer
-        transfer_total:
-          type: integer
-      type: object
-    subscan_internal_model.ExtrinsicParam:
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        type_name:
-          type: string
-        value: {}
-      type: object
-    internal_server_http.XcmMessageParams:
-      properties:
-        address:
-          description: filter by address
-          type: string
-        after_id:
-          description: Pagination, the last message id of the previous page
-          type: string
-        block_range:
-          description: 'filter by block range,eg: 1000-2000'
-          example: 20000-30000
-          type: string
-        bridge_type:
-          description: filter by bridge type
-          items:
-            type: string
-          type: array
-        dest_para_id:
-          description: filter by receiver parachain id
-          type: integer
-        extrinsic_index:
-          description: filter by send extrinsic index
-          type: string
-        filter_para_id:
-          description: filter by parachain id(sender or receiver)
-          minimum: 1
-          type: integer
-        filter_symbol:
-          description: filter by asset symbol
-          type: string
-        message_hash:
-          description: filter by message hash
-          type: string
-        message_type:
-          description: filter by message type
-          enum:
-          - transfer
-          - message
-          type: string
-        origin_para_id:
-          description: filter by sender origin parachain id
-          type: integer
-        page:
-          description: page number, start from 0
-          minimum: 0
-          type: integer
-        protocol:
-          description: filter by XCM protocol
-          enum:
-          - HRMP
-          - VMP
-          - UMP
-          - DMP
-          type: string
-        row:
-          description: page size
-          maximum: 100
-          minimum: 1
-          type: integer
-        status:
-          description: filter by status
-          enum:
-          - pending
-          - relayed
-          - success
-          - failed
-          type: string
-      type: object
-    subscan_internal_model.ParaXcmMessageTokenTotalJson:
-      properties:
-        count:
-          type: integer
-        decimals:
-          type: integer
-        symbol:
-          type: string
-        unique_id:
-          type: string
-        value:
+        tx_hash:
+          description: ethBridge transaction hash
           type: string
       type: object
     internal_server_http.XcmMetaParams:
@@ -826,34 +467,13 @@ components:
           description: optional, if not set or set 0, will return all parachain statistics
           type: integer
       type: object
-    subscan_internal_model.ParaXcmMessageTokenDailyCountJson:
+    subscan_internal_model.XcmMessageStatJson:
       properties:
-        count:
+        message_total:
           type: integer
-        time:
+        time_utc:
           type: string
-      type: object
-    internal_server_http.XcmMessageDetailParams:
-      properties:
-        origin_event_id:
-          description: sender event id, need with origin_para_id
-          type: string
-        origin_para_id:
-          description: sender parachain id, need with origin_event_id
-          type: integer
-        unique_id:
-          description: unique id of the message
-          type: string
-      type: object
-    internal_server_http.XcmChannelInfoParams:
-      properties:
-        recipient:
-          description: HRMP recipient parachain id
-          minimum: 1
-          type: integer
-        sender:
-          description: HRMP sender parachain id
-          minimum: 1
+        total:
           type: integer
       type: object
     subscan_internal_model.ParaXcmMessageJson:
@@ -963,35 +583,6 @@ components:
           description: xcm version
           type: integer
       type: object
-    subscan_internal_model.CrossChainMetadata:
-      properties:
-        lane_id:
-          description: s2s message laneId
-          type: string
-        message_id:
-          description: ethBridge messageId
-          type: string
-        nonce:
-          description: s2s message nonce
-          type: integer
-        send_at:
-          description: ethBridge send time or received time
-          type: integer
-        tx_hash:
-          description: ethBridge transaction hash
-          type: string
-      type: object
-    subscan_internal_model.ExecutionFee:
-      properties:
-        asset_unique_id:
-          type: string
-        decimals:
-          type: integer
-        estimate_fee:
-          type: string
-        symbol:
-          type: string
-      type: object
     internal_server_http.BridgeStatParams:
       properties:
         end:
@@ -1010,6 +601,45 @@ components:
       required:
       - end
       - start
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.HrmpChannel:
+      properties:
+        active_at:
+          type: integer
+        message_count:
+          type: integer
+        proposed_max_capacity:
+          type: integer
+        proposed_max_message_size:
+          type: integer
+        recipient:
+          type: integer
+        sender:
+          type: integer
+        status:
+          type: string
+        transfer_count:
+          type: integer
+      type: object
+    subscan_internal_model.XcmErrorMsg:
+      properties:
+        doc:
+          type: string
+        name:
+          type: string
       type: object
     internal_server_http.XcmMessageV2Params:
       properties:
@@ -1079,5 +709,395 @@ components:
           - relayed
           - success
           - failed
+          type: string
+      type: object
+    subscan_internal_model.CrossChainProtocol:
+      enum:
+      - UMP
+      - DMP
+      - HRMP
+      - SnowBridge
+      - SnowbridgeTanssi
+      type: string
+      x-enum-varnames:
+      - UMPProtocol
+      - DMPProtocol
+      - HRMPProtocol
+      - SnowBridge
+      - SnowbridgeTanssi
+    subscan_internal_model.ParaXcmMessageTokenTotalJson:
+      properties:
+        count:
+          type: integer
+        decimals:
+          type: integer
+        symbol:
+          type: string
+        unique_id:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.ParaXcmMessageTokenDailyCountJson:
+      properties:
+        count:
+          type: integer
+        time:
+          type: string
+      type: object
+    subscan_internal_model.BridgeStatStatJson:
+      properties:
+        time_utc:
+          type: string
+        total:
+          type: integer
+      type: object
+    subscan_internal_model.BoxProposal:
+      properties:
+        call_index:
+          type: string
+        call_module:
+          type: string
+        call_name:
+          type: string
+        params:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicParam'
+          type: array
+      type: object
+    subscan_internal_model.XcmMessageEmbeddedJson:
+      properties:
+        block_num:
+          description: relay chain block num
+          type: integer
+        bridge_type:
+          description: bridge type, like e2s(ethereum to substrate), s2e(substrate to ethereum), s2s(substrate to substrate)
+          type: string
+        call_data:
+          description: xcm transact call data
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.BoxProposal'
+          type: array
+        child_dest:
+          type: string
+        child_message:
+          $ref: '#/components/schemas/subscan_internal_model.XcmMessageEmbeddedJson'
+        child_para_id:
+          type: integer
+        confirm_block_timestamp:
+          type: integer
+        cross_chain_status:
+          description: 'cross chain status, 0: not cross chain, 1: cross chain unconfirmed, 2: cross chain confirmed, 3: cross chain completed'
+          type: integer
+        dest_chain:
+          description: dest chain, like Polkadot.kusama,Ethereum
+          type: string
+        dest_event_index:
+          description: receive message event index
+          type: string
+        dest_extrinsic_index:
+          description: receive message extrinsic index
+          type: string
+        dest_para_id:
+          description: eq 0 if to relay chain
+          type: integer
+        dest_raw: {}
+        error_msg:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.XcmErrorMsg'
+          description: message dispatch error msg
+        extrinsic_index:
+          description: Send message extrinsic index
+          type: string
+        fee_asset:
+          $ref: '#/components/schemas/subscan_internal_model.ExecutionFee'
+        from_account_id:
+          description: sender address
+          type: string
+        from_chain:
+          description: source chain, like Polkadot.kusama,Ethereum
+          type: string
+        message_hash:
+          description: xcm message hash,
+          type: string
+        message_relay_chain:
+          description: message relay chain name
+          type: string
+        message_type:
+          description: transfer/message
+          type: string
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_model.CrossChainMetadata'
+        origin_block_timestamp:
+          type: integer
+        origin_event_index:
+          description: send message event index
+          type: string
+        origin_para_id:
+          description: origin parachain id
+          type: integer
+        protocol:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.CrossChainProtocol'
+          description: UMP/DMP/HRMP
+        relayed_block_timestamp:
+          type: integer
+        relayed_event_index:
+          description: relaychain include message event index,only for HRMP protocol
+          type: string
+        relayed_extrinsic_index:
+          description: relaychain include message extrinsic index,only for HRMP protocol
+          type: string
+        s2s_dest_para_id:
+          description: s2s dest parachain id
+          type: integer
+        status:
+          description: pending, success, failed
+          type: string
+        to_account_id:
+          description: receiver address
+          type: string
+        to_account_raw: {}
+        unique_id:
+          description: global xcm message unique id
+          type: string
+        used_fee:
+          description: used gas
+          type: string
+        xcm_version:
+          description: xcm version
+          type: integer
+      type: object
+    subscan_internal_model.ExecutionFee:
+      properties:
+        asset_unique_id:
+          type: string
+        decimals:
+          type: integer
+        estimate_fee:
+          type: string
+        symbol:
+          type: string
+      type: object
+    internal_server_http.XcmChannelParams:
+      properties:
+        filter_para_id:
+          description: filter by parachain id(sender or recipient)
+          minimum: 1
+          type: integer
+        recipient:
+          description: HRMP recipient parachain id
+          minimum: 1
+          type: integer
+        sender:
+          description: HRMP sender parachain id
+          minimum: 1
+          type: integer
+        status:
+          description: filter by status
+          enum:
+          - closed
+          - accepted
+          - canceled
+          - requested
+          type: string
+      type: object
+    subscan_internal_model.MultiAssets:
+      properties:
+        amount:
+          type: string
+        asset_module:
+          type: string
+        asset_unique_id:
+          type: string
+        current_currency_amount:
+          type: string
+        decimals:
+          type: integer
+        enum_key:
+          type: string
+        history_currency_amount:
+          type: string
+        network:
+          type: string
+        raw: {}
+        symbol:
+          type: string
+        version:
+          type: string
+      type: object
+    internal_server_http.XcmHashParams:
+      properties:
+        dest_event_id:
+          description: receiver event id
+          type: string
+        dest_para_id:
+          description: receiver parachain id
+          type: integer
+        message_hash:
+          description: message hash
+          type: string
+        origin_event_id:
+          description: sender event id
+          type: string
+        origin_para_id:
+          description: sender parachain id
+          type: integer
+      type: object
+    subscan_internal_model.XcmMeta:
+      properties:
+        all_channel:
+          type: integer
+        connected_parachain_count:
+          type: integer
+        online_parachain:
+          type: integer
+        open_channel:
+          type: integer
+        parachain_count_with_requested:
+          type: integer
+        received_xcm_message_count:
+          type: integer
+        received_xcm_transfer_count:
+          type: integer
+        relayed_message_count:
+          type: integer
+        relayed_transfer_count:
+          type: integer
+        send_xcm_message_count:
+          type: integer
+        send_xcm_transfer_count:
+          type: integer
+        support_parachain:
+          type: integer
+      type: object
+    subscan_internal_model.ExtrinsicParam:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
+      type: object
+    internal_server_http.XcmChannelInfoParams:
+      properties:
+        recipient:
+          description: HRMP recipient parachain id
+          minimum: 1
+          type: integer
+        sender:
+          description: HRMP sender parachain id
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.XcmMessageCountStatJson:
+      properties:
+        message_total:
+          type: integer
+        recipient:
+          type: integer
+        sender:
+          type: integer
+        transfer_total:
+          type: integer
+      type: object
+    internal_server_http.xcmSenderStatParams:
+      properties:
+        direction:
+          enum:
+          - in
+          - out
+          type: string
+        end:
+          description: 'end date, format: 2006-01-02'
+          type: string
+        filter_para_id:
+          description: filter by parachain id, optional，if filter_para_id =-1 ，return all parachain send stat
+          minimum: -1
+          type: integer
+        start:
+          description: 'start date, format: 2006-01-02'
+          type: string
+      type: object
+    internal_server_http.XcmMessageParams:
+      properties:
+        address:
+          description: filter by address
+          type: string
+        after_id:
+          description: Pagination, the last message id of the previous page
+          type: string
+        block_range:
+          description: 'filter by block range,eg: 1000-2000'
+          example: 20000-30000
+          type: string
+        bridge_type:
+          description: filter by bridge type
+          items:
+            type: string
+          type: array
+        dest_para_id:
+          description: filter by receiver parachain id
+          type: integer
+        extrinsic_index:
+          description: filter by send extrinsic index
+          type: string
+        filter_para_id:
+          description: filter by parachain id(sender or receiver)
+          minimum: 1
+          type: integer
+        filter_symbol:
+          description: filter by asset symbol
+          type: string
+        message_hash:
+          description: filter by message hash
+          type: string
+        message_type:
+          description: filter by message type
+          enum:
+          - transfer
+          - message
+          type: string
+        origin_para_id:
+          description: filter by sender origin parachain id
+          type: integer
+        page:
+          description: page number, start from 0
+          minimum: 0
+          type: integer
+        protocol:
+          description: filter by XCM protocol
+          enum:
+          - HRMP
+          - VMP
+          - UMP
+          - DMP
+          type: string
+        row:
+          description: page size
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          description: filter by status
+          enum:
+          - pending
+          - relayed
+          - success
+          - failed
+          type: string
+      type: object
+    internal_server_http.XcmMessageDetailParams:
+      properties:
+        origin_event_id:
+          description: sender event id, need with origin_para_id
+          type: string
+        origin_para_id:
+          description: sender parachain id, need with origin_event_id
+          type: integer
+        unique_id:
+          description: unique id of the message
           type: string
       type: object

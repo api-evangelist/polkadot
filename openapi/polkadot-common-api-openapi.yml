@@ -37,6 +37,8 @@ paths:
       x-synonyms:
       - now
       - timestamp
+      operationId: getApiNow
+      x-operation-id-source: derived
 components:
   schemas:
     internal_server_http.J:
