@@ -483,6 +483,210 @@ paths:
       description: Localhost
 components:
   schemas:
+    types.ModuleErrorField:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
+    types.MetadataModules:
+      properties:
+        calls:
+          items:
+            $ref: '#/components/schemas/types.MetadataCalls'
+          type: array
+        calls_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        constants:
+          items:
+            $ref: '#/components/schemas/types.MetadataConstants'
+          type: array
+        errors:
+          items:
+            $ref: '#/components/schemas/types.MetadataModuleError'
+          type: array
+        errors_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        events:
+          items:
+            $ref: '#/components/schemas/types.MetadataEvents'
+          type: array
+        events_value:
+          $ref: '#/components/schemas/types.PalletLookUp'
+        index:
+          type: integer
+        name:
+          type: string
+        prefix:
+          type: string
+        storage:
+          items:
+            $ref: '#/components/schemas/types.MetadataStorage'
+          type: array
+      type: object
+    types.MapType:
+      properties:
+        hasher:
+          type: string
+        isLinked:
+          type: boolean
+        key:
+          type: string
+        key2:
+          type: string
+        key2Hasher:
+          type: string
+        value:
+          type: string
+      type: object
+    subscan_internal_model.RuntimeModuleJson:
+      properties:
+        modules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleItemJson'
+          type: array
+        spec_version:
+          type: integer
+      type: object
+    types.MetadataCalls:
+      properties:
+        args:
+          items:
+            $ref: '#/components/schemas/types.MetadataModuleCallArgument'
+          type: array
+        docs:
+          items:
+            type: string
+          type: array
+        lookup:
+          type: string
+        name:
+          type: string
+      type: object
+    internal_server_http.runtimeModuleParams:
+      properties:
+        all:
+          example: true
+          type: boolean
+        spec:
+          description: Runtime version
+          example: 9430
+          type: integer
+      type: object
+    types.MetadataConstants:
+      properties:
+        constants_value:
+          type: string
+        docs:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+        type:
+          type: string
+        type_value:
+          type: integer
+      type: object
+    internal_server_http.runtimeMetadataParams:
+      properties:
+        spec:
+          description: Runtime version
+          example: 9430
+          type: integer
+      type: object
+    types.StorageType:
+      properties:
+        PlainTypeValue:
+          type: integer
+        double_map_type:
+          $ref: '#/components/schemas/types.MapType'
+        map_type:
+          $ref: '#/components/schemas/types.MapType'
+        n_map_type:
+          $ref: '#/components/schemas/types.NMapType'
+        origin:
+          type: string
+        plain_type:
+          type: string
+      type: object
+    types.MetadataModuleError:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        fields:
+          items:
+            $ref: '#/components/schemas/types.ModuleErrorField'
+          type: array
+        index:
+          type: integer
+        name:
+          type: string
+      type: object
+    types.PalletLookUp:
+      properties:
+        type:
+          type: integer
+      type: object
+    subscan_internal_model.RuntimeModuleItemJson:
+      properties:
+        call:
+          items:
+            type: string
+          type: array
+        event:
+          items:
+            type: string
+          type: array
+        module:
+          type: string
+      type: object
+    types.NMapType:
+      properties:
+        hashers:
+          items:
+            type: string
+          type: array
+        key_vec:
+          items:
+            type: string
+          type: array
+        keys_id:
+          type: integer
+        value:
+          type: string
+        value_id:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    types.MetadataModuleCallArgument:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
     types.MetadataStorage:
       properties:
         docs:
@@ -523,186 +727,6 @@ components:
         name:
           type: string
       type: object
-    internal_server_http.runtimeModuleParams:
-      properties:
-        all:
-          example: true
-          type: boolean
-        spec:
-          description: Runtime version
-          example: 9430
-          type: integer
-      type: object
-    subscan_internal_model.RuntimeModuleItemJson:
-      properties:
-        call:
-          items:
-            type: string
-          type: array
-        event:
-          items:
-            type: string
-          type: array
-        module:
-          type: string
-      type: object
-    types.MetadataModules:
-      properties:
-        calls:
-          items:
-            $ref: '#/components/schemas/types.MetadataCalls'
-          type: array
-        calls_value:
-          $ref: '#/components/schemas/types.PalletLookUp'
-        constants:
-          items:
-            $ref: '#/components/schemas/types.MetadataConstants'
-          type: array
-        errors:
-          items:
-            $ref: '#/components/schemas/types.MetadataModuleError'
-          type: array
-        errors_value:
-          $ref: '#/components/schemas/types.PalletLookUp'
-        events:
-          items:
-            $ref: '#/components/schemas/types.MetadataEvents'
-          type: array
-        events_value:
-          $ref: '#/components/schemas/types.PalletLookUp'
-        index:
-          type: integer
-        name:
-          type: string
-        prefix:
-          type: string
-        storage:
-          items:
-            $ref: '#/components/schemas/types.MetadataStorage'
-          type: array
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    types.StorageType:
-      properties:
-        PlainTypeValue:
-          type: integer
-        double_map_type:
-          $ref: '#/components/schemas/types.MapType'
-        map_type:
-          $ref: '#/components/schemas/types.MapType'
-        n_map_type:
-          $ref: '#/components/schemas/types.NMapType'
-        origin:
-          type: string
-        plain_type:
-          type: string
-      type: object
-    types.PalletLookUp:
-      properties:
-        type:
-          type: integer
-      type: object
-    types.NMapType:
-      properties:
-        hashers:
-          items:
-            type: string
-          type: array
-        key_vec:
-          items:
-            type: string
-          type: array
-        keys_id:
-          type: integer
-        value:
-          type: string
-        value_id:
-          type: integer
-      type: object
-    types.MetadataCalls:
-      properties:
-        args:
-          items:
-            $ref: '#/components/schemas/types.MetadataModuleCallArgument'
-          type: array
-        docs:
-          items:
-            type: string
-          type: array
-        lookup:
-          type: string
-        name:
-          type: string
-      type: object
-    types.MetadataModuleError:
-      properties:
-        doc:
-          items:
-            type: string
-          type: array
-        fields:
-          items:
-            $ref: '#/components/schemas/types.ModuleErrorField'
-          type: array
-        index:
-          type: integer
-        name:
-          type: string
-      type: object
-    types.MapType:
-      properties:
-        hasher:
-          type: string
-        isLinked:
-          type: boolean
-        key:
-          type: string
-        key2:
-          type: string
-        key2Hasher:
-          type: string
-        value:
-          type: string
-      type: object
-    subscan_internal_model.RuntimeModuleJson:
-      properties:
-        modules:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleItemJson'
-          type: array
-        spec_version:
-          type: integer
-      type: object
-    internal_server_http.runtimeMetadataParams:
-      properties:
-        spec:
-          description: Runtime version
-          example: 9430
-          type: integer
-      type: object
-    types.ModuleErrorField:
-      properties:
-        doc:
-          items:
-            type: string
-          type: array
-        type:
-          type: string
-        type_name:
-          type: string
-      type: object
     subscan_internal_model.RuntimeVersion:
       properties:
         block_num:
@@ -712,56 +736,14 @@ components:
         spec_version:
           type: integer
       type: object
-    types.MetadataModuleCallArgument:
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        type_name:
-          type: string
-      type: object
-    types.MetadataConstants:
-      properties:
-        constants_value:
-          type: string
-        docs:
-          items:
-            type: string
-          type: array
-        name:
-          type: string
-        type:
-          type: string
-        type_value:
-          type: integer
-      type: object
-    RuntimeSpec:
+    RuntimeCode:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        authoringVersion:
+        code:
           type: string
-          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
-        chainType:
-          $ref: '#/components/schemas/ChainType'
-        implVersion:
-          type: string
-          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
-        specName:
-          type: string
-          description: Identifies the different Substrate runtimes.
-        specVersion:
-          type: string
-          description: Version of the runtime specification.
-        transactionVersion:
-          type: string
-          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
-        properties:
-          type: object
-          description: Arbitrary properties defined in the chain spec.
-      description: Version information related to the runtime.
+          format: hex
     RuntimeMetadata:
       type: object
       description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
@@ -788,6 +770,43 @@ components:
       required:
       - magicNumber
       - metadata
+    RuntimeSpec:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        authoringVersion:
+          type: string
+          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
+        chainType:
+          $ref: '#/components/schemas/ChainType'
+        implVersion:
+          type: string
+          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
+        specName:
+          type: string
+          description: Identifies the different Substrate runtimes.
+        specVersion:
+          type: string
+          description: Version of the runtime specification.
+        transactionVersion:
+          type: string
+          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
+        properties:
+          type: object
+          description: Arbitrary properties defined in the chain spec.
+      description: Version information related to the runtime.
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
     ChainType:
       type: object
       description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
@@ -810,25 +829,6 @@ components:
         custom:
           type: string
       example: '{"live": null}'
-    RuntimeCode:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        code:
-          type: string
-          format: hex
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - subscan-swagger.yaml

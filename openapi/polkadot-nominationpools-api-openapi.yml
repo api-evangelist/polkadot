@@ -205,32 +205,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
-      properties:
-        multi_state:
-          items:
-            type: string
-          type: array
-        state:
-          enum:
-          - Destroying
-          - Open
-          - Blocked
-          - Destroyed
-          type: string
-      type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
-      properties:
-        pool_id:
-          type: integer
-      type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
     internal_pluginv2_pallets_nominationPool.nominationPoolsMembersParams:
       properties:
         page:
@@ -245,6 +219,20 @@ components:
       required:
       - row
       type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
+      properties:
+        multi_state:
+          items:
+            type: string
+          type: array
+        state:
+          enum:
+          - Destroying
+          - Open
+          - Blocked
+          - Destroyed
+          type: string
+      type: object
     internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
       properties:
         page:
@@ -255,6 +243,18 @@ components:
         row:
           maximum: 100
           minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsMemberVoteParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
+      properties:
+        pool_id:
           type: integer
       type: object
     internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:

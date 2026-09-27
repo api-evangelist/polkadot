@@ -106,6 +106,13 @@ components:
           example: Success
           type: string
       type: object
+    internal_server_http.logInfoParam:
+      properties:
+        log_index:
+          type: string
+      required:
+      - log_index
+      type: object
     internal_server_http.logsParams:
       properties:
         after_id:
@@ -130,13 +137,6 @@ components:
           type: integer
         type:
           type: string
-      type: object
-    internal_server_http.logInfoParam:
-      properties:
-        log_index:
-          type: string
-      required:
-      - log_index
       type: object
     subscan_internal_model.ChainLogJson:
       properties:

@@ -56,18 +56,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.vestingReleaseParams:
-      properties:
-        end:
-          example: '2023-06-01'
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
     internal_server_http.J:
       properties:
         code:
@@ -80,6 +68,18 @@ components:
         message:
           example: Success
           type: string
+      type: object
+    internal_server_http.vestingReleaseParams:
+      properties:
+        end:
+          example: '2023-06-01'
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - end
+      - start
       type: object
     subscan_internal_model.VestingRelease:
       properties:

@@ -185,6 +185,112 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    internal_server_http.dailyStatV2Param:
+      properties:
+        category:
+          type: string
+        end:
+          example: '2023-06-01'
+          type: string
+        format:
+          enum:
+          - day
+          - hour
+          - 6hour
+          - minute
+          - 7d
+          - month
+          - year
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    internal_server_http.priceHistoryParams:
+      properties:
+        currency:
+          type: string
+        end:
+          example: '2023-06-01'
+          type: string
+        format:
+          enum:
+          - day
+          - hour
+          - 6hour
+          - 12hour
+          type: string
+        start:
+          example: '2023-05-01'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.AccountBalanceDetailJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        address:
+          type: string
+        balance:
+          type: string
+      type: object
+    internal_server_http.accountsMAUHandleParams:
+      properties:
+        end:
+          example: '2025-07-25'
+          type: string
+        start:
+          example: '2025-07-22'
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.DailyStaticJsonV2:
+      properties:
+        time_utc:
+          type: string
+        total:
+          type: string
+        transfer_amount:
+          type: string
+      type: object
+    subscan_internal_service_scan.Price:
+      properties:
+        feed_at:
+          type: integer
+        price:
+          type: string
+      type: object
     subscan_internal_model.MerkleTag:
       properties:
         address_type:
@@ -196,11 +302,59 @@ components:
         tag_type:
           type: string
       type: object
+    subscan_internal_model.DailyTokenStatusJson:
+      properties:
+        available:
+          type: string
+        other:
+          type: string
+        other_details:
+          $ref: '#/components/schemas/subscan_internal_model.OtherDetail'
+        staking:
+          type: string
+        system_accounts:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.AccountBalanceDetailJson'
+          type: array
+        time_utc:
+          type: string
+        total_issuance:
+          type: string
+        treasury_amount:
+          type: string
+      type: object
     subscan_internal_model.RegistrationJudgementJson:
       properties:
         index:
           type: integer
         judgement:
+          type: string
+      type: object
+    subscan_internal_model.MonthStatistics:
+      properties:
+        active_account:
+          type: integer
+        time_utc:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object
     subscan_internal_model.AccountDisplay:
@@ -231,13 +385,6 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.MonthStatistics:
-      properties:
-        active_account:
-          type: integer
-        time_utc:
-          type: string
-      type: object
     internal_server_http.dailyTokenStatParams:
       properties:
         end:
@@ -251,92 +398,6 @@ components:
           example: '2023-05-01'
           type: string
         symbol:
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.AccountBalanceDetailJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        address:
-          type: string
-        balance:
-          type: string
-      type: object
-    subscan_internal_model.DailyStaticJsonV2:
-      properties:
-        time_utc:
-          type: string
-        total:
-          type: string
-        transfer_amount:
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    internal_server_http.dailyStatV2Param:
-      properties:
-        category:
-          type: string
-        end:
-          example: '2023-06-01'
-          type: string
-        format:
-          enum:
-          - day
-          - hour
-          - 6hour
-          - minute
-          - 7d
-          - month
-          - year
-          type: string
-        start:
-          example: '2023-05-01'
           type: string
       required:
       - end
@@ -359,66 +420,5 @@ components:
         validator_bonded:
           type: string
         vesting_balance:
-          type: string
-      type: object
-    internal_server_http.accountsMAUHandleParams:
-      properties:
-        end:
-          example: '2025-07-25'
-          type: string
-        start:
-          example: '2025-07-22'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    subscan_internal_model.DailyTokenStatusJson:
-      properties:
-        available:
-          type: string
-        other:
-          type: string
-        other_details:
-          $ref: '#/components/schemas/subscan_internal_model.OtherDetail'
-        staking:
-          type: string
-        system_accounts:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.AccountBalanceDetailJson'
-          type: array
-        time_utc:
-          type: string
-        total_issuance:
-          type: string
-        treasury_amount:
-          type: string
-      type: object
-    internal_server_http.priceHistoryParams:
-      properties:
-        currency:
-          type: string
-        end:
-          example: '2023-06-01'
-          type: string
-        format:
-          enum:
-          - day
-          - hour
-          - 6hour
-          - 12hour
-          type: string
-        start:
-          example: '2023-05-01'
-          type: string
-      required:
-      - end
-      - start
-      type: object
-    subscan_internal_service_scan.Price:
-      properties:
-        feed_at:
-          type: integer
-        price:
           type: string
       type: object

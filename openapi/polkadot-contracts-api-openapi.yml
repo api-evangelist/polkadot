@@ -404,31 +404,46 @@ paths:
       description: Localhost
 components:
   schemas:
-    subscan_internal_model.ContractTransactionListJson:
+    subscan_internal_model.ContractAccountListJson:
       properties:
-        account_display:
+        balance:
+          type: string
+        contract_display:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        block_timestamp:
+        owner_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        transaction_count:
           type: integer
-        contract_address:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        extrinsic_index:
-          type: string
-        success:
-          type: boolean
+        verify_time:
+          type: integer
       type: object
-    subscan_internal_model.SampleIdentity:
+    internal_server_http.contractTxsParams:
       properties:
-        display:
+        address:
           type: string
-        identity:
+        block_range:
+          example: 20000-30000
+          type: string
+        contract:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        result:
           type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_server_http.contractInfoParams:
+      properties:
+        contract:
+          type: string
       type: object
     subscan_internal_model.AccountParentJson:
       properties:
@@ -439,6 +454,35 @@ components:
         identity:
           type: boolean
         sub_symbol:
+          type: string
+      type: object
+    internal_server_http.contractsEventsParams:
+      properties:
+        contract:
+          type: string
+        extrinsic_index:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
           type: string
       type: object
     subscan_internal_model.RegistrationJudgementJson:
@@ -476,6 +520,88 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
+    subscan_internal_model.ContractEventJson:
+      properties:
+        block_timestamp:
+          type: integer
+        data:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+      type: object
+    subscan_internal_model.ContractTransactionListJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        block_timestamp:
+          type: integer
+        contract_address:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        extrinsic_index:
+          type: string
+        success:
+          type: boolean
+      type: object
+    internal_server_http.contractTimelineParams:
+      properties:
+        contract:
+          type: string
+      type: object
+    subscan_internal_model.ContractTimeline:
+      properties:
+        action:
+          $ref: '#/components/schemas/subscan_internal_model.ContractAction'
+        block_timestamp:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+      type: object
+    internal_server_http.contractsListParams:
+      properties:
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - verify_time
+          - transaction_count
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        verified:
+          type: boolean
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.ThirdPartyCompiler:
+      properties:
+        digest:
+          type: string
+        repository_tag:
+          type: string
+        worker_dir:
+          type: string
+      type: object
     internal_server_http.J:
       properties:
         code:
@@ -488,6 +614,19 @@ components:
         message:
           example: Success
           type: string
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object
     subscan_internal_model.ContractDetailJson:
       properties:
@@ -520,140 +659,6 @@ components:
         verify_time:
           type: integer
       type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    internal_server_http.contractsListParams:
-      properties:
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - verify_time
-          - transaction_count
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        verified:
-          type: boolean
-      type: object
-    internal_server_http.contractsEventsParams:
-      properties:
-        contract:
-          type: string
-        extrinsic_index:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.ContractAccountListJson:
-      properties:
-        balance:
-          type: string
-        contract_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        owner_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transaction_count:
-          type: integer
-        verify_time:
-          type: integer
-      type: object
-    internal_server_http.contractInfoParams:
-      properties:
-        contract:
-          type: string
-      type: object
-    internal_server_http.contractTxsParams:
-      properties:
-        address:
-          type: string
-        block_range:
-          example: 20000-30000
-          type: string
-        contract:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        result:
-          type: boolean
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.ContractTimeline:
-      properties:
-        action:
-          $ref: '#/components/schemas/subscan_internal_model.ContractAction'
-        block_timestamp:
-          type: integer
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-      type: object
-    subscan_internal_model.ThirdPartyCompiler:
-      properties:
-        digest:
-          type: string
-        repository_tag:
-          type: string
-        worker_dir:
-          type: string
-      type: object
-    subscan_internal_model.ContractEventJson:
-      properties:
-        block_timestamp:
-          type: integer
-        data:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-      type: object
     subscan_internal_model.ContractAction:
       enum:
       - Instantiated
@@ -664,14 +669,6 @@ components:
       - ContractInstantiated
       - ContractTerminated
       - ContractCodeUpdated
-    internal_server_http.contractTimelineParams:
-      properties:
-        contract:
-          type: string
-      type: object
-    ContractMetadata:
-      type: object
-      description: Metadata used to instantiate a ContractPromise. This metadata can be generated by compiling the contract you are querying.
     ContractsInkQuery:
       type: object
       description: Result from calling a query to a Ink contract.
@@ -689,6 +686,9 @@ components:
           description: Will result in an Ok or Err object depending on the result of the query.
         storageDeposit:
           type: object
+    ContractMetadata:
+      type: object
+      description: Metadata used to instantiate a ContractPromise. This metadata can be generated by compiling the contract you are querying.
     Error:
       type: object
       properties:

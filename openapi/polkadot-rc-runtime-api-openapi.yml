@@ -165,32 +165,14 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RuntimeSpec:
+    RuntimeCode:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        authoringVersion:
+        code:
           type: string
-          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
-        chainType:
-          $ref: '#/components/schemas/ChainType'
-        implVersion:
-          type: string
-          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
-        specName:
-          type: string
-          description: Identifies the different Substrate runtimes.
-        specVersion:
-          type: string
-          description: Version of the runtime specification.
-        transactionVersion:
-          type: string
-          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
-        properties:
-          type: object
-          description: Arbitrary properties defined in the chain spec.
-      description: Version information related to the runtime.
+          format: hex
     RuntimeMetadata:
       type: object
       description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
@@ -217,6 +199,54 @@ components:
       required:
       - magicNumber
       - metadata
+    RuntimeSpec:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        authoringVersion:
+          type: string
+          description: The version of the authorship interface. An authoring node will not attempt to author blocks unless this is equal to its native runtime.
+        chainType:
+          $ref: '#/components/schemas/ChainType'
+        implVersion:
+          type: string
+          description: Version of the implementation specification. Non-consensus-breaking optimizations are about the only changes that could be made which would result in only the `impl_version` changing. The `impl_version` is set to 0 when `spec_version` is incremented.
+        specName:
+          type: string
+          description: Identifies the different Substrate runtimes.
+        specVersion:
+          type: string
+          description: Version of the runtime specification.
+        transactionVersion:
+          type: string
+          description: All existing dispatches are fully compatible when this number doesn't change. This number must change when an existing dispatchable (module ID, dispatch ID) is changed, either through an alteration in its user-level semantics, a parameter added/removed/changed, a dispatchable being removed, a module being removed, or a dispatchable/module changing its index.
+        properties:
+          type: object
+          description: Arbitrary properties defined in the chain spec.
+      description: Version information related to the runtime.
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
     ChainType:
       type: object
       description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
@@ -239,33 +269,3 @@ components:
         custom:
           type: string
       example: '{"live": null}'
-    Error:
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-        stack:
-          type: string
-        level:
-          type: string
-    RuntimeCode:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        code:
-          type: string
-          format: hex
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger

@@ -110,16 +110,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_spaceTime_http.holderParams:
-      properties:
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
     subscan_internal_plugin_spaceTime_db.TransferJson:
       properties:
         amount:
@@ -147,6 +137,19 @@ components:
         transaction_hash:
           type: string
       type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
     subscan_internal_plugin_spaceTime_db.HolderDisplay:
       properties:
         address:
@@ -157,6 +160,16 @@ components:
           type: boolean
         name:
           type: string
+      type: object
+    internal_plugin_spaceTime_http.holderParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
       type: object
     subscan_internal_plugin_spaceTime_db.Holder:
       properties:
@@ -169,19 +182,6 @@ components:
         is_verified:
           type: boolean
         name:
-          type: string
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
           type: string
       type: object
     internal_plugin_spaceTime_http.transferParams:

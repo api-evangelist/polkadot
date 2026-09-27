@@ -1745,6 +1745,80 @@ paths:
       description: Localhost
 components:
   schemas:
+    EraPayouts:
+      oneOf:
+      - $ref: '#/components/schemas/EraPayoutsData'
+        description: Successful payout data for an era
+      - type: object
+        description: Error message when payouts cannot be calculated
+        required:
+        - message
+        properties:
+          message:
+            type: string
+      description: Payouts for a single era - can be either actual payouts or an error message
+    ParseError:
+      type: object
+      description: Error response for transaction parsing failures.
+      required:
+      - code
+      - error
+      - transaction
+      - cause
+      - stack
+      properties:
+        cause:
+          type: string
+          description: Cause of the error
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code
+          example: 400
+          minimum: 0
+        error:
+          type: string
+          description: Error message
+          example: Failed to parse transaction.
+        stack:
+          type: string
+          description: Stack trace
+        transaction:
+          type: string
+          description: The transaction that failed to parse
+    ParseRequest:
+      type: object
+      description: Request body for transaction parsing.
+      properties:
+        tx:
+          type:
+          - string
+          - 'null'
+          description: Hex-encoded extrinsic with optional 0x prefix.
+          example: 0x4902840004316d995f...
+    NodeVersionResponse:
+      type: object
+      required:
+      - clientVersion
+      - clientImplName
+      - chain
+      properties:
+        chain:
+          type: string
+        clientImplName:
+          type: string
+        clientVersion:
+          type: string
+    Weight:
+      type: object
+      required:
+      - refTime
+      - proofSize
+      properties:
+        proofSize:
+          type: string
+        refTime:
+          type: string
     ClaimedReward:
       type: object
       description: Claimed reward status for a specific era
@@ -1758,93 +1832,36 @@ components:
         status:
           type: string
           description: Claim status ("claimed" or "unclaimed")
-    NominationsInfo:
+    StakingLedger:
       type: object
-      description: Nominations information for a nominator
+      description: Staking ledger information
       required:
-      - targets
-      - submittedIn
-      - suppressed
+      - stash
+      - total
+      - active
+      - unlocking
       properties:
-        submittedIn:
+        active:
           type: string
-          description: Era in which nomination was submitted
-        suppressed:
-          type: boolean
-          description: Whether nominations are suppressed
-        targets:
+          description: Active staked balance
+        claimedRewards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimedReward'
+          description: Claimed rewards per era (only when includeClaimedRewards=true)
+        stash:
+          type: string
+          description: Stash account address
+        total:
+          type: string
+          description: Total locked balance (active + unlocking)
+        unlocking:
           type: array
           items:
-            type: string
-          description: List of validator addresses being nominated
-    Weight:
-      type: object
-      required:
-      - refTime
-      - proofSize
-      properties:
-        proofSize:
-          type: string
-        refTime:
-          type: string
-    ParseResponse:
-      type: object
-      description: Response for successful transaction parsing.
-      required:
-      - isSigned
-      - method
-      - args
-      - era
-      - hash
-      properties:
-        args:
-          type: object
-          description: Decoded call arguments
-        era:
-          type: object
-          description: Era/mortality information
-        hash:
-          type: string
-          description: Blake2-256 hash of the extrinsic
-          example: 0x1234567890abcdef...
-        isSigned:
-          type: boolean
-          description: Whether the extrinsic is signed
-          example: true
-        method:
-          $ref: '#/components/schemas/MethodInfo'
-          description: Pallet and method information
-        nonce:
-          type:
-          - string
-          - 'null'
-          description: Account nonce (only present for signed extrinsics)
-          example: '42'
-        signature:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/SignatureInfo'
-            description: Signature information (only present for signed extrinsics)
-        tip:
-          type:
-          - string
-          - 'null'
-          description: Tip amount (only present for signed extrinsics)
-          example: '0'
-    RcStakingPayoutsResponse:
-      type: object
-      description: Response for GET /rc/accounts/{accountId}/staking-payouts
-      required:
-      - at
-      - erasPayouts
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        erasPayouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/EraPayouts'
-          description: Array of era payouts
+            $ref: '#/components/schemas/UnlockingChunk'
+          description: Unlocking chunks with value and era
     RcVestingInfoResponse:
       type: object
       description: Response for GET /rc/accounts/{accountId}/vesting-info
@@ -1859,6 +1876,134 @@ components:
           items:
             $ref: '#/components/schemas/VestingSchedule'
           description: Array of vesting schedules (empty array if no vesting)
+    BalanceLock:
+      type: object
+      description: Balance lock information
+      required:
+      - id
+      - amount
+      - reasons
+      properties:
+        amount:
+          type: string
+          description: Amount locked
+        id:
+          type: string
+          description: Lock identifier
+        reasons:
+          type: string
+          description: Lock reasons (Fee = 0, Misc = 1, All = 2)
+    TransactionPoolResponse:
+      type: object
+      required:
+      - pool
+      properties:
+        pool:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionPoolEntry'
+    ValidatorPayout:
+      type: object
+      description: Payout information for a single validator
+      required:
+      - validatorId
+      - nominatorStakingPayout
+      - claimed
+      - totalValidatorRewardPoints
+      - validatorCommission
+      - totalValidatorExposure
+      - nominatorExposure
+      properties:
+        claimed:
+          type: boolean
+          description: Whether the reward has been claimed
+        nominatorExposure:
+          type: string
+          description: Nominator's stake behind this validator
+        nominatorStakingPayout:
+          type: string
+          description: Calculated payout amount for the nominator
+        totalValidatorExposure:
+          type: string
+          description: Total stake behind this validator
+        totalValidatorRewardPoints:
+          type: string
+          description: Validator's reward points for this era
+        validatorCommission:
+          type: string
+          description: Validator's commission (as parts per billion, 0-1000000000)
+        validatorId:
+          type: string
+          description: Validator stash account ID
+    VestingSchedule:
+      type: object
+      description: A vesting schedule
+      required:
+      - locked
+      - perBlock
+      - startingBlock
+      properties:
+        locked:
+          type: string
+          description: Total tokens locked at start of vesting
+        perBlock:
+          type: string
+          description: Tokens unlocked per block
+        startingBlock:
+          type: string
+          description: Block when vesting begins
+    FeeEstimateResponse:
+      type: object
+      required:
+      - weight
+      - class
+      - partialFee
+      properties:
+        class:
+          type: string
+        partialFee:
+          type: string
+        weight:
+          $ref: '#/components/schemas/Weight'
+    TransactionPoolEntry:
+      type: object
+      required:
+      - hash
+      - encodedExtrinsic
+      properties:
+        encodedExtrinsic:
+          type: string
+        hash:
+          type: string
+        partialFee:
+          type:
+          - string
+          - 'null'
+        priority:
+          type:
+          - string
+          - 'null'
+        tip:
+          type:
+          - string
+          - 'null'
+    ProxyDefinition:
+      type: object
+      description: A proxy definition containing the delegate, proxy type, and delay
+      required:
+      - delegate
+      - proxyType
+      - delay
+      properties:
+        delay:
+          type: string
+          description: The announcement delay in blocks
+        delegate:
+          type: string
+          description: The delegate address that can act on behalf of the account
+        proxyType:
+          type: string
+          description: The type of proxy (e.g., "Any", "Staking", "Governance", etc.)
     RcBalanceInfoResponse:
       type: object
       description: Response for GET /rc/accounts/{accountId}/balance-info
@@ -1909,81 +2054,62 @@ components:
         transferable:
           type: string
           description: 'Calculated transferable balance using: free - max(maybeED, frozen - reserved)'
-    StakingLedger:
+    EraPayoutsData:
       type: object
-      description: Staking ledger information
+      description: Actual payout data for an era
       required:
-      - stash
-      - total
-      - active
-      - unlocking
-      properties:
-        active:
-          type: string
-          description: Active staked balance
-        claimedRewards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClaimedReward'
-          description: Claimed rewards per era (only when includeClaimedRewards=true)
-        stash:
-          type: string
-          description: Stash account address
-        total:
-          type: string
-          description: Total locked balance (active + unlocking)
-        unlocking:
-          type: array
-          items:
-            $ref: '#/components/schemas/UnlockingChunk'
-          description: Unlocking chunks with value and era
-    ParseRequest:
-      type: object
-      description: Request body for transaction parsing.
-      properties:
-        tx:
-          type:
-          - string
-          - 'null'
-          description: Hex-encoded extrinsic with optional 0x prefix.
-          example: 0x4902840004316d995f...
-    UnlockingChunk:
-      type: object
-      description: Unlocking chunk with value and era when funds become available
-      required:
-      - value
       - era
+      - totalEraRewardPoints
+      - totalEraPayout
+      - payouts
       properties:
         era:
           type: string
-          description: Era when funds become available
-        value:
+          description: Era index
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidatorPayout'
+          description: Individual payouts for validators nominated
+        totalEraPayout:
           type: string
-          description: Amount being unlocked
-    SignerId:
+          description: Total payout for the era
+        totalEraRewardPoints:
+          type: string
+          description: Total reward points for the era
+    SignatureInfo:
       type: object
-      description: Signer identifier.
+      description: Signature information for signed extrinsics.
       required:
-      - id
+      - signer
+      - signature
       properties:
-        id:
+        signature:
           type: string
-          description: SS58-encoded account address
-          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-    EraPayouts:
-      oneOf:
-      - $ref: '#/components/schemas/EraPayoutsData'
-        description: Successful payout data for an era
-      - type: object
-        description: Error message when payouts cannot be calculated
-        required:
-        - message
-        properties:
-          message:
+          description: Hex-encoded signature
+          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
+        signer:
+          $ref: '#/components/schemas/SignerId'
+          description: Signer account
+    NominationsInfo:
+      type: object
+      description: Nominations information for a nominator
+      required:
+      - targets
+      - submittedIn
+      - suppressed
+      properties:
+        submittedIn:
+          type: string
+          description: Era in which nomination was submitted
+        suppressed:
+          type: boolean
+          description: Whether nominations are suppressed
+        targets:
+          type: array
+          items:
             type: string
-      description: Payouts for a single era - can be either actual payouts or an error message
+          description: List of validator addresses being nominated
     RcStakingInfoResponse:
       type: object
       description: Response for GET /rc/accounts/{accountId}/staking-info
@@ -2013,163 +2139,63 @@ components:
         staking:
           $ref: '#/components/schemas/StakingLedger'
           description: Staking ledger
-    VestingSchedule:
+    RcProxyInfoResponse:
       type: object
-      description: A vesting schedule
+      description: Response for GET /rc/accounts/{accountId}/proxy-info
       required:
-      - locked
-      - perBlock
-      - startingBlock
+      - at
+      - delegatedAccounts
+      - depositHeld
       properties:
-        locked:
-          type: string
-          description: Total tokens locked at start of vesting
-        perBlock:
-          type: string
-          description: Tokens unlocked per block
-        startingBlock:
-          type: string
-          description: Block when vesting begins
-    ProxyDefinition:
-      type: object
-      description: A proxy definition containing the delegate, proxy type, and delay
-      required:
-      - delegate
-      - proxyType
-      - delay
-      properties:
-        delay:
-          type: string
-          description: The announcement delay in blocks
-        delegate:
-          type: string
-          description: The delegate address that can act on behalf of the account
-        proxyType:
-          type: string
-          description: The type of proxy (e.g., "Any", "Staking", "Governance", etc.)
-    TransactionPoolResponse:
-      type: object
-      required:
-      - pool
-      properties:
-        pool:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        delegatedAccounts:
           type: array
           items:
-            $ref: '#/components/schemas/TransactionPoolEntry'
-    BalanceLock:
+            $ref: '#/components/schemas/ProxyDefinition'
+          description: Array of delegated accounts with their proxy definitions
+        depositHeld:
+          type: string
+          description: The deposit held for the proxies
+    SignerId:
       type: object
-      description: Balance lock information
+      description: Signer identifier.
       required:
       - id
-      - amount
-      - reasons
       properties:
-        amount:
-          type: string
-          description: Amount locked
         id:
           type: string
-          description: Lock identifier
-        reasons:
-          type: string
-          description: Lock reasons (Fee = 0, Misc = 1, All = 2)
-    ParseError:
+          description: SS58-encoded account address
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    RcStakingPayoutsResponse:
       type: object
-      description: Error response for transaction parsing failures.
+      description: Response for GET /rc/accounts/{accountId}/staking-payouts
       required:
-      - code
-      - error
-      - transaction
-      - cause
-      - stack
+      - at
+      - erasPayouts
       properties:
-        cause:
-          type: string
-          description: Cause of the error
-        code:
-          type: integer
-          format: int32
-          description: HTTP status code
-          example: 400
-          minimum: 0
-        error:
-          type: string
-          description: Error message
-          example: Failed to parse transaction.
-        stack:
-          type: string
-          description: Stack trace
-        transaction:
-          type: string
-          description: The transaction that failed to parse
-    NodeVersionResponse:
+        at:
+          $ref: '#/components/schemas/BlockInfo'
+        erasPayouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/EraPayouts'
+          description: Array of era payouts
+    MethodInfo:
       type: object
+      description: Method information (pallet and method name).
       required:
-      - clientVersion
-      - clientImplName
-      - chain
+      - pallet
+      - method
       properties:
-        chain:
+        method:
           type: string
-        clientImplName:
+          description: Method name in lowerCamelCase
+          example: transferAllowDeath
+        pallet:
           type: string
-        clientVersion:
-          type: string
-    ValidatorPayout:
-      type: object
-      description: Payout information for a single validator
-      required:
-      - validatorId
-      - nominatorStakingPayout
-      - claimed
-      - totalValidatorRewardPoints
-      - validatorCommission
-      - totalValidatorExposure
-      - nominatorExposure
-      properties:
-        claimed:
-          type: boolean
-          description: Whether the reward has been claimed
-        nominatorExposure:
-          type: string
-          description: Nominator's stake behind this validator
-        nominatorStakingPayout:
-          type: string
-          description: Calculated payout amount for the nominator
-        totalValidatorExposure:
-          type: string
-          description: Total stake behind this validator
-        totalValidatorRewardPoints:
-          type: string
-          description: Validator's reward points for this era
-        validatorCommission:
-          type: string
-          description: Validator's commission (as parts per billion, 0-1000000000)
-        validatorId:
-          type: string
-          description: Validator stash account ID
-    TransactionPoolEntry:
-      type: object
-      required:
-      - hash
-      - encodedExtrinsic
-      properties:
-        encodedExtrinsic:
-          type: string
-        hash:
-          type: string
-        partialFee:
-          type:
-          - string
-          - 'null'
-        priority:
-          type:
-          - string
-          - 'null'
-        tip:
-          type:
-          - string
-          - 'null'
+          description: Pallet name in lowerCamelCase
+          example: balances
     RewardDestination:
       oneOf:
       - type: object
@@ -2209,33 +2235,63 @@ components:
             type: string
             description: Rewards are sent to a specific account
       description: 'Reward destination - e.g. { "staked": null }, { "stash": null }, { "account": "..." }'
-    SignatureInfo:
+    ParseResponse:
       type: object
-      description: Signature information for signed extrinsics.
+      description: Response for successful transaction parsing.
       required:
-      - signer
-      - signature
+      - isSigned
+      - method
+      - args
+      - era
+      - hash
       properties:
+        args:
+          type: object
+          description: Decoded call arguments
+        era:
+          type: object
+          description: Era/mortality information
+        hash:
+          type: string
+          description: Blake2-256 hash of the extrinsic
+          example: 0x1234567890abcdef...
+        isSigned:
+          type: boolean
+          description: Whether the extrinsic is signed
+          example: true
+        method:
+          $ref: '#/components/schemas/MethodInfo'
+          description: Pallet and method information
+        nonce:
+          type:
+          - string
+          - 'null'
+          description: Account nonce (only present for signed extrinsics)
+          example: '42'
         signature:
-          type: string
-          description: Hex-encoded signature
-          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
-        signer:
-          $ref: '#/components/schemas/SignerId'
-          description: Signer account
-    FeeEstimateResponse:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/SignatureInfo'
+            description: Signature information (only present for signed extrinsics)
+        tip:
+          type:
+          - string
+          - 'null'
+          description: Tip amount (only present for signed extrinsics)
+          example: '0'
+    UnlockingChunk:
       type: object
+      description: Unlocking chunk with value and era when funds become available
       required:
-      - weight
-      - class
-      - partialFee
+      - value
+      - era
       properties:
-        class:
+        era:
           type: string
-        partialFee:
+          description: Era when funds become available
+        value:
           type: string
-        weight:
-          $ref: '#/components/schemas/Weight'
+          description: Amount being unlocked
     BlockInfo:
       type: object
       description: Block information
@@ -2247,85 +2303,27 @@ components:
           type: string
         height:
           type: string
-    MethodInfo:
-      type: object
-      description: Method information (pallet and method name).
-      required:
-      - pallet
-      - method
-      properties:
-        method:
-          type: string
-          description: Method name in lowerCamelCase
-          example: transferAllowDeath
-        pallet:
-          type: string
-          description: Pallet name in lowerCamelCase
-          example: balances
-    EraPayoutsData:
-      type: object
-      description: Actual payout data for an era
-      required:
-      - era
-      - totalEraRewardPoints
-      - totalEraPayout
-      - payouts
-      properties:
-        era:
-          type: string
-          description: Era index
-        payouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatorPayout'
-          description: Individual payouts for validators nominated
-        totalEraPayout:
-          type: string
-          description: Total payout for the era
-        totalEraRewardPoints:
-          type: string
-          description: Total reward points for the era
-    RcProxyInfoResponse:
-      type: object
-      description: Response for GET /rc/accounts/{accountId}/proxy-info
-      required:
-      - at
-      - delegatedAccounts
-      - depositHeld
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockInfo'
-        delegatedAccounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProxyDefinition'
-          description: Array of delegated accounts with their proxy definitions
-        depositHeld:
-          type: string
-          description: The deposit held for the proxies
-    BlocksTrace:
+    OperationAmount:
       type: object
       properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        blockHash:
+        values:
           type: string
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceEvent'
-        parentHash:
+          format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
           type: string
-        spans:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceSpan'
-        storageKeys:
+          format: unsignedInteger
+        target:
           type: string
-          description: Hex encoded storage keys used to filter events.
-        tracingTargets:
-          type: string
-          description: Targets used to filter spans and events.
     SpanId:
       type: object
       properties:
@@ -2336,26 +2334,6 @@ components:
         id:
           type: string
           format: unsignedInteger
-    OperationPhase:
-      type: object
-      properties:
-        variant:
-          type: string
-          enum:
-          - onInitialize
-          - initialChecks
-          - applyExtrinsic
-          - onFinalize
-          - finalChecks
-          description: Phase of block execution pipeline.
-        extrinsicIndex:
-          type: string
-          format: unsignedInteger
-          description: 'If phase variant is `applyExtrinsic` this will be the index of
-
-            the extrinsic. Otherwise this field will not be present.
-
-            '
     TraceEventDataStringValues:
       type: object
       properties:
@@ -2371,6 +2349,36 @@ components:
           format: hex
           description: Hex scale encoded storage value.
       description: Note these exact values will only be present for storage events.
+    TraceSpan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: unsignedInteger
+        name:
+          type: string
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+        wasm:
+          type: boolean
+    OperationAmountCurrency:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: KSM
+    BlocksTraceOperations:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
     Error:
       type: object
       properties:
@@ -2382,12 +2390,6 @@ components:
           type: string
         level:
           type: string
-    OperationAmountCurrency:
-      type: object
-      properties:
-        symbol:
-          type: string
-          example: KSM
     Operation:
       type: object
       properties:
@@ -2429,51 +2431,6 @@ components:
                 '
         amount:
           $ref: '#/components/schemas/OperationAmount'
-    TraceSpan:
-      type: object
-      properties:
-        id:
-          type: string
-          format: unsignedInteger
-        name:
-          type: string
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
-        wasm:
-          type: boolean
-    BlocksTraceOperations:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
-    OperationAmount:
-      type: object
-      properties:
-        values:
-          type: string
-          format: unsignedInteger
-        currency:
-          $ref: '#/components/schemas/OperationAmountCurrency'
-    TraceEvent:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            stringValues:
-              $ref: '#/components/schemas/TraceEventDataStringValues'
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
     BlockIdentifiers:
       type: object
       properties:
@@ -2485,6 +2442,49 @@ components:
           type: string
           description: The block's height.
           format: unsignedInteger
+    BlocksTrace:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        blockHash:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceEvent'
+        parentHash:
+          type: string
+        spans:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceSpan'
+        storageKeys:
+          type: string
+          description: Hex encoded storage keys used to filter events.
+        tracingTargets:
+          type: string
+          description: Targets used to filter spans and events.
+    OperationPhase:
+      type: object
+      properties:
+        variant:
+          type: string
+          enum:
+          - onInitialize
+          - initialChecks
+          - applyExtrinsic
+          - onFinalize
+          - finalChecks
+          description: Phase of block execution pipeline.
+        extrinsicIndex:
+          type: string
+          format: unsignedInteger
+          description: 'If phase variant is `applyExtrinsic` this will be the index of
+
+            the extrinsic. Otherwise this field will not be present.
+
+            '
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - substrate-api-sidecar-openapi.yaml

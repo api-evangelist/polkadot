@@ -223,29 +223,27 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    BlocksTrace:
+    OperationAmount:
       type: object
       properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        blockHash:
+        values:
           type: string
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceEvent'
-        parentHash:
+          format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
           type: string
-        spans:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceSpan'
-        storageKeys:
+          format: unsignedInteger
+        target:
           type: string
-          description: Hex encoded storage keys used to filter events.
-        tracingTargets:
-          type: string
-          description: Targets used to filter spans and events.
     SpanId:
       type: object
       properties:
@@ -256,26 +254,6 @@ components:
         id:
           type: string
           format: unsignedInteger
-    OperationPhase:
-      type: object
-      properties:
-        variant:
-          type: string
-          enum:
-          - onInitialize
-          - initialChecks
-          - applyExtrinsic
-          - onFinalize
-          - finalChecks
-          description: Phase of block execution pipeline.
-        extrinsicIndex:
-          type: string
-          format: unsignedInteger
-          description: 'If phase variant is `applyExtrinsic` this will be the index of
-
-            the extrinsic. Otherwise this field will not be present.
-
-            '
     TraceEventDataStringValues:
       type: object
       properties:
@@ -291,12 +269,36 @@ components:
           format: hex
           description: Hex scale encoded storage value.
       description: Note these exact values will only be present for storage events.
+    TraceSpan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: unsignedInteger
+        name:
+          type: string
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string
+        wasm:
+          type: boolean
     OperationAmountCurrency:
       type: object
       properties:
         symbol:
           type: string
           example: KSM
+    BlocksTraceOperations:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
     Operation:
       type: object
       properties:
@@ -338,51 +340,6 @@ components:
                 '
         amount:
           $ref: '#/components/schemas/OperationAmount'
-    TraceSpan:
-      type: object
-      properties:
-        id:
-          type: string
-          format: unsignedInteger
-        name:
-          type: string
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
-        wasm:
-          type: boolean
-    BlocksTraceOperations:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
-    OperationAmount:
-      type: object
-      properties:
-        values:
-          type: string
-          format: unsignedInteger
-        currency:
-          $ref: '#/components/schemas/OperationAmountCurrency'
-    TraceEvent:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            stringValues:
-              $ref: '#/components/schemas/TraceEventDataStringValues'
-        parentId:
-          type: string
-          format: unsignedInteger
-        target:
-          type: string
     BlockIdentifiers:
       type: object
       properties:
@@ -394,3 +351,46 @@ components:
           type: string
           description: The block's height.
           format: unsignedInteger
+    BlocksTrace:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        blockHash:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceEvent'
+        parentHash:
+          type: string
+        spans:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceSpan'
+        storageKeys:
+          type: string
+          description: Hex encoded storage keys used to filter events.
+        tracingTargets:
+          type: string
+          description: Targets used to filter spans and events.
+    OperationPhase:
+      type: object
+      properties:
+        variant:
+          type: string
+          enum:
+          - onInitialize
+          - initialChecks
+          - applyExtrinsic
+          - onFinalize
+          - finalChecks
+          description: Phase of block execution pipeline.
+        extrinsicIndex:
+          type: string
+          format: unsignedInteger
+          description: 'If phase variant is `applyExtrinsic` this will be the index of
+
+            the extrinsic. Otherwise this field will not be present.
+
+            '

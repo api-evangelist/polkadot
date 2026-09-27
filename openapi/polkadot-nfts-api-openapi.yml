@@ -9,7 +9,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Subscan NF Ts API
+  title: Subscan NFTs API
   version: '1.0'
 servers:
 - url: https://https://www.subscan.io/
@@ -312,30 +312,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
     subscan_internal_plugin_nfts_db.NftsJson:
       properties:
         attributes: {}
@@ -363,6 +339,64 @@ components:
           type: integer
         unique_id:
           example: standard_nfts/126
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_plugin_nfts_db.NftRelateExtrinsic:
+      properties:
+        block_num:
+          example: 5296820
+          type: integer
+        block_timestamp:
+          example: 1693996722
+          type: integer
+        collection_id:
+          example: '129'
+          type: string
+        event_id:
+          example: ItemMetadataSet
+          type: string
+        event_index:
+          example: 5296820-26
+          type: string
+        extrinsic_index:
+          example: 5296820-3
+          type: string
+        id:
+          type: integer
+        item_id:
+          example: '1'
+          type: string
+        module_id:
+          example: nfts
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object
     internal_plugin_nfts_http.NftAccountBalancesParams:
@@ -398,13 +432,6 @@ components:
         name:
           type: string
       type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -433,38 +460,28 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.MetadataMedia:
+    subscan_internal_plugin_nfts_db.NftsSampleJson:
       properties:
-        types:
+        collection_id:
+          example: '1'
           type: string
-        url:
+        collection_image:
+          example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
           type: string
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
+        collection_name:
+          example: Retrowave
           type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_plugin_nfts_db.NftHolderJson:
-      properties:
-        balance:
-          example: 1
+        holders:
+          example: 10
           type: integer
-        holder:
+        items:
+          example: 10
+          type: integer
+        owner:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
+        transfer_count:
+          example: 10
+          type: integer
       type: object
     internal_plugin_nfts_http.NftHoldersParams:
       properties:
@@ -481,24 +498,25 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_plugin_share.J:
+    subscan_internal_model.EvmAccountDisplay:
       properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
+        contract_name:
+          type: string
+        verify_source:
           type: string
       type: object
-    internal_plugin_nfts_http.NftParams:
+    subscan_internal_model.SampleIdentity:
       properties:
-        collection_id:
-          example: '1'
+        display:
           type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object
     subscan_internal_plugin_nfts_db.CollectionItemJson:
       properties:
@@ -549,6 +567,105 @@ components:
           minimum: 1
           type: integer
       type: object
+    internal_plugin_nfts_http.NftsParams:
+      properties:
+        collection_id:
+          example: '1'
+          type: string
+        order:
+          description: Optional, order sort, default desc
+          enum:
+          - desc
+          - asc
+          example: desc
+          type: string
+        order_field:
+          description: Optional, order field
+          enum:
+          - items
+          - holders
+          - collection_id
+          - transfer_count
+          example: holders
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_nfts_http.NftParams:
+      properties:
+        collection_id:
+          example: '1'
+          type: string
+      type: object
+    subscan_internal_model.MetadataMedia:
+      properties:
+        types:
+          type: string
+        url:
+          type: string
+      type: object
+    internal_plugin_nfts_http.NftItemParams:
+      properties:
+        collection_id:
+          description: Collection id, required
+          type: string
+        item_id:
+          description: Item id, required
+          type: string
+      type: object
+    subscan_internal_plugin_nfts_db.ItemSample:
+      properties:
+        collection_id:
+          example: '1'
+          type: string
+        collection_name:
+          example: Kusama Crowdloans
+          type: string
+        item_id:
+          example: '1'
+          type: string
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
+        owner:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        transfer_count:
+          type: integer
+      type: object
+    subscan_internal_plugin_nfts_db.CollectionBalance:
+      properties:
+        balance:
+          example: '1'
+          type: string
+        collection_id:
+          example: '1'
+          type: string
+        collection_name:
+          example: Kusama Crowdloans
+          type: string
+        item_id:
+          example: '1'
+          type: string
+        token_metadata:
+          $ref: '#/components/schemas/subscan_internal_model.MetadataSample'
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
     subscan_internal_model.StandardMetadata:
       properties:
         attributes: {}
@@ -581,130 +698,13 @@ components:
         thumbnail:
           type: string
       type: object
-    subscan_internal_plugin_nfts_db.CollectionBalance:
+    subscan_internal_plugin_nfts_db.NftHolderJson:
       properties:
         balance:
-          example: '1'
-          type: string
-        collection_id:
-          example: '1'
-          type: string
-        collection_name:
-          example: Kusama Crowdloans
-          type: string
-        item_id:
-          example: '1'
-          type: string
-        token_metadata:
-          $ref: '#/components/schemas/subscan_internal_model.MetadataSample'
-      type: object
-    subscan_internal_plugin_nfts_db.ItemSample:
-      properties:
-        collection_id:
-          example: '1'
-          type: string
-        collection_name:
-          example: Kusama Crowdloans
-          type: string
-        item_id:
-          example: '1'
-          type: string
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
-        owner:
+          example: 1
+          type: integer
+        holder:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transfer_count:
-          type: integer
-      type: object
-    internal_plugin_nfts_http.NftItemParams:
-      properties:
-        collection_id:
-          description: Collection id, required
-          type: string
-        item_id:
-          description: Item id, required
-          type: string
-      type: object
-    internal_plugin_nfts_http.NftsParams:
-      properties:
-        collection_id:
-          example: '1'
-          type: string
-        order:
-          description: Optional, order sort, default desc
-          enum:
-          - desc
-          - asc
-          example: desc
-          type: string
-        order_field:
-          description: Optional, order field
-          enum:
-          - items
-          - holders
-          - collection_id
-          - transfer_count
-          example: holders
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_plugin_nfts_db.NftRelateExtrinsic:
-      properties:
-        block_num:
-          example: 5296820
-          type: integer
-        block_timestamp:
-          example: 1693996722
-          type: integer
-        collection_id:
-          example: '129'
-          type: string
-        event_id:
-          example: ItemMetadataSet
-          type: string
-        event_index:
-          example: 5296820-26
-          type: string
-        extrinsic_index:
-          example: 5296820-3
-          type: string
-        id:
-          type: integer
-        item_id:
-          example: '1'
-          type: string
-        module_id:
-          example: nfts
-          type: string
-      type: object
-    subscan_internal_plugin_nfts_db.NftsSampleJson:
-      properties:
-        collection_id:
-          example: '1'
-          type: string
-        collection_image:
-          example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
-          type: string
-        collection_name:
-          example: Retrowave
-          type: string
-        holders:
-          example: 10
-          type: integer
-        items:
-          example: 10
-          type: integer
-        owner:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transfer_count:
-          example: 10
-          type: integer
       type: object
     internal_plugin_nfts_http.NftActivitiesParams:
       properties:

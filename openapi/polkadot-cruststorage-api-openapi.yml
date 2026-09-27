@@ -265,12 +265,34 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+    internal_plugin_crust_swork_http.CrustGroupsParams:
+      properties:
+        group_owner:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - power
+          - total_stake
+          - members
+          - cap
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_crust_swork_http.CrustFilesParams:
       properties:
         address:
           type: string
-        all_orders:
-          type: boolean
         page:
           minimum: 0
           type: integer
@@ -297,72 +319,6 @@ components:
       - end
       - start
       type: object
-    internal_plugin_crust_swork_http.CrustFilesParams:
-      properties:
-        address:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    internal_plugin_crust_swork_http.CrustMembersParams:
-      properties:
-        group_owner:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 1000
-          minimum: 1
-          type: integer
-      required:
-      - group_owner
-      type: object
-    internal_plugin_crust_swork_http.CrustGroupParams:
-      properties:
-        group_owner:
-          type: string
-      required:
-      - group_owner
-      type: object
-    internal_plugin_crust_swork_http.CrustGroupsParams:
-      properties:
-        group_owner:
-          type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - power
-          - total_stake
-          - members
-          - cap
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 1000
-          minimum: 1
-          type: integer
-      type: object
-    internal_plugin_crust_swork_http.CrustMemberParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
     internal_plugin_crust_swork_http.CrustOrdersParams:
       properties:
         address:
@@ -382,4 +338,48 @@ components:
           maximum: 100
           minimum: 1
           type: integer
+      type: object
+    internal_plugin_crust_swork_http.CrustMembersParams:
+      properties:
+        group_owner:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      required:
+      - group_owner
+      type: object
+    internal_plugin_crust_swork_http.CrustMemberParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_plugin_crust_swork_http.CrustMemberOrdersParams:
+      properties:
+        address:
+          type: string
+        all_orders:
+          type: boolean
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_plugin_crust_swork_http.CrustGroupParams:
+      properties:
+        group_owner:
+          type: string
+      required:
+      - group_owner
       type: object

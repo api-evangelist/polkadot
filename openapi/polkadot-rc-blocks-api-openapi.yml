@@ -363,86 +363,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Block:
-      type: object
-      properties:
-        number:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        parentHash:
-          type: string
-          description: The hash of the parent block.
-          format: hex
-        stateRoot:
-          type: string
-          description: The state root after executing this block.
-          format: hex
-        extrinsicRoot:
-          type: string
-          description: The Merkle root of the extrinsics.
-          format: hex
-        authorId:
-          type: string
-          description: The account ID of the block author (may be undefined for some chains).
-          format: ss58
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/DigestItem'
-          description: Array of `DigestItem`s associated with the block.
-        onInitialize:
-          $ref: '#/components/schemas/BlockInitialize'
-        extrinsics:
-          type: array
-          description: Array of extrinsics (inherents and transactions) within the block.
-          items:
-            $ref: '#/components/schemas/Extrinsic'
-        onFinalize:
-          $ref: '#/components/schemas/BlockFinalize'
-        finalized:
-          type: boolean
-          description: 'A boolean identifying whether the block is finalized or not. Note: on chains that do not have deterministic finality this field is omitted.'
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-      description: 'Note: Block finalization does not correspond to consensus, i.e. whether the block is in the canonical chain. It denotes the finalization of block _construction._'
-    GenericExtrinsicEra:
-      type: object
-      description: 'The return value for era can either be `mortalEra`, or `immortalEra` and is represented as an enum in substrate. `immortalEra` meaning
-
-        the transaction is valid forever. `mortalEra` consists of a tuple containing a period and phase.
-
-        ex: `"{"mortalEra": ["64", "11"]}"`. The Period is the period of validity from the block hash found in the signing material.
-
-        The Phase is the period that this transaction''s lifetime begins (and, importantly,
-
-        implies which block hash is included in the signature material).
-
-        '
-      properties:
-        mortalEra:
-          type: array
-          items:
-            type: string
-          description: Tuple of a Phase, and Period. Each item in the array will be a string formatted as an integer.
-        immortalEra:
-          type: string
-          description: Hardcoded constant '0x00'.
-          format: hex
-      example: '{"mortalEra":["64", "11"]}'
     BlockFinalize:
       type: object
       properties:
@@ -451,56 +371,6 @@ components:
           items:
             $ref: '#/components/schemas/SanitizedEvent'
       description: Object with an array of `SanitizedEvent`s that occurred during block construction finalization with the `method` and `data` for each.
-    ExtrinsicMethod:
-      type: object
-      properties:
-        pallet:
-          type: string
-        method:
-          type: string
-      description: Extrinsic method
-    BlockParaInclusions:
-      type: object
-      description: Contains all decoded parachain inclusion information for a relay chain block
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        inclusions:
-          type: array
-          description: Array of parachain inclusions in this relay chain block, sorted by paraId
-          items:
-            $ref: '#/components/schemas/ParaInclusion'
-    Signature:
-      type: object
-      properties:
-        signature:
-          type: string
-          format: hex
-        signer:
-          type: string
-          format: ss58
-      description: Object with `signature` and `signer`, or `null` if unsigned.
-    RuntimeDispatchInfo:
-      type: object
-      properties:
-        weight:
-          $ref: '#/components/schemas/WeightsV2'
-          description: Weights represented as WeightsV2 (two dimensional weights). When querying historical blocks that use WeightsV1, the weight will be returned as a weight key that points to a number represented as a string.
-        class:
-          type: string
-          description: Extrinsic class.
-          enum:
-          - Normal
-          - Operational
-          - Mandatory
-        partialFee:
-          type: string
-          description: The _inclusion fee_ of a transaction, i.e. the minimum fee required for a transaction. Includes weight and encoded length fees, but does not have access to any signed extensions, e.g. the `tip`.
-          format: unsignedInteger
-        kind:
-          type: string
-          description: Information on the partialFee that is collected. Can be either `preDispatch`, `postDispatch` or `fromEvent`. `preDispatch` means the information used to collect the fee was from `payment_queryInfo`, `postDispatch` means the information used to calculate the fee was from finalized weights for the extrinsic, and `fromEvent` means that the partialFee was abstracted from the `TransactionPayment::TransactionPaidFee` event.
-      description: RuntimeDispatchInfo for the transaction. Includes the `partialFee`.
     DigestItem:
       type: object
       properties:
@@ -513,161 +383,6 @@ components:
           type: array
           items:
             type: string
-    Extrinsic:
-      type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/ExtrinsicMethod'
-        signature:
-          $ref: '#/components/schemas/Signature'
-        nonce:
-          type: string
-          description: Account nonce, if applicable.
-          format: unsignedInteger
-        args:
-          type: object
-          description: 'Object of arguments keyed by parameter name. Note: if you are expecting an [`OpaqueCall`](https://substrate.dev/rustdocs/v2.0.0/pallet_multisig/type.OpaqueCall.html) and it is not decoded in the response (i.e. it is just a hex string), then Sidecar was not able to decode it and likely that it is not a valid call for the runtime.'
-        tip:
-          type: string
-          description: Any tip added to the transaction.
-          format: unsignedInteger
-        hash:
-          type: string
-          description: The transaction's hash.
-          format: hex
-        info:
-          $ref: '#/components/schemas/RuntimeDispatchInfo'
-        era:
-          $ref: '#/components/schemas/GenericExtrinsicEra'
-        events:
-          type: array
-          description: An array of `SanitizedEvent`s that occurred during extrinsic execution.
-          items:
-            $ref: '#/components/schemas/SanitizedEvent'
-        success:
-          type: boolean
-          description: Whether or not the extrinsic succeeded.
-        paysFee:
-          type: boolean
-          description: Whether the extrinsic requires a fee. Careful! This field relates to whether or not the extrinsic requires a fee if called as a transaction. Block authors could insert the extrinsic as an inherent in the block and not pay a fee. Always check that `paysFee` is `true` and that the extrinsic is signed when reconciling old blocks.
-    BlockHeader:
-      type: object
-      properties:
-        parentHash:
-          type: string
-          description: The hash of the parent block.
-          format: hex
-        number:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-        stateRoot:
-          type: string
-          description: The state root after executing this block.
-          format: hex
-        extrinsicRoot:
-          type: string
-          description: The Merkle root of the extrinsics.
-          format: hex
-        digest:
-          type: object
-          properties:
-            logs:
-              type: array
-              items:
-                $ref: '#/components/schemas/DigestItem'
-              description: Array of `DigestItem`s associated with the block.
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-    Error:
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-        stack:
-          type: string
-        level:
-          type: string
-    SanitizedEvent:
-      type: object
-      properties:
-        method:
-          type: string
-        data:
-          type: array
-          items:
-            type: string
-    BlockInitialize:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/SanitizedEvent'
-      description: Object with an array of `SanitizedEvent`s that occurred during block initialization with the `method` and `data` for each.
-    WeightsV2:
-      type: object
-      properties:
-        refTime:
-          type: string
-          description: The weight of computational time used based on some reference hardware.
-        proofSize:
-          type: string
-          description: The weight of storage space used by proof of validity.
-    BlockRaw:
-      type: object
-      properties:
-        number:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-        parentHash:
-          type: string
-          description: The hash of the parent block.
-          format: hex
-        stateRoot:
-          type: string
-          description: The state root after executing this block.
-          format: hex
-        extrinsicRoot:
-          type: string
-          description: The Merkle root of the extrinsics.
-          format: hex
-        digest:
-          type: object
-          properties:
-            logs:
-              type: array
-              items:
-                $ref: '#/components/schemas/DigestItem'
-              description: Array of `DigestItem`s associated with the block.
-        extrinsics:
-          type: array
-          description: Array of raw extrinsics (inherents and transactions) within the block.
-          items:
-            type: string
-        rcBlockHash:
-          type: string
-          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
-        rcBlockNumber:
-          type: string
-          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
-        ahTimestamp:
-          type: string
-          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
-          format: unsignedInteger
     ParaInclusion:
       type: object
       description: Information about a single parachain inclusion event
@@ -726,6 +441,291 @@ components:
           type: string
           description: Hash of the validation code
           format: hex
+    Block:
+      type: object
+      properties:
+        number:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        parentHash:
+          type: string
+          description: The hash of the parent block.
+          format: hex
+        stateRoot:
+          type: string
+          description: The state root after executing this block.
+          format: hex
+        extrinsicRoot:
+          type: string
+          description: The Merkle root of the extrinsics.
+          format: hex
+        authorId:
+          type: string
+          description: The account ID of the block author (may be undefined for some chains).
+          format: ss58
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DigestItem'
+          description: Array of `DigestItem`s associated with the block.
+        onInitialize:
+          $ref: '#/components/schemas/BlockInitialize'
+        extrinsics:
+          type: array
+          description: Array of extrinsics (inherents and transactions) within the block.
+          items:
+            $ref: '#/components/schemas/Extrinsic'
+        onFinalize:
+          $ref: '#/components/schemas/BlockFinalize'
+        finalized:
+          type: boolean
+          description: 'A boolean identifying whether the block is finalized or not. Note: on chains that do not have deterministic finality this field is omitted.'
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+      description: 'Note: Block finalization does not correspond to consensus, i.e. whether the block is in the canonical chain. It denotes the finalization of block _construction._'
+    SanitizedEvent:
+      type: object
+      properties:
+        method:
+          type: string
+        data:
+          type: array
+          items:
+            type: string
+    Signature:
+      type: object
+      properties:
+        signature:
+          type: string
+          format: hex
+        signer:
+          type: string
+          format: ss58
+      description: Object with `signature` and `signer`, or `null` if unsigned.
+    BlockRaw:
+      type: object
+      properties:
+        number:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+        parentHash:
+          type: string
+          description: The hash of the parent block.
+          format: hex
+        stateRoot:
+          type: string
+          description: The state root after executing this block.
+          format: hex
+        extrinsicRoot:
+          type: string
+          description: The Merkle root of the extrinsics.
+          format: hex
+        digest:
+          type: object
+          properties:
+            logs:
+              type: array
+              items:
+                $ref: '#/components/schemas/DigestItem'
+              description: Array of `DigestItem`s associated with the block.
+        extrinsics:
+          type: array
+          description: Array of raw extrinsics (inherents and transactions) within the block.
+          items:
+            type: string
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    BlockInitialize:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanitizedEvent'
+      description: Object with an array of `SanitizedEvent`s that occurred during block initialization with the `method` and `data` for each.
+    BlockParaInclusions:
+      type: object
+      description: Contains all decoded parachain inclusion information for a relay chain block
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        inclusions:
+          type: array
+          description: Array of parachain inclusions in this relay chain block, sorted by paraId
+          items:
+            $ref: '#/components/schemas/ParaInclusion'
+    WeightsV2:
+      type: object
+      properties:
+        refTime:
+          type: string
+          description: The weight of computational time used based on some reference hardware.
+        proofSize:
+          type: string
+          description: The weight of storage space used by proof of validity.
+    GenericExtrinsicEra:
+      type: object
+      description: 'The return value for era can either be `mortalEra`, or `immortalEra` and is represented as an enum in substrate. `immortalEra` meaning
+
+        the transaction is valid forever. `mortalEra` consists of a tuple containing a period and phase.
+
+        ex: `"{"mortalEra": ["64", "11"]}"`. The Period is the period of validity from the block hash found in the signing material.
+
+        The Phase is the period that this transaction''s lifetime begins (and, importantly,
+
+        implies which block hash is included in the signature material).
+
+        '
+      properties:
+        mortalEra:
+          type: array
+          items:
+            type: string
+          description: Tuple of a Phase, and Period. Each item in the array will be a string formatted as an integer.
+        immortalEra:
+          type: string
+          description: Hardcoded constant '0x00'.
+          format: hex
+      example: '{"mortalEra":["64", "11"]}'
+    BlockHeader:
+      type: object
+      properties:
+        parentHash:
+          type: string
+          description: The hash of the parent block.
+          format: hex
+        number:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+        stateRoot:
+          type: string
+          description: The state root after executing this block.
+          format: hex
+        extrinsicRoot:
+          type: string
+          description: The Merkle root of the extrinsics.
+          format: hex
+        digest:
+          type: object
+          properties:
+            logs:
+              type: array
+              items:
+                $ref: '#/components/schemas/DigestItem'
+              description: Array of `DigestItem`s associated with the block.
+        rcBlockHash:
+          type: string
+          description: The relay chain block hash used for the query. Only present when `useRcBlock` parameter is used.
+        rcBlockNumber:
+          type: string
+          description: The relay chain block number used for the query. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+        ahTimestamp:
+          type: string
+          description: The Asset Hub block timestamp. Only present when `useRcBlock` parameter is used.
+          format: unsignedInteger
+    RuntimeDispatchInfo:
+      type: object
+      properties:
+        weight:
+          $ref: '#/components/schemas/WeightsV2'
+          description: Weights represented as WeightsV2 (two dimensional weights). When querying historical blocks that use WeightsV1, the weight will be returned as a weight key that points to a number represented as a string.
+        class:
+          type: string
+          description: Extrinsic class.
+          enum:
+          - Normal
+          - Operational
+          - Mandatory
+        partialFee:
+          type: string
+          description: The _inclusion fee_ of a transaction, i.e. the minimum fee required for a transaction. Includes weight and encoded length fees, but does not have access to any signed extensions, e.g. the `tip`.
+          format: unsignedInteger
+        kind:
+          type: string
+          description: Information on the partialFee that is collected. Can be either `preDispatch`, `postDispatch` or `fromEvent`. `preDispatch` means the information used to collect the fee was from `payment_queryInfo`, `postDispatch` means the information used to calculate the fee was from finalized weights for the extrinsic, and `fromEvent` means that the partialFee was abstracted from the `TransactionPayment::TransactionPaidFee` event.
+      description: RuntimeDispatchInfo for the transaction. Includes the `partialFee`.
+    ExtrinsicMethod:
+      type: object
+      properties:
+        pallet:
+          type: string
+        method:
+          type: string
+      description: Extrinsic method
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    Extrinsic:
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/ExtrinsicMethod'
+        signature:
+          $ref: '#/components/schemas/Signature'
+        nonce:
+          type: string
+          description: Account nonce, if applicable.
+          format: unsignedInteger
+        args:
+          type: object
+          description: 'Object of arguments keyed by parameter name. Note: if you are expecting an [`OpaqueCall`](https://substrate.dev/rustdocs/v2.0.0/pallet_multisig/type.OpaqueCall.html) and it is not decoded in the response (i.e. it is just a hex string), then Sidecar was not able to decode it and likely that it is not a valid call for the runtime.'
+        tip:
+          type: string
+          description: Any tip added to the transaction.
+          format: unsignedInteger
+        hash:
+          type: string
+          description: The transaction's hash.
+          format: hex
+        info:
+          $ref: '#/components/schemas/RuntimeDispatchInfo'
+        era:
+          $ref: '#/components/schemas/GenericExtrinsicEra'
+        events:
+          type: array
+          description: An array of `SanitizedEvent`s that occurred during extrinsic execution.
+          items:
+            $ref: '#/components/schemas/SanitizedEvent'
+        success:
+          type: boolean
+          description: Whether or not the extrinsic succeeded.
+        paysFee:
+          type: boolean
+          description: Whether the extrinsic requires a fee. Careful! This field relates to whether or not the extrinsic requires a fee if called as a transaction. Block authors could insert the extrinsic as an inherent in the block and not pay a fee. Always check that `paysFee` is `true` and that the extrinsic is signed when reconciling old blocks.
     BlockIdentifiers:
       type: object
       properties:

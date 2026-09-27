@@ -115,12 +115,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_service_scan.PriceRecord:
+    internal_server_http.CurrencyConverter:
       properties:
-        price:
+        output:
           type: string
-        time:
-          type: integer
+        price:
+          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
       type: object
     internal_server_http.currencyConverterParams:
       properties:
@@ -137,6 +137,18 @@ components:
       - quote
       - value
       type: object
+    internal_server_http.currencyPriceParams:
+      properties:
+        base:
+          type: string
+        quote:
+          enum:
+          - USD
+          type: string
+        time:
+          minimum: 1
+          type: integer
+      type: object
     internal_server_http.J:
       properties:
         code:
@@ -150,24 +162,12 @@ components:
           example: Success
           type: string
       type: object
-    internal_server_http.currencyPriceParams:
+    subscan_internal_service_scan.PriceRecord:
       properties:
-        base:
-          type: string
-        quote:
-          enum:
-          - USD
+        price:
           type: string
         time:
-          minimum: 1
           type: integer
-      type: object
-    internal_server_http.CurrencyConverter:
-      properties:
-        output:
-          type: string
-        price:
-          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
       type: object
     subscan_internal_service_scan.CurrencyPrice:
       properties:

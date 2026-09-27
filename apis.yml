@@ -71,7 +71,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-accounts-api
-  name: Polkadot accounts API
+  name: Polkadot Accounts API
   description: Account balance, staking, and proxy information
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -104,7 +104,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-ahm-api
-  name: Polkadot ahm API
+  name: Polkadot Ahm API
   description: Asset Hub Migration information
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -259,7 +259,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-blocks-api
-  name: Polkadot blocks API
+  name: Polkadot Blocks API
   description: Block queries and extrinsic data
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -292,7 +292,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-capabilities-api
-  name: Polkadot capabilities API
+  name: Polkadot Capabilities API
   description: API capabilities and chain pallets
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -418,7 +418,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-coretime-api
-  name: Polkadot coretime API
+  name: Polkadot Coretime API
   description: Coretime system information
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -697,7 +697,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-health-api
-  name: Polkadot health API
+  name: Polkadot Health API
   description: Health check
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -918,7 +918,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-node-api
-  name: Polkadot node API
+  name: Polkadot Node API
   description: Connected node information
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -982,7 +982,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-pallets-api
-  name: Polkadot pallets API
+  name: Polkadot Pallets API
   description: Runtime pallet metadata, storage, constants, events, errors
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1044,7 +1044,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-paras-api
-  name: Polkadot paras API
+  name: Polkadot Paras API
   description: Parachain inclusion data
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1168,7 +1168,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-rc-api
-  name: Polkadot rc API
+  name: Polkadot Rc API
   description: Relay chain endpoints (available on parachains only)
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1385,7 +1385,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-runtime-api
-  name: Polkadot runtime API
+  name: Polkadot Runtime API
   description: Runtime specification, metadata, and code
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1604,7 +1604,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-trace-api
-  name: Polkadot trace API
+  name: Polkadot Trace API
   description: The trace API from Polkadot — 4 operation(s) for trace.
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1637,7 +1637,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-transaction-api
-  name: Polkadot transaction API
+  name: Polkadot Transaction API
   description: Transaction submission, fee estimation, and construction material
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
@@ -1701,7 +1701,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 - aid: polkadot:polkadot-version-api
-  name: Polkadot version API
+  name: Polkadot Version API
   description: API version
   humanURL: https://support.subscan.io/
   baseURL: https://polkadot.api.subscan.io
