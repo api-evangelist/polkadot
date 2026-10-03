@@ -115,13 +115,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.CurrencyConverter:
-      properties:
-        output:
-          type: string
-        price:
-          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
-      type: object
     internal_server_http.currencyConverterParams:
       properties:
         from:
@@ -148,6 +141,13 @@ components:
         time:
           minimum: 1
           type: integer
+      type: object
+    internal_server_http.CurrencyConverter:
+      properties:
+        output:
+          type: string
+        price:
+          $ref: '#/components/schemas/subscan_internal_service_scan.CurrencyPrice'
       type: object
     internal_server_http.J:
       properties:

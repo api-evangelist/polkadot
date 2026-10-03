@@ -483,16 +483,28 @@ paths:
       description: Localhost
 components:
   schemas:
-    types.ModuleErrorField:
+    subscan_internal_model.RuntimeModuleItemJson:
       properties:
-        doc:
+        call:
           items:
             type: string
           type: array
-        type:
+        event:
+          items:
+            type: string
+          type: array
+        module:
           type: string
-        type_name:
-          type: string
+      type: object
+    internal_server_http.runtimeModuleParams:
+      properties:
+        all:
+          example: true
+          type: boolean
+        spec:
+          description: Runtime version
+          example: 9430
+          type: integer
       type: object
     types.MetadataModules:
       properties:
@@ -529,6 +541,20 @@ components:
             $ref: '#/components/schemas/types.MetadataStorage'
           type: array
       type: object
+    types.PalletLookUp:
+      properties:
+        type:
+          type: integer
+      type: object
+    subscan_internal_model.RuntimeModuleJson:
+      properties:
+        modules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleItemJson'
+          type: array
+        spec_version:
+          type: integer
+      type: object
     types.MapType:
       properties:
         hasher:
@@ -544,109 +570,12 @@ components:
         value:
           type: string
       type: object
-    subscan_internal_model.RuntimeModuleJson:
-      properties:
-        modules:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RuntimeModuleItemJson'
-          type: array
-        spec_version:
-          type: integer
-      type: object
-    types.MetadataCalls:
-      properties:
-        args:
-          items:
-            $ref: '#/components/schemas/types.MetadataModuleCallArgument'
-          type: array
-        docs:
-          items:
-            type: string
-          type: array
-        lookup:
-          type: string
-        name:
-          type: string
-      type: object
-    internal_server_http.runtimeModuleParams:
-      properties:
-        all:
-          example: true
-          type: boolean
-        spec:
-          description: Runtime version
-          example: 9430
-          type: integer
-      type: object
-    types.MetadataConstants:
-      properties:
-        constants_value:
-          type: string
-        docs:
-          items:
-            type: string
-          type: array
-        name:
-          type: string
-        type:
-          type: string
-        type_value:
-          type: integer
-      type: object
     internal_server_http.runtimeMetadataParams:
       properties:
         spec:
           description: Runtime version
           example: 9430
           type: integer
-      type: object
-    types.StorageType:
-      properties:
-        PlainTypeValue:
-          type: integer
-        double_map_type:
-          $ref: '#/components/schemas/types.MapType'
-        map_type:
-          $ref: '#/components/schemas/types.MapType'
-        n_map_type:
-          $ref: '#/components/schemas/types.NMapType'
-        origin:
-          type: string
-        plain_type:
-          type: string
-      type: object
-    types.MetadataModuleError:
-      properties:
-        doc:
-          items:
-            type: string
-          type: array
-        fields:
-          items:
-            $ref: '#/components/schemas/types.ModuleErrorField'
-          type: array
-        index:
-          type: integer
-        name:
-          type: string
-      type: object
-    types.PalletLookUp:
-      properties:
-        type:
-          type: integer
-      type: object
-    subscan_internal_model.RuntimeModuleItemJson:
-      properties:
-        call:
-          items:
-            type: string
-          type: array
-        event:
-          items:
-            type: string
-          type: array
-        module:
-          type: string
       type: object
     types.NMapType:
       properties:
@@ -664,45 +593,6 @@ components:
           type: string
         value_id:
           type: integer
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    types.MetadataModuleCallArgument:
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        type_name:
-          type: string
-      type: object
-    types.MetadataStorage:
-      properties:
-        docs:
-          items:
-            type: string
-          type: array
-        fallback:
-          type: string
-        hasher:
-          type: string
-        modifier:
-          type: string
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/types.StorageType'
       type: object
     types.MetadataEvents:
       properties:
@@ -727,6 +617,17 @@ components:
         name:
           type: string
       type: object
+    types.ModuleErrorField:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
     subscan_internal_model.RuntimeVersion:
       properties:
         block_num:
@@ -736,6 +637,138 @@ components:
         spec_version:
           type: integer
       type: object
+    types.MetadataModuleCallArgument:
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        type_name:
+          type: string
+      type: object
+    types.MetadataConstants:
+      properties:
+        constants_value:
+          type: string
+        docs:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+        type:
+          type: string
+        type_value:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    types.MetadataCalls:
+      properties:
+        args:
+          items:
+            $ref: '#/components/schemas/types.MetadataModuleCallArgument'
+          type: array
+        docs:
+          items:
+            type: string
+          type: array
+        lookup:
+          type: string
+        name:
+          type: string
+      type: object
+    types.MetadataModuleError:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        fields:
+          items:
+            $ref: '#/components/schemas/types.ModuleErrorField'
+          type: array
+        index:
+          type: integer
+        name:
+          type: string
+      type: object
+    types.StorageType:
+      properties:
+        PlainTypeValue:
+          type: integer
+        double_map_type:
+          $ref: '#/components/schemas/types.MapType'
+        map_type:
+          $ref: '#/components/schemas/types.MapType'
+        n_map_type:
+          $ref: '#/components/schemas/types.NMapType'
+        origin:
+          type: string
+        plain_type:
+          type: string
+      type: object
+    types.MetadataStorage:
+      properties:
+        docs:
+          items:
+            type: string
+          type: array
+        fallback:
+          type: string
+        hasher:
+          type: string
+        modifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/types.StorageType'
+      type: object
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    ChainType:
+      type: object
+      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
+      properties:
+        live:
+          type:
+          - string
+          - 'null'
+          default: null
+        development:
+          type:
+          - string
+          - 'null'
+          default: null
+        local:
+          type:
+          - string
+          - 'null'
+          default: null
+        custom:
+          type: string
+      example: '{"live": null}'
     RuntimeCode:
       type: object
       properties:
@@ -796,39 +829,6 @@ components:
           type: object
           description: Arbitrary properties defined in the chain spec.
       description: Version information related to the runtime.
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    ChainType:
-      type: object
-      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
-      properties:
-        live:
-          type:
-          - string
-          - 'null'
-          default: null
-        development:
-          type:
-          - string
-          - 'null'
-          default: null
-        local:
-          type:
-          - string
-          - 'null'
-          default: null
-        custom:
-          type: string
-      example: '{"live": null}'
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - subscan-swagger.yaml

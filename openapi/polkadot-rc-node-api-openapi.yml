@@ -80,6 +80,14 @@ paths:
                 $ref: '#/components/schemas/NodeVersion'
 components:
   schemas:
+    NodeRole:
+      type: string
+      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
+      enum:
+      - Full
+      - LightClient
+      - Authority
+      - Sentry
     NodeVersion:
       type: object
       properties:
@@ -169,11 +177,3 @@ components:
           type: string
           description: Height of the best block on the peer's canon chain.
           format: unsignedInteger
-    NodeRole:
-      type: string
-      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
-      enum:
-      - Full
-      - LightClient
-      - Authority
-      - Sentry

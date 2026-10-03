@@ -436,32 +436,24 @@ components:
         value:
           type: string
       type: object
-    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams:
+    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem:
       properties:
         address:
           type: string
-        cursor:
+        balance:
           type: string
-        direction:
+        token_type:
           type: string
-        end_time:
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams:
+      properties:
+        page:
           minimum: 0
           type: integer
-        extrinsic_index:
-          type: string
-        max_value:
-          type: string
-        min_value:
-          type: string
         row:
           maximum: 100
           minimum: 1
           type: integer
-        start_time:
-          minimum: 0
-          type: integer
-        token_type:
-          type: string
       required:
       - row
       type: object
@@ -474,19 +466,14 @@ components:
       required:
       - address
       type: object
-    internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams:
+    internal_pluginv2_customizeds_midnight.MidContractActionJson:
       properties:
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        token_type:
+        contract:
           type: string
-      required:
-      - row
+        entry_point:
+          type: string
+        operations_type:
+          type: string
       type: object
     internal_pluginv2_customizeds_midnight.midnightTransactionParams:
       properties:
@@ -494,77 +481,6 @@ components:
           type: string
         tx_hash:
           type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidCallJson:
-      properties:
-        contract:
-          type: string
-        contract_actions:
-          items:
-            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidContractActionJson'
-          type: array
-        cost_fee:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        id:
-          type: integer
-        public_identifiers:
-          items:
-            type: string
-          type: array
-        timestamp:
-          type: integer
-        tx_hash:
-          type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult:
-      properties:
-        has_more:
-          type: boolean
-        list:
-          items:
-            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem'
-          type: array
-        next_cursor:
-          type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult:
-      properties:
-        address:
-          type: string
-        balances:
-          additionalProperties:
-            type: string
-          type: object
-      type: object
-    internal_pluginv2_customizeds_midnight.MidnightContractsParams:
-      properties:
-        order:
-          description: asc or desc
-          enum:
-          - asc
-          - desc
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        sort:
-          description: sort by transaction_count or verify_time
-          enum:
-          - transaction_count
-          - verify_time
-          type: string
-        verified:
-          type: boolean
-      required:
-      - row
       type: object
     internal_pluginv2_customizeds_midnight.MidContract:
       properties:
@@ -606,74 +522,43 @@ components:
           type: boolean
         viewer: {}
       type: object
-    internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem:
-      properties:
-        token_type:
-          type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidnightContractParams:
+    internal_pluginv2_customizeds_midnight.MidCallJson:
       properties:
         contract:
           type: string
-      required:
-      - contract
-      type: object
-    internal_pluginv2_customizeds_midnight.MidnightContractState:
-      properties:
-        contract:
+        contract_actions:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidContractActionJson'
+          type: array
+        cost_fee:
           type: string
-        hash:
-          description: optional, if not provided, get latest state
+        event_index:
           type: string
-      required:
-      - contract
-      type: object
-    internal_pluginv2_customizeds_midnight.MidnightUnshieldedTokenTypeListParams:
-      properties:
-        page:
-          minimum: 0
+        extrinsic_index:
+          type: string
+        id:
           type: integer
-        row:
-          maximum: 100
-          minimum: 1
+        public_identifiers:
+          items:
+            type: string
+          type: array
+        timestamp:
           type: integer
-      required:
-      - row
+        tx_hash:
+          type: string
       type: object
     internal_pluginv2_customizeds_midnight.VerificationKey:
       additionalProperties:
         type: string
       type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidContractActionJson:
-      properties:
-        contract:
-          type: string
-        entry_point:
-          type: string
-        operations_type:
-          type: string
-      type: object
-    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceListItem:
+    internal_pluginv2_customizeds_midnight.MidUnshieldedBalanceResult:
       properties:
         address:
           type: string
-        balance:
-          type: string
-        token_type:
-          type: string
+        balances:
+          additionalProperties:
+            type: string
+          type: object
       type: object
     internal_pluginv2_customizeds_midnight.MidnightTransactionsParams:
       properties:
@@ -701,4 +586,119 @@ components:
           type: string
       required:
       - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractState:
+      properties:
+        contract:
+          type: string
+        hash:
+          description: optional, if not provided, get latest state
+          type: string
+      required:
+      - contract
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractParams:
+      properties:
+        contract:
+          type: string
+      required:
+      - contract
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightContractsParams:
+      properties:
+        order:
+          description: asc or desc
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        sort:
+          description: sort by transaction_count or verify_time
+          enum:
+          - transaction_count
+          - verify_time
+          type: string
+        verified:
+          type: boolean
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerParams:
+      properties:
+        address:
+          type: string
+        cursor:
+          type: string
+        direction:
+          type: string
+        end_time:
+          minimum: 0
+          type: integer
+        extrinsic_index:
+          type: string
+        max_value:
+          type: string
+        min_value:
+          type: string
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        start_time:
+          minimum: 0
+          type: integer
+        token_type:
+          type: string
+      required:
+      - row
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedBalanceListParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        token_type:
+          type: string
+      required:
+      - row
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidnightUnshieldedLedgerResult:
+      properties:
+        has_more:
+          type: boolean
+        list:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_customizeds_midnight.MidUnshieldedLedgerItem'
+          type: array
+        next_cursor:
+          type: string
+      type: object
+    internal_pluginv2_customizeds_midnight.MidUnshieldedTokenTypeListItem:
+      properties:
+        token_type:
+          type: string
       type: object

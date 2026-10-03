@@ -219,6 +219,18 @@ components:
       required:
       - row
       type: object
+    internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
+      properties:
+        page:
+          minimum: 0
+          type: integer
+        pool_id:
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
     internal_pluginv2_pallets_nominationPool.nominationPoolsListParams:
       properties:
         multi_state:
@@ -233,8 +245,10 @@ components:
           - Destroyed
           type: string
       type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsActivitiesParams:
+    internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
       properties:
+        address:
+          type: string
         page:
           minimum: 0
           type: integer
@@ -255,19 +269,5 @@ components:
     internal_pluginv2_pallets_nominationPool.nominationPoolsInfoParams:
       properties:
         pool_id:
-          type: integer
-      type: object
-    internal_pluginv2_pallets_nominationPool.nominationPoolsRewardsParams:
-      properties:
-        address:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        pool_id:
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
           type: integer
       type: object

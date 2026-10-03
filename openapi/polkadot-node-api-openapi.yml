@@ -175,19 +175,6 @@ paths:
       description: Localhost
 components:
   schemas:
-    NodeVersionResponse:
-      type: object
-      required:
-      - clientVersion
-      - clientImplName
-      - chain
-      properties:
-        chain:
-          type: string
-        clientImplName:
-          type: string
-        clientVersion:
-          type: string
     TransactionPoolEntry:
       type: object
       required:
@@ -219,6 +206,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionPoolEntry'
+    NodeVersionResponse:
+      type: object
+      required:
+      - clientVersion
+      - clientImplName
+      - chain
+      properties:
+        chain:
+          type: string
+        clientImplName:
+          type: string
+        clientVersion:
+          type: string
+    NodeRole:
+      type: string
+      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
+      enum:
+      - Full
+      - LightClient
+      - Authority
+      - Sentry
     NodeVersion:
       type: object
       properties:
@@ -308,14 +316,6 @@ components:
           type: string
           description: Height of the best block on the peer's canon chain.
           format: unsignedInteger
-    NodeRole:
-      type: string
-      description: Role of this node. (N.B. Sentry nodes are being deprecated.)
-      enum:
-      - Full
-      - LightClient
-      - Authority
-      - Sentry
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - substrate-api-sidecar-openapi.yaml

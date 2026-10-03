@@ -113,6 +113,21 @@ components:
       required:
       - log_index
       type: object
+    subscan_internal_model.ChainLogJson:
+      properties:
+        block_num:
+          type: integer
+        data:
+          type: string
+        engine:
+          type: string
+        id:
+          type: integer
+        log_index:
+          type: string
+        log_type:
+          type: string
+      type: object
     internal_server_http.logsParams:
       properties:
         after_id:
@@ -136,20 +151,5 @@ components:
           minimum: 1
           type: integer
         type:
-          type: string
-      type: object
-    subscan_internal_model.ChainLogJson:
-      properties:
-        block_num:
-          type: integer
-        data:
-          type: string
-        engine:
-          type: string
-        id:
-          type: integer
-        log_index:
-          type: string
-        log_type:
           type: string
       type: object

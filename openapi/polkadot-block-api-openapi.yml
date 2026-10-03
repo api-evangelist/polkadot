@@ -125,46 +125,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.SampleIdentity:
+    subscan_internal_model.RegistrationJudgementJson:
       properties:
-        display:
+        index:
+          type: integer
+        judgement:
           type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.SampleBlockV2Json:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        additional_meta:
-          additionalProperties: true
-          type: object
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        event_count:
-          type: integer
-        extrinsics_count:
-          type: integer
-        finalized:
-          type: boolean
-        hash:
-          type: string
-        max_proof_size:
-          type: integer
-        max_ref_time:
-          type: integer
-        proof_size:
-          type: integer
-        ref_time:
-          type: integer
       type: object
     subscan_internal_model.ChainLogJson:
       properties:
@@ -195,16 +161,12 @@ components:
         only_head:
           type: boolean
       type: object
-    subscan_internal_model.AccountParentJson:
+    internal_server_http.blockHeaderParams:
       properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
+        block_num:
+          example: 10000
+          minimum: 0
+          type: integer
       type: object
     subscan_internal_model.MerkleTag:
       properties:
@@ -215,13 +177,6 @@ components:
         tag_subtype:
           type: string
         tag_type:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
           type: string
       type: object
     internal_server_http.blocksParams:
@@ -243,6 +198,82 @@ components:
           maximum: 100
           minimum: 1
           type: integer
+      type: object
+    subscan_internal_model.SampleBlockV2Json:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        additional_meta:
+          additionalProperties: true
+          type: object
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_count:
+          type: integer
+        extrinsics_count:
+          type: integer
+        finalized:
+          type: boolean
+        hash:
+          type: string
+        max_proof_size:
+          type: integer
+        max_ref_time:
+          type: integer
+        proof_size:
+          type: integer
+        ref_time:
+          type: integer
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
       type: object
     subscan_internal_model.ChainBlockJson:
       properties:
@@ -294,6 +325,31 @@ components:
         validator:
           type: string
       type: object
+    subscan_internal_model.ChainEventJson:
+      properties:
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        event_id:
+          type: string
+        event_idx:
+          type: integer
+        event_index:
+          type: string
+        extrinsic_hash:
+          type: string
+        extrinsic_idx:
+          type: integer
+        finalized:
+          type: boolean
+        module_id:
+          type: string
+        params:
+          type: string
+        phase:
+          type: integer
+      type: object
     subscan_internal_model.ChainExtrinsicJson:
       properties:
         account_display:
@@ -331,18 +387,19 @@ components:
         success:
           type: boolean
       type: object
-    internal_server_http.blockHeaderParams:
+    subscan_internal_model.BlockHeader:
       properties:
-        block_num:
-          example: 10000
-          minimum: 0
+        block_number:
           type: integer
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
+        digest:
+          items:
+            type: string
+          type: array
+        extrinsics_root:
           type: string
-        verify_source:
+        parent_hash:
+          type: string
+        state_root:
           type: string
       type: object
     internal_server_http.J:
@@ -358,71 +415,14 @@ components:
           example: Success
           type: string
       type: object
-    subscan_internal_model.AccountDisplay:
+    subscan_internal_model.AccountParentJson:
       properties:
-        account_index:
-          type: string
         address:
-          description: Current network account
           type: string
         display:
           type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
         identity:
           type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    subscan_internal_model.ChainEventJson:
-      properties:
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        event_id:
-          type: string
-        event_idx:
-          type: integer
-        event_index:
-          type: string
-        extrinsic_hash:
-          type: string
-        extrinsic_idx:
-          type: integer
-        finalized:
-          type: boolean
-        module_id:
-          type: string
-        params:
-          type: string
-        phase:
-          type: integer
-      type: object
-    subscan_internal_model.BlockHeader:
-      properties:
-        block_number:
-          type: integer
-        digest:
-          items:
-            type: string
-          type: array
-        extrinsics_root:
-          type: string
-        parent_hash:
-          type: string
-        state_root:
+        sub_symbol:
           type: string
       type: object

@@ -110,6 +110,61 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    subscan_internal_plugin_spaceTime_db.Holder:
+      properties:
+        address:
+          type: string
+        balance:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_plugin_spaceTime_http.transferParams:
+      properties:
+        address:
+          type: string
+        after_id:
+          type: integer
+        page:
+          minimum: 0
+          type: integer
+        receiver:
+          type: string
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        sender:
+          type: string
+      type: object
+    subscan_internal_plugin_spaceTime_db.HolderDisplay:
+      properties:
+        address:
+          type: string
+        is_contract:
+          type: boolean
+        is_verified:
+          type: boolean
+        name:
+          type: string
+      type: object
     subscan_internal_plugin_spaceTime_db.TransferJson:
       properties:
         amount:
@@ -137,30 +192,6 @@ components:
         transaction_hash:
           type: string
       type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_plugin_spaceTime_db.HolderDisplay:
-      properties:
-        address:
-          type: string
-        is_contract:
-          type: boolean
-        is_verified:
-          type: boolean
-        name:
-          type: string
-      type: object
     internal_plugin_spaceTime_http.holderParams:
       properties:
         page:
@@ -170,35 +201,4 @@ components:
           maximum: 100
           minimum: 1
           type: integer
-      type: object
-    subscan_internal_plugin_spaceTime_db.Holder:
-      properties:
-        address:
-          type: string
-        balance:
-          type: string
-        is_contract:
-          type: boolean
-        is_verified:
-          type: boolean
-        name:
-          type: string
-      type: object
-    internal_plugin_spaceTime_http.transferParams:
-      properties:
-        address:
-          type: string
-        after_id:
-          type: integer
-        page:
-          minimum: 0
-          type: integer
-        receiver:
-          type: string
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        sender:
-          type: string
       type: object

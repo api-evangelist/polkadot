@@ -329,85 +329,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.tokensV2Param:
-      properties:
-        include_extends:
-          type: boolean
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        order_field:
-          enum:
-          - currency_id
-          - symbol
-          - holders
-          - token_id
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        provider:
-          type: string
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        search:
-          description: symbol
-          maxLength: 256
-          minLength: 1
-          type: string
-      type: object
-    internal_server_http.tokensSearchParam:
-      properties:
-        include_extends:
-          type: boolean
-        unique_ids:
-          items:
-            type: string
-          type: array
-      type: object
-    subscan_internal_model.TokenSearchJson:
-      properties:
-        category:
-          type: string
-        contract:
-          type: string
-        currency_id:
-          type: string
-        price:
-          type: string
-        symbol:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    subscan_internal_model.AssetTokenPriceJson:
-      properties:
-        price:
-          type: string
-        price_change:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    internal_server_http.providerActiveJson:
-      properties:
-        can_legacy:
-          type: boolean
-        id:
-          type: string
-        is_primary:
-          type: boolean
-        name:
-          type: string
-      type: object
     subscan_internal_service_scan_token.Token:
       properties:
         asset_type:
@@ -457,15 +378,6 @@ components:
         vesting_balance:
           type: string
       type: object
-    subscan_internal_service_scan_token.ExternalDataSource:
-      properties:
-        authorization_source:
-          type: string
-        circulating_supply:
-          type: string
-        source:
-          type: string
-      type: object
     subscan_internal_service_scan_token.AssetType:
       enum:
       - native
@@ -474,12 +386,51 @@ components:
       x-enum-varnames:
       - TypeNative
       - TypeBuiltin
-    internal_server_http.searchTokenParams:
+    internal_server_http.tokensV2Param:
       properties:
-        key:
+        include_extends:
+          type: boolean
+        order:
+          enum:
+          - asc
+          - desc
           type: string
-      required:
-      - key
+        order_field:
+          enum:
+          - currency_id
+          - symbol
+          - holders
+          - token_id
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        provider:
+          type: string
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        search:
+          description: symbol
+          maxLength: 256
+          minLength: 1
+          type: string
+      type: object
+    internal_server_http.providerActiveJson:
+      properties:
+        can_legacy:
+          type: boolean
+        id:
+          type: string
+        is_primary:
+          type: boolean
+        name:
+          type: string
       type: object
     internal_server_http.tokenJson:
       properties:
@@ -509,10 +460,30 @@ components:
         unique_id:
           type: string
       type: object
+    internal_server_http.TokenUniqueIDParams:
+      properties:
+        new_algorithm:
+          description: use new algorithm sum(free - max(0, frozen - reserve))
+          type: boolean
+      type: object
     internal_server_http.tokenNativeParam:
       properties:
         include_extends:
           type: boolean
+      type: object
+    subscan_internal_model.AssetTokenPriceJson:
+      properties:
+        price:
+          type: string
+        price_change:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.tokenExtendsJson:
+      properties:
+        holders:
+          type: integer
       type: object
     internal_server_http.J:
       properties:
@@ -527,14 +498,43 @@ components:
           example: Success
           type: string
       type: object
-    internal_server_http.tokenExtendsJson:
+    internal_server_http.tokensSearchParam:
       properties:
-        holders:
-          type: integer
-      type: object
-    internal_server_http.TokenUniqueIDParams:
-      properties:
-        new_algorithm:
-          description: use new algorithm sum(free - max(0, frozen - reserve))
+        include_extends:
           type: boolean
+        unique_ids:
+          items:
+            type: string
+          type: array
+      type: object
+    subscan_internal_service_scan_token.ExternalDataSource:
+      properties:
+        authorization_source:
+          type: string
+        circulating_supply:
+          type: string
+        source:
+          type: string
+      type: object
+    subscan_internal_model.TokenSearchJson:
+      properties:
+        category:
+          type: string
+        contract:
+          type: string
+        currency_id:
+          type: string
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.searchTokenParams:
+      properties:
+        key:
+          type: string
+      required:
+      - key
       type: object
