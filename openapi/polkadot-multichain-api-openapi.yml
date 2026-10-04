@@ -227,31 +227,48 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_server_http.accountBalanceValueStatParams:
+    subscan_internal_service_scan.DefiBifrostFarming:
+      properties:
+        bonded_redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        redeem:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        token_unique_id:
+          type: string
+      type: object
+    internal_server_http.identitiesParams:
       properties:
         address:
           type: string
       required:
       - address
       type: object
-    subscan_internal_service_scan.StakingV2:
+    subscan_internal_service_scan.DefiLoopStake:
       properties:
-        network:
+        bonded:
+          type: string
+        price:
           type: string
         token_unique_id:
           type: string
-        unclaimed:
+        unbonding:
           type: string
       type: object
-    subscan_internal_dao.AccountBalanceValueHistory:
+    subscan_internal_service_scan.DefiLiquidStaking:
       properties:
-        asset_value:
+        bonded:
           type: string
-        date:
+        exchange_ratio:
           type: string
-        defi_value:
+        price:
           type: string
-        value:
+        token_unique_id:
+          type: string
+        unbonding:
           type: string
       type: object
     internal_server_http.accountBalanceValueHistoryParams:
@@ -267,89 +284,6 @@ components:
       - end
       - start
       type: object
-    subscan_internal_service_scan.DefiLiquidStaking:
-      properties:
-        bonded:
-          type: string
-        exchange_ratio:
-          type: string
-        price:
-          type: string
-        token_unique_id:
-          type: string
-        unbonding:
-          type: string
-      type: object
-    internal_server_http.multiChainAccountParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_service_scan.DefiNominationPool:
-      properties:
-        SENJ_amount:
-          type: string
-        bonded:
-          type: string
-        network:
-          type: string
-        token_unique_id:
-          type: string
-        unbonding:
-          type: string
-        unclaimed:
-          type: string
-      type: object
-    internal_server_http.identitiesParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.LpTokenInfo:
-      properties:
-        amount:
-          type: string
-        decimals:
-          type: integer
-        price:
-          type: string
-        symbol:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_service_scan.DefiBifrost:
-      properties:
-        farming:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrostFarming'
-          type: array
-        liquid_staking:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLiquidStaking'
-          type: array
-        loop_stake:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLoopStake'
-          type: array
-      type: object
     subscan_internal_service_scan.DefiStaking:
       properties:
         enable_staking_network:
@@ -360,6 +294,19 @@ components:
           items:
             $ref: '#/components/schemas/subscan_internal_service_scan.StakingV2'
           type: array
+      type: object
+    subscan_internal_service_scan.DefiJson:
+      properties:
+        bifrost_defi:
+          additionalProperties:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrost'
+          type: object
+        defi_nomination_pool:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiNominationPool'
+          type: array
+        staking:
+          $ref: '#/components/schemas/subscan_internal_service_scan.DefiStaking'
       type: object
     subscan_internal_model.AssetsJson:
       properties:
@@ -402,40 +349,93 @@ components:
         unbonding:
           type: string
       type: object
-    subscan_internal_service_scan.DefiBifrostFarming:
+    subscan_internal_service_scan.DefiBifrost:
       properties:
-        bonded_redeem:
+        farming:
           items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrostFarming'
           type: array
-        redeem:
+        liquid_staking:
           items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLiquidStaking'
           type: array
-        token_unique_id:
+        loop_stake:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.DefiLoopStake'
+          type: array
+      type: object
+    subscan_internal_model.LpTokenInfo:
+      properties:
+        amount:
+          type: string
+        decimals:
+          type: integer
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
           type: string
       type: object
-    subscan_internal_service_scan.DefiJson:
+    subscan_internal_dao.AccountBalanceValueHistory:
       properties:
-        bifrost_defi:
-          additionalProperties:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiBifrost'
-          type: object
-        defi_nomination_pool:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.DefiNominationPool'
-          type: array
-        staking:
-          $ref: '#/components/schemas/subscan_internal_service_scan.DefiStaking'
+        asset_value:
+          type: string
+        date:
+          type: string
+        defi_value:
+          type: string
+        value:
+          type: string
       type: object
-    subscan_internal_service_scan.DefiLoopStake:
+    subscan_internal_service_scan.DefiNominationPool:
       properties:
+        SENJ_amount:
+          type: string
         bonded:
           type: string
-        price:
+        network:
           type: string
         token_unique_id:
           type: string
         unbonding:
           type: string
+        unclaimed:
+          type: string
+      type: object
+    subscan_internal_service_scan.StakingV2:
+      properties:
+        network:
+          type: string
+        token_unique_id:
+          type: string
+        unclaimed:
+          type: string
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_server_http.multiChainAccountParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_server_http.accountBalanceValueStatParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
       type: object

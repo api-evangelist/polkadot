@@ -265,20 +265,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_crust_swork_http.CrustFilesParams:
-      properties:
-        address:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
     internal_plugin_crust_swork_http.CrustMemberOrdersParams:
       properties:
         address:
@@ -294,6 +280,50 @@ components:
           type: integer
       required:
       - address
+      type: object
+    internal_plugin_crust_swork_http.CrustGroupParams:
+      properties:
+        group_owner:
+          type: string
+      required:
+      - group_owner
+      type: object
+    internal_plugin_crust_swork_http.CrustFilesParams:
+      properties:
+        address:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_plugin_crust_swork_http.CrustMemberParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
+      properties:
+        category:
+          enum:
+          - nodes
+          - storage
+          - files
+          type: string
+        end:
+          type: string
+        start:
+          type: string
+      required:
+      - end
+      - start
       type: object
     internal_plugin_crust_swork_http.CrustOrdersParams:
       properties:
@@ -339,13 +369,6 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_plugin_crust_swork_http.CrustMemberParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
     internal_plugin_crust_swork_http.CrustMembersParams:
       properties:
         group_owner:
@@ -359,27 +382,4 @@ components:
           type: integer
       required:
       - group_owner
-      type: object
-    internal_plugin_crust_swork_http.CrustGroupParams:
-      properties:
-        group_owner:
-          type: string
-      required:
-      - group_owner
-      type: object
-    internal_plugin_crust_swork_http.CrustStorageDailyStatParams:
-      properties:
-        category:
-          enum:
-          - nodes
-          - storage
-          - files
-          type: string
-        end:
-          type: string
-        start:
-          type: string
-      required:
-      - end
-      - start
       type: object

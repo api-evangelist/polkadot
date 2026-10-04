@@ -404,118 +404,18 @@ paths:
       description: Localhost
 components:
   schemas:
-    subscan_internal_model.ContractAction:
-      enum:
-      - Instantiated
-      - Terminated
-      - ContractCodeUpdated
-      type: string
-      x-enum-varnames:
-      - ContractInstantiated
-      - ContractTerminated
-      - ContractCodeUpdated
-    internal_server_http.contractsListParams:
+    subscan_internal_model.ContractTransactionListJson:
       properties:
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - verify_time
-          - transaction_count
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        verified:
-          type: boolean
-      type: object
-    subscan_internal_model.ContractAccountListJson:
-      properties:
-        balance:
-          type: string
-        contract_display:
+        account_display:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        owner_display:
+        block_timestamp:
+          type: integer
+        contract_address:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transaction_count:
-          type: integer
-        verify_time:
-          type: integer
-      type: object
-    internal_server_http.contractInfoParams:
-      properties:
-        contract:
+        extrinsic_index:
           type: string
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
+        success:
           type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
       type: object
     internal_server_http.contractTxsParams:
       properties:
@@ -558,38 +458,66 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_model.ThirdPartyCompiler:
+    subscan_internal_model.ContractTimeline:
       properties:
-        digest:
-          type: string
-        repository_tag:
-          type: string
-        worker_dir:
-          type: string
-      type: object
-    subscan_internal_model.ContractTransactionListJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        action:
+          $ref: '#/components/schemas/subscan_internal_model.ContractAction'
         block_timestamp:
           type: integer
-        contract_address:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        event_index:
+          type: string
         extrinsic_index:
           type: string
-        success:
-          type: boolean
       type: object
-    subscan_internal_model.MerkleTag:
+    subscan_internal_model.ContractEventJson:
       properties:
-        address_type:
+        block_timestamp:
+          type: integer
+        data:
           type: string
-        tag_name:
+        event_index:
           type: string
-        tag_subtype:
+        extrinsic_index:
           type: string
-        tag_type:
+      type: object
+    subscan_internal_model.ContractAccountListJson:
+      properties:
+        balance:
           type: string
+        contract_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        owner_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        transaction_count:
+          type: integer
+        verify_time:
+          type: integer
+      type: object
+    internal_server_http.contractsListParams:
+      properties:
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - verify_time
+          - transaction_count
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        verified:
+          type: boolean
       type: object
     subscan_internal_model.SampleIdentity:
       properties:
@@ -635,6 +563,44 @@ components:
         verify_time:
           type: integer
       type: object
+    internal_server_http.contractTimelineParams:
+      properties:
+        contract:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.ContractAction:
+      enum:
+      - Instantiated
+      - Terminated
+      - ContractCodeUpdated
+      type: string
+      x-enum-varnames:
+      - ContractInstantiated
+      - ContractTerminated
+      - ContractCodeUpdated
+    internal_server_http.contractInfoParams:
+      properties:
+        contract:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
     subscan_internal_model.RegistrationJudgementJson:
       properties:
         index:
@@ -642,33 +608,70 @@ components:
         judgement:
           type: string
       type: object
-    subscan_internal_model.ContractEventJson:
+    subscan_internal_model.AccountParentJson:
       properties:
-        block_timestamp:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
           type: integer
-        data:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-      type: object
-    subscan_internal_model.ContractTimeline:
-      properties:
-        action:
-          $ref: '#/components/schemas/subscan_internal_model.ContractAction'
-        block_timestamp:
+        data: {}
+        generated_at:
+          example: 1699600641
           type: integer
-        event_index:
-          type: string
-        extrinsic_index:
+        message:
+          example: Success
           type: string
       type: object
-    internal_server_http.contractTimelineParams:
+    subscan_internal_model.ThirdPartyCompiler:
       properties:
-        contract:
+        digest:
+          type: string
+        repository_tag:
+          type: string
+        worker_dir:
           type: string
       type: object
+    ContractMetadata:
+      type: object
+      description: Metadata used to instantiate a ContractPromise. This metadata can be generated by compiling the contract you are querying.
     Error:
       type: object
       properties:
@@ -697,9 +700,6 @@ components:
           description: Will result in an Ok or Err object depending on the result of the query.
         storageDeposit:
           type: object
-    ContractMetadata:
-      type: object
-      description: Metadata used to instantiate a ContractPromise. This metadata can be generated by compiling the contract you are querying.
   requestBodies:
     ContractMetadata:
       content:

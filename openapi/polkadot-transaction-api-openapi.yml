@@ -498,6 +498,107 @@ paths:
       description: Localhost
 components:
   schemas:
+    ParseRequest:
+      type: object
+      description: Request body for transaction parsing.
+      properties:
+        tx:
+          type:
+          - string
+          - 'null'
+          description: Hex-encoded extrinsic with optional 0x prefix.
+          example: 0x4902840004316d995f...
+    SignerId:
+      type: object
+      description: Signer identifier.
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: SS58-encoded account address
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    FeeEstimateResponse:
+      type: object
+      required:
+      - weight
+      - class
+      - partialFee
+      properties:
+        class:
+          type: string
+        partialFee:
+          type: string
+        weight:
+          $ref: '#/components/schemas/Weight'
+    MethodInfo:
+      type: object
+      description: Method information (pallet and method name).
+      required:
+      - pallet
+      - method
+      properties:
+        method:
+          type: string
+          description: Method name in lowerCamelCase
+          example: transferAllowDeath
+        pallet:
+          type: string
+          description: Pallet name in lowerCamelCase
+          example: balances
+    ParseError:
+      type: object
+      description: Error response for transaction parsing failures.
+      required:
+      - code
+      - error
+      - transaction
+      - cause
+      - stack
+      properties:
+        cause:
+          type: string
+          description: Cause of the error
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code
+          example: 400
+          minimum: 0
+        error:
+          type: string
+          description: Error message
+          example: Failed to parse transaction.
+        stack:
+          type: string
+          description: Stack trace
+        transaction:
+          type: string
+          description: The transaction that failed to parse
+    Weight:
+      type: object
+      required:
+      - refTime
+      - proofSize
+      properties:
+        proofSize:
+          type: string
+        refTime:
+          type: string
+    SignatureInfo:
+      type: object
+      description: Signature information for signed extrinsics.
+      required:
+      - signer
+      - signature
+      properties:
+        signature:
+          type: string
+          description: Hex-encoded signature
+          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
+        signer:
+          $ref: '#/components/schemas/SignerId'
+          description: Signer account
     ParseResponse:
       type: object
       description: Response for successful transaction parsing.
@@ -542,107 +643,72 @@ components:
           - 'null'
           description: Tip amount (only present for signed extrinsics)
           example: '0'
-    FeeEstimateResponse:
+    BlockIdentifiers:
       type: object
-      required:
-      - weight
-      - class
-      - partialFee
       properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    DryRunBody:
+      type: object
+      properties:
+        at:
+          type: string
+          format: unsignedInteger
+        tx:
+          type: string
+          format: hex
+        senderAddress:
+          type: string
+          format: ss58
+    TransactionFeeEstimate:
+      type: object
+      properties:
+        weight:
+          $ref: '#/components/schemas/WeightsV2'
+          description: Weights represented as WeightsV2 (two dimensional weights). When querying historical blocks that use WeightsV1, the weight will be returned as a weight key that points to a number represented as a string.
         class:
           type: string
+          description: Extrinsic class.
+          enum:
+          - Normal
+          - Operational
+          - Mandatory
         partialFee:
           type: string
-        weight:
-          $ref: '#/components/schemas/Weight'
-    Weight:
+          description: Expected inclusion fee for the transaction. Note that the fee rate changes up to 30% in a 24 hour period and this will not be the exact fee.
+          format: unsignedInteger
+      description: 'Note: `partialFee` does not include any tips that you may add to increase a transaction''s priority. See [compute_fee](https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.compute_fee).'
+    WeightsV2:
       type: object
-      required:
-      - refTime
-      - proofSize
       properties:
-        proofSize:
-          type: string
         refTime:
           type: string
-    SignerId:
-      type: object
-      description: Signer identifier.
-      required:
-      - id
-      properties:
-        id:
+          description: The weight of computational time used based on some reference hardware.
+        proofSize:
           type: string
-          description: SS58-encoded account address
-          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-    ParseRequest:
+          description: The weight of storage space used by proof of validity.
+    TransactionFailedToSubmit:
       type: object
-      description: Request body for transaction parsing.
       properties:
-        tx:
-          type:
-          - string
-          - 'null'
-          description: Hex-encoded extrinsic with optional 0x prefix.
-          example: 0x4902840004316d995f...
-    ParseError:
-      type: object
-      description: Error response for transaction parsing failures.
-      required:
-      - code
-      - error
-      - transaction
-      - cause
-      - stack
-      properties:
-        cause:
-          type: string
-          description: Cause of the error
         code:
-          type: integer
-          format: int32
-          description: HTTP status code
-          example: 400
-          minimum: 0
+          type: number
         error:
           type: string
-          description: Error message
-          example: Failed to parse transaction.
-        stack:
-          type: string
-          description: Stack trace
+          description: Failed to submit transaction.
         transaction:
           type: string
-          description: The transaction that failed to parse
-    SignatureInfo:
-      type: object
-      description: Signature information for signed extrinsics.
-      required:
-      - signer
-      - signature
-      properties:
-        signature:
+          format: hex
+        cause:
           type: string
-          description: Hex-encoded signature
-          example: 0xa24152685f52e4726466e80247d965bb3d349637fc8a1ea6f7cc1451ddec98b5...
-        signer:
-          $ref: '#/components/schemas/SignerId'
-          description: Signer account
-    MethodInfo:
-      type: object
-      description: Method information (pallet and method name).
-      required:
-      - pallet
-      - method
-      properties:
-        method:
+        stack:
           type: string
-          description: Method name in lowerCamelCase
-          example: transferAllowDeath
-        pallet:
-          type: string
-          description: Pallet name in lowerCamelCase
-          example: balances
+      description: Error message when the node rejects the submitted transaction.
     TransactionDryRun:
       type: object
       properties:
@@ -659,129 +725,6 @@ components:
           - $ref: '#/components/schemas/TransactionDispatchError'
           - $ref: '#/components/schemas/TransactionValidityError'
       description: "References:\n  - `PostDispatchInfo`: https://docs.rs/frame-support/38.0.0/frame_support/dispatch/struct.PostDispatchInfo.html\n  - `DispatchError`: https://docs.rs/sp-runtime/39.0.1/sp_runtime/enum.DispatchError.html\n  - `Error Type`: https://paritytech.github.io/polkadot-sdk/master/xcm_runtime_apis/dry_run/enum.Error.html"
-    TransactionFeeEstimateFailure:
-      type: object
-      properties:
-        code:
-          type: number
-        at:
-          type: object
-          properties:
-            hash:
-              type: string
-        error:
-          type: string
-          description: Error description.
-        transaction:
-          type: string
-          format: hex
-        block:
-          type: string
-          description: Block hash of the block fee estimation was attempted at.
-        cause:
-          type: string
-          description: Error message from the client.
-        stack:
-          type: string
-    DryRunBody:
-      type: object
-      properties:
-        at:
-          type: string
-          format: unsignedInteger
-        tx:
-          type: string
-          format: hex
-        senderAddress:
-          type: string
-          format: ss58
-    TransactionDispatchOutcome:
-      type: object
-      description: The result of a valid transaction submitted via the `dry-run` endpoint.
-      properties:
-        actualWeight:
-          type: string
-          format: unsignedInteger
-          description: The actual weight of the transaction.
-        paysFee:
-          type: string
-          format: boolean
-          description: Whether the transaction pays a fee.
-    TransactionFailure:
-      oneOf:
-      - $ref: '#/components/schemas/TransactionFailedToSubmit'
-      - $ref: '#/components/schemas/TransactionFailedToParse'
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
-    MetadataBlobBody:
-      type: object
-      properties:
-        tx:
-          type: string
-          format: hex
-          description: Full encoded extrinsic as a hex string.
-        txAdditionalSigned:
-          type: string
-          format: hex
-          description: Optional additional signed data for the extrinsic. Used together with `tx`.
-        callData:
-          type: string
-          format: hex
-          description: Call data as hex string. Use this alongside includedInExtrinsic and includedInSignedData instead of `tx`.
-        includedInExtrinsic:
-          type: string
-          format: hex
-          description: Signed extension data included in the extrinsic. Required when using callData.
-        includedInSignedData:
-          type: string
-          format: hex
-          description: Signed extension data included in the signature. Required when using callData.
-        at:
-          type: string
-          description: Block hash or number to query at. Defaults to finalized head.
-          format: unsignedInteger or $hex
-      description: 'Request body for generating the metadata blob. You must provide either: (1) `tx` (full extrinsic) with optional `txAdditionalSigned`, or (2) `callData` with `includedInExtrinsic` and `includedInSignedData`.'
-    TransactionValidityError:
-      type: object
-      description: The error result from an invalid transaction submitted via the `dry-run` endpoint.
-      properties:
-        errorType:
-          type: string
-          enum:
-          - Unimplemented
-          - VersionedConversionFailed
-          description: The type of transaction error, either `Unimplemented` or `VersionedConversionFailed`.
-    TransactionFailedToParse:
-      type: object
-      properties:
-        code:
-          type: number
-        error:
-          type: string
-          description: '`Failed to parse a tx.`'
-        transaction:
-          type: string
-          format: hex
-        cause:
-          type: string
-        stack:
-          type: string
-      description: Error message when Sidecar fails to parse the transaction.
-    TransactionSuccess:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The hash of the encoded transaction.
     TransactionMaterial:
       type: object
       properties:
@@ -807,6 +750,36 @@ components:
           type: string
           description: The chain's metadata. It will only be present when the metadata query param is used.
       description: 'Note: `chainName`, `specName`, and `specVersion` are used to define a type registry with a set of signed extensions and types. For Polkadot and Kusama, `chainName` is not used in defining this registry, but in other Substrate-based chains that re-launch their network without changing the `specName`, the `chainName` would be needed to create the correct registry. Substrate Reference: - `RuntimeVersion`: https://crates.parity.io/sp_version/struct.RuntimeVersion.html - `SignedExtension`: https://crates.parity.io/sp_runtime/traits/trait.SignedExtension.html -  FRAME Support: https://crates.parity.io/frame_support/metadata/index.html'
+    TransactionSuccess:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The hash of the encoded transaction.
+    TransactionFeeEstimateFailure:
+      type: object
+      properties:
+        code:
+          type: number
+        at:
+          type: object
+          properties:
+            hash:
+              type: string
+        error:
+          type: string
+          description: Error description.
+        transaction:
+          type: string
+          format: hex
+        block:
+          type: string
+          description: Block hash of the block fee estimation was attempted at.
+        cause:
+          type: string
+          description: Error message from the client.
+        stack:
+          type: string
     TransactionMetadataBlob:
       type: object
       properties:
@@ -836,20 +809,14 @@ components:
           type: string
           description: Symbol for the chain's native token.
       description: Response containing the metadata blob for offline signers. The metadataBlob contains type definitions needed to decode the specific transaction, Merkle proofs verifying these types are part of the full metadata, and extra chain info.
-    Transaction:
-      type: object
-      properties:
-        tx:
-          type: string
-          format: hex
-    TransactionFailedToSubmit:
+    TransactionFailedToParse:
       type: object
       properties:
         code:
           type: number
         error:
           type: string
-          description: Failed to submit transaction.
+          description: '`Failed to parse a tx.`'
         transaction:
           type: string
           format: hex
@@ -857,7 +824,50 @@ components:
           type: string
         stack:
           type: string
-      description: Error message when the node rejects the submitted transaction.
+      description: Error message when Sidecar fails to parse the transaction.
+    TransactionDispatchOutcome:
+      type: object
+      description: The result of a valid transaction submitted via the `dry-run` endpoint.
+      properties:
+        actualWeight:
+          type: string
+          format: unsignedInteger
+          description: The actual weight of the transaction.
+        paysFee:
+          type: string
+          format: boolean
+          description: Whether the transaction pays a fee.
+    TransactionFailure:
+      oneOf:
+      - $ref: '#/components/schemas/TransactionFailedToSubmit'
+      - $ref: '#/components/schemas/TransactionFailedToParse'
+    Transaction:
+      type: object
+      properties:
+        tx:
+          type: string
+          format: hex
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
+    TransactionValidityError:
+      type: object
+      description: The error result from an invalid transaction submitted via the `dry-run` endpoint.
+      properties:
+        errorType:
+          type: string
+          enum:
+          - Unimplemented
+          - VersionedConversionFailed
+          description: The type of transaction error, either `Unimplemented` or `VersionedConversionFailed`.
     TransactionDispatchError:
       type: object
       description: The reason why the dispatch call failed.
@@ -880,45 +890,41 @@ components:
           - Unavailable
           - RootNotAllowed
           description: The type of transaction error.
-    Error:
+    MetadataBlobBody:
       type: object
       properties:
-        code:
-          type: number
-        message:
+        tx:
           type: string
-        stack:
+          format: hex
+          description: Full encoded extrinsic as a hex string.
+        txAdditionalSigned:
           type: string
-        level:
+          format: hex
+          description: Optional additional signed data for the extrinsic. Used together with `tx`.
+        callData:
           type: string
-    WeightsV2:
-      type: object
-      properties:
-        refTime:
+          format: hex
+          description: Call data as hex string. Use this alongside includedInExtrinsic and includedInSignedData instead of `tx`.
+        includedInExtrinsic:
           type: string
-          description: The weight of computational time used based on some reference hardware.
-        proofSize:
+          format: hex
+          description: Signed extension data included in the extrinsic. Required when using callData.
+        includedInSignedData:
           type: string
-          description: The weight of storage space used by proof of validity.
-    TransactionFeeEstimate:
-      type: object
-      properties:
-        weight:
-          $ref: '#/components/schemas/WeightsV2'
-          description: Weights represented as WeightsV2 (two dimensional weights). When querying historical blocks that use WeightsV1, the weight will be returned as a weight key that points to a number represented as a string.
-        class:
+          format: hex
+          description: Signed extension data included in the signature. Required when using callData.
+        at:
           type: string
-          description: Extrinsic class.
-          enum:
-          - Normal
-          - Operational
-          - Mandatory
-        partialFee:
-          type: string
-          description: Expected inclusion fee for the transaction. Note that the fee rate changes up to 30% in a 24 hour period and this will not be the exact fee.
-          format: unsignedInteger
-      description: 'Note: `partialFee` does not include any tips that you may add to increase a transaction''s priority. See [compute_fee](https://crates.parity.io/pallet_transaction_payment/struct.Module.html#method.compute_fee).'
+          description: Block hash or number to query at. Defaults to finalized head.
+          format: unsignedInteger or $hex
+      description: 'Request body for generating the metadata blob. You must provide either: (1) `tx` (full extrinsic) with optional `txAdditionalSigned`, or (2) `callData` with `includedInExtrinsic` and `includedInSignedData`.'
   requestBodies:
+    TransactionDryRun:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DryRunBody'
+      required: true
     TransactionMetadataBlob:
       content:
         application/json:
@@ -930,12 +936,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Transaction'
-      required: true
-    TransactionDryRun:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DryRunBody'
       required: true
 x-refined-from:
 - polkadot-rest-api-openapi.json

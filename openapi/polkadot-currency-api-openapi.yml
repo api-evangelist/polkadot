@@ -115,6 +115,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    subscan_internal_service_scan.PriceRecord:
+      properties:
+        price:
+          type: string
+        time:
+          type: integer
+      type: object
+    subscan_internal_service_scan.CurrencyPrice:
+      properties:
+        price:
+          type: string
+        records:
+          items:
+            $ref: '#/components/schemas/subscan_internal_service_scan.PriceRecord'
+          type: array
+        time:
+          type: integer
+      type: object
     internal_server_http.currencyConverterParams:
       properties:
         from:
@@ -161,22 +179,4 @@ components:
         message:
           example: Success
           type: string
-      type: object
-    subscan_internal_service_scan.PriceRecord:
-      properties:
-        price:
-          type: string
-        time:
-          type: integer
-      type: object
-    subscan_internal_service_scan.CurrencyPrice:
-      properties:
-        price:
-          type: string
-        records:
-          items:
-            $ref: '#/components/schemas/subscan_internal_service_scan.PriceRecord'
-          type: array
-        time:
-          type: integer
       type: object

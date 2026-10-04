@@ -59,19 +59,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
     internal_pluginv2_customizeds_moonbeam_orbiters.OrbitersRewardParams:
       properties:
         address:
@@ -97,5 +84,18 @@ components:
         extrinsic_index:
           type: string
         module_id:
+          type: string
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
       type: object

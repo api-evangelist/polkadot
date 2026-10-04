@@ -254,61 +254,29 @@ components:
           type: string
           description: The block's height.
           format: unsignedInteger
-    SpanId:
+    OperationAmount:
       type: object
       properties:
-        name:
+        values:
           type: string
-        target:
-          type: string
+          format: unsignedInteger
+        currency:
+          $ref: '#/components/schemas/OperationAmountCurrency'
+    TraceSpan:
+      type: object
+      properties:
         id:
           type: string
           format: unsignedInteger
-    BlocksTrace:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        blockHash:
+        name:
           type: string
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceEvent'
-        parentHash:
-          type: string
-        spans:
-          type: array
-          items:
-            $ref: '#/components/schemas/TraceSpan'
-        storageKeys:
-          type: string
-          description: Hex encoded storage keys used to filter events.
-        tracingTargets:
-          type: string
-          description: Targets used to filter spans and events.
-    TraceEvent:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            stringValues:
-              $ref: '#/components/schemas/TraceEventDataStringValues'
         parentId:
           type: string
           format: unsignedInteger
         target:
           type: string
-    BlocksTraceOperations:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
+        wasm:
+          type: boolean
     Operation:
       type: object
       properties:
@@ -350,21 +318,29 @@ components:
                 '
         amount:
           $ref: '#/components/schemas/OperationAmount'
-    TraceSpan:
+    BlocksTrace:
       type: object
       properties:
-        id:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        blockHash:
           type: string
-          format: unsignedInteger
-        name:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceEvent'
+        parentHash:
           type: string
-        parentId:
+        spans:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceSpan'
+        storageKeys:
           type: string
-          format: unsignedInteger
-        target:
+          description: Hex encoded storage keys used to filter events.
+        tracingTargets:
           type: string
-        wasm:
-          type: boolean
+          description: Targets used to filter spans and events.
     TraceEventDataStringValues:
       type: object
       properties:
@@ -380,17 +356,41 @@ components:
           format: hex
           description: Hex scale encoded storage value.
       description: Note these exact values will only be present for storage events.
+    BlocksTraceOperations:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
     OperationAmountCurrency:
       type: object
       properties:
         symbol:
           type: string
           example: KSM
-    OperationAmount:
+    SpanId:
       type: object
       properties:
-        values:
+        name:
+          type: string
+        target:
+          type: string
+        id:
           type: string
           format: unsignedInteger
-        currency:
-          $ref: '#/components/schemas/OperationAmountCurrency'
+    TraceEvent:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            stringValues:
+              $ref: '#/components/schemas/TraceEventDataStringValues'
+        parentId:
+          type: string
+          format: unsignedInteger
+        target:
+          type: string

@@ -184,30 +184,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_assets_http.assetBalancesParams:
+    subscan_internal_model.AccountParentJson:
       properties:
         address:
           type: string
-      required:
-      - address
-      type: object
-    internal_plugin_assets_http.assetHolderParams:
-      properties:
-        asset_id:
+        display:
           type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
     subscan_internal_plugin_assets_db.Metadata:
@@ -219,57 +204,6 @@ components:
         name:
           type: string
         symbol:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetsParam:
-      properties:
-        asset_id:
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        order_field:
-          enum:
-          - asset_id
-          - symbol
-          - holders
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-        search:
-          description: assets symbol or name
-          maxLength: 256
-          minLength: 1
-          type: string
-      type: object
-    subscan_internal_plugin_assets_db.StateAssetSampleJson:
-      properties:
-        asset_id:
-          type: string
-        holders:
-          type: integer
-        issuer:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        market_cap:
-          type: string
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_plugin_assets_db.Metadata'
-        owner:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        price:
-          type: string
-        supply:
-          type: string
-        transfer_count:
-          type: integer
-        unique_id:
           type: string
       type: object
     internal_plugin_assets_http.assetActivitiesParams:
@@ -293,11 +227,6 @@ components:
         tag_subtype:
           type: string
         tag_type:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetParam:
-      properties:
-        asset_id:
           type: string
       type: object
     subscan_internal_model.AccountDisplay:
@@ -328,11 +257,93 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
+    subscan_internal_plugin_assets_db.StateAssetSampleJson:
+      properties:
+        asset_id:
+          type: string
+        holders:
+          type: integer
+        issuer:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        market_cap:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_plugin_assets_db.Metadata'
+        owner:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        price:
+          type: string
+        supply:
+          type: string
+        transfer_count:
+          type: integer
+        unique_id:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetHolderParams:
+      properties:
+        asset_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_plugin_assets_http.assetBalancesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_plugin_assets_http.assetParam:
+      properties:
+        asset_id:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetsParam:
+      properties:
+        asset_id:
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        order_field:
+          enum:
+          - asset_id
+          - symbol
+          - holders
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        search:
+          description: assets symbol or name
+          maxLength: 256
+          minLength: 1
+          type: string
+      type: object
     subscan_internal_model.EvmAccountDisplay:
       properties:
         contract_name:
           type: string
         verify_source:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object
     subscan_internal_model.SampleIdentity:
@@ -347,15 +358,4 @@ components:
           type: array
         parent:
           $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
       type: object

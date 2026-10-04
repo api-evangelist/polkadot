@@ -255,57 +255,12 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_plugin_uniques_db.ItemSample:
+    internal_plugin_uniques_http.uniqueItemParams:
       properties:
         collection_id:
-          type: string
-        collection_name:
           type: string
         item_id:
           type: integer
-        metadata:
-          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
-        owner:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        transfer_count:
-          type: integer
-      type: object
-    internal_plugin_uniques_http.uniqueParam:
-      properties:
-        collection_id:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    internal_plugin_uniques_http.UniquesHoldersParams:
-      properties:
-        collection_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
       type: object
     internal_plugin_uniques_http.uniqueItemsParams:
       properties:
@@ -334,47 +289,15 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_model.MerkleTag:
+    subscan_internal_model.AccountParentJson:
       properties:
-        address_type:
+        address:
           type: string
-        tag_name:
+        display:
           type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.StandardMetadata:
-      properties:
-        attributes: {}
-        decode_attrs:
-          items: {}
-          type: array
-        description:
-          example: Thanks
-          type: string
-        external_url:
-          example: https://beta.nft.io/my-collections
-          type: string
-        fallback_image:
-          type: string
-        image:
-          example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
-          type: string
-        local_image:
-          type: string
-        media:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
-          type: array
-        name:
-          example: 500 Followers
-          type: string
-        symbol:
-          example: PKG
-          type: string
-        thumbnail:
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
     internal_plugin_uniques_http.uniquesListParam:
@@ -408,6 +331,51 @@ components:
           minLength: 1
           type: string
       type: object
+    subscan_internal_plugin_uniques_db.ItemSample:
+      properties:
+        collection_id:
+          type: string
+        collection_name:
+          type: string
+        item_id:
+          type: integer
+        metadata:
+          $ref: '#/components/schemas/subscan_internal_model.StandardMetadata'
+        owner:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        transfer_count:
+          type: integer
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.MetadataMedia:
+      properties:
+        types:
+          type: string
+        url:
+          type: string
+      type: object
+    internal_plugin_uniques_http.uniqueParam:
+      properties:
+        collection_id:
+          type: string
+      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -436,39 +404,37 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.EvmAccountDisplay:
+    subscan_internal_model.StandardMetadata:
       properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+        attributes: {}
+        decode_attrs:
+          items: {}
           type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    subscan_internal_model.MetadataMedia:
-      properties:
-        types:
+        description:
+          example: Thanks
           type: string
-        url:
+        external_url:
+          example: https://beta.nft.io/my-collections
           type: string
-      type: object
-    internal_plugin_uniques_http.uniqueItemParams:
-      properties:
-        collection_id:
+        fallback_image:
           type: string
-        item_id:
-          type: integer
+        image:
+          example: https://ipfs.io/ipfs/bafkreihmb2esqysriq46l2uutyu2bqxkzlgluarbr36kom3hrykd2ku42u
+          type: string
+        local_image:
+          type: string
+        media:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
+          type: array
+        name:
+          example: 500 Followers
+          type: string
+        symbol:
+          example: PKG
+          type: string
+        thumbnail:
+          type: string
       type: object
     internal_plugin_uniques_http.UniquesBalancesParams:
       properties:
@@ -504,14 +470,48 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_plugin_share.J:
       properties:
-        address:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    internal_plugin_uniques_http.UniquesHoldersParams:
+      properties:
+        collection_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
         display:
           type: string
         identity:
           type: boolean
-        sub_symbol:
-          type: string
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object

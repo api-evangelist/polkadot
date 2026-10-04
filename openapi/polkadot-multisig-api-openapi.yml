@@ -139,38 +139,48 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.MultisigProcessJson:
+    subscan_internal_model.MultiAction:
+      enum:
+      - Approval
+      - Executed
+      - Cancelled
+      - Failed
+      type: string
+      x-enum-varnames:
+      - MultiActionApproval
+      - MultiActionExecuted
+      - MultiActionCancelled
+      - MultiActionExecuteFailed
+    subscan_internal_model.AccountParentJson:
       properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        approve_type:
+        address:
           type: string
-        extrinsic_index:
+        display:
           type: string
-        status:
-          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
-        timestamp:
-          type: integer
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
       type: object
-    subscan_internal_model.ExtrinsicSubCallJson:
+    subscan_internal_model.EvmAccountDisplay:
       properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        exec_result:
-          $ref: '#/components/schemas/subscan_libs_substrate.MetadataModuleError'
-        exec_status:
+        contract_name:
           type: string
-        module:
+        verify_source:
           type: string
-        multisig:
-          $ref: '#/components/schemas/subscan_internal_model.MultisigJson'
-        name:
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
           type: string
-        param: {}
-        sub_calls:
+        identity:
+          type: boolean
+        judgements:
           items:
-            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicSubCallJson'
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
           type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object
     subscan_internal_model.MultisigExtrinsicJson:
       properties:
@@ -210,12 +220,20 @@ components:
         threshold:
           type: integer
       type: object
-    subscan_internal_model.RegistrationJudgementJson:
+    subscan_internal_model.ExtrinsicError:
       properties:
-        index:
+        batch_index:
           type: integer
-        judgement:
+        doc:
           type: string
+        module:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        version:
+          type: integer
       type: object
     subscan_internal_model.MultisigExtrinsicDetailsJson:
       properties:
@@ -267,17 +285,6 @@ components:
         threshold:
           type: integer
       type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
     subscan_internal_model.MerkleTag:
       properties:
         address_type:
@@ -289,43 +296,31 @@ components:
         tag_type:
           type: string
       type: object
-    subscan_internal_model.ExtrinsicError:
+    internal_server_http.multisigsDetailsParams:
       properties:
-        batch_index:
-          type: integer
-        doc:
+        account:
+          example: 14RYaXRSqb9rPqMaAVp1UZW2czQ6dMNGMbvukwfifi6m8ZgZ
           type: string
-        module:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        version:
-          type: integer
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
+        page:
+          description: Page number, starting from 0
           example: 0
+          minimum: 0
           type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
           type: integer
-        message:
-          example: Success
+        status:
+          enum:
+          - Approval
+          - Executed
+          - Cancelled
+          - Failed
           type: string
-      type: object
-    subscan_internal_model.ExtrinsicParam:
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        type_name:
-          type: string
-        value: {}
+      required:
+      - account
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -355,68 +350,28 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.SampleIdentity:
+    subscan_internal_model.ExtrinsicParam:
       properties:
-        display:
+        name:
           type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+        type:
+          type: string
+        type_name:
+          type: string
+        value: {}
       type: object
-    internal_server_http.multisigParams:
+    subscan_internal_model.MultisigProcessJson:
       properties:
-        call_hash:
-          example: 95989422012815483151816709596805504452218676110269919620971647505502472854755
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        approve_type:
           type: string
-        multi_id:
-          example: 14661803-2
+        extrinsic_index:
           type: string
-      required:
-      - call_hash
-      - multi_id
-      type: object
-    subscan_internal_model.MultiAction:
-      enum:
-      - Approval
-      - Executed
-      - Cancelled
-      - Failed
-      type: string
-      x-enum-varnames:
-      - MultiActionApproval
-      - MultiActionExecuted
-      - MultiActionCancelled
-      - MultiActionExecuteFailed
-    internal_server_http.multisigsDetailsParams:
-      properties:
-        account:
-          example: 14RYaXRSqb9rPqMaAVp1UZW2czQ6dMNGMbvukwfifi6m8ZgZ
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
         status:
-          enum:
-          - Approval
-          - Executed
-          - Cancelled
-          - Failed
-          type: string
-      required:
-      - account
+          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
+        timestamp:
+          type: integer
       type: object
     subscan_libs_substrate.MetadataModuleError:
       properties:
@@ -431,11 +386,56 @@ components:
         value:
           type: string
       type: object
-    subscan_internal_model.EvmAccountDisplay:
+    internal_server_http.multisigParams:
       properties:
-        contract_name:
+        call_hash:
+          example: 95989422012815483151816709596805504452218676110269919620971647505502472854755
           type: string
-        verify_source:
+        multi_id:
+          example: 14661803-2
+          type: string
+      required:
+      - call_hash
+      - multi_id
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.ExtrinsicSubCallJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        exec_result:
+          $ref: '#/components/schemas/subscan_libs_substrate.MetadataModuleError'
+        exec_status:
+          type: string
+        module:
+          type: string
+        multisig:
+          $ref: '#/components/schemas/subscan_internal_model.MultisigJson'
+        name:
+          type: string
+        param: {}
+        sub_calls:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ExtrinsicSubCallJson'
+          type: array
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object
     subscan_internal_model.MultisigJson:

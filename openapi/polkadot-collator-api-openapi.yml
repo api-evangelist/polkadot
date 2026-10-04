@@ -167,45 +167,29 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_pluginv2_pallets_collator.CollatorTimelineJson:
+    internal_pluginv2_pallets_collator.MetadataJson:
       properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        action:
+        candidacy_bond:
           type: string
-        block_num:
+        candidates:
           type: integer
-        event_index:
+        candidates_total_bond:
           type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
+        desired_candidates:
           type: integer
-        judgement:
-          type: string
-      type: object
-    internal_pluginv2_pallets_collator.CollatorJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        balance:
-          type: string
-        bond:
-          type: string
-        last_authored_block:
-          description: LastChangeBlock   int                   `json:"last_change_block"`
+        invulnerables:
           type: integer
-        status:
-          $ref: '#/components/schemas/subscan_internal_dao.CollatorStatus'
       type: object
-    internal_pluginv2_pallets_collator.collatorInfoParams:
-      properties:
-        account:
-          type: string
-      required:
-      - account
-      type: object
+    subscan_internal_dao.CollatorStatus:
+      enum:
+      - 1
+      - 2
+      - 3
+      type: integer
+      x-enum-varnames:
+      - CollatorInvulnerable
+      - CollatorCandidate
+      - CollatorRetired
     subscan_internal_model.AccountParentJson:
       properties:
         address:
@@ -217,16 +201,17 @@ components:
         sub_symbol:
           type: string
       type: object
-    subscan_internal_model.MerkleTag:
+    internal_pluginv2_pallets_collator.collatorTimelineParams:
       properties:
-        address_type:
+        account:
           type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
       type: object
     internal_pluginv2_pallets_collator.collatorListParams:
       properties:
@@ -259,6 +244,24 @@ components:
           - 1
           - 2
       type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_pluginv2_pallets_collator.collatorInfoParams:
+      properties:
+        account:
+          type: string
+      required:
+      - account
+      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -287,33 +290,43 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_dao.CollatorStatus:
-      enum:
-      - 1
-      - 2
-      - 3
-      type: integer
-      x-enum-varnames:
-      - CollatorInvulnerable
-      - CollatorCandidate
-      - CollatorRetired
-    internal_pluginv2_pallets_collator.collatorTimelineParams:
+    internal_pluginv2_pallets_collator.CollatorJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        balance:
+          type: string
+        bond:
+          type: string
+        last_authored_block:
+          description: LastChangeBlock   int                   `json:"last_change_block"`
+          type: integer
+        status:
+          $ref: '#/components/schemas/subscan_internal_dao.CollatorStatus'
+      type: object
+    internal_pluginv2_pallets_collator.CollatorTimelineJson:
       properties:
         account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        action:
           type: string
-        page:
-          minimum: 0
+        block_num:
           type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
+        event_index:
+          type: string
       type: object
     subscan_internal_model.EvmAccountDisplay:
       properties:
         contract_name:
           type: string
         verify_source:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
           type: string
       type: object
     subscan_internal_model.SampleIdentity:
@@ -328,17 +341,4 @@ components:
           type: array
         parent:
           $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_pluginv2_pallets_collator.MetadataJson:
-      properties:
-        candidacy_bond:
-          type: string
-        candidates:
-          type: integer
-        candidates_total_bond:
-          type: string
-        desired_candidates:
-          type: integer
-        invulnerables:
-          type: integer
       type: object

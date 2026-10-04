@@ -172,50 +172,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_plugin_avail_vector_db.VectorTransferDailyJson:
-      properties:
-        avail_to_eth_count:
-          type: integer
-        avail_to_eth_sum:
-          type: string
-        date:
-          type: string
-        eth_to_avail_count:
-          type: integer
-        eth_to_avail_sum:
-          type: string
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
-    subscan_internal_plugin_avail_vector_db.VectorTransferStatistics:
-      properties:
-        avail_to_eth_count:
-          type: integer
-        avail_to_eth_sum:
-          type: string
-        eth_to_avail_count:
-          type: integer
-        eth_to_avail_sum:
-          type: string
-      type: object
     subscan_internal_plugin_avail_dataAvailability_db.AppDataJson:
       properties:
         account:
@@ -229,36 +185,28 @@ components:
         size:
           type: integer
       type: object
-    subscan_internal_plugin_avail_vector_db.VectorTransferJson:
+    subscan_internal_model.AccountParentJson:
       properties:
-        amount:
+        address:
           type: string
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        extrinsic_index:
+        display:
           type: string
-        id:
-          type: integer
-        receiver:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        result:
+        identity:
           type: boolean
-        sender:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        token_id:
+        sub_symbol:
           type: string
       type: object
-    subscan_internal_model.MerkleTag:
+    subscan_internal_plugin_avail_vector_db.VectorTransferDailyJson:
       properties:
-        address_type:
+        avail_to_eth_count:
+          type: integer
+        avail_to_eth_sum:
           type: string
-        tag_name:
+        date:
           type: string
-        tag_subtype:
-          type: string
-        tag_type:
+        eth_to_avail_count:
+          type: integer
+        eth_to_avail_sum:
           type: string
       type: object
     internal_plugin_avail_vector_http.transferDailyParam:
@@ -280,28 +228,36 @@ components:
       - end
       - start
       type: object
-    internal_plugin_avail_vector_http.transferParam:
+    subscan_internal_model.MerkleTag:
       properties:
-        address:
+        address_type:
           type: string
-        block_range:
+        tag_name:
           type: string
-        max_amount:
+        tag_subtype:
           type: string
-        min_amount:
+        tag_type:
           type: string
-        page:
-          minimum: 0
+      type: object
+    subscan_internal_plugin_avail_vector_db.VectorTransferJson:
+      properties:
+        amount:
+          type: string
+        block_num:
+          type: integer
+        block_timestamp:
+          type: integer
+        extrinsic_index:
+          type: string
+        id:
           type: integer
         receiver:
-          type: string
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
         result:
           type: boolean
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
         sender:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        token_id:
           type: string
       type: object
     subscan_internal_model.AccountDisplay:
@@ -332,25 +288,52 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.EvmAccountDisplay:
+    internal_plugin_avail_dataAvailability_http.SubmittedDataInfoParam:
       properties:
-        contract_name:
+        extrinsic_index:
+          example: 277764-458
           type: string
-        verify_source:
+        hash:
+          example: 19113970726987136144018792964335985025967463666252479637084635182152021787304
+          type: string
+      required:
+      - extrinsic_index
+      - hash
+      type: object
+    subscan_internal_plugin_avail_vector_db.VectorTransferStatistics:
+      properties:
+        avail_to_eth_count:
+          type: integer
+        avail_to_eth_sum:
+          type: string
+        eth_to_avail_count:
+          type: integer
+        eth_to_avail_sum:
           type: string
       type: object
-    subscan_internal_model.SampleIdentity:
+    internal_plugin_avail_vector_http.transferParam:
       properties:
-        display:
+        address:
           type: string
-        identity:
+        block_range:
+          type: string
+        max_amount:
+          type: string
+        min_amount:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        receiver:
+          type: string
+        result:
           type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+        sender:
+          type: string
       type: object
     internal_plugin_avail_dataAvailability_http.SubmittedListParam:
       properties:
@@ -371,26 +354,43 @@ components:
           minimum: 1
           type: integer
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_plugin_share.J:
       properties:
-        address:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
           type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
         display:
           type: string
         identity:
           type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    internal_plugin_avail_dataAvailability_http.SubmittedDataInfoParam:
-      properties:
-        extrinsic_index:
-          example: 277764-458
-          type: string
-        hash:
-          example: 19113970726987136144018792964335985025967463666252479637084635182152021787304
-          type: string
-      required:
-      - extrinsic_index
-      - hash
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object
