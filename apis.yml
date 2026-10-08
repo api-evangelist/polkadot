@@ -1829,6 +1829,12 @@ apis:
   - type: GitHubRepository
     url: https://github.com/paritytech/polkadot-rest-api
 common:
+  - type: Plans
+    url: plans/subscan.yml
+  - type: RateLimits
+    url: rate-limits/subscan.yml
+  - type: FinOps
+    url: finops/subscan.yml
   - type: IssueTracker
     url: https://github.com/paritytech/substrate-api-sidecar/issues
   - type: Releases
