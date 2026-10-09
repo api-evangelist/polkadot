@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Subscan API Plans
 description: Subscan API service pricing plans for accessing indexed on-chain data across Substrate-based networks including Polkadot and Kusama.
 provider: Subscan
@@ -48,3 +52,32 @@ plans:
       - Dedicated account support
       - Custom quota arrangements
     contact: api@subscan.io
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - period
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Developer
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Pro
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - period
+    periods: []
