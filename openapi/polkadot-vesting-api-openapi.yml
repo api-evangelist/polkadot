@@ -56,15 +56,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.VestingRelease:
-      properties:
-        amount:
-          type: string
-        block_num:
-          type: integer
-        day:
-          type: string
-      type: object
     internal_server_http.J:
       properties:
         code:
@@ -89,4 +80,13 @@ components:
       required:
       - end
       - start
+      type: object
+    subscan_internal_model.VestingRelease:
+      properties:
+        amount:
+          type: string
+        block_num:
+          type: integer
+        day:
+          type: string
       type: object

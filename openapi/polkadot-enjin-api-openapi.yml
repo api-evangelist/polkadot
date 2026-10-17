@@ -223,63 +223,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenItemsParams:
-      properties:
-        collection_id:
-          description: Optional. multiToken collection id
-          type: string
-        order:
-          description: Optional, order sort, default desc
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          description: Optional, order field
-          enum:
-          - holders
-          - item_id
-          - create_at
-          - transfer_count
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          description: Owner        string           `json:"owner" binding:"omitempty,addr"`           // Optional. multiToken owner address. Only support ss58 address
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenHolderBalanceParams:
-      properties:
-        address:
-          type: string
-        collection_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    internal_plugin_enjin_multiTokens_http.EnjinMultiTokeInfoParams:
-      properties:
-        collection_id:
-          description: multiToken collection id
-          type: string
-      type: object
-    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenItemParams:
-      properties:
-        collection_id:
-          type: string
-        token_id:
-          type: string
-      type: object
     internal_plugin_enjin_multiTokens_http.EnjinMultiTokenParams:
       properties:
         collection_id:
@@ -312,6 +255,47 @@ components:
           minLength: 1
           type: string
       type: object
+    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenItemsParams:
+      properties:
+        collection_id:
+          description: Optional. multiToken collection id
+          type: string
+        order:
+          description: Optional, order sort, default desc
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          description: Optional, order field
+          enum:
+          - holders
+          - item_id
+          - create_at
+          - transfer_count
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          description: Owner        string           `json:"owner" binding:"omitempty,addr"`           // Optional. multiToken owner address. Only support ss58 address
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_plugin_share.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
     internal_plugin_enjin_multiTokens_http.EnjinMultiTokenActivitiesParams:
       properties:
         collection_id:
@@ -326,6 +310,35 @@ components:
           type: integer
         token_id:
           description: Optional. filter by token id
+          type: string
+      type: object
+    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenHolderBalanceParams:
+      properties:
+        address:
+          type: string
+        collection_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_plugin_enjin_multiTokens_http.EnjinMultiTokeInfoParams:
+      properties:
+        collection_id:
+          description: multiToken collection id
+          type: string
+      type: object
+    internal_plugin_enjin_multiTokens_http.EnjinMultiTokenItemParams:
+      properties:
+        collection_id:
+          type: string
+        token_id:
           type: string
       type: object
     internal_plugin_enjin_multiTokens_http.EnjinMultiTokenHoldersParams:
@@ -345,17 +358,4 @@ components:
           type: string
       required:
       - collection_id
-      type: object
-    subscan_internal_plugin_share.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
       type: object

@@ -184,51 +184,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    subscan_internal_plugin_assets_db.Metadata:
-      properties:
-        decimals:
-          type: integer
-        deposit:
-          type: string
-        name:
-          type: string
-        symbol:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetActivitiesParams:
-      properties:
-        asset_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -257,6 +212,36 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_plugin_assets_db.Metadata:
+      properties:
+        decimals:
+          type: integer
+        deposit:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetHolderParams:
+      properties:
+        asset_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
     subscan_internal_plugin_assets_db.StateAssetSampleJson:
       properties:
         asset_id:
@@ -278,30 +263,6 @@ components:
         transfer_count:
           type: integer
         unique_id:
-          type: string
-      type: object
-    internal_plugin_assets_http.assetHolderParams:
-      properties:
-        asset_id:
-          type: string
-        page:
-          minimum: 0
-          type: integer
-        row:
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    internal_plugin_assets_http.assetBalancesParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    internal_plugin_assets_http.assetParam:
-      properties:
-        asset_id:
           type: string
       type: object
     internal_plugin_assets_http.assetsParam:
@@ -332,20 +293,6 @@ components:
           minLength: 1
           type: string
       type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
     subscan_internal_model.SampleIdentity:
       properties:
         display:
@@ -358,4 +305,57 @@ components:
           type: array
         parent:
           $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetParam:
+      properties:
+        asset_id:
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    internal_plugin_assets_http.assetBalancesParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    internal_plugin_assets_http.assetActivitiesParams:
+      properties:
+        asset_id:
+          type: string
+        page:
+          minimum: 0
+          type: integer
+        row:
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
       type: object

@@ -523,335 +523,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.VestingJson:
+    subscan_internal_model.MetadataMedia:
       properties:
-        linear_schedules:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LinearVestingSchedule'
-          type: array
-        orml_schedules:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.OrmlVestingSchedule'
-          type: array
-        pallet_schedules:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.PalletVestingSchedule'
-          type: array
-        total_locked:
+        types:
           type: string
-        type:
+        url:
           type: string
       type: object
     subscan_internal_model.TransferHistoryTokensTotal:
       additionalProperties:
         $ref: '#/components/schemas/subscan_internal_model.TransferHistoryTotal'
       type: object
-    subscan_internal_model.AccountJsonExtra:
+    subscan_internal_model.EvmAccountDisplay:
       properties:
-        amount:
+        contract_name:
           type: string
-        conviction:
-          type: string
-        origins:
-          type: integer
-        proxy_type:
-          type: string
-      type: object
-    subscan_internal_service_scan.AccountTokenJson:
-      properties:
-        ERC20:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-        ERC721:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-        ERC1155:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-        assets:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-        builtin:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-        native:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
-          type: array
-      type: object
-    subscan_internal_service_scan.IdentifierWithSubAccount:
-      properties:
-        identifier:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        sub_account:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-          type: array
-      type: object
-    subscan_internal_model.TokenJsonV2Json:
-      properties:
-        alias_name:
-          type: string
-        asset_id:
-          type: string
-        balance:
-          type: string
-        bonded:
-          type: string
-        category:
-          type: string
-        contract:
-          type: string
-        conviction_lock:
-          type: string
-        currency_id:
-          type: string
-        decimals:
-          type: integer
-        democracy_lock:
-          type: string
-        election_lock:
-          type: string
-        exchange_ratio:
-          type: string
-        label:
-          type: string
-        lock:
-          type: string
-        lp_bonded_token_combination:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        lp_token_combination:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        media:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
-          type: array
-        multi_location: {}
-        price:
-          type: string
-        reserved:
-          type: string
-        supply:
-          type: string
-        symbol:
-          type: string
-        token_image:
-          description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
-          type: string
-        unbonding:
-          type: string
-        unclaimed:
-          type: string
-        unique_id:
-          type: string
-        vesting:
-          $ref: '#/components/schemas/subscan_internal_model.VestingJson'
-      type: object
-    internal_server_http.accountNetAssetsParams:
-      properties:
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 20
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.LinearVestingSchedule:
-      properties:
-        balance:
-          type: string
-        cliff:
-          type: integer
-        vesting:
-          type: integer
-      type: object
-    internal_server_http.searchByIdentityParams:
-      properties:
-        identity:
-          maxLength: 300
-          minLength: 1
-          type: string
-      required:
-      - identity
-      type: object
-    internal_server_http.transfersParams:
-      properties:
-        address:
-          type: string
-        after_id:
-          items:
-            type: integer
-          type: array
-        asset_symbol:
-          type: string
-        asset_unique_id:
-          type: string
-        block_range:
-          type: string
-        currency:
-          enum:
-          - token
-          - usd
-          type: string
-        direction:
-          enum:
-          - all
-          - sent
-          - received
-          type: string
-        extrinsic_index:
-          type: string
-        filter_nft:
-          description: filter nft transfer, support uniques module and enjin multi-token
-          type: boolean
-        include_total:
-          type: boolean
-        item_id:
-          type: integer
-        max_amount:
-          type: string
-        min_amount:
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        receiver:
-          type: string
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        sender:
-          type: string
-        success:
-          type: boolean
-        timeout:
-          type: integer
-        token_category:
-          items:
-            type: string
-          type: array
-      type: object
-    subscan_internal_model.AccountMerkleJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        address_type:
-          type: string
-        balance:
-          type: string
-        count_extrinsic:
-          type: integer
-        locked:
-          type: string
-        tag_name:
-          type: string
-        tag_sub_type:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.TokenJson:
-      properties:
-        alias_name:
-          type: string
-        asset_id:
-          type: string
-        balance:
-          type: string
-        bonded:
-          type: string
-        contract:
-          type: string
-        conviction_lock:
-          type: string
-        currency_id:
-          type: string
-        decimals:
-          type: integer
-        democracy_lock:
-          type: string
-        election_lock:
-          type: string
-        exchange_ratio:
-          type: string
-        label:
-          type: string
-        lock:
-          type: string
-        lp_bonded_token_combination:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        lp_token_combination:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
-          type: array
-        media:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
-          type: array
-        multi_location: {}
-        price:
-          type: string
-        reserved:
-          type: string
-        symbol:
-          type: string
-        token_image:
-          description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
-          type: string
-        unbonding:
-          type: string
-        unclaimed:
-          type: string
-        unique_id:
-          type: string
-        vesting:
-          $ref: '#/components/schemas/subscan_internal_model.VestingJson'
-      type: object
-    subscan_internal_model.ProxyAccountInfoJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        proxy_type:
-          type: string
-      type: object
-    subscan_internal_model.TransferHistoryTotal:
-      properties:
-        received:
-          type: string
-        sent:
-          type: string
-        total:
+        verify_source:
           type: string
       type: object
     internal_server_http.tokenHoldersParams:
@@ -886,412 +573,6 @@ components:
         token:
           type: string
         unique_id:
-          type: string
-      type: object
-    subscan_internal_model.AccountHold:
-      properties:
-        amount:
-          type: string
-        id: {}
-      type: object
-    subscan_internal_model.AssetChangedHistoryJson:
-      properties:
-        amount:
-          type: string
-        asset_unique_id:
-          type: string
-        block_timestamp:
-          type: integer
-        decimals:
-          type: integer
-        event_id:
-          type: string
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        symbol:
-          type: string
-      type: object
-    internal_server_http.accountBalanceParams:
-      properties:
-        address:
-          type: string
-        block_range:
-          description: 'block range filter, e.g.: 1000-2000, only polkadot,kusama,westend available'
-          type: string
-        end:
-          description: 'history end date, e.g.: 2024-01-02'
-          type: string
-        recent_block:
-          description: 'Block-level returns rows, e.g.: 1000, only polkadot,kusama,westend available'
-          maximum: 10000
-          type: integer
-        start:
-          description: 'history start date, e.g.: 2024-01-02'
-          type: string
-        token_unique_id:
-          type: string
-      required:
-      - address
-      type: object
-    internal_server_http.assetsChangedParams:
-      properties:
-        address:
-          type: string
-        asset_unique_id:
-          type: string
-        page:
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      required:
-      - address
-      type: object
-    subscan_internal_model.RoleRegistrarJson:
-      properties:
-        registrar_fee:
-          type: string
-        registrar_index:
-          type: integer
-      type: object
-    subscan_internal_model.AccountRoleCountJson:
-      properties:
-        count:
-          type: integer
-        role:
-          type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_server_http.accountsParams:
-      properties:
-        account:
-          description: Get the account data associated with different roles of the account,Only proxy,proxies,multisig,multisigMember,convictionDelegate,convictionDelegated,democracyDelegate,democracyDelegated role is valid
-          type: string
-        address:
-          description: Get the specified account data
-          items:
-            type: string
-          maxItems: 100
-          minItems: 1
-          type: array
-        filter:
-          enum:
-          - validator
-          - nominator
-          - councilMember
-          - techcomm
-          - registrar
-          - system
-          - module
-          - evm
-          - erc20
-          - erc721
-          - erc1155
-          - contract
-          - nominationPool
-          - proxies
-          - proxy
-          - multisig
-          - multisigMember
-          - fellowship
-          - onChainIdentity
-          - convictionDelegate
-          - convictionDelegated
-          - democracyDelegate
-          - democracyDelegated
-          - multiTokensHolder
-          - tanssiOperator
-          - activeBlockAuthor
-          - collator
-          type: string
-        max_balance:
-          type: string
-        min_balance:
-          type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - balance
-          - locked
-          - ring_lock
-          - nft_amount
-          - evm_txn_count
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.AccountNetAssetJson:
-      properties:
-        account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        evm_account:
-          type: string
-        priced_token_count:
-          type: integer
-        total_value:
-          type: string
-        unpriced_token_count:
-          type: integer
-      type: object
-    subscan_internal_model.ItemDetail:
-      properties:
-        collection_symbol:
-          type: string
-        fallback_image:
-          type: string
-        image:
-          type: string
-        local_image:
-          type: string
-        media:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
-          type: array
-        symbol:
-          type: string
-        thumbnail:
-          type: string
-      type: object
-    subscan_internal_model.PalletVestingSchedule:
-      properties:
-        locked:
-          type: string
-        per_block:
-          type: string
-        starting_block:
-          type: integer
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.LpTokenInfo:
-      properties:
-        amount:
-          type: string
-        decimals:
-          type: integer
-        price:
-          type: string
-        symbol:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    subscan_internal_model.DelegateJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        amount:
-          type: string
-        conviction:
-          type: string
-        delegate_account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        origins:
-          type: integer
-        votes:
-          type: string
-      type: object
-    internal_server_http.accountTokenParams:
-      properties:
-        address:
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.AccountDerive:
-      properties:
-        balance:
-          type: string
-        bonded:
-          type: string
-        id:
-          type: integer
-        locked:
-          type: string
-        reserved:
-          type: string
-        token:
-          type: string
-        unbonding:
-          type: string
-        unique_id:
-          type: string
-      type: object
-    subscan_internal_model.SnapshotBalanceHistoryJson:
-      properties:
-        balance:
-          type: string
-        block:
-          type: integer
-        date:
-          type: string
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.ProxyAccountJson:
-      properties:
-        proxy_account:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.ProxyAccountInfoJson'
-          type: array
-        real_account:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.ProxyAccountInfoJson'
-          type: array
-      type: object
-    subscan_internal_model.DelegateAccountJson:
-      properties:
-        conviction_delegate:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
-          type: array
-        conviction_delegated:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
-          type: array
-        democracy_delegate:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
-          type: array
-        democracy_delegated:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
-          type: array
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    subscan_internal_model.OrmlVestingSchedule:
-      properties:
-        per_period:
-          type: string
-        period:
-          type: integer
-        period_count:
-          type: integer
-        start:
-          type: integer
-      type: object
-    subscan_internal_model.MultiAccountJson:
-      properties:
-        multi_account:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-          type: array
-        multi_account_member:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-          type: array
-        threshold:
-          type: integer
-      type: object
-    internal_server_http.accountInfoParams:
-      properties:
-        key:
-          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-          type: string
-      required:
-      - key
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    internal_server_http.accountTokenV2Params:
-      properties:
-        address:
-          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-          type: string
-        order:
-          enum:
-          - asc
-          - desc
-          example: desc
-          type: string
-        order_field:
-          enum:
-          - token
-          - balance
-          - price
-          - supply
-          example: balance
-          type: string
-        page:
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          example: 20
-          maximum: 100
-          minimum: 0
-          type: integer
-        token_type:
-          example: erc20
-          type: string
-      required:
-      - address
-      type: object
-    subscan_internal_model.MetadataMedia:
-      properties:
-        types:
-          type: string
-        url:
           type: string
       type: object
     subscan_internal_model.AccountSampleJson:
@@ -1333,76 +614,6 @@ components:
           type: string
         substrate_account:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-      type: object
-    internal_server_http.accountsMerkleParams:
-      properties:
-        address_type:
-          type: string
-        order:
-          enum:
-          - desc
-          - asc
-          type: string
-        order_field:
-          enum:
-          - balance
-          - locked
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        tag_name:
-          type: string
-        tag_sub_type:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.AccountDisplay:
-      properties:
-        account_index:
-          type: string
-        address:
-          description: Current network account
-          type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
-      type: object
-    internal_server_http.accountsStatisticsParams:
-      properties:
-        exclude_system:
-          type: boolean
-        type:
-          enum:
-          - assets
-          - role
-          type: string
       type: object
     subscan_internal_model.AccountJsonV1:
       properties:
@@ -1537,6 +748,131 @@ components:
         web:
           type: string
       type: object
+    subscan_internal_model.AccountHold:
+      properties:
+        amount:
+          type: string
+        id: {}
+      type: object
+    internal_server_http.accountsMerkleParams:
+      properties:
+        address_type:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - balance
+          - locked
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        tag_name:
+          type: string
+        tag_sub_type:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_server_http.transfersParams:
+      properties:
+        address:
+          type: string
+        after_id:
+          items:
+            type: integer
+          type: array
+        asset_symbol:
+          type: string
+        asset_unique_id:
+          type: string
+        block_range:
+          type: string
+        currency:
+          enum:
+          - token
+          - usd
+          type: string
+        direction:
+          enum:
+          - all
+          - sent
+          - received
+          type: string
+        extrinsic_index:
+          type: string
+        filter_nft:
+          description: filter nft transfer, support uniques module and enjin multi-token
+          type: boolean
+        include_total:
+          type: boolean
+        item_id:
+          type: integer
+        max_amount:
+          type: string
+        min_amount:
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        receiver:
+          type: string
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        sender:
+          type: string
+        success:
+          type: boolean
+        timeout:
+          type: integer
+        token_category:
+          items:
+            type: string
+          type: array
+      type: object
+    subscan_internal_model.SnapshotBalanceHistoryJson:
+      properties:
+        balance:
+          type: string
+        block:
+          type: integer
+        date:
+          type: string
+      type: object
     subscan_internal_model.TransferHistoryJson:
       properties:
         amount:
@@ -1589,6 +925,211 @@ components:
         transfer_id:
           type: integer
       type: object
+    subscan_internal_model.AccountDerive:
+      properties:
+        balance:
+          type: string
+        bonded:
+          type: string
+        id:
+          type: integer
+        locked:
+          type: string
+        reserved:
+          type: string
+        token:
+          type: string
+        unbonding:
+          type: string
+        unique_id:
+          type: string
+      type: object
+    internal_server_http.accountBalanceParams:
+      properties:
+        address:
+          type: string
+        block_range:
+          description: 'block range filter, e.g.: 1000-2000, only polkadot,kusama,westend available'
+          type: string
+        end:
+          description: 'history end date, e.g.: 2024-01-02'
+          type: string
+        recent_block:
+          description: 'Block-level returns rows, e.g.: 1000, only polkadot,kusama,westend available'
+          maximum: 10000
+          type: integer
+        start:
+          description: 'history start date, e.g.: 2024-01-02'
+          type: string
+        token_unique_id:
+          type: string
+      required:
+      - address
+      type: object
+    internal_server_http.searchByIdentityParams:
+      properties:
+        identity:
+          maxLength: 300
+          minLength: 1
+          type: string
+      required:
+      - identity
+      type: object
+    subscan_internal_model.LinearVestingSchedule:
+      properties:
+        balance:
+          type: string
+        cliff:
+          type: integer
+        vesting:
+          type: integer
+      type: object
+    subscan_internal_model.MultiAccountJson:
+      properties:
+        multi_account:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+          type: array
+        multi_account_member:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+          type: array
+        threshold:
+          type: integer
+      type: object
+    subscan_internal_model.AccountBalanceHistoryStatus:
+      enum:
+      - ''
+      type: string
+      x-enum-varnames:
+      - AccountBalanceHistoryStatusNone
+    subscan_internal_model.AccountMerkleJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        address_type:
+          type: string
+        balance:
+          type: string
+        count_extrinsic:
+          type: integer
+        locked:
+          type: string
+        tag_name:
+          type: string
+        tag_sub_type:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    subscan_internal_model.DelegateAccountJson:
+      properties:
+        conviction_delegate:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
+          type: array
+        conviction_delegated:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
+          type: array
+        democracy_delegate:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
+          type: array
+        democracy_delegated:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.DelegateJson'
+          type: array
+      type: object
+    subscan_internal_model.TransferHistoryTotal:
+      properties:
+        received:
+          type: string
+        sent:
+          type: string
+        total:
+          type: string
+      type: object
+    subscan_internal_model.DelegateJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        amount:
+          type: string
+        conviction:
+          type: string
+        delegate_account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        origins:
+          type: integer
+        votes:
+          type: string
+      type: object
+    subscan_internal_model.AccountNetAssetJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        evm_account:
+          type: string
+        priced_token_count:
+          type: integer
+        total_value:
+          type: string
+        unpriced_token_count:
+          type: integer
+      type: object
+    subscan_internal_model.AccountRoleCountJson:
+      properties:
+        count:
+          type: integer
+        role:
+          type: string
+      type: object
+    subscan_internal_model.OrmlVestingSchedule:
+      properties:
+        per_period:
+          type: string
+        period:
+          type: integer
+        period_count:
+          type: integer
+        start:
+          type: integer
+      type: object
+    subscan_internal_model.ProxyAccountJson:
+      properties:
+        proxy_account:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ProxyAccountInfoJson'
+          type: array
+        real_account:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.ProxyAccountInfoJson'
+          type: array
+      type: object
+    subscan_internal_model.PalletVestingSchedule:
+      properties:
+        locked:
+          type: string
+        per_block:
+          type: string
+        starting_block:
+          type: integer
+      type: object
+    internal_server_http.accountTokenParams:
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
+    subscan_internal_model.ProxyAccountInfoJson:
+      properties:
+        account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        proxy_type:
+          type: string
+      type: object
     internal_server_http.J:
       properties:
         code:
@@ -1602,6 +1143,188 @@ components:
           example: Success
           type: string
       type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    internal_server_http.assetsChangedParams:
+      properties:
+        address:
+          type: string
+        asset_unique_id:
+          type: string
+        page:
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      required:
+      - address
+      type: object
+    internal_server_http.accountTokenV2Params:
+      properties:
+        address:
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+          type: string
+        order:
+          enum:
+          - asc
+          - desc
+          example: desc
+          type: string
+        order_field:
+          enum:
+          - token
+          - balance
+          - price
+          - supply
+          example: balance
+          type: string
+        page:
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          example: 20
+          maximum: 100
+          minimum: 0
+          type: integer
+        token_type:
+          example: erc20
+          type: string
+      required:
+      - address
+      type: object
+    internal_server_http.accountNetAssetsParams:
+      properties:
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.TokenJson:
+      properties:
+        alias_name:
+          type: string
+        asset_id:
+          type: string
+        balance:
+          type: string
+        bonded:
+          type: string
+        contract:
+          type: string
+        conviction_lock:
+          type: string
+        currency_id:
+          type: string
+        decimals:
+          type: integer
+        democracy_lock:
+          type: string
+        election_lock:
+          type: string
+        exchange_ratio:
+          type: string
+        label:
+          type: string
+        lock:
+          type: string
+        lp_bonded_token_combination:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        lp_token_combination:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        media:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
+          type: array
+        multi_location: {}
+        price:
+          type: string
+        reserved:
+          type: string
+        symbol:
+          type: string
+        token_image:
+          description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
+          type: string
+        unbonding:
+          type: string
+        unclaimed:
+          type: string
+        unique_id:
+          type: string
+        vesting:
+          $ref: '#/components/schemas/subscan_internal_model.VestingJson'
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
+      type: object
+    subscan_internal_model.ItemDetail:
+      properties:
+        collection_symbol:
+          type: string
+        fallback_image:
+          type: string
+        image:
+          type: string
+        local_image:
+          type: string
+        media:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
+          type: array
+        symbol:
+          type: string
+        thumbnail:
+          type: string
+      type: object
+    subscan_internal_model.LpTokenInfo:
+      properties:
+        amount:
+          type: string
+        decimals:
+          type: integer
+        price:
+          type: string
+        symbol:
+          type: string
+        unique_id:
+          type: string
+      type: object
     subscan_internal_model.StakingAccount:
       properties:
         controller:
@@ -1613,9 +1336,286 @@ components:
         reward_display:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
       type: object
-    subscan_internal_model.AccountBalanceHistoryStatus:
-      enum:
-      - ''
-      type: string
-      x-enum-varnames:
-      - AccountBalanceHistoryStatusNone
+    subscan_internal_model.AccountDisplay:
+      properties:
+        account_index:
+          type: string
+        address:
+          description: Current network account
+          type: string
+        display:
+          type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    internal_server_http.accountsStatisticsParams:
+      properties:
+        exclude_system:
+          type: boolean
+        type:
+          enum:
+          - assets
+          - role
+          type: string
+      type: object
+    subscan_internal_model.RoleRegistrarJson:
+      properties:
+        registrar_fee:
+          type: string
+        registrar_index:
+          type: integer
+      type: object
+    subscan_internal_service_scan.AccountTokenJson:
+      properties:
+        ERC20:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+        ERC721:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+        ERC1155:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+        assets:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+        builtin:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+        native:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.TokenJson'
+          type: array
+      type: object
+    internal_server_http.accountInfoParams:
+      properties:
+        key:
+          example: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+          type: string
+      required:
+      - key
+      type: object
+    subscan_internal_model.TokenJsonV2Json:
+      properties:
+        alias_name:
+          type: string
+        asset_id:
+          type: string
+        balance:
+          type: string
+        bonded:
+          type: string
+        category:
+          type: string
+        contract:
+          type: string
+        conviction_lock:
+          type: string
+        currency_id:
+          type: string
+        decimals:
+          type: integer
+        democracy_lock:
+          type: string
+        election_lock:
+          type: string
+        exchange_ratio:
+          type: string
+        label:
+          type: string
+        lock:
+          type: string
+        lp_bonded_token_combination:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        lp_token_combination:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LpTokenInfo'
+          type: array
+        media:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.MetadataMedia'
+          type: array
+        multi_location: {}
+        price:
+          type: string
+        reserved:
+          type: string
+        supply:
+          type: string
+        symbol:
+          type: string
+        token_image:
+          description: TokenId        *decimal.Decimal `json:"token_id,omitempty"`
+          type: string
+        unbonding:
+          type: string
+        unclaimed:
+          type: string
+        unique_id:
+          type: string
+        vesting:
+          $ref: '#/components/schemas/subscan_internal_model.VestingJson'
+      type: object
+    subscan_internal_service_scan.IdentifierWithSubAccount:
+      properties:
+        identifier:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        sub_account:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+          type: array
+      type: object
+    subscan_internal_model.AssetChangedHistoryJson:
+      properties:
+        amount:
+          type: string
+        asset_unique_id:
+          type: string
+        block_timestamp:
+          type: integer
+        decimals:
+          type: integer
+        event_id:
+          type: string
+        event_index:
+          type: string
+        extrinsic_index:
+          type: string
+        symbol:
+          type: string
+      type: object
+    internal_server_http.accountsParams:
+      properties:
+        account:
+          description: Get the account data associated with different roles of the account,Only proxy,proxies,multisig,multisigMember,convictionDelegate,convictionDelegated,democracyDelegate,democracyDelegated role is valid
+          type: string
+        address:
+          description: Get the specified account data
+          items:
+            type: string
+          maxItems: 100
+          minItems: 1
+          type: array
+        filter:
+          enum:
+          - validator
+          - nominator
+          - councilMember
+          - techcomm
+          - registrar
+          - system
+          - module
+          - evm
+          - erc20
+          - erc721
+          - erc1155
+          - contract
+          - nominationPool
+          - proxies
+          - proxy
+          - multisig
+          - multisigMember
+          - fellowship
+          - onChainIdentity
+          - convictionDelegate
+          - convictionDelegated
+          - democracyDelegate
+          - democracyDelegated
+          - multiTokensHolder
+          - tanssiOperator
+          - activeBlockAuthor
+          - collator
+          type: string
+        max_balance:
+          type: string
+        min_balance:
+          type: string
+        order:
+          enum:
+          - desc
+          - asc
+          type: string
+        order_field:
+          enum:
+          - balance
+          - locked
+          - ring_lock
+          - nft_amount
+          - evm_txn_count
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.AccountJsonExtra:
+      properties:
+        amount:
+          type: string
+        conviction:
+          type: string
+        origins:
+          type: integer
+        proxy_type:
+          type: string
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    subscan_internal_model.VestingJson:
+      properties:
+        linear_schedules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.LinearVestingSchedule'
+          type: array
+        orml_schedules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.OrmlVestingSchedule'
+          type: array
+        pallet_schedules:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.PalletVestingSchedule'
+          type: array
+        total_locked:
+          type: string
+        type:
+          type: string
+      type: object

@@ -332,40 +332,28 @@ components:
         xcm_send_transfer_count:
           type: integer
       type: object
-    subscan_internal_model.AccountParentJson:
+    subscan_internal_model.ParaChainMetaJson:
       properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
+        auction_active:
           type: boolean
-        sub_symbol:
-          type: string
-      type: object
-    internal_server_http.parachainInfoParams:
-      properties:
-        filter_anonymous:
-          type: boolean
-        order:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
+        auction_count:
           type: integer
-        para_id:
+        ending_period:
           type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
+        lease_offset:
           type: integer
-        status:
-          items:
-            type: string
-          type: array
+        lease_period:
+          type: integer
+        lease_periods_per_slot:
+          type: integer
+        online_count:
+          type: integer
+        retirement_period:
+          type: integer
+        total_slot_num:
+          type: integer
+        upcoming_count:
+          type: integer
       type: object
     internal_server_http.parachainMetricListParams:
       properties:
@@ -418,91 +406,6 @@ components:
       - end
       - start
       type: object
-    internal_server_http.paraChainListParams:
-      properties:
-        filter_anonymous:
-          type: boolean
-        order:
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        para_id:
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        status:
-          items:
-            type: string
-          type: array
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    subscan_internal_model.ParachainMetricNetworkStat:
-      properties:
-        avg_tps:
-          type: string
-        extrinsic_count:
-          type: integer
-        network:
-          type: string
-        para_id:
-          type: integer
-        peak_tps:
-          type: string
-        relay_network:
-          type: string
-        transfer_count:
-          type: integer
-        updated_at:
-          type: string
-        xcm_receive_count:
-          type: integer
-        xcm_send_count:
-          type: integer
-      type: object
-    subscan_internal_model.ParachainMetricSeriesPoint:
-      properties:
-        avg_tps:
-          type: string
-        bucket_format:
-          type: string
-        bucket_time:
-          type: string
-        extrinsic_count:
-          type: integer
-        network:
-          type: string
-        para_id:
-          type: integer
-        peak_tps:
-          type: string
-        relay_network:
-          type: string
-        transfer_count:
-          type: integer
-        updated_at:
-          type: string
-        xcm_receive_count:
-          type: integer
-        xcm_send_count:
-          type: integer
-      type: object
     subscan_internal_model.AccountDisplay:
       properties:
         account_index:
@@ -531,13 +434,30 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    subscan_internal_model.ParachainMetricTotal:
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.ParachainMetricSeriesPoint:
       properties:
         avg_tps:
           type: string
+        bucket_format:
+          type: string
+        bucket_time:
+          type: string
         extrinsic_count:
           type: integer
+        network:
+          type: string
+        para_id:
+          type: integer
         peak_tps:
+          type: string
+        relay_network:
           type: string
         transfer_count:
           type: integer
@@ -548,28 +468,89 @@ components:
         xcm_send_count:
           type: integer
       type: object
-    subscan_internal_model.ParaChainMetaJson:
+    subscan_internal_model.ParachainMetricNetworkStat:
       properties:
-        auction_active:
+        avg_tps:
+          type: string
+        extrinsic_count:
+          type: integer
+        network:
+          type: string
+        para_id:
+          type: integer
+        peak_tps:
+          type: string
+        relay_network:
+          type: string
+        transfer_count:
+          type: integer
+        updated_at:
+          type: string
+        xcm_receive_count:
+          type: integer
+        xcm_send_count:
+          type: integer
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    internal_server_http.parachainInfoParams:
+      properties:
+        filter_anonymous:
           type: boolean
-        auction_count:
+        order:
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
           type: integer
-        ending_period:
+        para_id:
           type: integer
-        lease_offset:
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
           type: integer
-        lease_period:
-          type: integer
-        lease_periods_per_slot:
-          type: integer
-        online_count:
-          type: integer
-        retirement_period:
-          type: integer
-        total_slot_num:
-          type: integer
-        upcoming_count:
-          type: integer
+        status:
+          items:
+            type: string
+          type: array
+      type: object
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
       type: object
     subscan_internal_model.ParaChainSample:
       properties:
@@ -635,25 +616,57 @@ components:
       - end
       - start
       type: object
-    internal_server_http.J:
+    internal_server_http.paraChainListParams:
       properties:
-        code:
+        filter_anonymous:
+          type: boolean
+        order:
+          type: string
+        page:
+          description: Page number, starting from 0
           example: 0
+          minimum: 0
           type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
+        para_id:
           type: integer
-        message:
-          example: Success
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+        status:
+          items:
+            type: string
+          type: array
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
           type: string
       type: object
-    subscan_internal_model.EvmAccountDisplay:
+    subscan_internal_model.ParachainMetricTotal:
       properties:
-        contract_name:
+        avg_tps:
           type: string
-        verify_source:
+        extrinsic_count:
+          type: integer
+        peak_tps:
           type: string
+        transfer_count:
+          type: integer
+        updated_at:
+          type: string
+        xcm_receive_count:
+          type: integer
+        xcm_send_count:
+          type: integer
       type: object
     subscan_internal_model.RegistrationJudgementJson:
       properties:
@@ -661,17 +674,4 @@ components:
           type: integer
         judgement:
           type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
-        display:
-          type: string
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
       type: object

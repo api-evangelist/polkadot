@@ -887,143 +887,22 @@ paths:
       description: Localhost
 components:
   schemas:
-    internal_pluginv2_pallets_coretime.workloadDetailsParams:
-      properties:
-        core:
-          description: one of core and paraid is required
-          example: 10
-          minimum: 0
-          type: integer
-        para_id:
-          example: 1000
-          type: integer
-        region_begin:
-          example: 200000
-          type: integer
-        show_workplan:
-          type: boolean
-      type: object
-    internal_pluginv2_pallets_coretime.workloadHistoryParams:
-      properties:
-        core:
-          example: 10
-          minimum: 0
-          type: integer
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        para_id:
-          example: 1000
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 500
-          minimum: 1
-          type: integer
-      type: object
-    internal_pluginv2_pallets_coretime.PriceChatPoint:
-      properties:
-        block:
-          type: integer
-        price:
-          type: string
-      type: object
-    internal_pluginv2_pallets_coretime.CoreWorkloadsPlansJson:
-      properties:
-        workloads:
-          items:
-            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson'
-          type: array
-        workplans:
-          items:
-            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkplanInfoJson'
-          type: array
-      type: object
-    internal_pluginv2_pallets_coretime.assignParams:
-      properties:
-        core:
-          example: 10
-          type: integer
-        order:
-          enum:
-          - asc
-          - desc
-          type: string
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        paraId:
-          example: 1000
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 500
-          minimum: 1
-          type: integer
-      type: object
-    internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson:
-      properties:
-        assigned_type:
-          type: string
-        core:
-          type: integer
-        last_block:
-          type: integer
-        mask:
-          type: string
-        para_id:
-          type: integer
-        purchased_type:
-          type: string
-        region_begin:
-          type: integer
-        region_end:
-          type: integer
-        region_id:
-          type: string
-      type: object
-    internal_pluginv2_pallets_coretime.RegionAssignedJson:
-      properties:
-        assigned_type:
-          type: string
-        begin:
-          type: integer
-        core:
-          type: integer
-        end:
-          type: integer
-        mask:
-          type: string
-        region_id:
-          type: string
-        task_id:
-          type: integer
-      type: object
-    internal_pluginv2_pallets_coretime.operationParams:
+    internal_pluginv2_pallets_coretime.regionListParams:
       properties:
         address:
           type: string
-        block_range:
-          example: 110000-120000
-          type: string
+        begin:
+          example: 10
+          minimum: 1
+          type: integer
         core:
           example: 10
           minimum: 0
           type: integer
-        core_index:
-          example: 12345-1260-20-12333121323217721
-          maxLength: 80
-          minLength: 0
-          type: string
-        event_id:
-          example: Interlaced
-          type: string
+        end:
+          example: 20
+          minimum: 0
+          type: integer
         page:
           description: Page number, starting from 0
           example: 0
@@ -1035,8 +914,28 @@ components:
           maximum: 100
           minimum: 1
           type: integer
+        status:
+          enum:
+          - valid
+          - assigned
+          - working
+          - dropped
+          - expired
+          type: string
+        valid:
+          type: boolean
       type: object
-    internal_pluginv2_pallets_coretime.OperationJson:
+    internal_pluginv2_pallets_coretime.regionParams:
+      properties:
+        core_index:
+          example: 12345-1260-20-12333121323217721
+          maxLength: 80
+          minLength: 0
+          type: string
+      required:
+      - core_index
+      type: object
+    internal_pluginv2_pallets_coretime.RegionPurchasedJson:
       properties:
         account:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
@@ -1054,14 +953,41 @@ components:
           type: integer
         event_index:
           type: string
-        eventId:
-          type: string
         extrinsic_index:
           type: string
         mask:
           type: string
-        module:
+        price:
           type: string
+        purchased_type:
+          type: string
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
+      type: object
+    subscan_internal_model.MerkleTag:
+      properties:
+        address_type:
+          type: string
+        tag_name:
+          type: string
+        tag_subtype:
+          type: string
+        tag_type:
+          type: string
+      type: object
+    internal_pluginv2_pallets_coretime.CoreWorkLoadsJson:
+      properties:
+        key:
+          type: integer
+        list:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson'
+          type: array
       type: object
     internal_pluginv2_pallets_coretime.purchasedParams:
       properties:
@@ -1095,28 +1021,48 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_pluginv2_pallets_coretime.RegionInfoJson:
+    internal_pluginv2_pallets_coretime.workloadDetailsParams:
+      properties:
+        core:
+          description: one of core and paraid is required
+          example: 10
+          minimum: 0
+          type: integer
+        para_id:
+          example: 1000
+          type: integer
+        region_begin:
+          example: 200000
+          type: integer
+        show_workplan:
+          type: boolean
+      type: object
+    internal_pluginv2_pallets_coretime.OperationJson:
       properties:
         account:
           $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        assign_type:
-          type: string
         begin:
+          type: integer
+        block_num:
+          type: integer
+        block_timestamp:
           type: integer
         core:
           type: integer
         core_index:
           type: string
-        duration:
+        end:
           type: integer
+        event_index:
+          type: string
+        eventId:
+          type: string
+        extrinsic_index:
+          type: string
         mask:
           type: string
-        price:
+        module:
           type: string
-        status:
-          type: string
-        task:
-          type: integer
       type: object
     internal_pluginv2_pallets_coretime.SaleInfoJson:
       properties:
@@ -1167,16 +1113,68 @@ components:
         total_core:
           type: integer
       type: object
-    internal_pluginv2_pallets_coretime.saleParams:
+    internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson:
       properties:
-        begin:
+        assigned_type:
+          type: string
+        core:
+          type: integer
+        last_block:
+          type: integer
+        mask:
+          type: string
+        para_id:
+          type: integer
+        purchased_type:
+          type: string
+        region_begin:
+          type: integer
+        region_end:
+          type: integer
+        region_id:
+          type: string
+      type: object
+    internal_pluginv2_pallets_coretime.operationParams:
+      properties:
+        address:
+          type: string
+        block_range:
+          example: 110000-120000
+          type: string
+        core:
           example: 10
+          minimum: 0
+          type: integer
+        core_index:
+          example: 12345-1260-20-12333121323217721
+          maxLength: 80
+          minLength: 0
+          type: string
+        event_id:
+          example: Interlaced
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
           minimum: 1
           type: integer
-        sales_cycle:
-          example: 1
-          minimum: 1
-          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.CoreWorkloadsPlansJson:
+      properties:
+        workloads:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson'
+          type: array
+        workplans:
+          items:
+            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkplanInfoJson'
+          type: array
       type: object
     subscan_internal_model.SampleIdentity:
       properties:
@@ -1190,116 +1188,6 @@ components:
           type: array
         parent:
           $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-      type: object
-    internal_pluginv2_pallets_coretime.SaleListItemJson:
-      properties:
-        region_begin:
-          type: integer
-        region_end:
-          type: integer
-        sales_cycle:
-          description: -1 为 无效 0为内部计算错误 > 1 为正常
-          type: integer
-      type: object
-    internal_pluginv2_pallets_coretime.regionParams:
-      properties:
-        core_index:
-          example: 12345-1260-20-12333121323217721
-          maxLength: 80
-          minLength: 0
-          type: string
-      required:
-      - core_index
-      type: object
-    internal_pluginv2_pallets_coretime.saleHistoryParams:
-      properties:
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-      type: object
-    subscan_internal_model.MerkleTag:
-      properties:
-        address_type:
-          type: string
-        tag_name:
-          type: string
-        tag_subtype:
-          type: string
-        tag_type:
-          type: string
-      type: object
-    internal_pluginv2_pallets_coretime.CoreWorkplanInfoJson:
-      properties:
-        assigned_type:
-          type: string
-        core:
-          type: integer
-        mask:
-          type: string
-        para_id:
-          type: integer
-        purchased_type:
-          type: string
-        region_begin:
-          type: integer
-      type: object
-    internal_pluginv2_pallets_coretime.RegionPurchasedJson:
-      properties:
-        account:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        begin:
-          type: integer
-        block_num:
-          type: integer
-        block_timestamp:
-          type: integer
-        core:
-          type: integer
-        core_index:
-          type: string
-        end:
-          type: integer
-        event_index:
-          type: string
-        extrinsic_index:
-          type: string
-        mask:
-          type: string
-        price:
-          type: string
-        purchased_type:
-          type: string
-      type: object
-    internal_pluginv2_pallets_coretime.WorkloadHistoryJson:
-      properties:
-        assigned_type:
-          type: string
-        begin:
-          type: integer
-        core:
-          type: integer
-        end:
-          type: integer
-        end_block:
-          type: integer
-        mask:
-          type: string
-        para_id:
-          type: integer
-        purchased_type:
-          type: string
-        region_id:
-          type: string
-        start_block:
-          type: integer
       type: object
     internal_pluginv2_pallets_coretime.workloadsParams:
       properties:
@@ -1320,78 +1208,6 @@ components:
           minimum: 1
           type: integer
       type: object
-    internal_pluginv2_pallets_coretime.CoreWorkLoadsJson:
-      properties:
-        key:
-          type: integer
-        list:
-          items:
-            $ref: '#/components/schemas/internal_pluginv2_pallets_coretime.CoreWorkloadInfoJson'
-          type: array
-      type: object
-    subscan_internal_model.EvmAccountDisplay:
-      properties:
-        contract_name:
-          type: string
-        verify_source:
-          type: string
-      type: object
-    subscan_internal_model.RegistrationJudgementJson:
-      properties:
-        index:
-          type: integer
-        judgement:
-          type: string
-      type: object
-    internal_pluginv2_pallets_coretime.regionListParams:
-      properties:
-        address:
-          type: string
-        begin:
-          example: 10
-          minimum: 1
-          type: integer
-        core:
-          example: 10
-          minimum: 0
-          type: integer
-        end:
-          example: 20
-          minimum: 0
-          type: integer
-        page:
-          description: Page number, starting from 0
-          example: 0
-          minimum: 0
-          type: integer
-        row:
-          description: Data size per page
-          example: 10
-          maximum: 100
-          minimum: 1
-          type: integer
-        status:
-          enum:
-          - valid
-          - assigned
-          - working
-          - dropped
-          - expired
-          type: string
-        valid:
-          type: boolean
-      type: object
-    subscan_internal_model.AccountParentJson:
-      properties:
-        address:
-          type: string
-        display:
-          type: string
-        identity:
-          type: boolean
-        sub_symbol:
-          type: string
-      type: object
     internal_pluginv2_pallets_coretime.workplanParams:
       properties:
         core:
@@ -1411,6 +1227,48 @@ components:
           maximum: 500
           minimum: 1
           type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.SaleListItemJson:
+      properties:
+        region_begin:
+          type: integer
+        region_end:
+          type: integer
+        sales_cycle:
+          description: -1 为 无效 0为内部计算错误 > 1 为正常
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.assignParams:
+      properties:
+        core:
+          example: 10
+          type: integer
+        order:
+          enum:
+          - asc
+          - desc
+          type: string
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        paraId:
+          example: 1000
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 500
+          minimum: 1
+          type: integer
+      type: object
+    subscan_internal_model.RegistrationJudgementJson:
+      properties:
+        index:
+          type: integer
+        judgement:
+          type: string
       type: object
     subscan_internal_model.AccountDisplay:
       properties:
@@ -1440,27 +1298,148 @@ components:
         people:
           $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
       type: object
-    CoretimeRegion:
-      type: object
+    internal_pluginv2_pallets_coretime.WorkloadHistoryJson:
       properties:
-        core:
+        assigned_type:
           type: string
-          description: The core id.
         begin:
-          type: string
-          description: The begin time.
+          type: integer
+        core:
+          type: integer
         end:
-          type: string
-          description: The end time.
-        owner:
-          type: string
-          description: The owner of the region.
-        paid:
-          type: string
-          description: The paid price.
+          type: integer
+        end_block:
+          type: integer
         mask:
           type: string
-          description: The mask.
+        para_id:
+          type: integer
+        purchased_type:
+          type: string
+        region_id:
+          type: string
+        start_block:
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.PriceChatPoint:
+      properties:
+        block:
+          type: integer
+        price:
+          type: string
+      type: object
+    internal_pluginv2_pallets_coretime.RegionInfoJson:
+      properties:
+        account:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        assign_type:
+          type: string
+        begin:
+          type: integer
+        core:
+          type: integer
+        core_index:
+          type: string
+        duration:
+          type: integer
+        mask:
+          type: string
+        price:
+          type: string
+        status:
+          type: string
+        task:
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.workloadHistoryParams:
+      properties:
+        core:
+          example: 10
+          minimum: 0
+          type: integer
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        para_id:
+          example: 1000
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 500
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.saleParams:
+      properties:
+        begin:
+          example: 10
+          minimum: 1
+          type: integer
+        sales_cycle:
+          example: 1
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.CoreWorkplanInfoJson:
+      properties:
+        assigned_type:
+          type: string
+        core:
+          type: integer
+        mask:
+          type: string
+        para_id:
+          type: integer
+        purchased_type:
+          type: string
+        region_begin:
+          type: integer
+      type: object
+    subscan_internal_model.AccountParentJson:
+      properties:
+        address:
+          type: string
+        display:
+          type: string
+        identity:
+          type: boolean
+        sub_symbol:
+          type: string
+      type: object
+    internal_pluginv2_pallets_coretime.saleHistoryParams:
+      properties:
+        page:
+          description: Page number, starting from 0
+          example: 0
+          minimum: 0
+          type: integer
+        row:
+          description: Data size per page
+          example: 10
+          maximum: 100
+          minimum: 1
+          type: integer
+      type: object
+    internal_pluginv2_pallets_coretime.RegionAssignedJson:
+      properties:
+        assigned_type:
+          type: string
+        begin:
+          type: integer
+        core:
+          type: integer
+        end:
+          type: integer
+        mask:
+          type: string
+        region_id:
+          type: string
+        task_id:
+          type: integer
+      type: object
     CoretimeRenewal:
       type: object
       properties:
@@ -1482,9 +1461,83 @@ components:
         when:
           type: string
           description: The renewal time.
+    CoretimeRegionsResponse:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeRegion'
+    CoretimeChainCoresResponse:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        cores:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeCore'
+    CoretimeLeasesResponse:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        leases:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeLease'
+    CoretimeCore:
+      type: object
+      properties:
+        coreId:
+          type: string
+          description: The core id.
+        paraId:
+          type: string
+          description: The parachain core.
+        workload:
+          type: object
+          $ref: '#/components/schemas/CoretimeWorkload'
+        workplan:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeWorkplan'
+        type:
+          description: The paid price.
+          type: object
+          properties:
+            condition:
+              type: string
+              description: Type of assignment.
+            details:
+              type: object
+              oneOf:
+              - $ref: '#/components/schemas/CoretimeUntil'
+              - $ref: '#/components/schemas/CoretimeMask'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeRegion'
     CoretimeUntil:
       type: string
       description: The lease expiry time.
+    CoretimeWorkload:
+      type: object
+      properties:
+        isPool:
+          type: boolean
+          description: Whether the workload is a pool.
+        isTask:
+          type: boolean
+          description: Whether the workload is a task.
+        mask:
+          type: string
+          description: The mask.
+        task:
+          type: string
+          description: The parachain id.
     CoretimeRelayCoreDescriptor:
       type: object
       properties:
@@ -1538,41 +1591,55 @@ components:
                 last:
                   type: string
                   description: The last assignment in queue.
-    BlockIdentifiers:
+    CoretimeWorkplan:
       type: object
       properties:
-        hash:
+        core:
           type: string
-          description: The block's hash.
-          format: hex
-        height:
+          description: The core id.
+        timeslice:
           type: string
-          description: The block's height.
-          format: unsignedInteger
-    CoretimeConfig:
-      type: object
-      properties:
-        interludeLength:
-          type: string
-          description: The interlude length.
-        leadinLength:
-          type: string
-          description: The leadin length.
-        regionLength:
-          type: string
-          description: The region length.
-        relayBlocksPerTimeslice:
-          type: string
-          description: The number of relay chain blocks per timeslice.
-    CoretimeLeasesResponse:
+          description: The timeslice.
+        info:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeWorkplanInfo'
+    CoretimeRelayCoresResponse:
       type: object
       properties:
         at:
           $ref: '#/components/schemas/BlockIdentifiers'
-        leases:
+        cores:
           type: array
           items:
-            $ref: '#/components/schemas/CoretimeLease'
+            $ref: '#/components/schemas/CoretimeRelayCoreDescriptor'
+    CoretimeWorkplanInfo:
+      type: object
+      properties:
+        isPool:
+          type: boolean
+          description: Whether the workload is a pool.
+        isTask:
+          type: boolean
+          description: Whether the workload is a task.
+        mask:
+          type: string
+          description: The mask.
+        task:
+          type: string
+          description: The parachain id.
+    CoretimeReservationsResponse:
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/BlockIdentifiers'
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoretimeReservation'
+    CoretimeMask:
+      type: string
+      description: The mask.
     CoretimeChainInfoResponse:
       type: object
       properties:
@@ -1610,71 +1677,6 @@ components:
             firstCore:
               type: string
               description: The first core id.
-    CoretimeWorkplanInfo:
-      type: object
-      properties:
-        isPool:
-          type: boolean
-          description: Whether the workload is a pool.
-        isTask:
-          type: boolean
-          description: Whether the workload is a task.
-        mask:
-          type: string
-          description: The mask.
-        task:
-          type: string
-          description: The parachain id.
-    CoretimeCore:
-      type: object
-      properties:
-        coreId:
-          type: string
-          description: The core id.
-        paraId:
-          type: string
-          description: The parachain core.
-        workload:
-          type: object
-          $ref: '#/components/schemas/CoretimeWorkload'
-        workplan:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeWorkplan'
-        type:
-          description: The paid price.
-          type: object
-          properties:
-            condition:
-              type: string
-              description: Type of assignment.
-            details:
-              type: object
-              oneOf:
-              - $ref: '#/components/schemas/CoretimeUntil'
-              - $ref: '#/components/schemas/CoretimeMask'
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeRegion'
-    CoretimeRelayCoresResponse:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        cores:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeRelayCoreDescriptor'
-    CoretimeChainCoresResponse:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        cores:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeCore'
     CoretimeReservation:
       type: object
       properties:
@@ -1684,15 +1686,17 @@ components:
         mask:
           type: string
           description: The mask.
-    CoretimeRegionsResponse:
+    BlockIdentifiers:
       type: object
       properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeRegion'
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
     CoretimeRelayInfoResponse:
       type: object
       properties:
@@ -1716,46 +1720,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CoretimeRenewal'
-    CoretimeWorkplan:
+    CoretimeConfig:
       type: object
       properties:
-        core:
+        interludeLength:
           type: string
-          description: The core id.
-        timeslice:
+          description: The interlude length.
+        leadinLength:
           type: string
-          description: The timeslice.
-        info:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeWorkplanInfo'
-    CoretimeReservationsResponse:
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        reservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoretimeReservation'
-    CoretimeWorkload:
-      type: object
-      properties:
-        isPool:
-          type: boolean
-          description: Whether the workload is a pool.
-        isTask:
-          type: boolean
-          description: Whether the workload is a task.
-        mask:
+          description: The leadin length.
+        regionLength:
           type: string
-          description: The mask.
-        task:
+          description: The region length.
+        relayBlocksPerTimeslice:
           type: string
-          description: The parachain id.
-    CoretimeMask:
-      type: string
-      description: The mask.
+          description: The number of relay chain blocks per timeslice.
     CoretimeLease:
       type: object
       properties:
@@ -1768,6 +1747,27 @@ components:
         core:
           type: string
           description: The core id.
+    CoretimeRegion:
+      type: object
+      properties:
+        core:
+          type: string
+          description: The core id.
+        begin:
+          type: string
+          description: The begin time.
+        end:
+          type: string
+          description: The end time.
+        owner:
+          type: string
+          description: The owner of the region.
+        paid:
+          type: string
+          description: The paid price.
+        mask:
+          type: string
+          description: The mask.
 x-refined-from:
 - polkadot-rest-api-openapi.json
 - subscan-swagger.yaml

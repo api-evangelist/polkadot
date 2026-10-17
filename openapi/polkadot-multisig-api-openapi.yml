@@ -139,18 +139,29 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.MultiAction:
-      enum:
-      - Approval
-      - Executed
-      - Cancelled
-      - Failed
-      type: string
-      x-enum-varnames:
-      - MultiActionApproval
-      - MultiActionExecuted
-      - MultiActionCancelled
-      - MultiActionExecuteFailed
+    subscan_internal_model.MultisigJson:
+      properties:
+        call_hash:
+          type: string
+        call_module:
+          type: string
+        call_module_function:
+          type: string
+        error:
+          $ref: '#/components/schemas/subscan_internal_model.ExtrinsicError'
+        extrinsic_index:
+          type: string
+        multi_id:
+          type: string
+        multisig_account_display:
+          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
+        multisig_status:
+          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
+        processing:
+          type: integer
+        threshold:
+          type: integer
+      type: object
     subscan_internal_model.AccountParentJson:
       properties:
         address:
@@ -162,25 +173,40 @@ components:
         sub_symbol:
           type: string
       type: object
-    subscan_internal_model.EvmAccountDisplay:
+    subscan_internal_model.AccountDisplay:
       properties:
-        contract_name:
+        account_index:
           type: string
-        verify_source:
+        address:
+          description: Current network account
           type: string
-      type: object
-    subscan_internal_model.SampleIdentity:
-      properties:
         display:
           type: string
+        evm_address:
+          type: string
+        evm_contract:
+          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
         identity:
           type: boolean
         judgements:
           items:
             $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
           type: array
+        merkle:
+          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
         parent:
-          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          allOf:
+          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+          description: Parent account
+        people:
+          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      type: object
+    subscan_internal_model.EvmAccountDisplay:
+      properties:
+        contract_name:
+          type: string
+        verify_source:
+          type: string
       type: object
     subscan_internal_model.MultisigExtrinsicJson:
       properties:
@@ -219,6 +245,19 @@ components:
           type: array
         threshold:
           type: integer
+      type: object
+    subscan_libs_substrate.MetadataModuleError:
+      properties:
+        doc:
+          items:
+            type: string
+          type: array
+        module:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
       type: object
     subscan_internal_model.ExtrinsicError:
       properties:
@@ -285,6 +324,44 @@ components:
         threshold:
           type: integer
       type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.MultiAction:
+      enum:
+      - Approval
+      - Executed
+      - Cancelled
+      - Failed
+      type: string
+      x-enum-varnames:
+      - MultiActionApproval
+      - MultiActionExecuted
+      - MultiActionCancelled
+      - MultiActionExecuteFailed
+    subscan_internal_model.SampleIdentity:
+      properties:
+        display:
+          type: string
+        identity:
+          type: boolean
+        judgements:
+          items:
+            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
+          type: array
+        parent:
+          $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
+      type: object
     subscan_internal_model.MerkleTag:
       properties:
         address_type:
@@ -322,33 +399,17 @@ components:
       required:
       - account
       type: object
-    subscan_internal_model.AccountDisplay:
+    internal_server_http.multisigParams:
       properties:
-        account_index:
+        call_hash:
+          example: 95989422012815483151816709596805504452218676110269919620971647505502472854755
           type: string
-        address:
-          description: Current network account
+        multi_id:
+          example: 14661803-2
           type: string
-        display:
-          type: string
-        evm_address:
-          type: string
-        evm_contract:
-          $ref: '#/components/schemas/subscan_internal_model.EvmAccountDisplay'
-        identity:
-          type: boolean
-        judgements:
-          items:
-            $ref: '#/components/schemas/subscan_internal_model.RegistrationJudgementJson'
-          type: array
-        merkle:
-          $ref: '#/components/schemas/subscan_internal_model.MerkleTag'
-        parent:
-          allOf:
-          - $ref: '#/components/schemas/subscan_internal_model.AccountParentJson'
-          description: Parent account
-        people:
-          $ref: '#/components/schemas/subscan_internal_model.SampleIdentity'
+      required:
+      - call_hash
+      - multi_id
       type: object
     subscan_internal_model.ExtrinsicParam:
       properties:
@@ -372,44 +433,6 @@ components:
           $ref: '#/components/schemas/subscan_internal_model.MultiAction'
         timestamp:
           type: integer
-      type: object
-    subscan_libs_substrate.MetadataModuleError:
-      properties:
-        doc:
-          items:
-            type: string
-          type: array
-        module:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-      type: object
-    internal_server_http.multisigParams:
-      properties:
-        call_hash:
-          example: 95989422012815483151816709596805504452218676110269919620971647505502472854755
-          type: string
-        multi_id:
-          example: 14661803-2
-          type: string
-      required:
-      - call_hash
-      - multi_id
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
       type: object
     subscan_internal_model.ExtrinsicSubCallJson:
       properties:
@@ -437,27 +460,4 @@ components:
           type: integer
         judgement:
           type: string
-      type: object
-    subscan_internal_model.MultisigJson:
-      properties:
-        call_hash:
-          type: string
-        call_module:
-          type: string
-        call_module_function:
-          type: string
-        error:
-          $ref: '#/components/schemas/subscan_internal_model.ExtrinsicError'
-        extrinsic_index:
-          type: string
-        multi_id:
-          type: string
-        multisig_account_display:
-          $ref: '#/components/schemas/subscan_internal_model.AccountDisplay'
-        multisig_status:
-          $ref: '#/components/schemas/subscan_internal_model.MultiAction'
-        processing:
-          type: integer
-        threshold:
-          type: integer
       type: object

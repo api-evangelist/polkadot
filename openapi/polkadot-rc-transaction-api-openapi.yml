@@ -176,39 +176,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    TransactionSuccess:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The hash of the encoded transaction.
-    TransactionFailedToSubmit:
-      type: object
-      properties:
-        code:
-          type: number
-        error:
-          type: string
-          description: Failed to submit transaction.
-        transaction:
-          type: string
-          format: hex
-        cause:
-          type: string
-        stack:
-          type: string
-      description: Error message when the node rejects the submitted transaction.
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
     Error:
       type: object
       properties:
@@ -220,22 +187,22 @@ components:
           type: string
         level:
           type: string
-    TransactionDryRun:
+    TransactionFailedToParse:
       type: object
       properties:
-        resultType:
+        code:
+          type: number
+        error:
           type: string
-          enum:
-          - DispatchOutcome
-          - DispatchError
-          - TransactionValidityError
-          description: The result will be either a `DispatchOutcome` if the transaction is valid, a `DispatchError` if the transaction failed, or a `TransactionValidityError` if the transaction is invalid.
-        result:
-          oneOf:
-          - $ref: '#/components/schemas/TransactionDispatchOutcome'
-          - $ref: '#/components/schemas/TransactionDispatchError'
-          - $ref: '#/components/schemas/TransactionValidityError'
-      description: "References:\n  - `PostDispatchInfo`: https://docs.rs/frame-support/38.0.0/frame_support/dispatch/struct.PostDispatchInfo.html\n  - `DispatchError`: https://docs.rs/sp-runtime/39.0.1/sp_runtime/enum.DispatchError.html\n  - `Error Type`: https://paritytech.github.io/polkadot-sdk/master/xcm_runtime_apis/dry_run/enum.Error.html"
+          description: '`Failed to parse a tx.`'
+        transaction:
+          type: string
+          format: hex
+        cause:
+          type: string
+        stack:
+          type: string
+      description: Error message when Sidecar fails to parse the transaction.
     DryRunBody:
       type: object
       properties:
@@ -248,6 +215,12 @@ components:
         senderAddress:
           type: string
           format: ss58
+    Transaction:
+      type: object
+      properties:
+        tx:
+          type: string
+          format: hex
     TransactionMaterial:
       type: object
       properties:
@@ -273,30 +246,6 @@ components:
           type: string
           description: The chain's metadata. It will only be present when the metadata query param is used.
       description: 'Note: `chainName`, `specName`, and `specVersion` are used to define a type registry with a set of signed extensions and types. For Polkadot and Kusama, `chainName` is not used in defining this registry, but in other Substrate-based chains that re-launch their network without changing the `specName`, the `chainName` would be needed to create the correct registry. Substrate Reference: - `RuntimeVersion`: https://crates.parity.io/sp_version/struct.RuntimeVersion.html - `SignedExtension`: https://crates.parity.io/sp_runtime/traits/trait.SignedExtension.html -  FRAME Support: https://crates.parity.io/frame_support/metadata/index.html'
-    TransactionFeeEstimateFailure:
-      type: object
-      properties:
-        code:
-          type: number
-        at:
-          type: object
-          properties:
-            hash:
-              type: string
-        error:
-          type: string
-          description: Error description.
-        transaction:
-          type: string
-          format: hex
-        block:
-          type: string
-          description: Block hash of the block fee estimation was attempted at.
-        cause:
-          type: string
-          description: Error message from the client.
-        stack:
-          type: string
     TransactionDispatchError:
       type: object
       description: The reason why the dispatch call failed.
@@ -319,16 +268,6 @@ components:
           - Unavailable
           - RootNotAllowed
           description: The type of transaction error.
-    TransactionValidityError:
-      type: object
-      description: The error result from an invalid transaction submitted via the `dry-run` endpoint.
-      properties:
-        errorType:
-          type: string
-          enum:
-          - Unimplemented
-          - VersionedConversionFailed
-          description: The type of transaction error, either `Unimplemented` or `VersionedConversionFailed`.
     TransactionFeeEstimate:
       type: object
       properties:
@@ -356,22 +295,50 @@ components:
         proofSize:
           type: string
           description: The weight of storage space used by proof of validity.
-    TransactionFailedToParse:
+    TransactionDryRun:
+      type: object
+      properties:
+        resultType:
+          type: string
+          enum:
+          - DispatchOutcome
+          - DispatchError
+          - TransactionValidityError
+          description: The result will be either a `DispatchOutcome` if the transaction is valid, a `DispatchError` if the transaction failed, or a `TransactionValidityError` if the transaction is invalid.
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/TransactionDispatchOutcome'
+          - $ref: '#/components/schemas/TransactionDispatchError'
+          - $ref: '#/components/schemas/TransactionValidityError'
+      description: "References:\n  - `PostDispatchInfo`: https://docs.rs/frame-support/38.0.0/frame_support/dispatch/struct.PostDispatchInfo.html\n  - `DispatchError`: https://docs.rs/sp-runtime/39.0.1/sp_runtime/enum.DispatchError.html\n  - `Error Type`: https://paritytech.github.io/polkadot-sdk/master/xcm_runtime_apis/dry_run/enum.Error.html"
+    TransactionFailure:
+      oneOf:
+      - $ref: '#/components/schemas/TransactionFailedToSubmit'
+      - $ref: '#/components/schemas/TransactionFailedToParse'
+    TransactionFeeEstimateFailure:
       type: object
       properties:
         code:
           type: number
+        at:
+          type: object
+          properties:
+            hash:
+              type: string
         error:
           type: string
-          description: '`Failed to parse a tx.`'
+          description: Error description.
         transaction:
           type: string
           format: hex
+        block:
+          type: string
+          description: Block hash of the block fee estimation was attempted at.
         cause:
           type: string
+          description: Error message from the client.
         stack:
           type: string
-      description: Error message when Sidecar fails to parse the transaction.
     TransactionDispatchOutcome:
       type: object
       description: The result of a valid transaction submitted via the `dry-run` endpoint.
@@ -384,16 +351,49 @@ components:
           type: string
           format: boolean
           description: Whether the transaction pays a fee.
-    TransactionFailure:
-      oneOf:
-      - $ref: '#/components/schemas/TransactionFailedToSubmit'
-      - $ref: '#/components/schemas/TransactionFailedToParse'
-    Transaction:
+    TransactionSuccess:
       type: object
       properties:
-        tx:
+        hash:
+          type: string
+          description: The hash of the encoded transaction.
+    TransactionValidityError:
+      type: object
+      description: The error result from an invalid transaction submitted via the `dry-run` endpoint.
+      properties:
+        errorType:
+          type: string
+          enum:
+          - Unimplemented
+          - VersionedConversionFailed
+          description: The type of transaction error, either `Unimplemented` or `VersionedConversionFailed`.
+    BlockIdentifiers:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
+    TransactionFailedToSubmit:
+      type: object
+      properties:
+        code:
+          type: number
+        error:
+          type: string
+          description: Failed to submit transaction.
+        transaction:
           type: string
           format: hex
+        cause:
+          type: string
+        stack:
+          type: string
+      description: Error message when the node rejects the submitted transaction.
   requestBodies:
     TransactionDryRun:
       content:

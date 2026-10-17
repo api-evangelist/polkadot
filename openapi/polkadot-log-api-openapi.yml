@@ -93,41 +93,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    subscan_internal_model.ChainLogJson:
-      properties:
-        block_num:
-          type: integer
-        data:
-          type: string
-        engine:
-          type: string
-        id:
-          type: integer
-        log_index:
-          type: string
-        log_type:
-          type: string
-      type: object
-    internal_server_http.logInfoParam:
-      properties:
-        log_index:
-          type: string
-      required:
-      - log_index
-      type: object
-    internal_server_http.J:
-      properties:
-        code:
-          example: 0
-          type: integer
-        data: {}
-        generated_at:
-          example: 1699600641
-          type: integer
-        message:
-          example: Success
-          type: string
-      type: object
     internal_server_http.logsParams:
       properties:
         after_id:
@@ -151,5 +116,40 @@ components:
           minimum: 1
           type: integer
         type:
+          type: string
+      type: object
+    internal_server_http.logInfoParam:
+      properties:
+        log_index:
+          type: string
+      required:
+      - log_index
+      type: object
+    internal_server_http.J:
+      properties:
+        code:
+          example: 0
+          type: integer
+        data: {}
+        generated_at:
+          example: 1699600641
+          type: integer
+        message:
+          example: Success
+          type: string
+      type: object
+    subscan_internal_model.ChainLogJson:
+      properties:
+        block_num:
+          type: integer
+        data:
+          type: string
+        engine:
+          type: string
+        id:
+          type: integer
+        log_index:
+          type: string
+        log_type:
           type: string
       type: object

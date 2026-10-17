@@ -165,6 +165,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        stack:
+          type: string
+        level:
+          type: string
     RuntimeSpec:
       type: object
       properties:
@@ -191,17 +202,6 @@ components:
           type: object
           description: Arbitrary properties defined in the chain spec.
       description: Version information related to the runtime.
-    BlockIdentifiers:
-      type: object
-      properties:
-        hash:
-          type: string
-          description: The block's hash.
-          format: hex
-        height:
-          type: string
-          description: The block's height.
-          format: unsignedInteger
     RuntimeCode:
       type: object
       properties:
@@ -210,17 +210,28 @@ components:
         code:
           type: string
           format: hex
-    Error:
+    ChainType:
       type: object
+      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
       properties:
-        code:
-          type: number
-        message:
+        live:
+          type:
+          - string
+          - 'null'
+          default: null
+        development:
+          type:
+          - string
+          - 'null'
+          default: null
+        local:
+          type:
+          - string
+          - 'null'
+          default: null
+        custom:
           type: string
-        stack:
-          type: string
-        level:
-          type: string
+      example: '{"live": null}'
     RuntimeMetadata:
       type: object
       description: 'Substrate runtime metadata containing pallet information, types registry, and API specifications.
@@ -247,25 +258,14 @@ components:
       required:
       - magicNumber
       - metadata
-    ChainType:
+    BlockIdentifiers:
       type: object
-      description: Type of the chain. It will return one of the following enum variants as a key. Live, Development, Local, or Custom. Each variant will have a value as null except when the ChainType is Custom, it will return a string.
       properties:
-        live:
-          type:
-          - string
-          - 'null'
-          default: null
-        development:
-          type:
-          - string
-          - 'null'
-          default: null
-        local:
-          type:
-          - string
-          - 'null'
-          default: null
-        custom:
+        hash:
           type: string
-      example: '{"live": null}'
+          description: The block's hash.
+          format: hex
+        height:
+          type: string
+          description: The block's height.
+          format: unsignedInteger
